@@ -1,3 +1,4 @@
+import 'package:chautari/view/login_view.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -31,15 +32,6 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-        ),
-      ),
-    );
+    return LoginView();
   }
 }
