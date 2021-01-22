@@ -27,13 +27,15 @@ dependencies:
   shared_preferences: ^0.5.12+4
   carousel_pro: ^1.0.0
   google_fonts: ^1.1.0
-  google_nav_bar: ^2.2.0
+  line_icons: ^0.2.0
   http: ^0.12.1
   dio: ^3.0.9
   cached_network_image: ^2.2.0+1
   flutter_facebook_login: ^3.0.0
   google_sign_in: ^4.5.1
   flutter_secure_storage: ^3.3.3
+  google_nav_bar: ^3.2.0
+  
 
 
 

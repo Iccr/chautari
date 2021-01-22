@@ -1,5 +1,6 @@
 import 'package:chautari/view/login_view.dart';
 import 'package:chautari/view/room_view.dart';
+import 'package:chautari/view/tab_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,7 +22,8 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.teal,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Chautari'),
+      home: Tabbar(),
+      // home: MyHomePage(title: 'Chautari'),
     );
   }
 }
