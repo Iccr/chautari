@@ -10,14 +10,16 @@ class ApiService {
   String _baseUrl = "";
   @override
   ApiService() {
-    _serverUrl = "http://167.71.234.79:6002/api/";
+    // _serverUrl = "http://143.110.252.83:4000/api/";
+    _serverUrl = "http://localhost:4000/api/";
+
     // if (Platform.isAndroid) {
     //   _serverUrl = "http://10.0.2.2:8080/api/";
     // } else if (Platform.isIOS) {
     //   _serverUrl = "http://localhost:8080/api/";
     //   // _serverUrl = "http://192.168.0.100:8080/api/";
     // }
-    _baseUrl = _serverUrl + version;
+    _baseUrl = _serverUrl + version + "/";
     BaseOptions options = new BaseOptions(
       // baseUrl: _baseUrl,
       connectTimeout: 70000,
@@ -56,9 +58,11 @@ class ApiService {
     return responseJson;
   }
 
-  Future post(String url, dynamic params) async {
+  Future post(String url, dynamic params,
+      {bool shouldAppednBaseurl = true}) async {
     var responseJson;
-    final String _url = _baseUrl + url;
+    String _url = shouldAppednBaseurl ? _baseUrl + url : url;
+
     print(_url);
     try {
       Response response = await _http.post(_url, data: params);

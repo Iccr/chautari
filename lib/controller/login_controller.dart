@@ -2,6 +2,7 @@ import 'package:chautari/model/error.dart';
 import 'package:chautari/repository/login_repository.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
@@ -14,6 +15,7 @@ class LoginController extends GetxController {
   bool loading;
   bool loaded;
   String error;
+  String token;
 
   final FacebookLogin facebookSignIn = new FacebookLogin();
   final _storage = FlutterSecureStorage();
@@ -25,16 +27,28 @@ class LoginController extends GetxController {
   );
 
   Future fbLogin() async {
-    final FacebookLoginResult result = await facebookSignIn.logIn(['email']);
+    final FacebookLoginResult result =
+        await facebookSignIn.logIn(['email', 'public_profile']);
     // var _result = false;
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         final FacebookAccessToken accessToken = result.accessToken;
-        Map<String, String> params = {
-          "token": accessToken.userId,
-          "provider": "facebook"
+
+        var model = await LoginRepository().getFacebookUser(accessToken.token);
+
+        Map<String, dynamic> params = {
+          "user": {
+            "token": accessToken.token,
+            "user_id": accessToken.userId,
+            "provider": "facebook",
+            "name": model.name,
+            "email": model.email,
+            "imageurl": model.picture ?? ""
+          }
         };
-        // await _loginWithApi(params);
+
+        await _loginWithApi(params);
+
         break;
       case FacebookLoginStatus.cancelledByUser:
         error = "Login cancelled by the user.";
@@ -64,13 +78,12 @@ class LoginController extends GetxController {
     await _storage.write(key: AppConstant.userToken, value: val);
   }
 
-  Future _loginWithApi(Map<String, String> params) async {
+  Future _loginWithApi(Map<String, dynamic> params) async {
     var model = await LoginRepository().social(params);
     if ((model.error ?? []).isEmpty) {
       String token = model.data.token;
       await _saveToken(token);
-
-      // _result = true;
+      Get.toNamed("/rooms");
     } else {
       List<ApiError> errors = model.error ?? [];
       error = errors.first?.detail ?? "";

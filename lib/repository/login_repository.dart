@@ -1,24 +1,27 @@
+import 'dart:convert';
+
+import 'package:chautari/model/fb_user_model.dart';
 import 'package:chautari/model/login_model.dart';
 import 'package:chautari/utilities/api_service.dart';
 
 class LoginRepository {
-  final String url = "/auth/login";
-  final String _socialUrl = "/auth/social";
+  final String _socialUrl = "login";
+  final String _fb_verify_url =
+      "https://graph.facebook.com/me?fields=name,first_name,last_name,email,picture&access_token=";
 
   ApiService api;
   LoginRepository() {
     api = ApiService();
   }
 
-  Future<LoginApiResponse> login(Map<String, String> params) async {
-    print("calling with $params");
-    final response = await api.post(url, params);
+  Future<LoginApiResponse> social(Map<String, dynamic> params) async {
+    final response = await api.post(_socialUrl, params);
     return LoginApiResponse.fromJson(response.data);
   }
 
-  Future<LoginApiResponse> social(Map<String, String> params) async {
-    print("calling with $params");
-    final response = await api.post(_socialUrl, params);
-    return LoginApiResponse.fromJson(response.data);
+  Future<FbUserModel> getFacebookUser(String accessToken) async {
+    String url = _fb_verify_url + accessToken;
+    final response = await api.post(url, null, shouldAppednBaseurl: false);
+    return FbUserModel.fromJson(jsonDecode(response.data));
   }
 }
