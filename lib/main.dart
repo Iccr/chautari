@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
         GetPage(name: "/rooms", page: () => RoomView()),
         GetPage(name: "/login", page: () => LoginView())
       ],
+
       theme: ThemeData(
         primarySwatch: Colors.teal,
         visualDensity: VisualDensity.adaptivePlatformDensity,

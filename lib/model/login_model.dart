@@ -2,18 +2,27 @@ import 'package:chautari/model/error.dart';
 
 class LoginApiResponse {
   UserModel data;
-  List<ApiError> error;
+  List<ApiError> errors;
 
   LoginApiResponse({this.data});
 
   LoginApiResponse.fromJson(Map<String, dynamic> json) {
     data = json['data'] != null ? new UserModel.fromJson(json['data']) : null;
+    if (json['errors'] != null) {
+      errors = new List<ApiError>();
+      json['errors'].forEach((v) {
+        errors.add(new ApiError.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     if (this.data != null) {
       data['data'] = this.data.toJson();
+    }
+    if (this.errors != null) {
+      data['errors'] = this.errors.map((v) => v.toJson()).toList();
     }
     return data;
   }

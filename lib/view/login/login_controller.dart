@@ -91,13 +91,13 @@ class LoginController extends GetxController {
 
   Future _loginWithApi(Map<String, dynamic> params) async {
     var model = await LoginRepository().social(params);
-    if ((model.error ?? []).isEmpty) {
+    if ((model.errors ?? []).isEmpty) {
       String token = model.data.token;
       await _saveToken(token);
       Get.offNamed("/rooms");
     } else {
-      List<ApiError> errors = model.error ?? [];
-      error = errors.first?.detail ?? "";
+      List<ApiError> errors = model.errors ?? [];
+      error = errors.first?.value ?? "";
       // _result = false;
     }
   }
