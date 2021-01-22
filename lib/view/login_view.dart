@@ -20,7 +20,7 @@ class LoginView extends StatelessWidget {
                 child: Text("Login With Facebook"),
               ),
               RaisedButton(
-                onPressed: null,
+                onPressed: () => c.gleSignIn(),
                 child: Text("Login With Google"),
               ),
             ],

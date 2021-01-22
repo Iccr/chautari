@@ -67,7 +67,7 @@ class LoginController extends GetxController {
         "token": auth.accessToken,
         "provider": "google"
       };
-      await _loginWithApi(params);
+      // await _loginWithApi(params);
     } catch (e) {
       print(e);
       error = e;
