@@ -47,7 +47,7 @@ class LoginController extends GetxController {
           }
         };
 
-        await _loginWithApi(params);
+        var authModel = await _loginWithApi(params);
 
         break;
       case FacebookLoginStatus.cancelledByUser:
@@ -83,7 +83,7 @@ class LoginController extends GetxController {
     if ((model.error ?? []).isEmpty) {
       String token = model.data.token;
       await _saveToken(token);
-      Get.toNamed("/rooms");
+      Get.offNamed("/rooms");
     } else {
       List<ApiError> errors = model.error ?? [];
       error = errors.first?.detail ?? "";
