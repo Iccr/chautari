@@ -1,6 +1,6 @@
-import 'package:chautari/view/login_view.dart';
-import 'package:chautari/view/room_view.dart';
-import 'package:chautari/view/tab_view.dart';
+import 'package:chautari/view/login/login_view.dart';
+import 'package:chautari/view/room/room_view.dart';
+import 'package:chautari/view/tab/tab_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -15,8 +15,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       getPages: [
-        GetPage(name: "/", page: () => LoginView()),
-        GetPage(name: "/rooms", page: () => RoomView())
+        GetPage(name: "/", page: () => Tabbar()),
+        GetPage(name: "/rooms", page: () => RoomView()),
+        GetPage(name: "/login", page: () => LoginView())
       ],
       theme: ThemeData(
         primarySwatch: Colors.teal,
