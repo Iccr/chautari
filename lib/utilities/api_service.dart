@@ -11,14 +11,13 @@ class ApiService {
   @override
   ApiService() {
     // _serverUrl = "http://143.110.252.83:4000/api/";
-    _serverUrl = "http://localhost:4000/api/";
 
-    // if (Platform.isAndroid) {
-    //   _serverUrl = "http://10.0.2.2:8080/api/";
-    // } else if (Platform.isIOS) {
-    //   _serverUrl = "http://localhost:8080/api/";
-    //   // _serverUrl = "http://192.168.0.100:8080/api/";
-    // }
+    if (Platform.isAndroid) {
+      _serverUrl = "http://10.0.2.2:4000/api/";
+    } else if (Platform.isIOS) {
+      _serverUrl = "http://localhost:4000/api/";
+      // _serverUrl = "http://192.168.0.100:8080/api/";
+    }
     _baseUrl = _serverUrl + version + "/";
     BaseOptions options = new BaseOptions(
       // baseUrl: _baseUrl,
