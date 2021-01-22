@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>739135606863-4s1456p5mleefs6l8u9hcbcuc6k016vf.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.739135606863-4s1456p5mleefs6l8u9hcbcuc6k016vf</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBzmy3szsxSnSvxCGeQgqel4RX4BRpWHLg</string>
+	<key>GCM_SENDER_ID</key>
+	<string>739135606863</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.chautari.basti</string>
+	<key>PROJECT_ID</key>
+	<string>boiling-fire-3549</string>
+	<key>STORAGE_BUCKET</key>
+	<string>boiling-fire-3549.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:739135606863:ios:69e2fed321dffd08a15a3a</string>
+	<key>DATABASE_URL</key>
+	<string>https://boiling-fire-3549.firebaseio.com</string>
+</dict>
+</plist>

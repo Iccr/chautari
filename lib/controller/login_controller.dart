@@ -47,7 +47,7 @@ class LoginController extends GetxController {
           }
         };
 
-        var authModel = await _loginWithApi(params);
+        await _loginWithApi(params);
 
         break;
       case FacebookLoginStatus.cancelledByUser:
@@ -62,15 +62,26 @@ class LoginController extends GetxController {
   Future gleSignIn() async {
     try {
       var result = await _googleSignIn.signIn();
-      var auth = await result.authentication;
-      Map<String, String> params = {
-        "token": auth.accessToken,
-        "provider": "google"
-      };
-      // await _loginWithApi(params);
+      if (result == null) {
+        throw Exception("something went wrong");
+      } else {
+        var auth = await result.authentication;
+
+        Map<String, dynamic> params = {
+          "user": {
+            "token": auth.accessToken,
+            "user_id": auth.idToken,
+            "provider": "google",
+            "name": result.displayName,
+            "email": result.email,
+            "imageurl": result.photoUrl
+          }
+        };
+        await _loginWithApi(params);
+      }
     } catch (e) {
       print(e);
-      error = e;
+      error = e.message;
     }
   }
 
