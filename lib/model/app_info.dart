@@ -9,6 +9,13 @@ class AppinfoResponseModel {
   AppinfoResponseModel.fromJson(Map<String, dynamic> json) {
     data =
         json['data'] != null ? new AppinfoModel.fromJson(json['data']) : null;
+
+    if (json['error'] != null) {
+      errors = new List<ApiError>();
+      json['error'].forEach((v) {
+        errors.add(new ApiError.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -16,14 +23,9 @@ class AppinfoResponseModel {
     if (this.data != null) {
       data['data'] = this.data.toJson();
     }
-    // if (this.meta != null) {
-    //   data['meta'] = this.meta.toJson();
-    // }
-    if (data['error'] != null) {
-      errors = new List<ApiError>();
-      data['error'].forEach((v) {
-        errors.add(new ApiError.fromJson(v));
-      });
+
+    if (this.errors != null) {
+      data['errors'] = this.errors.map((v) => v.toJson()).toList();
     }
     return data;
   }
