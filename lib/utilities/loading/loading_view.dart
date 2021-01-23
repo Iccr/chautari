@@ -1,9 +1,6 @@
 import 'package:chautari/extensions/color_extensions.dart';
-import 'package:chautari/utilities/utilities.dart';
 import 'package:flutter/material.dart';
-
-import 'dart:math';
-
+import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class LoadingScreen extends StatefulWidget {
@@ -22,10 +19,8 @@ class _LoadingScreenState extends State<LoadingScreen> {
   Widget build(BuildContext context) {
     return Stack(children: [
       Container(
-        // color: Colors.transparent,
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        // color: Colors.black54
       ),
       Positioned(
         bottom: 16,
@@ -40,45 +35,28 @@ class _LoadingScreenState extends State<LoadingScreen> {
             ),
             child: Padding(
               padding: const EdgeInsets.only(left: 24.0, right: 24.0),
-              child: Row(
-                  // mainAxisAlignment: MainAxisAlignment.start,
-                  //  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Expanded(
-                      child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(widget.title,
-                                textAlign: TextAlign.left,
-                                style: GoogleFonts.poppins(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w600)),
-                            SizedBox(height: 8),
-                            Text(widget.description,
-                                style: GoogleFonts.poppins(
-                                    color: HexColor('#777777'),
-                                    fontSize: 12,
-                                    fontWeight: FontWeight.w400))
-                          ]),
-                    ),
-                    AnimatedProgressHud()
-                    // RotationTransition(
-                    //   turns: Tween(begin: 0.0, end: 1.0).animate(_controller),
-                    //   child: DashedBorder(),
-                    // ),
-
-                    //         Container(
-                    //           width: 54,
-                    //           height: 54,
-                    //           decoration: BoxDecoration(
-                    //             border: DashPathBorder.all(
-                    //             dashArray: CircularIntervalList<double>(<double>[3, 8]),
-                    // )
-                    //           )
-                    //         ,)
-                  ]),
+              child: Row(children: [
+                Expanded(
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(widget.title,
+                            textAlign: TextAlign.left,
+                            style: GoogleFonts.poppins(
+                                color: Colors.black,
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600)),
+                        SizedBox(height: 8),
+                        Text(widget.description,
+                            style: GoogleFonts.poppins(
+                                color: HexColor('#777777'),
+                                fontSize: 12,
+                                fontWeight: FontWeight.w400))
+                      ]),
+                ),
+                AnimatedProgressHud()
+              ]),
             ),
           ),
         ),
@@ -114,18 +92,9 @@ class _AnimatedProgressHudState extends State<AnimatedProgressHud>
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedBuilder(
-        animation: _controller,
-        builder: (_, child) {
-          return Transform.rotate(
-            angle: _controller.value * 2 * -pi,
-            child: Image(
-              width: 54,
-              height: 54,
-              fit: BoxFit.fill,
-              image: getIconFromAsset('ic_loading.png'),
-            ),
-          );
-        });
+    return SpinKitRipple(
+      color: Colors.teal,
+      size: 50.0,
+    );
   }
 }

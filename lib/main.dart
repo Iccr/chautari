@@ -1,8 +1,10 @@
 import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/room/room_view.dart';
+import 'package:chautari/view/splash/splash_screen.dart';
 import 'package:chautari/view/tab/tab_view.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() {
   runApp(MyApp());
@@ -15,16 +17,17 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Flutter Demo',
       getPages: [
-        GetPage(name: "/", page: () => Tabbar()),
+        GetPage(name: "/tabs", page: () => Tabbar()),
         GetPage(name: "/rooms", page: () => RoomView()),
         GetPage(name: "/login", page: () => LoginView())
       ],
 
       theme: ThemeData(
+        fontFamily: 'Poppins',
         primarySwatch: Colors.teal,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: Tabbar(),
+      home: SplashScreen(),
       // home: MyHomePage(title: 'Chautari'),
     );
   }
