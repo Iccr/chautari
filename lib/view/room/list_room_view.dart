@@ -37,7 +37,7 @@ class RoomWidget extends StatelessWidget {
       child: Stack(
         children: [
           Container(
-            height: 300,
+            height: 350,
           ),
           ImageCarousel(room: room),
           Positioned(
@@ -106,7 +106,7 @@ class RoomsInsight extends StatelessWidget {
             ),
             SizedBox(height: vgap),
             Text(
-              "Rs ${room.price} / month",
+              "Rs ${room.price} /month",
               style: Theme.of(context).textTheme.bodyText1,
             ),
             SizedBox(height: vgap),
@@ -137,7 +137,7 @@ class ImageCarousel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      height: 250,
       color: Colors.yellow,
     );
   }
