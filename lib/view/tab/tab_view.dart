@@ -1,3 +1,5 @@
+import 'package:chautari/view/explore/explore_view.dart';
+import 'package:chautari/view/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
@@ -11,11 +13,8 @@ class _TabbarState extends State<Tabbar> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static const List<Widget> _widgetOptions = <Widget>[
-    Text(
-      'Index 0: Home',
-      style: optionStyle,
-    ),
+  static List<Widget> _widgetOptions = <Widget>[
+    Exploreview(),
     Text(
       'Index 1: Likes',
       style: optionStyle,
@@ -33,9 +32,6 @@ class _TabbarState extends State<Tabbar> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('BottomNavigationBar Sample'),
-      ),
       body: Center(
         child: _widgetOptions.elementAt(_selectedIndex),
       ),
