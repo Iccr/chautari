@@ -44,6 +44,7 @@ class RoomsModel {
   int state;
   String water;
   List<String> images;
+  String postedOn;
 
   RoomsModel(
       {this.address,
@@ -58,7 +59,8 @@ class RoomsModel {
       this.price,
       this.images,
       this.state,
-      this.water});
+      this.water,
+      this.postedOn});
 
   RoomsModel.fromJson(Map<String, dynamic> json) {
     address = json['address'];
@@ -74,6 +76,7 @@ class RoomsModel {
     price = json['price'];
     state = json['state'];
     water = json['water'];
+    postedOn = json['posted_on'];
 
     this.images = List<String>();
     json['images'].forEach((e) {

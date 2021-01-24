@@ -39,7 +39,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
         decoration: BoxDecoration(
             shape: BoxShape.circle,
             color:
-                _current == index ? Colors.teal : Color.fromRGBO(0, 0, 0, 0.6)),
+                _current == index ? Colors.teal : Color.fromRGBO(0, 0, 0, 0.4)),
       ));
     });
     return list;
@@ -74,8 +74,8 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
           child: Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              // color: Colors.teal,
               height: 20,
+              width: 200,
               // child: Stack(
               // alignment: Alignment.center,
               // children: <Widget>[

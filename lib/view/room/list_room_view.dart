@@ -80,7 +80,7 @@ class RoomsInsight extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 Text(
-                  "${room.address}, ${room.districtName}, state: ${room.state}",
+                  "${room.address}, ${room.districtName}, Province: ${room.state}",
                   style: Theme.of(context).textTheme.bodyText1,
                 ),
               ],
@@ -96,17 +96,28 @@ class RoomsInsight extends StatelessWidget {
               children: [
                 Text("${room.numberOfRooms}" +
                     " rooms, ${room.parkingCount}" +
-                    " parking, ${room.amenityCount} facilities avalable"),
+                    " parking + ${room.amenityCount} more facilities avalable"),
               ],
             ),
             SizedBox(height: vgap),
             Row(
               children: [
-                Text("water ${room.water}"),
+                Row(
+                  children: [
+                    Text("water: "),
+                    Text("${room.water}"),
+                  ],
+                ),
               ],
             ),
             SizedBox(height: vgap),
-            Text("3 days ago", style: TextStyle(color: Colors.grey)),
+            Row(
+              children: [
+                Text("date: "),
+                Text(room.postedOn ?? "n/a",
+                    style: TextStyle(color: Colors.grey)),
+              ],
+            ),
           ],
         ));
   }
