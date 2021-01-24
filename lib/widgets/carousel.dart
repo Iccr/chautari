@@ -70,27 +70,29 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
             ),
           ),
         ),
-        Positioned.fill(
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              height: 20,
-              width: 200,
-              // child: Stack(
-              // alignment: Alignment.center,
-              // children: <Widget>[
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: getPagerIndicator(),
-              ),
-              // Positioned(
-              //   right: 10,
-              //   bottom: 5,
-              //   child: Text(""),
-              // ),
-              // ],
+        Positioned(
+          bottom: 0,
+          child: Container(
+            margin: EdgeInsets.only(left: 5),
+            height: 20,
+
+            padding: EdgeInsets.all(5),
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.grey.shade200.withOpacity(0.4)),
+            // child: Stack(
+            // alignment: Alignment.center,
+            // children: <Widget>[
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: getPagerIndicator(),
             ),
+            // Positioned(
+            //   right: 10,
+            //   bottom: 5,
+            //   child: Text(""),
             // ),
+            // ],
           ),
         )
       ]),
