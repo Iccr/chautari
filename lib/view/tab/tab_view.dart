@@ -1,6 +1,6 @@
 import 'package:chautari/view/explore/explore_view.dart';
+import 'package:chautari/view/profile/profile_view.dart';
 import 'package:chautari/view/setting/setting_view.dart';
-import 'package:chautari/view/splash/splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
@@ -20,10 +20,7 @@ class _TabbarState extends State<Tabbar> {
           'Index 1: Likes',
           style: optionStyle,
         ),
-        Text(
-          'Index 2: Search',
-          style: optionStyle,
-        ),
+        ProfileView(),
         SettingView()
       ];
 

@@ -1,0 +1,65 @@
+import 'package:flutter/material.dart';
+import 'package:line_icons/line_icons.dart';
+
+class AvatarView extends StatelessWidget {
+  bool shouldShowCameraIcon = false;
+  String imageUrl;
+  double radius;
+  Function cameraAction;
+  AvatarView(
+      {this.imageUrl,
+      this.shouldShowCameraIcon,
+      this.radius = 106,
+      this.cameraAction});
+  double getHeight() {
+    return shouldShowCameraIcon == true ? cameraIconWidth : 0.0;
+
+    //
+  }
+
+  get cameraIconWidth => radius / 4;
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: radius,
+      width: radius + cameraIconWidth,
+      child: Stack(
+        children: [
+          Positioned(
+            child: CircleAvatar(
+              backgroundImage: (imageUrl ?? "").isEmpty
+                  ? AssetImage("images/profile.png")
+                  : NetworkImage(imageUrl ?? ""),
+              backgroundColor: Colors.transparent,
+              radius: radius / 2,
+            ),
+          ),
+          Positioned(
+            top: radius / 2 + cameraIconWidth / 2,
+            right: cameraIconWidth,
+            child: GestureDetector(
+              onTap: () {
+                cameraAction();
+              },
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.circular(cameraIconWidth)),
+                padding: EdgeInsets.all(6),
+                width: cameraIconWidth,
+                height: this.getHeight(),
+                child: Center(
+                    child: Icon(
+                  LineIcons.camera,
+                  size: getHeight() / 2,
+                  color: Colors.white,
+                )),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
