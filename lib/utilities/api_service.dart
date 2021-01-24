@@ -1,26 +1,33 @@
 import 'package:dio/dio.dart';
 import 'dart:io' show Platform;
 
-class ApiService {
-  String _serverUrl = "";
-
+class BaseUrl {
   final String version = "v1";
 
+  String _serverUrl;
+  String _imageServerUrl;
+
+  BaseUrl() {
+    if (Platform.isAndroid) {
+      _serverUrl = "http://10.0.2.2:4000/api/";
+      _imageServerUrl = "http://10.0.2.2:4000/";
+    } else if (Platform.isIOS) {
+      _serverUrl = "http://localhost:4000/api/";
+      _imageServerUrl = "http://localhost:4000/";
+    }
+  }
+
+  String get imageBaseUrl => _imageServerUrl;
+  String get baseUrl => _serverUrl + version;
+}
+
+class ApiService {
   Dio _http;
   String _baseUrl = "";
   @override
   ApiService() {
-    // _serverUrl = "http://143.110.252.83:4000/api/";
-
-    if (Platform.isAndroid) {
-      _serverUrl = "http://10.0.2.2:4000/api/";
-    } else if (Platform.isIOS) {
-      _serverUrl = "http://localhost:4000/api/";
-      // _serverUrl = "http://192.168.0.100:8080/api/";
-    }
-    _baseUrl = _serverUrl + version + "/";
+    _baseUrl = BaseUrl().baseUrl;
     BaseOptions options = new BaseOptions(
-      // baseUrl: _baseUrl,
       connectTimeout: 70000,
       receiveTimeout: 60000,
       headers: _headers(),
