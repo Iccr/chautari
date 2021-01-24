@@ -51,16 +51,16 @@ class _TabbarState extends State<Tabbar> {
                 tabBackgroundColor: Colors.grey[800],
                 tabs: [
                   GButton(
-                    icon: LineIcons.home,
-                    text: 'Home',
-                  ),
-                  GButton(
-                    icon: LineIcons.heart_o,
-                    text: 'Likes',
-                  ),
-                  GButton(
                     icon: LineIcons.search,
-                    text: 'Search',
+                    text: 'Explore',
+                  ),
+                  GButton(
+                    icon: LineIcons.map,
+                    text: 'Map',
+                  ),
+                  GButton(
+                    icon: LineIcons.user,
+                    text: 'Profile',
                   ),
                   GButton(
                     icon: LineIcons.gears,
