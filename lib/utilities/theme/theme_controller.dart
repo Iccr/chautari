@@ -19,9 +19,12 @@ class ThemeController extends GetxController {
   }
 
   ThemeData get theme => _themeData;
+  ThemeMode get mode => Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
 
   setTheme() {
     Get.changeTheme(
         Get.isDarkMode ? AppTheme.lightTheme() : AppTheme.darkTheme());
+    _themeData = Get.theme;
+    update();
   }
 }

@@ -14,27 +14,29 @@ class _TabbarState extends State<Tabbar> {
   int _selectedIndex = 0;
   static const TextStyle optionStyle =
       TextStyle(fontSize: 30, fontWeight: FontWeight.bold);
-  static List<Widget> _widgetOptions = <Widget>[
-    Exploreview(),
-    Text(
-      'Index 1: Likes',
-      style: optionStyle,
-    ),
-    Text(
-      'Index 2: Search',
-      style: optionStyle,
-    ),
-    SettingView()
-  ];
+  static List<Widget> _widgetOptions(TextStyle optionStyle) => <Widget>[
+        Exploreview(),
+        Text(
+          'Index 1: Likes',
+          style: optionStyle,
+        ),
+        Text(
+          'Index 2: Search',
+          style: optionStyle,
+        ),
+        SettingView()
+      ];
 
   @override
   Widget build(BuildContext context) {
+    var theme = Theme.of(context);
     return Scaffold(
       body: Center(
-        child: _widgetOptions.elementAt(_selectedIndex),
+        child:
+            _widgetOptions(theme.textTheme.headline4).elementAt(_selectedIndex),
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(color: Colors.white, boxShadow: [
+        decoration: BoxDecoration(color: Colors.teal, boxShadow: [
           BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
         ]),
         child: SafeArea(
