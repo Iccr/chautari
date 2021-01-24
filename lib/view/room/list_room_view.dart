@@ -1,4 +1,5 @@
 import 'package:chautari/model/rooms_model.dart';
+import 'package:chautari/widgets/carousel.dart';
 import 'package:flutter/material.dart';
 
 class RoomListWidget extends StatelessWidget {
@@ -34,38 +35,19 @@ class RoomWidget extends StatelessWidget {
         borderRadius: BorderRadius.circular(5),
         color: Colors.white,
       ),
-      child: Stack(
+      child: Column(
         children: [
-          Container(
-            height: 350,
-          ),
-          ImageCarousel(room: room),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Container(
-              child: RoomsInsight(room: this.room),
-            ),
-          )
+          // Container(
+          //   height: 350,
+          // ),
+          // ImageCarousel(room: room),
+          CarouselWithIndicator(room),
+          RoomsInsight(room: this.room)
         ],
       ),
     );
   }
 }
-
-// "address": "satdobato",
-//             "amenity_count": 3,
-//             "available": true,
-//             "district_name": "Arghakhanchi",
-//             "id": 1,
-//             "lat": "27.7172",
-//             "long": "85.3240",
-//             "number_of_rooms": 1,
-//             "parking_count": 1,
-//             "price": "3000",
-//             "state": 5,
-//             "water": "Enough for small family"
 
 class RoomsInsight extends StatelessWidget {
   final RoomsModel room;
@@ -74,7 +56,7 @@ class RoomsInsight extends StatelessWidget {
   double vgap = 2;
   double hgap = 10;
 
-  double padding = 8;
+  double padding = 10;
 
   @override
   Widget build(BuildContext context) {
@@ -91,7 +73,6 @@ class RoomsInsight extends StatelessWidget {
           ],
         ),
         padding: EdgeInsets.all(padding),
-        margin: EdgeInsets.all(padding),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [

@@ -43,6 +43,7 @@ class RoomsModel {
   String price;
   int state;
   String water;
+  List<String> images;
 
   RoomsModel(
       {this.address,
@@ -55,6 +56,7 @@ class RoomsModel {
       this.numberOfRooms,
       this.parkingCount,
       this.price,
+      this.images,
       this.state,
       this.water});
 
@@ -66,11 +68,17 @@ class RoomsModel {
     id = json['id'];
     lat = json['lat'];
     long = json['long'];
+
     numberOfRooms = json['number_of_rooms'];
     parkingCount = json['parking_count'];
     price = json['price'];
     state = json['state'];
     water = json['water'];
+
+    this.images = List<String>();
+    json['images'].forEach((e) {
+      images.add(e);
+    });
   }
 
   Map<String, dynamic> toJson() {
@@ -87,6 +95,7 @@ class RoomsModel {
     data['price'] = this.price;
     data['state'] = this.state;
     data['water'] = this.water;
+
     return data;
   }
 }

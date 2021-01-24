@@ -5,7 +5,7 @@ import 'package:chautari/model/login_model.dart';
 import 'package:chautari/utilities/api_service.dart';
 
 class LoginRepository {
-  final String _socialUrl = "login";
+  final String _socialUrl = "/login";
   final String _fb_verify_url =
       "https://graph.facebook.com/me?fields=name,first_name,last_name,email,picture&access_token=";
 
