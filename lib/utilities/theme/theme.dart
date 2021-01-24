@@ -9,18 +9,20 @@ extension AppTheme on ThemeData {
       visualDensity: VisualDensity.adaptivePlatformDensity,
       textTheme: TextTheme(
         headline4: TextStyle(
-            fontFamily: "Poppins", fontSize: 36.0, fontWeight: FontWeight.w500),
+            fontFamily: "Poppins", fontSize: 33.0, fontWeight: FontWeight.bold),
+        headline5: TextStyle(
+            fontFamily: "Poppins", fontSize: 23.0, fontWeight: FontWeight.bold),
         headline6: TextStyle(
-            fontSize: 36.0, fontFamily: "Poppins", fontWeight: FontWeight.w500),
+            fontSize: 19.0, fontFamily: "Poppins", fontWeight: FontWeight.bold),
         bodyText2: TextStyle(
-            fontSize: 14.0,
+            fontSize: 13.0,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w500,
             color: Colors.white.withOpacity(0.8)),
         bodyText1: TextStyle(
-            fontSize: 16.0,
+            fontSize: 15.0,
             fontFamily: 'Poppins',
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
             color: Colors.white.withOpacity(0.9)),
       ),
     );
@@ -34,18 +36,20 @@ extension AppTheme on ThemeData {
       visualDensity: VisualDensity.adaptivePlatformDensity,
       textTheme: TextTheme(
         headline4: TextStyle(
-            fontFamily: "Poppins", fontSize: 36.0, fontWeight: FontWeight.w500),
+            fontFamily: "Poppins", fontSize: 33.0, fontWeight: FontWeight.bold),
+        headline5: TextStyle(
+            fontFamily: "Poppins", fontSize: 23.0, fontWeight: FontWeight.bold),
         headline6: TextStyle(
-            fontSize: 36.0, fontFamily: "Poppins", fontWeight: FontWeight.w500),
+            fontSize: 19.0, fontFamily: "Poppins", fontWeight: FontWeight.bold),
         bodyText2: TextStyle(
-            fontSize: 14.0,
+            fontSize: 13.0,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w500,
             color: Colors.black.withOpacity(0.8)),
         bodyText1: TextStyle(
-            fontSize: 16.0,
+            fontSize: 15.0,
             fontFamily: 'Poppins',
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w500,
             color: Colors.black.withOpacity(0.9)),
       ),
     );
