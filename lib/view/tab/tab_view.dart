@@ -36,7 +36,7 @@ class _TabbarState extends State<Tabbar> {
             _widgetOptions(theme.textTheme.headline4).elementAt(_selectedIndex),
       ),
       bottomNavigationBar: Container(
-        decoration: BoxDecoration(color: Colors.teal, boxShadow: [
+        decoration: BoxDecoration(color: theme.primaryColor, boxShadow: [
           BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
         ]),
         child: SafeArea(
