@@ -1,9 +1,11 @@
 import 'package:chautari/model/error.dart';
+import 'package:chautari/model/login_model.dart';
 import 'package:chautari/repository/login_repository.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AppConstant {
@@ -16,6 +18,21 @@ class LoginController extends GetxController {
   bool loaded;
   String error;
   String token;
+  final GetStorage box = GetStorage();
+  UserModel user;
+  onInit() {
+    super.onInit();
+    Map<String, dynamic> _userMap = box.read("user");
+    if (_userMap == null) {
+      this._isLoggedIn = false;
+    } else {
+      this.user = UserModel.fromJson(_userMap);
+      this._isLoggedIn = true;
+    }
+  }
+
+  bool _isLoggedIn = false;
+  bool get isLoggedIn => _isLoggedIn;
 
   final FacebookLogin facebookSignIn = new FacebookLogin();
   final _storage = FlutterSecureStorage();
@@ -94,6 +111,8 @@ class LoginController extends GetxController {
     if ((model.errors ?? []).isEmpty) {
       String token = model.data.token;
       await _saveToken(token);
+      box.write("user", model.data.toJson());
+      this.user = model.data;
       Get.offNamed("/rooms");
     } else {
       List<ApiError> errors = model.errors ?? [];

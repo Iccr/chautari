@@ -10,6 +10,6 @@ class ChautariColors {
   }
 
   Color blackAndWhitecolor() {
-    return _mode == ThemeMode.dark ? Colors.black87 : Colors.white70;
+    return _mode == ThemeMode.dark ? Colors.white70 : Colors.black;
   }
 }
