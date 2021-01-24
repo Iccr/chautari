@@ -15,10 +15,13 @@ extension AppTheme on ThemeData {
         bodyText2: TextStyle(
             fontSize: 14.0,
             fontFamily: 'Poppins',
-            color: Colors.black87,
-            fontWeight: FontWeight.w500),
+            fontWeight: FontWeight.w500,
+            color: Colors.white.withOpacity(0.8)),
         bodyText1: TextStyle(
-            fontSize: 16.0, fontFamily: 'Poppins', fontWeight: FontWeight.w600),
+            fontSize: 16.0,
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w600,
+            color: Colors.white.withOpacity(0.9)),
       ),
     );
   }
@@ -37,10 +40,13 @@ extension AppTheme on ThemeData {
         bodyText2: TextStyle(
             fontSize: 14.0,
             fontFamily: 'Poppins',
-            color: Colors.black87,
-            fontWeight: FontWeight.w500),
+            fontWeight: FontWeight.w500,
+            color: Colors.black.withOpacity(0.8)),
         bodyText1: TextStyle(
-            fontSize: 16.0, fontFamily: 'Poppins', fontWeight: FontWeight.w600),
+            fontSize: 16.0,
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w600,
+            color: Colors.black.withOpacity(0.9)),
       ),
     );
   }

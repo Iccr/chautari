@@ -1,4 +1,5 @@
 import 'package:chautari/model/rooms_model.dart';
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/widgets/carousel.dart';
 import 'package:flutter/material.dart';
 
@@ -62,7 +63,7 @@ class RoomsInsight extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: ChautariColors().blackAndWhitecolor(),
           borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
@@ -94,9 +95,11 @@ class RoomsInsight extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text("${room.numberOfRooms}" +
-                    " rooms, ${room.parkingCount}" +
-                    " parking + ${room.amenityCount} more facilities avalable"),
+                Text(
+                  "${room.numberOfRooms}" +
+                      " rooms, ${room.parkingCount}" +
+                      " parking + ${room.amenityCount} more facilities avalable",
+                ),
               ],
             ),
             SizedBox(height: vgap),
