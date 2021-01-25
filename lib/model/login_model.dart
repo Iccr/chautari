@@ -36,6 +36,7 @@ class UserModel {
   String name;
   String provider;
   String token;
+  bool isLoggedIn = false;
 
   UserModel(
       {this.authToken,
@@ -65,6 +66,7 @@ class UserModel {
     data['name'] = this.name;
     data['provider'] = this.provider;
     data['token'] = this.token;
+    data['isLoggedIn'] = this.isLoggedIn;
     return data;
   }
 }

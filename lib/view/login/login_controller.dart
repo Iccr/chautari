@@ -2,40 +2,46 @@ import 'package:chautari/model/error.dart';
 import 'package:chautari/model/login_model.dart';
 import 'package:chautari/repository/login_repository.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AppConstant {
-  static String userToken = "chautari_user_token";
   static String recentEmail = "chautari_recent_email";
+  static String userKey = "chautari_user";
 }
 
 class LoginController extends GetxController {
   bool loading;
   bool loaded;
   String error;
-  String token;
   final GetStorage box = GetStorage();
-  UserModel user;
+  var _user = UserModel().obs;
+
   onInit() {
     super.onInit();
-    Map<String, dynamic> _userMap = box.read("user");
-    if (_userMap == null) {
-      this._isLoggedIn = false;
+    if (token != null) {
     } else {
-      this.user = UserModel.fromJson(_userMap);
-      this._isLoggedIn = true;
+      Map<String, dynamic> _userMap = box.read(AppConstant.userKey);
+      if (_userMap != null) {
+        this._user.value = UserModel.fromJson(_userMap);
+      }
     }
   }
 
-  bool _isLoggedIn = false;
-  bool get isLoggedIn => _isLoggedIn;
+  UserModel get user => _user.value;
+
+  bool get isLoggedIn => this._user?.value.isLoggedIn ?? false;
+  String get token => this._user?.value.token;
+
+  logout() async {
+    await _removeUser();
+    await _saveuser(UserModel());
+    this._user.value = UserModel();
+  }
 
   final FacebookLogin facebookSignIn = new FacebookLogin();
-  final _storage = FlutterSecureStorage();
 
   GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: <String>[
@@ -102,23 +108,24 @@ class LoginController extends GetxController {
     }
   }
 
-  _saveToken(String val) async {
-    await _storage.write(key: AppConstant.userToken, value: val);
+  _saveuser(UserModel user) async {
+    await box.write(AppConstant.userKey, user.toJson());
+  }
+
+  _removeUser() async {
+    await box.remove(AppConstant.userKey);
   }
 
   Future _loginWithApi(Map<String, dynamic> params) async {
     var model = await LoginRepository().social(params);
     if ((model.errors ?? []).isEmpty) {
       String token = model.data.token;
-      await _saveToken(token);
-      box.write("user", model.data.toJson());
-      this.user = model.data;
-      // Get.offNamed("/rooms");
+      await _saveuser(model.data);
+      this._user.value = model.data;
       Get.back();
     } else {
       List<ApiError> errors = model.errors ?? [];
       error = errors.first?.value ?? "";
-      // _result = false;
     }
   }
 }
