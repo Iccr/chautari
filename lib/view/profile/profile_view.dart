@@ -13,7 +13,7 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    LoginController loginController = Get.find();
+    AuthController loginController = Get.find();
     const double padding = 15;
     _goTOLogin() {
       showCupertinoModalBottomSheet(
@@ -99,7 +99,7 @@ class ProfileView extends StatelessWidget {
 }
 
 class UserInfoView extends StatelessWidget {
-  LoginController loginController = Get.find();
+  AuthController loginController = Get.find();
   final UserModel user;
   UserInfoView({this.user});
   @override

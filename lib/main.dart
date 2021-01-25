@@ -17,7 +17,7 @@ void main() async {
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   ThemeController themeController = Get.put(ThemeController());
-  LoginController loginController = Get.put(LoginController());
+  AuthController loginController = Get.put(AuthController());
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
