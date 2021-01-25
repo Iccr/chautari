@@ -82,54 +82,25 @@ class ProfileView extends StatelessWidget {
                     ),
                     itemCount: c.menu.length,
                     itemBuilder: (context, index) {
-                      return Container(
-                        padding: EdgeInsets.all(ChautariPadding.standard),
-                        height: 60,
+                      return GestureDetector(
+                        onTap: () => {},
                         child: Container(
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.end,
-                            children: [
-                              Text(
-                                c.menu.elementAt(index),
-                              ),
-                            ],
+                          padding: EdgeInsets.all(ChautariPadding.standard),
+                          height: 60,
+                          child: Container(
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Text(
+                                  c.menu.elementAt(index).title,
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                       );
                     },
-                  )
-                      // ListView(
-                      //   children: <Widget>[
-                      //     ListTile(
-                      //       title: Text('My Properties'),
-                      //       onTap: () {
-                      //         if (!loginController.isLoggedIn) {
-                      //           Get.defaultDialog(
-                      //               middleText: "Please login to continue",
-                      //               textConfirm: "Login",
-                      //               confirmTextColor:
-                      //                   ChautariColors().blackAndWhitecolor(),
-                      //               onConfirm: () => {
-                      //                     Get.back(),
-                      //                     _goTOLogin(),
-                      //                   },
-                      //               onCancel: () => {Get.back()});
-                      //         } else {
-                      //           _goToMyProperties();
-                      //         }
-                      //       },
-                      //     ),
-                      //     ListTile(
-                      //       title: Text('Add and Earn Money'),
-                      //       onTap: () => {},
-                      //     ),
-                      //     ListTile(
-                      //       title: Text('My Stats'),
-                      //       onTap: () => {},
-                      //     )
-                      //   ],
-                      // ),
-                      )
+                  ))
                 ],
               ),
             ),

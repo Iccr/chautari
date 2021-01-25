@@ -9,20 +9,45 @@ class ProfileController extends GetxController {
     // TODO: implement onInit
   }
 
-  List<String> _normalMenu = [
-    "Add Rent",
-    "My Rents",
-    "My Subscriptions",
-    "chats",
+  goTo(index) {}
+
+  List<MenuItem> _normalMenu = [
+    MenuItem(title: "Add Rent", index: 0),
+    MenuItem(title: "My Rents", index: 1),
+    MenuItem(title: "My Subscriptions", index: 2),
+    MenuItem(title: "chats", index: 3)
   ];
 
-  List<String> _loggedInMenu = [
-    "Add Rent",
-    "My Rents",
+  List<MenuItem> _loggedInMenu = [
+    MenuItem(title: "Add Rent", index: 0),
+    MenuItem(title: "My Rents", index: 1),
   ];
 
-  List<String> get menu => auth.isLoggedIn ? _loggedInMenu : _normalMenu;
+  List<MenuItem> get menu => auth.isLoggedIn ? _loggedInMenu : _normalMenu;
 
   String get user_insight_message =>
       "Log in to access chats, suscribtions and many more features.";
+
+  selectedIndex(int index) {
+    MenuItem selectedItem = menu.elementAt(index);
+    print("selected item:${selectedItem.title}");
+
+    switch (selectedItem.index) {
+      case 0:
+        break;
+      case 1:
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      default:
+    }
+  }
+}
+
+class MenuItem {
+  final String title;
+  final int index;
+  MenuItem({this.title, this.index});
 }
