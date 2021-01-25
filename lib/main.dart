@@ -1,5 +1,6 @@
 import 'package:chautari/utilities/theme/theme.dart';
 import 'package:chautari/utilities/theme/theme_controller.dart';
+import 'package:chautari/view/add_property/add_property.dart';
 import 'package:chautari/view/explore/explore_view.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
@@ -25,7 +26,8 @@ class MyApp extends StatelessWidget {
       getPages: [
         GetPage(name: "/tabs", page: () => Tabbar()),
         GetPage(name: "/rooms", page: () => Exploreview()),
-        GetPage(name: "/login", page: () => LoginView())
+        GetPage(name: "/login", page: () => LoginView()),
+        GetPage(name: "/addProperty", page: () => AddProperty())
       ],
       themeMode: ThemeMode.light,
       theme: AppTheme.lightTheme(),

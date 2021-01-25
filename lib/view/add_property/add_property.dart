@@ -11,7 +11,11 @@ class AddProperty extends StatelessWidget {
       ),
       body: GetBuilder<AddPropertyController>(
         init: AddPropertyController(),
-        builder: (c) => Container(),
+        builder: (c) => Container(
+          child: Center(
+            child: Text("add rent"),
+          ),
+        ),
       ),
     );
   }
