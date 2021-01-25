@@ -13,10 +13,19 @@ class ProfileController extends GetxController {
   goTo(index) {}
 
   List<MenuItem> _normalMenu = [
-    MenuItem(title: "Add Rent", index: 0),
-    MenuItem(title: "My Rents", index: 1),
-    MenuItem(title: "My Subscriptions", index: 2),
-    MenuItem(title: "chats", index: 3)
+    MenuItem(
+        title: "Add Rent",
+        index: 0,
+        subtitle: "Earn money, rent your property in Chautari Basti"),
+    MenuItem(
+        title: "My Rents",
+        index: 1,
+        subtitle: "See Your properties in Chautari Basti"),
+    MenuItem(
+        title: "My Subscriptions",
+        index: 2,
+        subtitle: "we will notify you when your preference is matched"),
+    MenuItem(title: "chats", index: 3, subtitle: "Your chats history")
   ];
 
   List<MenuItem> _loggedInMenu = [
@@ -52,5 +61,6 @@ class ProfileController extends GetxController {
 class MenuItem {
   final String title;
   final int index;
-  MenuItem({this.title, this.index});
+  final String subtitle;
+  MenuItem({this.title, this.index, this.subtitle});
 }
