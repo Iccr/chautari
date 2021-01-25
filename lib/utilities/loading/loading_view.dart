@@ -1,4 +1,5 @@
 import 'package:chautari/extensions/color_extensions.dart';
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -44,7 +45,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                         Text(widget.title,
                             textAlign: TextAlign.left,
                             style: GoogleFonts.poppins(
-                                color: Colors.black,
+                                color: ChautariColors().black,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600)),
                         SizedBox(height: 8),
@@ -93,7 +94,7 @@ class _AnimatedProgressHudState extends State<AnimatedProgressHud>
   @override
   Widget build(BuildContext context) {
     return SpinKitRipple(
-      color: Colors.teal,
+      color: ChautariColors().primaryColor(),
       size: 50.0,
     );
   }

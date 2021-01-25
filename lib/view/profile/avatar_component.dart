@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -55,7 +56,7 @@ class AvatarView extends StatelessWidget {
                     child: Icon(
                   LineIcons.camera,
                   size: getHeight() / 2,
-                  color: Colors.white,
+                  color: ChautariColors().white,
                 )),
               ),
             ),

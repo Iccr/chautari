@@ -1,4 +1,5 @@
 import 'package:chautari/utilities/loading/loading_view.dart';
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 
@@ -31,7 +32,7 @@ class ProgressHud extends StatefulWidget {
       title: this.title ?? 'Loading...',
       description: this.description ?? 'Please wait for a while',
     );
-    color = Colors.black.withOpacity(0.5);
+    color = ChautariColors().black.withOpacity(0.5);
   }
 
   @override

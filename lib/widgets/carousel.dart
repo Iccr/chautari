@@ -1,5 +1,6 @@
 import 'package:chautari/model/rooms_model.dart';
 import 'package:chautari/utilities/api_service.dart';
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -37,9 +38,11 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
         height: items.length > 1 ? 8.0 : 0,
         margin: EdgeInsets.symmetric(vertical: 0, horizontal: 4.0),
         decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color:
-                _current == index ? Colors.teal : Color.fromRGBO(0, 0, 0, 0.4)),
+          shape: BoxShape.circle,
+          color: _current == index
+              ? ChautariColors().primaryColor()
+              : ChautariColors().black.withOpacity(0.4),
+        ),
       ));
     });
     return list;
@@ -79,7 +82,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
             padding: EdgeInsets.all(5),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: Colors.grey.shade200.withOpacity(0.4)),
+                color: ChautariColors().grey.shade200.withOpacity(0.4)),
             // child: Stack(
             // alignment: Alignment.center,
             // children: <Widget>[
