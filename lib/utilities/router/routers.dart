@@ -5,7 +5,7 @@ import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/tab/tab_view.dart';
 import 'package:get/get.dart';
 
-class Routers {
+class ChautariRouters {
   List<GetPage> _routers;
 
   Routers() {

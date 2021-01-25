@@ -1,3 +1,4 @@
+import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -34,6 +35,8 @@ class ProfileController extends GetxController {
 
     switch (selectedItem.index) {
       case 0:
+        print("go to ${RouteName.addPropery}");
+        Get.toNamed(RouteName.addPropery);
         break;
       case 1:
         break;

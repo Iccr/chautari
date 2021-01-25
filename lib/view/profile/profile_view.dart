@@ -83,7 +83,7 @@ class ProfileView extends StatelessWidget {
                     itemCount: c.menu.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () => {},
+                        onTap: () => {c.selectedIndex(index)},
                         child: Container(
                           padding: EdgeInsets.all(ChautariPadding.standard),
                           height: 60,
