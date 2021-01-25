@@ -12,4 +12,9 @@ class ChautariColors {
   Color blackAndWhitecolor() {
     return _mode == ThemeMode.dark ? Colors.black : Colors.white;
   }
+
+  Color blackAndPrimarycolor() {
+    ThemeData theme = Get.theme;
+    return _mode == ThemeMode.dark ? Colors.black : theme.primaryColor;
+  }
 }
