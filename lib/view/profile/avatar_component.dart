@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
@@ -30,7 +31,8 @@ class AvatarView extends StatelessWidget {
             child: CircleAvatar(
               backgroundImage: (imageUrl ?? "").isEmpty
                   ? AssetImage("images/profile.png")
-                  : NetworkImage(imageUrl ?? ""),
+                  : CachedNetworkImageProvider(imageUrl ?? ""),
+              // : NetworkImage(imageUrl ?? ""),
               backgroundColor: Colors.transparent,
               radius: radius / 2,
             ),
