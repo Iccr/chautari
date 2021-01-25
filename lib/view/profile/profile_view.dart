@@ -17,28 +17,24 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthController loginController = Get.find();
-
     double padding = ChautariPadding.standard;
-    _goTOLogin() {
-      showCupertinoModalBottomSheet(
+
+    int _redirectTo;
+
+    _goTOLogin({ProfileController controller}) async {
+      await showCupertinoModalBottomSheet(
         expand: true,
         context: context,
         backgroundColor: Colors.transparent,
         builder: (context) => LoginView(),
       );
-    }
-
-    _goToMyProperties() {
-      print("go to my properties");
-    }
-
-    _logout() async {
-      await loginController.logout();
+      if (_redirectTo != null && controller != null) {
+        controller.selectedIndex(_redirectTo);
+      }
+      _redirectTo = null;
     }
 
     double _getHeight() {
-      print("get_height of userview");
-      print(loginController.isLoggedIn);
       return loginController.isLoggedIn ? 60 : 60;
     }
 
@@ -59,7 +55,8 @@ class ProfileView extends StatelessWidget {
       if (loginController.isLoggedIn) {
         c.selectedIndex(index);
       } else {
-        _goTOLogin();
+        _redirectTo = index;
+        _goTOLogin(controller: c);
       }
     }
 
@@ -126,6 +123,10 @@ class UserInfoView extends StatelessWidget {
   UserInfoView({this.user, this.action});
   @override
   Widget build(BuildContext context) {
+    _logout() async {
+      await loginController.logout();
+    }
+
     showLogoutDialogue() {
       Get.defaultDialog(
           title: "Do you want to Logout?",
@@ -134,7 +135,7 @@ class UserInfoView extends StatelessWidget {
           textConfirm: "Logout",
           confirmTextColor: ChautariColors.blackAndWhitecolor(),
           onConfirm: () async {
-            await loginController.logout();
+            await _logout();
             Get.back();
           },
           onCancel: () => {Get.back()});
