@@ -55,6 +55,7 @@ class UserModel {
     name = json['name'];
     provider = json['provider'];
     token = json['token'];
+    isLoggedIn = json['isLoggedIn'];
   }
 
   Map<String, dynamic> toJson() {
