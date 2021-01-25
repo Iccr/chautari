@@ -12,7 +12,7 @@ class AppConstant {
   static String userKey = "chautari_user";
 }
 
-class LoginController extends GetxController {
+class AuthController extends GetxController {
   bool loading;
   bool loaded;
   String error;

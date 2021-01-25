@@ -9,8 +9,8 @@ class LoginView extends StatelessWidget {
       appBar: AppBar(
         title: Text("Login"),
       ),
-      body: GetBuilder<LoginController>(
-        init: LoginController(),
+      body: GetBuilder<AuthController>(
+        init: AuthController(),
         builder: (c) => Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
