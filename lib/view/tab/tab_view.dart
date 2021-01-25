@@ -1,3 +1,4 @@
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/view/explore/explore_view.dart';
 import 'package:chautari/view/profile/profile_view.dart';
 import 'package:chautari/view/setting/setting_view.dart';
@@ -34,18 +35,20 @@ class _TabbarState extends State<Tabbar> {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(color: theme.primaryColor, boxShadow: [
-          BoxShadow(blurRadius: 20, color: Colors.black.withOpacity(.1))
+          BoxShadow(
+              blurRadius: 20, color: ChautariColors().black.withOpacity(.1))
         ]),
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: GNav(
                 gap: 8,
-                activeColor: Colors.white,
+                activeColor: ChautariColors().white,
                 iconSize: 24,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 duration: Duration(milliseconds: 500),
-                tabBackgroundColor: Colors.grey[800],
+                tabBackgroundColor:
+                    ChautariColors().tabBarActiveBackgroundColor,
                 tabs: [
                   GButton(
                     icon: LineIcons.search,

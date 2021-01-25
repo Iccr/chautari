@@ -1,5 +1,6 @@
 import 'package:chautari/model/login_model.dart';
 import 'package:chautari/utilities/theme/colors.dart';
+import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/profile/avatar_component.dart';
@@ -16,7 +17,7 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthController loginController = Get.find();
-    const double padding = 15;
+    double padding = ChautariPadding.standard;
     _goTOLogin() {
       showCupertinoModalBottomSheet(
         expand: true,
@@ -37,7 +38,7 @@ class ProfileView extends StatelessWidget {
     double _getHeight() {
       print("get_height of userview");
       print(loginController.isLoggedIn);
-      return loginController.isLoggedIn ? 60 : 85;
+      return loginController.isLoggedIn ? 60 : 60;
     }
 
     Widget _getFAB() {
@@ -58,42 +59,79 @@ class ProfileView extends StatelessWidget {
       builder: (c) => SafeArea(
         child: Scaffold(
             body: Container(
-              child: ListView(children: <Widget>[
-                Container(
+              child: Column(
+                children: [
+                  Container(
                     margin: EdgeInsets.only(top: padding, left: padding),
                     height: _getHeight(),
                     child: UserInfoView(
                       user: loginController.user,
                       action: _goTOLogin,
-                    )),
-                ListTile(
-                  title: Text('My Properties'),
-                  onTap: () {
-                    if (!loginController.isLoggedIn) {
-                      Get.defaultDialog(
-                          middleText: "Please login to continue",
-                          textConfirm: "Login",
-                          confirmTextColor:
-                              ChautariColors().blackAndWhitecolor(),
-                          onConfirm: () => {
-                                Get.back(),
-                                _goTOLogin(),
-                              },
-                          onCancel: () => {Get.back()});
-                    } else {
-                      _goToMyProperties();
-                    }
-                  },
-                ),
-                ListTile(
-                  title: Text('Add and Earn Money'),
-                  onTap: () => {},
-                ),
-                ListTile(
-                  title: Text('My Stats'),
-                  onTap: () => {},
-                )
-              ]),
+                    ),
+                  ),
+                  Expanded(
+                      child: ListView.separated(
+                    separatorBuilder: (context, index) => Container(
+                      padding: EdgeInsets.only(left: 10, right: 100),
+                      height: 0.5,
+                      child: Container(
+                        color: ChautariColors()
+                            .primaryAndWhitecolor()
+                            .withOpacity(0.5),
+                      ),
+                    ),
+                    itemCount: c.menu.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        padding: EdgeInsets.all(ChautariPadding.standard),
+                        height: 60,
+                        child: Container(
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Text(
+                                c.menu.elementAt(index),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  )
+                      // ListView(
+                      //   children: <Widget>[
+                      //     ListTile(
+                      //       title: Text('My Properties'),
+                      //       onTap: () {
+                      //         if (!loginController.isLoggedIn) {
+                      //           Get.defaultDialog(
+                      //               middleText: "Please login to continue",
+                      //               textConfirm: "Login",
+                      //               confirmTextColor:
+                      //                   ChautariColors().blackAndWhitecolor(),
+                      //               onConfirm: () => {
+                      //                     Get.back(),
+                      //                     _goTOLogin(),
+                      //                   },
+                      //               onCancel: () => {Get.back()});
+                      //         } else {
+                      //           _goToMyProperties();
+                      //         }
+                      //       },
+                      //     ),
+                      //     ListTile(
+                      //       title: Text('Add and Earn Money'),
+                      //       onTap: () => {},
+                      //     ),
+                      //     ListTile(
+                      //       title: Text('My Stats'),
+                      //       onTap: () => {},
+                      //     )
+                      //   ],
+                      // ),
+                      )
+                ],
+              ),
             ),
             floatingActionButton: _getFAB()),
       ),
@@ -138,9 +176,10 @@ class UserInfoView extends StatelessWidget {
                           TextSpan(
                               text: "Login now",
                               style: TextStyle(
-                                  fontWeight: FontWeight.w600,
-                                  decoration: TextDecoration.none,
-                                  color: Colors.blue),
+                                fontWeight: FontWeight.w600,
+                                decoration: TextDecoration.none,
+                                color: ChautariColors().primaryColor(),
+                              ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {
                                   action();
