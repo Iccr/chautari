@@ -4,6 +4,8 @@ import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/profile/avatar_component.dart';
 import 'package:chautari/view/profile/profile_controller.dart';
+import 'package:chautari/widgets/flat_buttons.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -35,7 +37,7 @@ class ProfileView extends StatelessWidget {
     double _getHeight() {
       print("get_height of userview");
       print(loginController.isLoggedIn);
-      return loginController.isLoggedIn ? 60 : 0;
+      return loginController.isLoggedIn ? 60 : 85;
     }
 
     Widget _getFAB() {
@@ -62,6 +64,7 @@ class ProfileView extends StatelessWidget {
                     height: _getHeight(),
                     child: UserInfoView(
                       user: loginController.user,
+                      action: _goTOLogin,
                     )),
                 ListTile(
                   title: Text('My Properties'),
@@ -100,12 +103,54 @@ class ProfileView extends StatelessWidget {
 
 class UserInfoView extends StatelessWidget {
   AuthController loginController = Get.find();
+  ProfileController profileController = Get.find();
   final UserModel user;
-  UserInfoView({this.user});
+  final Function action;
+  UserInfoView({this.user, this.action});
   @override
   Widget build(BuildContext context) {
+    showDialogue() {
+      Get.defaultDialog(
+          title: "Do you want to Logout?",
+          middleText:
+              "your will not be able to get notification and other services",
+          textConfirm: "Logout",
+          confirmTextColor: ChautariColors().blackAndWhitecolor(),
+          onConfirm: () async {
+            await loginController.logout();
+            Get.back();
+          },
+          onCancel: () => {Get.back()});
+    }
+
     return !loginController.isLoggedIn
-        ? Container()
+        ? Container(
+            child: Row(
+              children: [
+                Flexible(
+                  child: RichText(
+                    text: TextSpan(
+                        style: DefaultTextStyle.of(context).style,
+                        children: [
+                          TextSpan(
+                              text: profileController.user_insight_message),
+                          TextSpan(text: " Would you like to "),
+                          TextSpan(
+                              text: "Login now",
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w600,
+                                  decoration: TextDecoration.none,
+                                  color: Colors.blue),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () {
+                                  action();
+                                }),
+                        ]),
+                  ),
+                ),
+              ],
+            ),
+          )
         : Row(
             mainAxisAlignment: MainAxisAlignment.start,
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -124,24 +169,11 @@ class UserInfoView extends StatelessWidget {
                 ],
               ),
               Expanded(child: Container()),
-              FlatButton(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-                color: ChautariColors().blackAndWhitecolor(),
-                onPressed: () async {
-                  Get.defaultDialog(
-                      title: "Do you want to Logout?",
-                      middleText:
-                          "your will not be able to get notification and other services",
-                      textConfirm: "Logout",
-                      confirmTextColor: ChautariColors().blackAndWhitecolor(),
-                      onConfirm: () async {
-                        await loginController.logout();
-                        Get.back();
-                      },
-                      onCancel: () => {Get.back()});
+              ChautariWidget.getFlatButton(
+                Text("Logout"),
+                () {
+                  showDialogue();
                 },
-                child: Text("Logout"),
               ),
               SizedBox(
                 width: 15,
