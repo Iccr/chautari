@@ -1,3 +1,4 @@
+import 'package:chautari/utilities/router/routers.dart';
 import 'package:chautari/utilities/theme/theme.dart';
 import 'package:chautari/utilities/theme/theme_controller.dart';
 import 'package:chautari/view/add_property/add_property.dart';
@@ -23,12 +24,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Flutter Demo',
-      getPages: [
-        GetPage(name: "/tabs", page: () => Tabbar()),
-        GetPage(name: "/rooms", page: () => Exploreview()),
-        GetPage(name: "/login", page: () => LoginView()),
-        GetPage(name: "/addProperty", page: () => AddProperty())
-      ],
+      getPages: ChautariRouters().routers,
       themeMode: ThemeMode.light,
       theme: AppTheme.lightTheme(),
       darkTheme: AppTheme.darkTheme(),

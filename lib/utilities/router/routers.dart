@@ -8,14 +8,13 @@ import 'package:get/get.dart';
 class ChautariRouters {
   List<GetPage> _routers;
 
-  Routers() {
+  ChautariRouters() {
     _routers = [
       GetPage(name: RouteName.tab, page: () => Tabbar()),
       GetPage(name: RouteName.roomsList, page: () => Exploreview()),
       GetPage(name: RouteName.login, page: () => LoginView()),
       GetPage(name: RouteName.addPropery, page: () => AddProperty())
     ];
-    return _routers;
   }
 
   List<GetPage> get routers => _routers;
