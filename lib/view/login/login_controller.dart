@@ -113,7 +113,8 @@ class LoginController extends GetxController {
       await _saveToken(token);
       box.write("user", model.data.toJson());
       this.user = model.data;
-      Get.offNamed("/rooms");
+      // Get.offNamed("/rooms");
+      Get.back();
     } else {
       List<ApiError> errors = model.errors ?? [];
       error = errors.first?.value ?? "";
