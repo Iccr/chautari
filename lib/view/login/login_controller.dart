@@ -15,32 +15,30 @@ class AppConstant {
 class AuthController extends GetxController {
   bool loading;
   bool loaded;
-  String error;
+  var error = "".obs;
   final GetStorage box = GetStorage();
   var _user = UserModel().obs;
 
   onInit() {
     super.onInit();
-    if (token != null) {
-    } else {
-      Map<String, dynamic> _userMap = box.read(AppConstant.userKey);
-      if (_userMap != null) {
-        this._user.value = UserModel.fromJson(_userMap);
-      }
-    }
+
+    Map<String, dynamic> _userMap = box.read(AppConstant.userKey);
+    UserModel user = UserModel.fromJson(_userMap);
+    print(user.email);
+    print(user.isLoggedIn);
+    this._user.value = user;
   }
 
   UserModel get user => _user.value;
-  bool get isLoggedIn {
-    return this._user?.value.isLoggedIn ?? false;
-  }
+  bool get isLoggedIn => this._user?.value.isLoggedIn ?? false;
 
   String get token => this._user?.value.token;
 
   logout() async {
     await _removeUser();
-    await _saveuser(UserModel());
-    this._user.value = UserModel();
+    var empty_user = UserModel();
+    await _saveuser(empty_user);
+    this._user.value = empty_user;
   }
 
   final FacebookLogin facebookSignIn = new FacebookLogin();
@@ -76,10 +74,10 @@ class AuthController extends GetxController {
 
         break;
       case FacebookLoginStatus.cancelledByUser:
-        error = "Login cancelled by the user.";
+        error.value = "Login cancelled by the user.";
         break;
       case FacebookLoginStatus.error:
-        error = result.errorMessage;
+        error.value = result.errorMessage;
         break;
     }
   }
@@ -129,7 +127,7 @@ class AuthController extends GetxController {
       Get.back();
     } else {
       List<ApiError> errors = model.errors ?? [];
-      error = errors.first?.value ?? "";
+      error.value = errors.first?.value ?? "";
     }
   }
 }
