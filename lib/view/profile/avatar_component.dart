@@ -56,7 +56,7 @@ class AvatarView extends StatelessWidget {
                     child: Icon(
                   LineIcons.camera,
                   size: getHeight() / 2,
-                  color: ChautariColors().white,
+                  color: ChautariColors.white,
                 )),
               ),
             ),

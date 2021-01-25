@@ -34,7 +34,7 @@ class RoomWidget extends StatelessWidget {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(5),
-        color: ChautariColors().white,
+        color: ChautariColors.white,
       ),
       child: Column(
         children: [
@@ -63,11 +63,11 @@ class RoomsInsight extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-          color: ChautariColors().blackAndWhitecolor(),
+          color: ChautariColors.blackAndWhitecolor(),
           borderRadius: BorderRadius.circular(5),
           boxShadow: [
             BoxShadow(
-              color: ChautariColors().black.withOpacity(0.24),
+              color: ChautariColors.black.withOpacity(0.24),
               offset: Offset(0.0, 1.0), //(x,y)
               blurRadius: 6.0,
             ),
@@ -118,7 +118,7 @@ class RoomsInsight extends StatelessWidget {
               children: [
                 Text("date: "),
                 Text(room.postedOn ?? "n/a",
-                    style: TextStyle(color: ChautariColors().grey)),
+                    style: TextStyle(color: ChautariColors.grey)),
               ],
             ),
           ],

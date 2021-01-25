@@ -5,7 +5,7 @@ class ChautariWidget {
   static FlatButton getFlatButton(Widget child, Function onPressed) {
     return FlatButton(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      color: ChautariColors().blackAndWhitecolor(),
+      color: ChautariColors.blackAndWhitecolor(),
       onPressed: () async {
         onPressed();
       },

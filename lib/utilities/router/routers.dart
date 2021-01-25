@@ -15,6 +15,7 @@ class ChautariRouters {
       GetPage(name: RouteName.login, page: () => LoginView()),
       GetPage(name: RouteName.addPropery, page: () => AddProperty())
     ];
+    return _routers;
   }
 
   List<GetPage> get routers => _routers;

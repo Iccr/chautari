@@ -46,7 +46,7 @@ class ProfileView extends StatelessWidget {
           ? null
           : FloatingActionButton(
               onPressed: () => {_goTOLogin()},
-              backgroundColor: ChautariColors().blackAndPrimarycolor(),
+              backgroundColor: ChautariColors.blackAndPrimarycolor(),
               child: Text(
                 "Login",
                 style: Theme.of(context).textTheme.bodyText2,
@@ -75,8 +75,7 @@ class ProfileView extends StatelessWidget {
                       padding: EdgeInsets.only(left: 10, right: 100),
                       height: 0.5,
                       child: Container(
-                        color: ChautariColors()
-                            .primaryAndWhitecolor()
+                        color: ChautariColors.primaryAndWhitecolor()
                             .withOpacity(0.5),
                       ),
                     ),
@@ -124,7 +123,7 @@ class UserInfoView extends StatelessWidget {
           middleText:
               "your will not be able to get notification and other services",
           textConfirm: "Logout",
-          confirmTextColor: ChautariColors().blackAndWhitecolor(),
+          confirmTextColor: ChautariColors.blackAndWhitecolor(),
           onConfirm: () async {
             await loginController.logout();
             Get.back();
@@ -149,7 +148,7 @@ class UserInfoView extends StatelessWidget {
                               style: TextStyle(
                                 fontWeight: FontWeight.w600,
                                 decoration: TextDecoration.none,
-                                color: ChautariColors().primaryColor(),
+                                color: ChautariColors.primaryColor(),
                               ),
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () {

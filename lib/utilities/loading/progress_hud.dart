@@ -32,7 +32,7 @@ class ProgressHud extends StatefulWidget {
       title: this.title ?? 'Loading...',
       description: this.description ?? 'Please wait for a while',
     );
-    color = ChautariColors().black.withOpacity(0.5);
+    color = ChautariColors.black.withOpacity(0.5);
   }
 
   @override
