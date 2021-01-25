@@ -17,6 +17,7 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     AuthController loginController = Get.find();
+
     double padding = ChautariPadding.standard;
     _goTOLogin() {
       showCupertinoModalBottomSheet(
@@ -54,6 +55,14 @@ class ProfileView extends StatelessWidget {
             );
     }
 
+    _selectedIndex(int index, ProfileController c) {
+      if (loginController.isLoggedIn) {
+        c.selectedIndex(index);
+      } else {
+        _goTOLogin();
+      }
+    }
+
     return GetX<ProfileController>(
       init: ProfileController(),
       builder: (c) => SafeArea(
@@ -82,7 +91,7 @@ class ProfileView extends StatelessWidget {
                     itemCount: c.menu.length,
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: () => {c.selectedIndex(index)},
+                        onTap: () => {_selectedIndex(index, c)},
                         child: Container(
                           padding: EdgeInsets.all(ChautariPadding.standard),
                           height: 60,
@@ -117,7 +126,7 @@ class UserInfoView extends StatelessWidget {
   UserInfoView({this.user, this.action});
   @override
   Widget build(BuildContext context) {
-    showDialogue() {
+    showLogoutDialogue() {
       Get.defaultDialog(
           title: "Do you want to Logout?",
           middleText:
@@ -181,7 +190,7 @@ class UserInfoView extends StatelessWidget {
               ChautariWidget.getFlatButton(
                 Text("Logout"),
                 () {
-                  showDialogue();
+                  showLogoutDialogue();
                 },
               ),
               SizedBox(
