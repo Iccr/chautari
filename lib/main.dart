@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
-      title: 'Flutter Demo',
+      title: 'Chautari Basti',
       getPages: ChautariRouters().routers,
       themeMode: ThemeMode.light,
       theme: AppTheme.lightTheme(),
