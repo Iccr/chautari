@@ -33,6 +33,7 @@ class ProfileView extends StatelessWidget {
     }
 
     double _getHeight() {
+      print("get_height of userview");
       print(loginController.isLoggedIn);
       return loginController.isLoggedIn ? 60 : 0;
     }
@@ -50,7 +51,7 @@ class ProfileView extends StatelessWidget {
             );
     }
 
-    return GetBuilder<ProfileController>(
+    return GetX<ProfileController>(
       init: ProfileController(),
       builder: (c) => SafeArea(
         child: Scaffold(
@@ -103,8 +104,6 @@ class UserInfoView extends StatelessWidget {
   UserInfoView({this.user});
   @override
   Widget build(BuildContext context) {
-    const double _padding = 15;
-
     return !loginController.isLoggedIn
         ? Container()
         : Row(

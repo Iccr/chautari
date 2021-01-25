@@ -31,8 +31,10 @@ class LoginController extends GetxController {
   }
 
   UserModel get user => _user.value;
+  bool get isLoggedIn {
+    return this._user?.value.isLoggedIn ?? false;
+  }
 
-  bool get isLoggedIn => this._user?.value.isLoggedIn ?? false;
   String get token => this._user?.value.token;
 
   logout() async {
@@ -119,9 +121,11 @@ class LoginController extends GetxController {
   Future _loginWithApi(Map<String, dynamic> params) async {
     var model = await LoginRepository().social(params);
     if ((model.errors ?? []).isEmpty) {
-      String token = model.data.token;
-      await _saveuser(model.data);
-      this._user.value = model.data;
+      UserModel user = model.data;
+      user.isLoggedIn = true;
+      await _saveuser(user);
+      this._user.value = user;
+
       Get.back();
     } else {
       List<ApiError> errors = model.errors ?? [];
