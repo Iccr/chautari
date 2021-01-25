@@ -125,21 +125,27 @@ class UserInfoView extends StatelessWidget {
               ),
               Expanded(child: Container()),
               FlatButton(
-                  color: ChautariColors().blackAndWhitecolor(),
-                  onPressed: () async {
-                    Get.defaultDialog(
-                        title: "Do you want to Logout?",
-                        middleText:
-                            "your will not be able to get notification and other services",
-                        textConfirm: "Logout",
-                        confirmTextColor: ChautariColors().blackAndWhitecolor(),
-                        onConfirm: () async {
-                          await loginController.logout();
-                          Get.back();
-                        },
-                        onCancel: () => {Get.back()});
-                  },
-                  child: Text("Logout"))
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5)),
+                color: ChautariColors().blackAndWhitecolor(),
+                onPressed: () async {
+                  Get.defaultDialog(
+                      title: "Do you want to Logout?",
+                      middleText:
+                          "your will not be able to get notification and other services",
+                      textConfirm: "Logout",
+                      confirmTextColor: ChautariColors().blackAndWhitecolor(),
+                      onConfirm: () async {
+                        await loginController.logout();
+                        Get.back();
+                      },
+                      onCancel: () => {Get.back()});
+                },
+                child: Text("Logout"),
+              ),
+              SizedBox(
+                width: 15,
+              )
             ],
           );
   }
