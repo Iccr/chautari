@@ -28,7 +28,9 @@ class ProfileView extends StatelessWidget {
         backgroundColor: Colors.transparent,
         builder: (context) => LoginView(),
       );
-      if (_redirectTo != null && controller != null) {
+      if (loginController.isLoggedIn &&
+          _redirectTo != null &&
+          controller != null) {
         controller.selectedIndex(_redirectTo);
       }
       _redirectTo = null;
@@ -90,14 +92,21 @@ class ProfileView extends StatelessWidget {
                       return GestureDetector(
                         onTap: () => {_selectedIndex(index, c)},
                         child: Container(
-                          padding: EdgeInsets.all(ChautariPadding.standard),
+                          padding:
+                              EdgeInsets.only(left: ChautariPadding.standard),
                           height: 60,
                           child: Container(
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.end,
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(
                                   c.menu.elementAt(index).title,
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                ),
+                                Text(
+                                  c.menu.elementAt(index).subtitle,
+                                  style: TextStyle(fontWeight: FontWeight.w500),
                                 ),
                               ],
                             ),
