@@ -1,4 +1,4 @@
-import 'package:chautari/view/login/login_controller.dart';
+import 'package:chautari/view/login/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 

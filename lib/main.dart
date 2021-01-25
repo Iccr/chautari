@@ -1,7 +1,7 @@
 import 'package:chautari/utilities/theme/theme.dart';
 import 'package:chautari/utilities/theme/theme_controller.dart';
 import 'package:chautari/view/explore/explore_view.dart';
-import 'package:chautari/view/login/login_controller.dart';
+import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/splash/splash_screen.dart';
 import 'package:chautari/view/tab/tab_view.dart';

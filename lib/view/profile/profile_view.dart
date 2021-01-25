@@ -1,6 +1,6 @@
 import 'package:chautari/model/login_model.dart';
 import 'package:chautari/utilities/theme/colors.dart';
-import 'package:chautari/view/login/login_controller.dart';
+import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/profile/avatar_component.dart';
 import 'package:chautari/view/profile/profile_controller.dart';

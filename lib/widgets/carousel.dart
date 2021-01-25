@@ -120,7 +120,7 @@ class ImageView extends StatelessWidget {
         ),
       ),
       placeholder: (context, url) => Image(
-        image: AssetImage("room_placeholder.png"),
+        image: AssetImage("images/room_placeholder.png"),
       ),
       errorWidget: (context, url, error) => Icon(Icons.error),
     );
