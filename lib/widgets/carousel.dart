@@ -114,8 +114,6 @@ class ImageView extends StatelessWidget {
           image: DecorationImage(
             image: imageProvider,
             fit: BoxFit.cover,
-            // colorFilter:
-            // ColorFilter.mode(Colors.red, BlendMode.colorBurn)
           ),
         ),
       ),
