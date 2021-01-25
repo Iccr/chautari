@@ -45,7 +45,7 @@ class _LoadingScreenState extends State<LoadingScreen> {
                         Text(widget.title,
                             textAlign: TextAlign.left,
                             style: GoogleFonts.poppins(
-                                color: ChautariColors().black,
+                                color: ChautariColors.black,
                                 fontSize: 14,
                                 fontWeight: FontWeight.w600)),
                         SizedBox(height: 8),
@@ -94,7 +94,7 @@ class _AnimatedProgressHudState extends State<AnimatedProgressHud>
   @override
   Widget build(BuildContext context) {
     return SpinKitRipple(
-      color: ChautariColors().primaryColor(),
+      color: ChautariColors.primaryColor(),
       size: 50.0,
     );
   }

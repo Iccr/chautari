@@ -23,7 +23,7 @@ class MapScreenState extends State<PersonalInformationView>
   Widget build(BuildContext context) {
     return new Scaffold(
         body: new Container(
-      color: ChautariColors().white,
+      color: ChautariColors.white,
       child: new ListView(
         children: <Widget>[
           Column(
@@ -265,8 +265,8 @@ class MapScreenState extends State<PersonalInformationView>
               child: Container(
                   child: new RaisedButton(
                 child: new Text("Save"),
-                textColor: ChautariColors().white,
-                color: ChautariColors().green,
+                textColor: ChautariColors.white,
+                color: ChautariColors.green,
                 onPressed: () {
                   setState(() {
                     _status = true;
@@ -285,8 +285,8 @@ class MapScreenState extends State<PersonalInformationView>
               child: Container(
                   child: new RaisedButton(
                 child: new Text("Cancel"),
-                textColor: ChautariColors().white,
-                color: ChautariColors().red,
+                textColor: ChautariColors.white,
+                color: ChautariColors.red,
                 onPressed: () {
                   setState(() {
                     _status = true;
@@ -307,11 +307,11 @@ class MapScreenState extends State<PersonalInformationView>
   Widget _getEditIcon() {
     return new GestureDetector(
       child: new CircleAvatar(
-        backgroundColor: ChautariColors().red,
+        backgroundColor: ChautariColors.red,
         radius: 14.0,
         child: new Icon(
           Icons.edit,
-          color: ChautariColors().white,
+          color: ChautariColors.white,
           size: 16.0,
         ),
       ),

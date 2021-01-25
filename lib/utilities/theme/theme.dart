@@ -18,12 +18,12 @@ extension AppTheme on ThemeData {
             fontSize: 13.0,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w500,
-            color: ChautariColors().white.withOpacity(0.8)),
+            color: ChautariColors.white.withOpacity(0.8)),
         bodyText1: TextStyle(
             fontSize: 15.0,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w500,
-            color: ChautariColors().white.withOpacity(0.9)),
+            color: ChautariColors.white.withOpacity(0.9)),
       ),
     );
   }
@@ -32,7 +32,7 @@ extension AppTheme on ThemeData {
     return ThemeData(
       brightness: Brightness.light,
       fontFamily: 'Poppins',
-      primarySwatch: ChautariColors().primaryColor(),
+      primarySwatch: ChautariColors.primaryColor(),
       visualDensity: VisualDensity.adaptivePlatformDensity,
       textTheme: TextTheme(
         headline4: TextStyle(
@@ -45,12 +45,12 @@ extension AppTheme on ThemeData {
             fontSize: 13.0,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w500,
-            color: ChautariColors().black.withOpacity(0.8)),
+            color: ChautariColors.black.withOpacity(0.8)),
         bodyText1: TextStyle(
             fontSize: 15.0,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w500,
-            color: ChautariColors().black.withOpacity(0.9)),
+            color: ChautariColors.black.withOpacity(0.9)),
       ),
     );
   }

@@ -40,8 +40,8 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: _current == index
-              ? ChautariColors().primaryColor()
-              : ChautariColors().black.withOpacity(0.4),
+              ? ChautariColors.primaryColor()
+              : ChautariColors.black.withOpacity(0.4),
         ),
       ));
     });
@@ -82,7 +82,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
             padding: EdgeInsets.all(5),
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
-                color: ChautariColors().grey.shade200.withOpacity(0.4)),
+                color: ChautariColors.grey.shade200.withOpacity(0.4)),
             // child: Stack(
             // alignment: Alignment.center,
             // children: <Widget>[

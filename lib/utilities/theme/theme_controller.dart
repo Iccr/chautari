@@ -4,12 +4,12 @@ import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class ThemeController extends GetxController {
-  ThemeData _themeData;
+  var _themeData = AppTheme.lightTheme().obs;
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    _themeData = AppTheme.lightTheme();
+    _themeData.value = AppTheme.lightTheme();
   }
 
   @override
@@ -18,13 +18,12 @@ class ThemeController extends GetxController {
     super.onReady();
   }
 
-  ThemeData get theme => _themeData;
+  ThemeData get theme => _themeData.value;
   ThemeMode get mode => Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
 
   setTheme() {
     Get.changeTheme(
         Get.isDarkMode ? AppTheme.lightTheme() : AppTheme.darkTheme());
-    _themeData = Get.theme;
-    update();
+    _themeData.value = Get.theme;
   }
 }
