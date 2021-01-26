@@ -149,6 +149,8 @@ class ImageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
+      key: Key(imageurl),
+      cacheKey: imageurl,
       imageUrl: imageurl,
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
