@@ -73,18 +73,6 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
           ),
         ),
       ),
-      // Positioned(
-      //   top: 0,
-      //   right: 0,
-      //   child: Container(
-      //     padding: EdgeInsets.all(2),
-      //     decoration: _glossyDecoration(),
-      //     child: Text(
-      //       "${room.address}, ${room.districtName}, Province: ${room.state}",
-      //       style: Theme.of(context).textTheme.bodyText1,
-      //     ),
-      //   ),
-      // ),
       Positioned(
         bottom: 0,
         right: 0,
@@ -126,7 +114,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
             autoPlay: false,
             enlargeCenterPage: true,
             enableInfiniteScroll: false,
-            aspectRatio: true ? 5 / 4 : 1.67,
+            aspectRatio: 5 / 4,
             onPageChanged: (index, reason) {
               setState(() {
                 _current = index;
@@ -145,7 +133,6 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
 //For Images
   @override
   Widget build(BuildContext context) {
-    var room = widget.model;
     return Container(
       child: Stack(
         children: _carouselWithOverlay(),

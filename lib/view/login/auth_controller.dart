@@ -26,15 +26,15 @@ class AuthController extends GetxController {
   }
 
   UserModel get user => _user.value;
-  bool get isLoggedIn => this._user?.value.isLoggedIn ?? false;
+  bool get isLoggedIn => this._user.value.isLoggedIn ?? false;
 
-  String get token => this._user?.value.token;
+  String get token => this._user.value.token;
 
   logout() async {
     await _removeUser();
-    var empty_user = UserModel();
-    await _saveuser(empty_user);
-    this._user.value = empty_user;
+    var emptyUser = UserModel();
+    await _saveuser(emptyUser);
+    this._user.value = emptyUser;
   }
 
   final FacebookLogin facebookSignIn = new FacebookLogin();

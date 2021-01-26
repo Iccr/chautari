@@ -1,10 +1,8 @@
-import 'dart:convert';
-
 import 'package:chautari/model/rooms_model.dart';
 import 'package:chautari/utilities/api_service.dart';
 
 class RoomsRepository {
-  final String _list_rooms_url = "/rooms";
+  final String _listRoomURl = "/rooms";
 
   ApiService api;
   RoomsRepository() {
@@ -12,7 +10,7 @@ class RoomsRepository {
   }
 
   Future<RoomsResponseModel> fetchRoms() async {
-    final response = await api.get(_list_rooms_url);
+    final response = await api.get(_listRoomURl);
     return RoomsResponseModel.fromJson(response.data);
   }
 }

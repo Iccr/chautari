@@ -3,21 +3,53 @@ import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:flutter/material.dart';
-import 'package:line_icons/line_icons.dart';
 
-class ChautariWidget {
-  static FlatButton getFlatButton(Widget child, Function onPressed) {
-    return FlatButton(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
-      color: ChautariColors.blackAndWhitecolor(),
-      onPressed: () async {
-        onPressed();
-      },
-      child: child,
+class ChautariList {
+  List<MenuItem> items = [];
+  final Function tap;
+  ChautariList({this.items, this.tap});
+
+  // Widget getStandardList(
+  //     {Color seperatorGradientBeginColor, Color seperatorGradientEndColor}) {
+  //   return ListView.separated(
+  //     separatorBuilder: (context, index) => _getSeperator(
+  //       beginColor: seperatorGradientBeginColor ?? ChautariColors.white,
+  //       endColor: seperatorGradientEndColor ?? ChautariColors.primary,
+  //     ),
+  //     itemCount: items.length,
+  //     itemBuilder: (context, index) {
+  //       var item = items.elementAt(index);
+  //       return _getListTile(
+  //         () => tap,
+  //         item,
+  //       );
+  //     },
+  //   );
+  // }
+
+  Widget getSeperator({Color beginColor, Color endColor}) {
+    return Container(
+      padding: EdgeInsets.only(
+        left: ChautariPadding.standard,
+        right: ChautariPadding.standard,
+      ),
+      height: 0.6,
+      child: Container(
+        decoration: BoxDecoration(
+          color: ChautariColors.primaryDarkAndWhitecolor().withOpacity(0.5),
+          gradient: LinearGradient(
+              begin: Alignment.centerLeft,
+              end: Alignment.centerRight,
+              colors: [
+                beginColor ?? ChautariColors.whiteAndBlackcolor(),
+                endColor ?? ChautariColors.blackAndWhitecolor()
+              ]),
+        ),
+      ),
     );
   }
 
-  static Widget getListTile(Function tap, MenuItem item) {
+  Widget getListTile(Function tap, MenuItem item) {
     List<Widget> _getContent() {
       return [
         Text(

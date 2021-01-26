@@ -15,7 +15,6 @@ class MapScreenState extends State<PersonalInformationView>
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
   }
 

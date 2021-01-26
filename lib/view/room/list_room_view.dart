@@ -50,10 +50,10 @@ class RoomsInsight extends StatelessWidget {
   final RoomsModel room;
   RoomsInsight({@required this.room});
 
-  double vgap = 2;
-  double hgap = 10;
+  final double vgap = 2;
+  final double hgap = 10;
 
-  double padding = 10;
+  final double padding = 10;
 
   @override
   Widget build(BuildContext context) {

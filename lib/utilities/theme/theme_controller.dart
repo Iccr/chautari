@@ -9,7 +9,6 @@ class ThemeController extends GetxController {
   final GetStorage box = GetStorage();
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     String theme = box.read(AppConstant.themeKey);
     if (theme == null) {
@@ -26,7 +25,6 @@ class ThemeController extends GetxController {
 
   @override
   void onReady() {
-    // TODO: implement onReady
     super.onReady();
   }
 

@@ -6,7 +6,7 @@ import 'package:chautari/utilities/api_service.dart';
 
 class LoginRepository {
   final String _socialUrl = "/login";
-  final String _fb_verify_url =
+  final String _fbVerifyUrl =
       "https://graph.facebook.com/me?fields=name,first_name,last_name,email,picture&access_token=";
 
   ApiService api;
@@ -20,7 +20,7 @@ class LoginRepository {
   }
 
   Future<FbUserModel> getFacebookUser(String accessToken) async {
-    String url = _fb_verify_url + accessToken;
+    String url = _fbVerifyUrl + accessToken;
     final response = await api.post(url, null, shouldAppednBaseurl: false);
     return FbUserModel.fromJson(jsonDecode(response.data));
   }
