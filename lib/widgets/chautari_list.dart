@@ -9,23 +9,23 @@ class ChautariList {
   final Function tap;
   ChautariList({this.items, this.tap});
 
-  // Widget getStandardList(
-  //     {Color seperatorGradientBeginColor, Color seperatorGradientEndColor}) {
-  //   return ListView.separated(
-  //     separatorBuilder: (context, index) => _getSeperator(
-  //       beginColor: seperatorGradientBeginColor ?? ChautariColors.white,
-  //       endColor: seperatorGradientEndColor ?? ChautariColors.primary,
-  //     ),
-  //     itemCount: items.length,
-  //     itemBuilder: (context, index) {
-  //       var item = items.elementAt(index);
-  //       return _getListTile(
-  //         () => tap,
-  //         item,
-  //       );
-  //     },
-  //   );
-  // }
+  Widget getStandardList(
+      {Color seperatorGradientBeginColor, Color seperatorGradientEndColor}) {
+    return ListView.separated(
+      separatorBuilder: (context, index) => getSeperator(
+        beginColor: seperatorGradientBeginColor ?? ChautariColors.white,
+        endColor: seperatorGradientEndColor ?? ChautariColors.primary,
+      ),
+      itemCount: items.length,
+      itemBuilder: (context, index) {
+        var item = items.elementAt(index);
+        return getListTile(
+          () => tap,
+          item,
+        );
+      },
+    );
+  }
 
   Widget getSeperator({Color beginColor, Color endColor}) {
     return Container(

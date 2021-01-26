@@ -4,4 +4,5 @@ class AppConstant {
   static String darktheme = "Dark Theme";
   static String lighttheme = "Light Theme";
   static String themeKey = "Theme";
+  static String appinfomodelsKey = "appinfomodels";
 }

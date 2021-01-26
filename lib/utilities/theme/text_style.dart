@@ -10,6 +10,11 @@ class ChautariTextStyles {
     fontWeight: FontWeight.w500,
     color: ChautariColors.whiteAndBlackcolor().withOpacity(0.8),
   );
+
+  TextStyle search = TextStyle(
+    fontWeight: FontWeight.w600,
+    color: ChautariColors.white.withOpacity(.6),
+  );
 }
 //   TextStyle(
 //             fontSize: 15.0,

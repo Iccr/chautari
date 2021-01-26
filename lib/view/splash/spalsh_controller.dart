@@ -1,4 +1,5 @@
 import 'package:chautari/repository/appinfo_repository.dart';
+import 'package:chautari/utilities/constants.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
@@ -21,7 +22,7 @@ class SplashController extends GetxController {
     var models = await AppinfoRepository().fetchAppInfo();
     if ((models.errors ?? []).isEmpty) {
       this.loaded = true;
-      Get.put(models, tag: "appinfomodels");
+      Get.put(models.data, tag: AppConstant.appinfomodelsKey);
       Get.offNamed("/tabs");
     } else {
       error = models.errors.first?.value ?? "";
