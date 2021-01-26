@@ -26,7 +26,7 @@ class ChautariColors extends GetxController {
     return mode == ThemeMode.dark ? black : primary;
   }
 
-  static Color primaryColor() {
+  static MaterialColor primaryColor() {
     return primary;
   }
 

@@ -38,12 +38,8 @@ class RoomWidget extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Container(
-          //   height: 350,
-          // ),
-          // ImageCarousel(room: room),
           CarouselWithIndicator(room),
-          RoomsInsight(room: this.room)
+          RoomsInsight(room: this.room),
         ],
       ),
     );
@@ -86,12 +82,6 @@ class RoomsInsight extends StatelessWidget {
                 ),
               ],
             ),
-            SizedBox(height: vgap),
-            Text(
-              "Rs ${room.price} /month",
-              style: Theme.of(context).textTheme.bodyText1,
-            ),
-            SizedBox(height: vgap),
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [

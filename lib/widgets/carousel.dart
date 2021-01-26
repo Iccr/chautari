@@ -48,57 +48,108 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
     return list;
   }
 
-//For Images
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Stack(children: [
-        GestureDetector(
-          onTap: () {
-            widget.onImageTapped();
-          },
-          child: CarouselSlider(
-            items: getItems(),
-            options: CarouselOptions(
-              viewportFraction: 1.0,
-              autoPlay: false,
-              enlargeCenterPage: true,
-              enableInfiniteScroll: false,
-              aspectRatio: true ? 5 / 4 : 1.67,
-              onPageChanged: (index, reason) {
-                setState(() {
-                  _current = index;
-                });
-              },
+  BoxDecoration _glossyDecoration({double opacity = 1}) {
+    return BoxDecoration(
+      borderRadius: BorderRadius.circular(5),
+      color: ChautariColors.primaryColor().shade200.withOpacity(opacity),
+    );
+  }
+
+  List<Widget> _overlayWidgets() {
+    var room = widget.model;
+    var overlays = [
+      Positioned.fill(
+        child: Align(
+          alignment: Alignment.center,
+          child: Container(
+            padding: EdgeInsets.all(2),
+            decoration: _glossyDecoration(opacity: 0),
+            child: Text(
+              "Chautari Basti",
+              style: TextStyle(
+                  fontWeight: FontWeight.w200,
+                  color: ChautariColors.primaryColor().withOpacity(0.7)),
             ),
           ),
         ),
-        Positioned(
-          bottom: 0,
-          child: Container(
-            margin: EdgeInsets.only(left: 5),
-            height: 20,
-
-            padding: EdgeInsets.all(5),
-            decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(5),
-                color: ChautariColors.grey.shade200.withOpacity(0.4)),
-            // child: Stack(
-            // alignment: Alignment.center,
-            // children: <Widget>[
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: getPagerIndicator(),
-            ),
-            // Positioned(
-            //   right: 10,
-            //   bottom: 5,
-            //   child: Text(""),
-            // ),
-            // ],
+      ),
+      // Positioned(
+      //   top: 0,
+      //   right: 0,
+      //   child: Container(
+      //     padding: EdgeInsets.all(2),
+      //     decoration: _glossyDecoration(),
+      //     child: Text(
+      //       "${room.address}, ${room.districtName}, Province: ${room.state}",
+      //       style: Theme.of(context).textTheme.bodyText1,
+      //     ),
+      //   ),
+      // ),
+      Positioned(
+        bottom: 0,
+        right: 0,
+        child: Container(
+          padding: EdgeInsets.all(2),
+          decoration: _glossyDecoration(),
+          child: Text(
+            "Rs ${room.price} /month",
+            style: Theme.of(context).textTheme.bodyText1,
           ),
-        )
-      ]),
+        ),
+      ),
+      Positioned(
+        bottom: 0,
+        child: Container(
+          height: getItems().length > 1 ? 25 : 0,
+          padding: EdgeInsets.all(5),
+          decoration: _glossyDecoration(),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: getPagerIndicator(),
+          ),
+        ),
+      )
+    ];
+    return overlays;
+  }
+
+  List<Widget> _carousel() {
+    return [
+      GestureDetector(
+        onTap: () {
+          widget.onImageTapped();
+        },
+        child: CarouselSlider(
+          items: getItems(),
+          options: CarouselOptions(
+            viewportFraction: 1.0,
+            autoPlay: false,
+            enlargeCenterPage: true,
+            enableInfiniteScroll: false,
+            aspectRatio: true ? 5 / 4 : 1.67,
+            onPageChanged: (index, reason) {
+              setState(() {
+                _current = index;
+              });
+            },
+          ),
+        ),
+      ),
+    ];
+  }
+
+  List<Widget> _carouselWithOverlay() {
+    return [..._carousel(), ..._overlayWidgets()];
+  }
+
+//For Images
+  @override
+  Widget build(BuildContext context) {
+    var room = widget.model;
+    return Container(
+      child: Stack(
+        children: _carouselWithOverlay(),
+      ),
     );
   }
 }
