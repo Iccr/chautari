@@ -12,11 +12,18 @@ class ChautariColors extends GetxController {
 
   static Color tabBarActiveBackgroundColor = Colors.grey[800];
 
-  // black and white => lightmode black, dark mode white
+  // black and white => dark black, light mode white
 
   static Color blackAndWhitecolor() {
     var mode = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
     return mode == ThemeMode.dark ? black : white;
+  }
+
+  // black and white => dark mode white, light mode black
+
+  static Color whiteAndBlackcolor() {
+    var mode = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    return mode == ThemeMode.dark ? white : black;
   }
 
 // black and primary => lightmode black, dark mode theme.primaryColor
