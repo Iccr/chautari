@@ -21,13 +21,17 @@ class SettingController extends GetxController {
         subtitle: "Use Chautari Basit in your prefered language"),
   ];
 
-  List<MenuItem> _themeMenu = [
-    MenuItem(title: AppConstant.darktheme, index: 0),
+  var _themeMenu = [
+    MenuItem(
+        title: AppConstant.darktheme,
+        index: 0,
+        subtitle: "abc",
+        selected: true),
     MenuItem(title: AppConstant.lighttheme, index: 1)
-  ];
+  ].obs;
 
   List<MenuItem> get menu => _settingsMenu;
-  List<MenuItem> get themes => _themeMenu;
+  List<MenuItem> get themes => _themeMenu.value;
 
   @override
   void onInit() {
@@ -44,6 +48,14 @@ class SettingController extends GetxController {
   }
 
   setTheme(MenuItem item) {
+    var new_theme = themes.map(
+      (e) {
+        e.selected = item.index == e.index;
+        return e;
+      },
+    ).toList();
+
+    _themeMenu.assignAll(new_theme);
     themeController.setTheme(item.title);
   }
 
