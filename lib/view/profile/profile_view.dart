@@ -103,14 +103,14 @@ class ProfileView extends StatelessWidget {
                               children: [
                                 Text(
                                   c.menu.elementAt(index).title,
-                                  style: ChautariTextStyles.listTitle,
+                                  style: ChautariTextStyles().listTitle,
                                 ),
                                 SizedBox(
                                   height: 2,
                                 ),
                                 Text(
                                   c.menu.elementAt(index).subtitle,
-                                  style: ChautariTextStyles.listTitle,
+                                  style: ChautariTextStyles().listSubtitle,
                                 ),
                               ],
                             ),
@@ -161,7 +161,7 @@ class UserInfoView extends StatelessWidget {
                 Flexible(
                   child: RichText(
                     text: TextSpan(
-                        style: DefaultTextStyle.of(context).style,
+                        style: ChautariTextStyles().listSubtitle,
                         children: [
                           TextSpan(
                               text: profileController.user_insight_message),

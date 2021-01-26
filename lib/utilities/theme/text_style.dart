@@ -1,8 +1,15 @@
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:flutter/material.dart';
 
 class ChautariTextStyles {
-  static TextStyle listTitle = TextStyle(fontWeight: FontWeight.w600);
-  static TextStyle listSubtitle = TextStyle(fontWeight: FontWeight.w500);
+  TextStyle listTitle = TextStyle(
+    fontWeight: FontWeight.w600,
+    color: ChautariColors.whiteAndBlackcolor(),
+  );
+  TextStyle listSubtitle = TextStyle(
+    fontWeight: FontWeight.w500,
+    color: ChautariColors.whiteAndBlackcolor().withOpacity(0.8),
+  );
 }
 //   TextStyle(
 //             fontSize: 15.0,
