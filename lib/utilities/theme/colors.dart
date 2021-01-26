@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChautariColors extends GetxController {
-  ThemeMode _mode;
   static Color primary = Colors.teal;
   static Color white = Colors.white;
-  static Color black = Colors.black;
+  static Color black = Colors.black87;
   static Color green = Colors.green;
   static Color red = Colors.red;
   static MaterialColor grey = Colors.grey;
@@ -41,6 +40,11 @@ class ChautariColors extends GetxController {
   static Color primaryAndWhitecolor() {
     var mode = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
     return mode == ThemeMode.dark ? white : primary;
+  }
+
+  static Color primaryDarkAndWhitecolor() {
+    var mode = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    return mode == ThemeMode.dark ? white : primaryColor().shade900;
   }
 
   static Color shades900AndPrimaryColor() {

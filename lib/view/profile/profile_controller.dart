@@ -6,13 +6,6 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 
 class ProfileController extends GetxController {
   AuthController auth = Get.find();
-  @override
-  void onInit() {
-    // TODO: implement onInit
-  }
-
-  goTo(index) {}
-
   List<MenuItem> _normalMenu = [
     MenuItem(
         title: "Add Rent",
@@ -36,7 +29,7 @@ class ProfileController extends GetxController {
 
   List<MenuItem> get menu => auth.isLoggedIn ? _loggedInMenu : _normalMenu;
 
-  String get user_insight_message =>
+  String get userInsightMessage =>
       "Log in to access chats, suscribtions and many more features.";
 
   selectedIndex(int index) {

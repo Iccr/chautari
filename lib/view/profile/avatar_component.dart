@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:line_icons/line_icons.dart';
 
 class AvatarView extends StatelessWidget {
-  bool shouldShowCameraIcon = false;
-  String imageUrl;
-  double radius;
-  Function cameraAction;
+  final bool shouldShowCameraIcon;
+  final String imageUrl;
+  final double radius;
+  final Function cameraAction;
   AvatarView(
       {this.imageUrl,
-      this.shouldShowCameraIcon,
+      this.shouldShowCameraIcon = false,
       this.radius = 106,
       this.cameraAction});
   double getHeight() {

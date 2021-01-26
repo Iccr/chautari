@@ -1,13 +1,10 @@
 import 'package:chautari/model/menu_item.dart';
 import 'package:chautari/utilities/constants.dart';
-import 'package:chautari/utilities/theme/theme.dart';
 import 'package:chautari/utilities/theme/theme_controller.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class SettingController extends GetxController {
-  ThemeData _themeData;
   ThemeController themeController;
 
   List<MenuItem> _settingsMenu = [
@@ -31,31 +28,28 @@ class SettingController extends GetxController {
   ].obs;
 
   List<MenuItem> get menu => _settingsMenu;
-  List<MenuItem> get themes => _themeMenu.value;
+  List<MenuItem> get themes => this._themeMenu.value;
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     themeController = Get.find();
-    _themeData = AppTheme.lightTheme();
   }
 
   @override
   void onReady() {
-    // TODO: implement onReady
     super.onReady();
   }
 
   setTheme(MenuItem item) {
-    var new_theme = themes.map(
+    var newTheme = themes.map(
       (e) {
         e.selected = item.index == e.index;
         return e;
       },
     ).toList();
 
-    _themeMenu.assignAll(new_theme);
+    _themeMenu.assignAll(newTheme);
     themeController.setTheme(item.title);
   }
 

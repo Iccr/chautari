@@ -10,7 +10,6 @@ class ExploreController extends GetxController {
   get length => models.length;
   @override
   void onReady() {
-    // TODO: implement onReady
     super.onReady();
     _fetchRooms();
   }

@@ -6,15 +6,14 @@ import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/profile/avatar_component.dart';
 import 'package:chautari/view/profile/profile_controller.dart';
-import 'package:chautari/widgets/flat_buttons.dart';
+import 'package:chautari/widgets/chautari_list.dart';
+import 'package:chautari/widgets/chautari_widgets.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class ProfileView extends StatelessWidget {
-  AlertDialog dialogue;
-
   @override
   Widget build(BuildContext context) {
     AuthController loginController = Get.find();
@@ -80,43 +79,13 @@ class ProfileView extends StatelessWidget {
                   ),
                   Expanded(
                     child: ListView.separated(
-                      separatorBuilder: (context, index) => Container(
-                        padding: EdgeInsets.only(left: 10, right: 100),
-                        height: 0.5,
-                        child: Container(
-                          color: ChautariColors.primaryAndWhitecolor()
-                              .withOpacity(0.5),
-                        ),
-                      ),
+                      separatorBuilder: (context, index) =>
+                          ChautariList().getSeperator(),
                       itemCount: c.menu.length,
                       itemBuilder: (context, index) {
-                        return GestureDetector(
-                          onTap: () => {_selectedIndex(index, c)},
-                          child: Container(
-                            padding:
-                                EdgeInsets.only(left: ChautariPadding.standard),
-                            height: 60,
-                            child: Container(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Text(
-                                    c.menu.elementAt(index).title,
-                                    style: ChautariTextStyles().listTitle,
-                                  ),
-                                  SizedBox(
-                                    height: 2,
-                                  ),
-                                  Text(
-                                    c.menu.elementAt(index).subtitle,
-                                    style: ChautariTextStyles().listSubtitle,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
+                        return ChautariList().getListTile(
+                            () => _selectedIndex(index, c),
+                            c.menu.elementAt(index));
                       },
                     ),
                   )
@@ -130,8 +99,8 @@ class ProfileView extends StatelessWidget {
 }
 
 class UserInfoView extends StatelessWidget {
-  AuthController loginController = Get.find();
-  ProfileController profileController = Get.find();
+  final AuthController loginController = Get.find();
+  final ProfileController profileController = Get.find();
   final UserModel user;
   final Function action;
   UserInfoView({this.user, this.action});
@@ -164,8 +133,7 @@ class UserInfoView extends StatelessWidget {
                     text: TextSpan(
                         style: ChautariTextStyles().listSubtitle,
                         children: [
-                          TextSpan(
-                              text: profileController.user_insight_message),
+                          TextSpan(text: profileController.userInsightMessage),
                           TextSpan(text: " Would you like to "),
                           TextSpan(
                               text: "Login now",
