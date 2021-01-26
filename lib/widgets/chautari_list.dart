@@ -69,6 +69,7 @@ class ChautariList {
     }
 
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () => {tap()},
       child: Container(
         padding: EdgeInsets.only(left: ChautariPadding.standard),
