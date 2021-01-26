@@ -10,6 +10,7 @@ import 'dart:math';
 //         child: HomePage(),
 //       ),
 
+// ignore: must_be_immutable
 class ProgressHud extends StatefulWidget {
   final bool isLoading;
   final double opacity;
