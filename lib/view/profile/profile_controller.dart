@@ -1,3 +1,4 @@
+import 'package:chautari/model/menu_item.dart';
 import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:get/get.dart';
@@ -24,7 +25,7 @@ class ProfileController extends GetxController {
     MenuItem(
         title: "My Subscriptions",
         index: 2,
-        subtitle: "we will notify you when your preference is matched"),
+        subtitle: "We will notify you when your preference is matched"),
     MenuItem(title: "chats", index: 3, subtitle: "Your chats history")
   ];
 
@@ -56,11 +57,4 @@ class ProfileController extends GetxController {
       default:
     }
   }
-}
-
-class MenuItem {
-  final String title;
-  final int index;
-  final String subtitle;
-  MenuItem({this.title, this.index, this.subtitle});
 }

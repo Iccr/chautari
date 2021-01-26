@@ -1,16 +1,12 @@
 import 'package:chautari/model/error.dart';
 import 'package:chautari/model/login_model.dart';
 import 'package:chautari/repository/login_repository.dart';
+import 'package:chautari/utilities/constants.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-class AppConstant {
-  static String recentEmail = "chautari_recent_email";
-  static String userKey = "chautari_user";
-}
 
 class AuthController extends GetxController {
   bool loading;

@@ -79,46 +79,47 @@ class ProfileView extends StatelessWidget {
                     ),
                   ),
                   Expanded(
-                      child: ListView.separated(
-                    separatorBuilder: (context, index) => Container(
-                      padding: EdgeInsets.only(left: 10, right: 100),
-                      height: 0.5,
-                      child: Container(
-                        color: ChautariColors.primaryAndWhitecolor()
-                            .withOpacity(0.5),
-                      ),
-                    ),
-                    itemCount: c.menu.length,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () => {_selectedIndex(index, c)},
+                    child: ListView.separated(
+                      separatorBuilder: (context, index) => Container(
+                        padding: EdgeInsets.only(left: 10, right: 100),
+                        height: 0.5,
                         child: Container(
-                          padding:
-                              EdgeInsets.only(left: ChautariPadding.standard),
-                          height: 60,
+                          color: ChautariColors.primaryAndWhitecolor()
+                              .withOpacity(0.5),
+                        ),
+                      ),
+                      itemCount: c.menu.length,
+                      itemBuilder: (context, index) {
+                        return GestureDetector(
+                          onTap: () => {_selectedIndex(index, c)},
                           child: Container(
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  c.menu.elementAt(index).title,
-                                  style: ChautariTextStyles().listTitle,
-                                ),
-                                SizedBox(
-                                  height: 2,
-                                ),
-                                Text(
-                                  c.menu.elementAt(index).subtitle,
-                                  style: ChautariTextStyles().listSubtitle,
-                                ),
-                              ],
+                            padding:
+                                EdgeInsets.only(left: ChautariPadding.standard),
+                            height: 60,
+                            child: Container(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    c.menu.elementAt(index).title,
+                                    style: ChautariTextStyles().listTitle,
+                                  ),
+                                  SizedBox(
+                                    height: 2,
+                                  ),
+                                  Text(
+                                    c.menu.elementAt(index).subtitle,
+                                    style: ChautariTextStyles().listSubtitle,
+                                  ),
+                                ],
+                              ),
                             ),
                           ),
-                        ),
-                      );
-                    },
-                  ))
+                        );
+                      },
+                    ),
+                  )
                 ],
               ),
             ),
