@@ -1,6 +1,7 @@
 import 'package:chautari/model/login_model.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
+import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/profile/avatar_component.dart';
@@ -102,11 +103,14 @@ class ProfileView extends StatelessWidget {
                               children: [
                                 Text(
                                   c.menu.elementAt(index).title,
-                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                  style: ChautariTextStyles.listTitle,
+                                ),
+                                SizedBox(
+                                  height: 2,
                                 ),
                                 Text(
                                   c.menu.elementAt(index).subtitle,
-                                  style: TextStyle(fontWeight: FontWeight.w500),
+                                  style: ChautariTextStyles.listTitle,
                                 ),
                               ],
                             ),
