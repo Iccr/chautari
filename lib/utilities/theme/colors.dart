@@ -42,4 +42,6 @@ class ChautariColors extends GetxController {
     var mode = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
     return mode == ThemeMode.dark ? white : primary;
   }
+
+  static Color standardBackgroundGradient() {}
 }

@@ -1,15 +1,27 @@
+import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/theme/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:get_storage/get_storage.dart';
 
 class ThemeController extends GetxController {
-  var _themeData = AppTheme.lightTheme().obs;
+  final GetStorage box = GetStorage();
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
-    _themeData.value = AppTheme.lightTheme();
+    String theme = box.read(AppConstant.themeKey);
+    if (theme == null) {
+      theme = AppConstant.lighttheme;
+      _changeTheme(
+        _getThemeData(theme),
+      );
+    } else {
+      _changeTheme(
+        _getThemeData(theme),
+      );
+    }
   }
 
   @override
@@ -18,12 +30,22 @@ class ThemeController extends GetxController {
     super.onReady();
   }
 
-  ThemeData get theme => _themeData.value;
   ThemeMode get mode => Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
 
-  setTheme() {
-    Get.changeTheme(
-        Get.isDarkMode ? AppTheme.lightTheme() : AppTheme.darkTheme());
-    _themeData.value = Get.theme;
+  setTheme(String theme) {
+    box.write(AppConstant.themeKey, theme);
+    _changeTheme(
+      _getThemeData(theme),
+    );
+  }
+
+  ThemeData _getThemeData(String theme) {
+    return theme == AppConstant.darktheme
+        ? AppTheme.darkTheme()
+        : AppTheme.lightTheme();
+  }
+
+  _changeTheme(ThemeData theme) {
+    Get.changeTheme(theme);
   }
 }
