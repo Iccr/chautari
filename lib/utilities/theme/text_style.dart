@@ -16,9 +16,3 @@ class ChautariTextStyles {
     color: ChautariColors.white.withOpacity(.6),
   );
 }
-//   TextStyle(
-//             fontSize: 15.0,
-//             fontFamily: 'Poppins',
-//             fontWeight: FontWeight.w500,
-//             color: ChautariColors.white.withOpacity(0.9))
-// }

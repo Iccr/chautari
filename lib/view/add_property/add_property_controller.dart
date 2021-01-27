@@ -1,3 +1,4 @@
+import 'dart:io';
 import 'package:chautari/model/app_info.dart';
 import 'package:chautari/model/menu_item.dart';
 import 'package:chautari/utilities/constants.dart';
@@ -6,6 +7,7 @@ import 'package:get/get.dart';
 
 class AddPropertyController extends GetxController {
   final AppinfoModel appInfo = Get.find(tag: AppConstant.appinfomodelsKey);
+
   // list =>
   // single select => // district
   // multi select =>
@@ -13,7 +15,8 @@ class AddPropertyController extends GetxController {
   // parkings
   // waters
 
-// district, type textfield, action picker
+// district, type textfield, action picker, done
+
 // address, textfield
   // lat, lng, type textfield, action map,
 // price textfield
@@ -26,6 +29,30 @@ class AddPropertyController extends GetxController {
 // preferences, multi select
 
 // images, picker, preview
+
+  var isValid = false;
+  var address = "".obs;
+  var addressError = "".obs;
+  // var lat = "".obs;
+  // var long = "".obs;
+  // var price = "".obs;
+  // var numberOfRooms = "".obs;
+  // var districtId = "".obs;
+  // var parkingIds = List<String>().obs;
+  // var amenityIds = List<String>().obs;
+  // var available = true.obs;
+  // var waterId = "".obs;
+  // var images = List<File>().obs;
+
+  setAddress(String val) {
+    if (val.length > 2) {
+      address.value = val;
+    } else {
+      addressError.value = "Enter valid District";
+    }
+  }
+
+  validateAddress() {}
 
   var listItems = [
     MenuItem(title: "District"),
@@ -62,4 +89,6 @@ class AddPropertyController extends GetxController {
   void onReady() {
     super.onReady();
   }
+
+  submit() {}
 }
