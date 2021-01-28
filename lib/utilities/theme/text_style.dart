@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 
 class ChautariTextStyles {
   TextStyle listTitle = TextStyle(
+    fontSize: 16,
     fontWeight: FontWeight.w600,
     color: ChautariColors.whiteAndBlackcolor(),
   );
   TextStyle listSubtitle = TextStyle(
+    fontSize: 13,
     fontWeight: FontWeight.w500,
     color: ChautariColors.whiteAndBlackcolor().withOpacity(0.8),
   );

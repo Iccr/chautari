@@ -8,4 +8,5 @@ class RouteName {
   static String roomsList = "/rooms";
   static String login = "/login";
   static String addPropery = "/addProperty";
+  static String map = "/map";
 }

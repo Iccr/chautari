@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:chautari/model/app_info.dart';
 import 'package:chautari/model/menu_item.dart';
 import 'package:chautari/utilities/constants.dart';
+import 'package:chautari/utilities/router/router_name.dart';
+
 import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
 
@@ -91,4 +93,8 @@ class AddPropertyController extends GetxController {
   }
 
   submit() {}
+
+  openMap() async {
+    await Get.toNamed(RouteName.map);
+  }
 }
