@@ -11,7 +11,8 @@ class ChautariDecoration {
     return InputDecoration(
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
-            color: ChautariColors.primary.withOpacity(0.5), width: 5.0),
+          color: ChautariColors.primary.withOpacity(1),
+        ),
       ),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(

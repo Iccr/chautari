@@ -19,10 +19,14 @@ class AuthController extends GetxController {
     super.onInit();
 
     Map<String, dynamic> _userMap = box.read(AppConstant.userKey);
-    UserModel user = UserModel.fromJson(_userMap);
-    print(user.email);
-    print(user.isLoggedIn);
-    this._user.value = user;
+    if (_userMap == null) {
+      this._user.value = UserModel();
+    } else {
+      UserModel user = UserModel.fromJson(_userMap);
+      print(user.email);
+      print(user.isLoggedIn);
+      this._user.value = user;
+    }
   }
 
   UserModel get user => _user.value;

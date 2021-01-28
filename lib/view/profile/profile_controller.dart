@@ -6,7 +6,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 
 class ProfileController extends GetxController {
   AuthController auth = Get.find();
-  List<MenuItem> _normalMenu = [
+  List<MenuItem> _loggedInMenu = [
     MenuItem(
         title: "Add Rent",
         index: 0,
@@ -22,9 +22,15 @@ class ProfileController extends GetxController {
     MenuItem(title: "chats", index: 3, subtitle: "Your chats history")
   ];
 
-  List<MenuItem> _loggedInMenu = [
-    MenuItem(title: "Add Rent", index: 0),
-    MenuItem(title: "My Rents", index: 1),
+  List<MenuItem> _normalMenu = [
+    MenuItem(
+        title: "Add Rent",
+        index: 0,
+        subtitle: "Earn money, rent your property in Chautari Basti"),
+    MenuItem(
+        title: "My Rents",
+        index: 1,
+        subtitle: "See Your properties in Chautari Basti"),
   ];
 
   List<MenuItem> get menu => auth.isLoggedIn ? _loggedInMenu : _normalMenu;

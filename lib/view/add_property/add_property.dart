@@ -12,11 +12,14 @@ class AddProperty extends StatelessWidget {
   final SearchController search = Get.put(SearchController());
   final AddPropertyController addController = Get.put(AddPropertyController());
   final TextEditingController _districtTextController = TextEditingController();
-  final FocusNode _myFocusNode = FocusNode();
+  final FocusNode _noFocusNode = FocusNode();
+
+  final _formKey = GlobalKey<FormBuilderState>();
+
   @override
   Widget build(BuildContext context) {
     _openSearch() async {
-      _myFocusNode.unfocus();
+      _noFocusNode.unfocus();
       var _ = await showSearch(
         context: context,
         delegate: SearchBar(
@@ -31,34 +34,9 @@ class AddProperty extends StatelessWidget {
       );
     }
 
-    Widget districtview() {
-      return GestureDetector(
-        behavior: HitTestBehavior.opaque,
-        onTap: () => _openSearch(),
-        child: Container(
-          padding: EdgeInsets.only(
-            left: ChautariPadding.standard,
-            right: ChautariPadding.standard,
-            top: ChautariPadding.standard,
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextField(
-                focusNode: _myFocusNode,
-                decoration: ChautariDecoration()
-                    .outlinedBorderTextField(hintText: "Select District"),
-                style: ChautariTextStyles().listSubtitle,
-                controller: _districtTextController,
-                onTap: () async {
-                  _openSearch();
-                },
-              ),
-            ],
-          ),
-        ),
-      );
+    _openMap() {
+      _noFocusNode.unfocus();
+      addController.openMap();
     }
 
     return Scaffold(
@@ -66,9 +44,37 @@ class AddProperty extends StatelessWidget {
         title: Text("Add"),
       ),
       body: Container(
+        padding: EdgeInsets.all(ChautariPadding.standard),
         child: Column(
           children: [
-            districtview(),
+            // districtview(),
+            FormBuilder(
+              child: Column(
+                children: [
+                  FormBuilderTextField(
+                    controller: _districtTextController,
+                    focusNode: _noFocusNode,
+                    name: "district_field",
+                    style: ChautariTextStyles().listTitle,
+                    decoration: ChautariDecoration()
+                        .outlinedBorderTextField(hintText: "Select District"),
+                    onTap: () => {
+                      _openSearch(),
+                    },
+                  ),
+                  FormBuilderTextField(
+                    controller: _districtTextController,
+                    focusNode: _noFocusNode,
+                    name: "map_field",
+                    style: ChautariTextStyles().listTitle,
+                    decoration: ChautariDecoration()
+                        .outlinedBorderTextField(hintText: "Select Address"),
+                    onTap: () => _openMap(),
+                  ),
+                ],
+              ),
+            ),
+
             RaisedButton(
               onPressed: () {},
               child: Text("Submit"),
