@@ -1,4 +1,4 @@
-import 'package:chautari/model/menu_item.dart';
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/text_decoration.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
@@ -13,14 +13,15 @@ class AddProperty extends StatelessWidget {
   final SearchController search = Get.put(SearchController());
   final AddPropertyController addController = Get.put(AddPropertyController());
   final TextEditingController _districtTextController = TextEditingController();
-  final FocusNode _noFocusNode = FocusNode();
+  final FocusNode _districtFocusNode = FocusNode();
+  final FocusNode _addressFocusNode = FocusNode();
 
   final _formKey = GlobalKey<FormBuilderState>();
 
   @override
   Widget build(BuildContext context) {
     _openSearch() async {
-      _noFocusNode.unfocus();
+      _districtFocusNode.unfocus();
       var _ = await showSearch(
         context: context,
         delegate: SearchBar(
@@ -36,7 +37,7 @@ class AddProperty extends StatelessWidget {
     }
 
     _openMap() {
-      _noFocusNode.unfocus();
+      _addressFocusNode.unfocus();
       addController.openMap();
     }
 
@@ -50,10 +51,11 @@ class AddProperty extends StatelessWidget {
           child: FormBuilder(
             child: Column(
               children: [
+                SizedBox(height: ChautariPadding.standard),
                 // district
                 FormBuilderTextField(
                   controller: _districtTextController,
-                  focusNode: _noFocusNode,
+                  focusNode: _districtFocusNode,
                   name: "district_field",
                   style: ChautariTextStyles().listTitle,
                   decoration: ChautariDecoration().outlinedBorderTextField(
@@ -64,17 +66,26 @@ class AddProperty extends StatelessWidget {
                 ),
                 SizedBox(height: ChautariPadding.standard),
                 // address and map
+
                 FormBuilderTextField(
                   controller: null,
-                  focusNode: _noFocusNode,
+                  focusNode: _addressFocusNode,
                   name: "map_field",
                   style: ChautariTextStyles().listTitle,
-                  decoration: ChautariDecoration()
-                      .outlinedBorderTextField(helperText: "Select Address"),
+                  decoration: ChautariDecoration().outlinedBorderTextField(
+                      helperText: "local address name", labelText: "address"),
                   onTap: () => _openMap(),
                 ),
                 SizedBox(height: ChautariPadding.standard),
                 FormBuilderTouchSpin(
+                  addIcon: Icon(
+                    Icons.add,
+                    color: ChautariColors.whiteAndBlackcolor().withOpacity(0.5),
+                  ),
+                  subtractIcon: Icon(
+                    Icons.remove,
+                    color: ChautariColors.whiteAndBlackcolor().withOpacity(0.5),
+                  ),
                   name: "noOfROoms",
                   min: 1,
                   max: 20,
@@ -99,8 +110,27 @@ class AddProperty extends StatelessWidget {
                 ),
 
                 SizedBox(height: ChautariPadding.standard),
+                // amenity
+                FormBuilderCheckboxGroup(
+                  wrapAlignment: WrapAlignment.spaceBetween,
+                  wrapSpacing: Get.width,
+                  decoration: ChautariDecoration().outlinedBorderTextField(
+                    labelText: "Amenities",
+                    helperText: "Select all availabe options",
+                  ),
+                  name: "Checkbox",
+                  options: addController.amenities
+                      .map(
+                        (element) =>
+                            FormBuilderFieldOption(value: element.name),
+                      )
+                      .toList(),
+                ),
+
+                SizedBox(height: ChautariPadding.standard),
 
                 FormBuilderRadioGroup(
+                  wrapSpacing: Get.width,
                   decoration: ChautariDecoration().outlinedBorderTextField(
                     labelText: "Water",
                     helperText: "Select one options",
@@ -113,11 +143,19 @@ class AddProperty extends StatelessWidget {
                       )
                       .toList(),
                 ),
+                SizedBox(height: ChautariPadding.standard),
+                FormBuilderTextField(
+                  name: "price",
+                  decoration: ChautariDecoration().outlinedBorderTextField(
+                      labelText: "Price", helperText: "price per month"),
+                ),
+                SizedBox(height: ChautariPadding.standard),
 
                 RaisedButton(
                   onPressed: () {},
                   child: Text("Submit"),
-                )
+                ),
+                SizedBox(height: ChautariPadding.standard),
               ],
             ),
           ),

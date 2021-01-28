@@ -69,13 +69,10 @@ class AddPropertyController extends GetxController {
   List<Districts> get _districts => appInfo.districts;
 
   List<Water> get waters => appInfo.waters;
-  List<Amenities> get _amenities => appInfo.amenities;
+  List<Amenities> get amenities => appInfo.amenities;
   List<Parking> get parkings => appInfo.parkings;
 
   var districtViewmodels = List<MenuItem>().obs;
-
-  var waterViewModels = List<MenuItem>().obs;
-  var amenitiesViewModels = List<MenuItem>().obs;
 
   @override
   void onInit() {
