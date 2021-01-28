@@ -6,6 +6,7 @@ import 'package:chautari/view/add_property/add_property_controller.dart';
 import 'package:chautari/widgets/search/search.dart';
 import 'package:chautari/widgets/search/search_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:get/get.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
@@ -153,6 +154,18 @@ class AddProperty extends StatelessWidget {
                 ),
                 SizedBox(height: ChautariPadding.standard),
 
+                FormBuilderImagePicker(
+                  name: "images",
+                  decoration: ChautariDecoration()
+                      .outlinedBorderTextField(labelText: 'pic images'),
+                  maxImages: 15,
+                ),
+
+                // FormBuilderImagePicker(
+                //   name: 'photos',
+                //   decoration: const InputDecoration(labelText: 'Pick Photos'),
+                //   maxImages: 1,
+                // )
                 RaisedButton(
                   onPressed: () {},
                   child: Text("Submit"),
