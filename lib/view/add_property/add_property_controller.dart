@@ -1,4 +1,3 @@
-import 'dart:io';
 import 'package:chautari/model/app_info.dart';
 import 'package:chautari/model/menu_item.dart';
 import 'package:chautari/utilities/constants.dart';
@@ -9,7 +8,6 @@ import 'package:get/get.dart';
 
 class AddPropertyController extends GetxController {
   final AppinfoModel appInfo = Get.find(tag: AppConstant.appinfomodelsKey);
-
   // list =>
   // single select => // district
   // multi select =>
@@ -35,11 +33,12 @@ class AddPropertyController extends GetxController {
   var isValid = false;
   var address = "".obs;
   var addressError = "".obs;
+  // var districtId = "".obs;
   // var lat = "".obs;
   // var long = "".obs;
   // var price = "".obs;
   // var numberOfRooms = "".obs;
-  // var districtId = "".obs;
+
   // var parkingIds = List<String>().obs;
   // var amenityIds = List<String>().obs;
   // var available = true.obs;
@@ -68,18 +67,20 @@ class AddPropertyController extends GetxController {
   ];
 
   List<Districts> get _districts => appInfo.districts;
-  List<Parking> get _parkings => appInfo.parkings;
-  List<Waters> get _waters => appInfo.waters;
+
+  List<Water> get waters => appInfo.waters;
   List<Amenities> get _amenities => appInfo.amenities;
+  List<Parking> get parkings => appInfo.parkings;
 
   var districtViewmodels = List<MenuItem>().obs;
-  var parkingViewModels = List<MenuItem>().obs;
+
   var waterViewModels = List<MenuItem>().obs;
   var amenitiesViewModels = List<MenuItem>().obs;
 
   @override
   void onInit() {
     super.onInit();
+
     districtViewmodels.assignAll(
       _districts.map(
         (e) => MenuItem(title: e.name, subtitle: "${e.state}"),

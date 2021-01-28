@@ -35,7 +35,7 @@ class AppinfoModel {
   List<Amenities> amenities;
   List<Districts> districts;
   List<Parking> parkings;
-  List<Waters> waters;
+  List<Water> waters;
 
   AppinfoModel({this.amenities, this.districts, this.parkings, this.waters});
 
@@ -59,9 +59,9 @@ class AppinfoModel {
       });
     }
     if (json['waters'] != null) {
-      waters = new List<Waters>();
+      waters = new List<Water>();
       json['waters'].forEach((v) {
-        waters.add(new Waters.fromJson(v));
+        waters.add(new Water.fromJson(v));
       });
     }
   }
@@ -138,13 +138,13 @@ class Districts {
   }
 }
 
-class Waters {
+class Water {
   String name;
   int value;
 
-  Waters({this.name, this.value});
+  Water({this.name, this.value});
 
-  Waters.fromJson(Map<String, dynamic> json) {
+  Water.fromJson(Map<String, dynamic> json) {
     name = json['name'];
     value = json['value'];
   }
