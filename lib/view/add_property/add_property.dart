@@ -1,3 +1,4 @@
+import 'package:chautari/model/menu_item.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/text_decoration.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
@@ -45,41 +46,81 @@ class AddProperty extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.all(ChautariPadding.standard),
-        child: Column(
-          children: [
-            // districtview(),
-            FormBuilder(
-              child: Column(
-                children: [
-                  FormBuilderTextField(
-                    controller: _districtTextController,
-                    focusNode: _noFocusNode,
-                    name: "district_field",
-                    style: ChautariTextStyles().listTitle,
-                    decoration: ChautariDecoration()
-                        .outlinedBorderTextField(hintText: "Select District"),
-                    onTap: () => {
-                      _openSearch(),
-                    },
+        child: SingleChildScrollView(
+          child: FormBuilder(
+            child: Column(
+              children: [
+                // district
+                FormBuilderTextField(
+                  controller: _districtTextController,
+                  focusNode: _noFocusNode,
+                  name: "district_field",
+                  style: ChautariTextStyles().listTitle,
+                  decoration: ChautariDecoration().outlinedBorderTextField(
+                      helperText: "Select District", labelText: "District"),
+                  onTap: () => {
+                    _openSearch(),
+                  },
+                ),
+                SizedBox(height: ChautariPadding.standard),
+                // address and map
+                FormBuilderTextField(
+                  controller: null,
+                  focusNode: _noFocusNode,
+                  name: "map_field",
+                  style: ChautariTextStyles().listTitle,
+                  decoration: ChautariDecoration()
+                      .outlinedBorderTextField(helperText: "Select Address"),
+                  onTap: () => _openMap(),
+                ),
+                SizedBox(height: ChautariPadding.standard),
+                FormBuilderTouchSpin(
+                  name: "noOfROoms",
+                  min: 1,
+                  max: 20,
+                  initialValue: 0,
+                  decoration: ChautariDecoration().outlinedBorderTextField(
+                      labelText: "Number of rooms",
+                      helperText: "Available number of rooms to rent"),
+                ),
+                SizedBox(height: ChautariPadding.standard),
+                FormBuilderCheckboxGroup(
+                  decoration: ChautariDecoration().outlinedBorderTextField(
+                    labelText: "parkings",
+                    helperText: "Select all availabe options",
                   ),
-                  FormBuilderTextField(
-                    controller: _districtTextController,
-                    focusNode: _noFocusNode,
-                    name: "map_field",
-                    style: ChautariTextStyles().listTitle,
-                    decoration: ChautariDecoration()
-                        .outlinedBorderTextField(hintText: "Select Address"),
-                    onTap: () => _openMap(),
-                  ),
-                ],
-              ),
-            ),
+                  name: "Checkbox",
+                  options: addController.parkings
+                      .map(
+                        (element) =>
+                            FormBuilderFieldOption(value: element.name),
+                      )
+                      .toList(),
+                ),
 
-            RaisedButton(
-              onPressed: () {},
-              child: Text("Submit"),
-            )
-          ],
+                SizedBox(height: ChautariPadding.standard),
+
+                FormBuilderRadioGroup(
+                  decoration: ChautariDecoration().outlinedBorderTextField(
+                    labelText: "Water",
+                    helperText: "Select one options",
+                  ),
+                  name: "Checkbox",
+                  options: addController.waters
+                      .map(
+                        (element) =>
+                            FormBuilderFieldOption(value: element.name),
+                      )
+                      .toList(),
+                ),
+
+                RaisedButton(
+                  onPressed: () {},
+                  child: Text("Submit"),
+                )
+              ],
+            ),
+          ),
         ),
       ),
     );

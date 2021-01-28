@@ -24,6 +24,7 @@ class ChautariDecoration {
         ),
       ),
       helperStyle: ChautariTextStyles().listSubtitle,
+      labelStyle: ChautariTextStyles().listSubtitle,
       hintText: hintText,
       helperText: helperText,
       labelText: labelText,
