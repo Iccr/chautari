@@ -1,43 +1,14 @@
 import 'dart:async';
 
+import 'package:chautari/widgets/map/map_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geolocator/geolocator.dart';
 
 class MapView extends StatelessWidget {
   Completer<GoogleMapController> _controller = Completer();
 
-  var _cameraPosition = CameraPosition(
-    target: LatLng(27.7172, 85.3240),
-    zoom: 14.4746,
-  );
-
-  Future<Position> _determinePosition() async {
-    bool serviceEnabled;
-    LocationPermission permission;
-
-    serviceEnabled = await Geolocator.isLocationServiceEnabled();
-    if (!serviceEnabled) {
-      return Future.error('Location services are disabled.');
-    }
-
-    permission = await Geolocator.checkPermission();
-    if (permission == LocationPermission.deniedForever) {
-      return Future.error(
-          'Location permissions are permantly denied, we cannot request permissions.');
-    }
-
-    if (permission == LocationPermission.denied) {
-      permission = await Geolocator.requestPermission();
-      if (permission != LocationPermission.whileInUse &&
-          permission != LocationPermission.always) {
-        return Future.error(
-            'Location permissions are denied (actual value: $permission).');
-      }
-    }
-
-    return await Geolocator.getCurrentPosition();
-  }
+  MapController mapController = Get.put(MapController());
 
   @override
   Widget build(BuildContext context) {
@@ -46,9 +17,10 @@ class MapView extends StatelessWidget {
         title: Text("Map"),
       ),
       body: GoogleMap(
+        markers: mapController.marker,
         myLocationEnabled: true,
         mapType: MapType.hybrid,
-        initialCameraPosition: _cameraPosition,
+        initialCameraPosition: mapController.cameraPosition,
         onMapCreated: (GoogleMapController controller) {
           _controller.complete(controller);
         },
