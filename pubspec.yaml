@@ -44,6 +44,7 @@ dependencies:
   geolocator: ^6.1.14
   geocoding: ^1.0.5
   app_settings: ^4.0.4
+  intl: ^0.16.1
   form_builder_map_field:
     git:
       url: git@github.com:Iccr/form_builder_map_field.git

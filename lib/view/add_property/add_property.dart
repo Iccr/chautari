@@ -8,6 +8,7 @@ import 'package:chautari/widgets/search/search_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:intl/intl.dart';
 
 class AddProperty extends StatelessWidget {
   final SearchController search = Get.put(SearchController());
@@ -90,6 +91,7 @@ class AddProperty extends StatelessWidget {
                   min: 1,
                   max: 20,
                   initialValue: 0,
+                  displayFormat: NumberFormat("##"),
                   decoration: ChautariDecoration().outlinedBorderTextField(
                       labelText: "Number of rooms",
                       helperText: "Available number of rooms to rent"),
