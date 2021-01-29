@@ -24,6 +24,8 @@ class AddProperty extends StatelessWidget {
   final _districtKey = ValueKey("district");
   final _addressKey = ValueKey("address");
   final _parkingKey = ValueKey("parking");
+  final _amenityKey = ValueKey("amenity");
+  final _waterKey = ValueKey("water");
 
   @override
   Widget build(BuildContext context) {
@@ -91,6 +93,71 @@ class AddProperty extends StatelessWidget {
                 ),
                 SizedBox(height: ChautariPadding.standard),
 
+                // parking
+                FormBuilderCheckboxGroup(
+                  key: _parkingKey,
+                  validator: (value) {
+                    return value == null ? "This field cannot be empty" : null;
+                  },
+                  decoration: ChautariDecoration().outlinedBorderTextField(
+                    labelText: "parkings",
+                    helperText: "Select all availabe options",
+                  ),
+                  name: "parking",
+                  options: addController.parkings
+                      .map(
+                        (element) =>
+                            FormBuilderFieldOption(value: element.name),
+                      )
+                      .toList(),
+                ),
+
+                SizedBox(height: ChautariPadding.standard),
+
+                // amenity
+                FormBuilderCheckboxGroup(
+                  key: _amenityKey,
+                  validator: (value) {
+                    return value == null ? "This field cannot be empty" : null;
+                  },
+                  wrapAlignment: WrapAlignment.spaceBetween,
+                  wrapSpacing: Get.width,
+                  decoration: ChautariDecoration().outlinedBorderTextField(
+                    labelText: "Amenities",
+                    helperText: "Select all availabe options",
+                  ),
+                  name: "amenity",
+                  options: addController.amenities
+                      .map(
+                        (element) =>
+                            FormBuilderFieldOption(value: element.name),
+                      )
+                      .toList(),
+                ),
+
+                SizedBox(height: ChautariPadding.standard),
+
+                // water
+                FormBuilderRadioGroup(
+                  key: _waterKey,
+                  wrapSpacing: Get.width,
+                  validator: (value) {
+                    return value == null ? "This field cannot be empty" : null;
+                  },
+                  decoration: ChautariDecoration().outlinedBorderTextField(
+                    labelText: "Water",
+                    helperText: "Select one options",
+                  ),
+                  name: "water",
+                  options: addController.waters
+                      .map(
+                        (element) =>
+                            FormBuilderFieldOption(value: element.name),
+                      )
+                      .toList(),
+                ),
+                SizedBox(height: ChautariPadding.standard),
+
                 // number of rooms
                 FormBuilderTouchSpin(
                   addIcon: Icon(
@@ -109,63 +176,6 @@ class AddProperty extends StatelessWidget {
                   decoration: ChautariDecoration().outlinedBorderTextField(
                       labelText: "Number of rooms",
                       helperText: "Available number of rooms to rent"),
-                ),
-                SizedBox(height: ChautariPadding.standard),
-
-                // parking
-                FormBuilderCheckboxGroup(
-                  key: _parkingKey,
-                  validator: (value) {
-                    return value == null ? "This field cannot be empty" : null;
-                  },
-                  decoration: ChautariDecoration().outlinedBorderTextField(
-                    labelText: "parkings",
-                    helperText: "Select all availabe options",
-                  ),
-                  name: "Checkbox",
-                  options: addController.parkings
-                      .map(
-                        (element) =>
-                            FormBuilderFieldOption(value: element.name),
-                      )
-                      .toList(),
-                ),
-
-                SizedBox(height: ChautariPadding.standard),
-
-                // amenity
-                FormBuilderCheckboxGroup(
-                  wrapAlignment: WrapAlignment.spaceBetween,
-                  wrapSpacing: Get.width,
-                  decoration: ChautariDecoration().outlinedBorderTextField(
-                    labelText: "Amenities",
-                    helperText: "Select all availabe options",
-                  ),
-                  name: "Checkbox",
-                  options: addController.amenities
-                      .map(
-                        (element) =>
-                            FormBuilderFieldOption(value: element.name),
-                      )
-                      .toList(),
-                ),
-
-                SizedBox(height: ChautariPadding.standard),
-
-                // water
-                FormBuilderRadioGroup(
-                  wrapSpacing: Get.width,
-                  decoration: ChautariDecoration().outlinedBorderTextField(
-                    labelText: "Water",
-                    helperText: "Select one options",
-                  ),
-                  name: "Checkbox",
-                  options: addController.waters
-                      .map(
-                        (element) =>
-                            FormBuilderFieldOption(value: element.name),
-                      )
-                      .toList(),
                 ),
                 SizedBox(height: ChautariPadding.standard),
 
