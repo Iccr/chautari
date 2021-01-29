@@ -36,7 +36,7 @@ class ChautariList {
       height: 0.6,
       child: Container(
         decoration: BoxDecoration(
-          color: ChautariColors.primaryDarkAndWhitecolor().withOpacity(0.5),
+          color: ChautariColors.primaryDarkAndWhite900color().withOpacity(0.5),
           gradient: LinearGradient(
               begin: Alignment.centerLeft,
               end: Alignment.centerRight,
