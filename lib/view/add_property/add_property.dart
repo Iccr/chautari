@@ -21,6 +21,8 @@ class AddProperty extends StatelessWidget {
   ScrollController _scrollController = new ScrollController();
 
   final _formKey = GlobalKey<FormBuilderState>();
+  final _districtKey = ValueKey("district");
+  final _addressKey = ValueKey("district");
 
   @override
   Widget build(BuildContext context) {
@@ -53,19 +55,25 @@ class AddProperty extends StatelessWidget {
         padding: EdgeInsets.all(ChautariPadding.standard),
         child: SingleChildScrollView(
           child: FormBuilder(
+            key: _formKey,
+            autovalidateMode: AutovalidateMode.always,
             child: Column(
               children: [
                 SizedBox(height: ChautariPadding.standard),
                 // district
                 FormBuilderTextField(
+                  key: _districtKey,
+                  validator: FormBuilderValidators.required(context),
                   controller: _districtTextController,
                   focusNode: _districtFocusNode,
                   name: "district_field",
                   style: ChautariTextStyles().listTitle,
                   decoration: ChautariDecoration().outlinedBorderTextField(
-                      helperText: "Select District", labelText: "District"),
-                  onTap: () => {
-                    _openSearch(),
+                      helperText: "Select District",
+                      labelText: "District",
+                      errorText: addController.districtError),
+                  onTap: () {
+                    _openSearch();
                   },
                 ),
                 SizedBox(height: ChautariPadding.standard),
@@ -184,7 +192,18 @@ class AddProperty extends StatelessWidget {
                 //   maxImages: 1,
                 // )
                 RaisedButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    _formKey.currentState.save();
+                    if (_formKey.currentState.validate()) {
+                      print(_formKey.currentState.value);
+                    } else {
+                      var firstWidget =
+                          _formKey.currentState.fields.entries.firstWhere(
+                        (element) => element.value.hasError,
+                      );
+                      Scrollable.ensureVisible(firstWidget.value.context);
+                    }
+                  },
                   child: Text("Submit"),
                 ),
                 SizedBox(height: ChautariPadding.standard),
