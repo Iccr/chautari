@@ -150,6 +150,7 @@ class AddProperty extends StatelessWidget {
                 ),
                 SizedBox(height: ChautariPadding.standard),
                 FormBuilderTextField(
+                  keyboardType: TextInputType.number,
                   name: "price",
                   decoration: ChautariDecoration().outlinedBorderTextField(
                       labelText: "Price", helperText: "price per month"),
@@ -162,6 +163,7 @@ class AddProperty extends StatelessWidget {
                   scrollController: _scrollController,
                   imageQuality: 40,
                   name: "images",
+                  iconColor: ChautariColors.whiteAndPrimarycolor(),
                   onChanged: (value) {
                     print("on changed");
                     print(value.length);
@@ -171,7 +173,8 @@ class AddProperty extends StatelessWidget {
                         curve: Curves.easeInOut);
                   },
                   decoration: ChautariDecoration().outlinedBorderTextField(
-                      labelText: 'Propery images', helperText: "Max 10 images"),
+                      labelText: 'Propery images',
+                      helperText: "Maximum 10 images are allowed"),
                   maxImages: 15,
                 ),
 

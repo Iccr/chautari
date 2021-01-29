@@ -25,7 +25,7 @@ class ChautariColors extends GetxController {
     return mode == ThemeMode.dark ? white : black;
   }
 
-// black and primary => lightmode black, dark mode theme.primaryColor
+// primary and black  => dark mode black, lightmode theme.primaryColor,
 
   static Color blackAndPrimarycolor() {
     var mode = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
@@ -36,13 +36,14 @@ class ChautariColors extends GetxController {
     return primary;
   }
 
-// primary and white => lightmode primary, dark mode white
-  static Color primaryAndWhitecolor() {
+// primary and white => dark mode white lightmode primary,
+  static Color whiteAndPrimarycolor() {
     var mode = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
     return mode == ThemeMode.dark ? white : primary;
   }
 
-  static Color primaryDarkAndWhitecolor() {
+// dark mode white, lightmode , primary with shade900
+  static Color primaryDarkAndWhite900color() {
     var mode = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
     return mode == ThemeMode.dark ? white : primaryColor().shade900;
   }
