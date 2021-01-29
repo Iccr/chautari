@@ -1,3 +1,4 @@
+import 'package:chautari/forked/form_builder_image_picker.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/text_decoration.dart';
@@ -6,7 +7,6 @@ import 'package:chautari/view/add_property/add_property_controller.dart';
 import 'package:chautari/widgets/search/search.dart';
 import 'package:chautari/widgets/search/search_controller.dart';
 import 'package:flutter/material.dart';
-import 'package:form_builder_image_picker/form_builder_image_picker.dart';
 import 'package:get/get.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
@@ -17,6 +17,8 @@ class AddProperty extends StatelessWidget {
   final TextEditingController _districtTextController = TextEditingController();
   final FocusNode _districtFocusNode = FocusNode();
   final FocusNode _addressFocusNode = FocusNode();
+
+  ScrollController _scrollController = new ScrollController();
 
   final _formKey = GlobalKey<FormBuilderState>();
 
@@ -155,9 +157,21 @@ class AddProperty extends StatelessWidget {
                 SizedBox(height: ChautariPadding.standard),
 
                 FormBuilderImagePicker(
+                  previewMargin: EdgeInsets.only(right: ChautariPadding.small5),
+                  previewWidth: 130,
+                  scrollController: _scrollController,
+                  imageQuality: 40,
                   name: "images",
-                  decoration: ChautariDecoration()
-                      .outlinedBorderTextField(labelText: 'pic images'),
+                  onChanged: (value) {
+                    print("on changed");
+                    print(value.length);
+                    _scrollController.animateTo(
+                        _scrollController.position.maxScrollExtent + 130,
+                        duration: Duration(milliseconds: 100),
+                        curve: Curves.easeInOut);
+                  },
+                  decoration: ChautariDecoration().outlinedBorderTextField(
+                      labelText: 'Propery images', helperText: "Max 10 images"),
                   maxImages: 15,
                 ),
 
