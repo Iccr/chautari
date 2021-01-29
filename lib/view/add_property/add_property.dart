@@ -22,7 +22,8 @@ class AddProperty extends StatelessWidget {
 
   final _formKey = GlobalKey<FormBuilderState>();
   final _districtKey = ValueKey("district");
-  final _addressKey = ValueKey("district");
+  final _addressKey = ValueKey("address");
+  final _parkingKey = ValueKey("parking");
 
   @override
   Widget build(BuildContext context) {
@@ -69,9 +70,9 @@ class AddProperty extends StatelessWidget {
                   name: "district_field",
                   style: ChautariTextStyles().listTitle,
                   decoration: ChautariDecoration().outlinedBorderTextField(
-                      helperText: "Select District",
-                      labelText: "District",
-                      errorText: addController.districtError),
+                    helperText: "Select District",
+                    labelText: "District",
+                  ),
                   onTap: () {
                     _openSearch();
                   },
@@ -89,6 +90,8 @@ class AddProperty extends StatelessWidget {
                   onTap: () => _openMap(),
                 ),
                 SizedBox(height: ChautariPadding.standard),
+
+                // number of rooms
                 FormBuilderTouchSpin(
                   addIcon: Icon(
                     Icons.add,
@@ -108,7 +111,13 @@ class AddProperty extends StatelessWidget {
                       helperText: "Available number of rooms to rent"),
                 ),
                 SizedBox(height: ChautariPadding.standard),
+
+                // parking
                 FormBuilderCheckboxGroup(
+                  key: _parkingKey,
+                  validator: (value) {
+                    return value == null ? "This field cannot be empty" : null;
+                  },
                   decoration: ChautariDecoration().outlinedBorderTextField(
                     labelText: "parkings",
                     helperText: "Select all availabe options",
@@ -123,6 +132,7 @@ class AddProperty extends StatelessWidget {
                 ),
 
                 SizedBox(height: ChautariPadding.standard),
+
                 // amenity
                 FormBuilderCheckboxGroup(
                   wrapAlignment: WrapAlignment.spaceBetween,
@@ -142,6 +152,7 @@ class AddProperty extends StatelessWidget {
 
                 SizedBox(height: ChautariPadding.standard),
 
+                // water
                 FormBuilderRadioGroup(
                   wrapSpacing: Get.width,
                   decoration: ChautariDecoration().outlinedBorderTextField(
@@ -157,6 +168,8 @@ class AddProperty extends StatelessWidget {
                       .toList(),
                 ),
                 SizedBox(height: ChautariPadding.standard),
+
+                // price
                 FormBuilderTextField(
                   keyboardType: TextInputType.number,
                   name: "price",
@@ -165,6 +178,7 @@ class AddProperty extends StatelessWidget {
                 ),
                 SizedBox(height: ChautariPadding.standard),
 
+                // image
                 FormBuilderImagePicker(
                   previewMargin: EdgeInsets.only(right: ChautariPadding.small5),
                   previewWidth: 130,
@@ -186,11 +200,7 @@ class AddProperty extends StatelessWidget {
                   maxImages: 15,
                 ),
 
-                // FormBuilderImagePicker(
-                //   name: 'photos',
-                //   decoration: const InputDecoration(labelText: 'Pick Photos'),
-                //   maxImages: 1,
-                // )
+                // submit
                 RaisedButton(
                   onPressed: () {
                     _formKey.currentState.save();

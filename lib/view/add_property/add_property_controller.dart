@@ -46,16 +46,6 @@ class AddPropertyController extends GetxController {
   // var waterId = "".obs;
   // var images = List<File>().obs;
 
-  //errors
-  var _districtError = "".obs;
-
-  String get districtError =>
-      _districtError.value.isEmpty ? null : _districtError.value;
-
-  setDistricterror(String error) {
-    _districtError.value = error;
-  }
-
   setAddress(String val) {
     if (val.length > 2) {
       address.value = val;
