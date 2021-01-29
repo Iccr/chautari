@@ -75,6 +75,7 @@ class SearchBar extends SearchDelegate<MenuItem> {
             )
             .toList();
     return ListView.separated(
+      keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
       itemCount: filteredItems.length,
       separatorBuilder: (context, index) => ChautariList().getSeperator(),
       itemBuilder: (context, index) {
