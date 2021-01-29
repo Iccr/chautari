@@ -93,7 +93,7 @@ class AddProperty extends StatelessWidget {
       body: Container(
         padding: EdgeInsets.all(ChautariPadding.standard),
         child: KeyboardActions(
-          overscroll: 30,
+          overscroll: 50,
           config: _buildConfig(context),
           child: FormBuilder(
             key: _formKey,
@@ -239,7 +239,9 @@ class AddProperty extends StatelessWidget {
                     addController.priceFocusNode.requestFocus();
                   },
                   decoration: ChautariDecoration().outlinedBorderTextField(
-                      labelText: "Price", helperText: "price per month"),
+                      prefix: Text("Rs. "),
+                      labelText: "Price",
+                      helperText: "price per month"),
                 ),
                 SizedBox(height: ChautariPadding.standard),
 
