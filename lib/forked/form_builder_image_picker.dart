@@ -10,7 +10,6 @@ import 'image_source_sheet.dart';
 
 /// Field for picking image(s) from Gallery or Camera.
 class FormBuilderImagePicker extends FormBuilderField<List<dynamic>> {
-  //TODO: Add documentation
   final double previewWidth;
   final double previewHeight;
   final EdgeInsets previewMargin;

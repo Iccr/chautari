@@ -8,14 +8,17 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
 
+class CreateRoomApiRequestModel {}
+
 class AddPropertyController extends GetxController {
   final AppinfoModel appInfo = Get.find(tag: AppConstant.appinfomodelsKey);
 
   var isValid = false;
 
   // observers
-  var address = "".obs;
   var addressError = "".obs;
+  var _lat = 1000.0.obs;
+  var _long = 1000.0.obs;
   // observable keys
   var _formKey = GlobalKey<FormBuilderState>().obs;
   var districtViewmodels = List<MenuItem>().obs;
@@ -29,7 +32,13 @@ class AddPropertyController extends GetxController {
   List<Parking> get parkings => appInfo.parkings;
   AutovalidateMode get autovalidateMode => _autovalidateMode.value;
 
+  double get lat => _lat.value == 1000.0 ? null : _lat.value;
+  double get long => _long.value == 1000.0 ? null : _long.value;
+
   // properties
+
+  final TextEditingController districtTextController = TextEditingController();
+  final TextEditingController addressTextController = TextEditingController();
   //focus
 
   FocusNode districtFocusNode;
@@ -53,6 +62,7 @@ class AddPropertyController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
     districtFocusNode = FocusNode();
     addressFocusNode = FocusNode();
     priceFocusNode = FocusNode();
@@ -67,18 +77,17 @@ class AddPropertyController extends GetxController {
   @override
   onClose() {
     super.onClose();
-    districtFocusNode.dispose();
-    addressFocusNode.dispose();
-    priceFocusNode.dispose();
+    // districtFocusNode.dispose();
+    // addressFocusNode.dispose();
+    // priceFocusNode.dispose();
   }
 
 // setters
-  setAddress(String val) {
-    if (val.length > 2) {
-      address.value = val;
-    } else {
-      addressError.value = "Enter valid District";
-    }
+
+  setLatLng(double lat, double long) {
+    _lat.value = lat;
+    _long.value = long;
+    addressFocusNode.requestFocus();
   }
 
 // functions
@@ -96,7 +105,10 @@ class AddPropertyController extends GetxController {
   }
 
   openMap() async {
-    await Get.toNamed(RouteName.map);
+    if (lat == null && long == null) {
+      addressFocusNode.unfocus();
+      await Get.toNamed(RouteName.map);
+    }
   }
 
   validateAddress() {}

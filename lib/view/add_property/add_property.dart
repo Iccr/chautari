@@ -40,7 +40,6 @@ class NumericTextFormatter extends TextInputFormatter {
 class AddProperty extends StatelessWidget {
   final SearchController search = Get.put(SearchController());
   final AddPropertyController addController = Get.put(AddPropertyController());
-  final TextEditingController _districtTextController = TextEditingController();
 
   ScrollController _scrollController = new ScrollController();
 
@@ -73,7 +72,7 @@ class AddProperty extends StatelessWidget {
           onSelected: (item) {
             var district = search.onSelectedDistrict(item);
             print(district);
-            _districtTextController.text =
+            addController.districtTextController.text =
                 "${district.name}, province: ${district.state}";
           },
         ),
@@ -81,7 +80,6 @@ class AddProperty extends StatelessWidget {
     }
 
     _openMap() {
-      addController.addressFocusNode.unfocus();
       addController.openMap();
     }
 
@@ -92,7 +90,6 @@ class AddProperty extends StatelessWidget {
       body: GetX<AddPropertyController>(
           init: AddPropertyController(),
           builder: (addController) {
-            print("validatemode is ${addController.autovalidateMode}");
             return Container(
               padding: EdgeInsets.all(ChautariPadding.standard),
               child: KeyboardActions(
@@ -102,13 +99,14 @@ class AddProperty extends StatelessWidget {
                   key: addController.formKey,
                   autovalidateMode: addController.autovalidateMode,
                   child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       SizedBox(height: ChautariPadding.standard),
                       // district
                       FormBuilderTextField(
                         key: _districtKey,
                         validator: FormBuilderValidators.required(context),
-                        controller: _districtTextController,
+                        controller: addController.districtTextController,
                         focusNode: addController.districtFocusNode,
                         name: "district_field",
                         style: ChautariTextStyles().listSubtitle,
@@ -123,12 +121,56 @@ class AddProperty extends StatelessWidget {
                       ),
                       SizedBox(height: ChautariPadding.standard),
                       // address and map
-
+                      if (addController.lat != null &&
+                          addController.long != null) ...[
+                        SizedBox(height: ChautariPadding.small5),
+                        Text(
+                          "${addController.lat}, ${addController.long}",
+                          textAlign: TextAlign.left,
+                        ),
+                        SizedBox(height: ChautariPadding.small5),
+                        Text.rich(
+                          TextSpan(
+                            style: ChautariTextStyles().listSubtitle,
+                            children: [
+                              TextSpan(
+                                text:
+                                    "People will be serching with this address.",
+                                style: ChautariTextStyles()
+                                    .listSubtitle
+                                    .copyWith(
+                                        color: ChautariColors
+                                                .whiteAndPrimarycolor()
+                                            .withOpacity(0.8)),
+                              ),
+                              TextSpan(
+                                text: "Try to make it as accurate as possible",
+                                style: ChautariTextStyles()
+                                    .listSubtitle
+                                    .copyWith(
+                                        color: ChautariColors
+                                                .whiteAndPrimarycolor()
+                                            .withOpacity(0.8)),
+                              ),
+                            ],
+                          ),
+                        ),
+                        SizedBox(height: ChautariPadding.small5),
+                      ],
                       FormBuilderTextField(
-                        controller: null,
+                        key: _addressKey,
+                        controller: addController.addressTextController,
                         focusNode: addController.addressFocusNode,
                         name: "map_field",
-                        style: ChautariTextStyles().listTitle,
+                        onSaved: (newValue) {
+                          // newValue.trim().toLowerCase();
+                        },
+                        validator: (value) {
+                          return value == null || value.isEmpty
+                              ? "This field cannot be empty"
+                              : null;
+                        },
+                        style: ChautariTextStyles().listSubtitle,
                         decoration: ChautariDecoration()
                             .outlinedBorderTextField(
                                 helperText: "local address name",
@@ -153,10 +195,15 @@ class AddProperty extends StatelessWidget {
                         name: "parking",
                         options: addController.parkings
                             .map(
-                              (element) =>
-                                  FormBuilderFieldOption(value: element.name),
+                              (element) => FormBuilderFieldOption(
+                                value: element,
+                                child: Text(element.name.capitalize),
+                              ),
                             )
                             .toList(),
+                        onChanged: (value) {
+                          print("parking value $value");
+                        },
                       ),
 
                       SizedBox(height: ChautariPadding.standard),
@@ -293,6 +340,7 @@ class AddProperty extends StatelessWidget {
 
                       // submit
                       RaisedButton(
+                        color: ChautariColors.primaryColor(),
                         onPressed: () {
                           addController.submit();
                         },
