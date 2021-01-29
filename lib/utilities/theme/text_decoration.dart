@@ -14,6 +14,10 @@ class ChautariDecoration {
           color: ChautariColors.primary.withOpacity(1),
         ),
       ),
+      border: OutlineInputBorder(
+        borderSide: BorderSide(
+            color: ChautariColors.whiteAndBlackcolor().withOpacity(0.5)),
+      ),
       enabledBorder: OutlineInputBorder(
         borderSide: BorderSide(
             color: ChautariColors.whiteAndBlackcolor().withOpacity(0.5)),

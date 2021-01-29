@@ -7,16 +7,39 @@ import 'package:chautari/view/add_property/add_property_controller.dart';
 import 'package:chautari/widgets/search/search.dart';
 import 'package:chautari/widgets/search/search_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+
+class NumericTextFormatter extends TextInputFormatter {
+  @override
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
+    if (newValue.text.isEmpty) {
+      return newValue.copyWith(text: '');
+    } else if (newValue.text.compareTo(oldValue.text) != 0) {
+      final int selectionIndexFromTheRight =
+          newValue.text.length - newValue.selection.end;
+      final f = NumberFormat("##,##,###");
+      final number =
+          int.parse(newValue.text.replaceAll(f.symbols.GROUP_SEP, ''));
+      final newString = f.format(number);
+      return TextEditingValue(
+        text: newString,
+        selection: TextSelection.collapsed(
+            offset: newString.length - selectionIndexFromTheRight),
+      );
+    } else {
+      return newValue;
+    }
+  }
+}
 
 class AddProperty extends StatelessWidget {
   final SearchController search = Get.put(SearchController());
   final AddPropertyController addController = Get.put(AddPropertyController());
   final TextEditingController _districtTextController = TextEditingController();
-  final FocusNode _districtFocusNode = FocusNode();
-  final FocusNode _addressFocusNode = FocusNode();
 
   ScrollController _scrollController = new ScrollController();
 
@@ -26,11 +49,12 @@ class AddProperty extends StatelessWidget {
   final _parkingKey = ValueKey("parking");
   final _amenityKey = ValueKey("amenity");
   final _waterKey = ValueKey("water");
+  final _priceKey = ValueKey("price");
 
   @override
   Widget build(BuildContext context) {
     _openSearch() async {
-      _districtFocusNode.unfocus();
+      addController.districtFocusNode.unfocus();
       var _ = await showSearch(
         context: context,
         delegate: SearchBar(
@@ -46,7 +70,7 @@ class AddProperty extends StatelessWidget {
     }
 
     _openMap() {
-      _addressFocusNode.unfocus();
+      addController.addressFocusNode.unfocus();
       addController.openMap();
     }
 
@@ -59,7 +83,7 @@ class AddProperty extends StatelessWidget {
         child: SingleChildScrollView(
           child: FormBuilder(
             key: _formKey,
-            autovalidateMode: AutovalidateMode.always,
+            autovalidateMode: AutovalidateMode.disabled,
             child: Column(
               children: [
                 SizedBox(height: ChautariPadding.standard),
@@ -68,7 +92,7 @@ class AddProperty extends StatelessWidget {
                   key: _districtKey,
                   validator: FormBuilderValidators.required(context),
                   controller: _districtTextController,
-                  focusNode: _districtFocusNode,
+                  focusNode: addController.districtFocusNode,
                   name: "district_field",
                   style: ChautariTextStyles().listTitle,
                   decoration: ChautariDecoration().outlinedBorderTextField(
@@ -84,7 +108,7 @@ class AddProperty extends StatelessWidget {
 
                 FormBuilderTextField(
                   controller: null,
-                  focusNode: _addressFocusNode,
+                  focusNode: addController.addressFocusNode,
                   name: "map_field",
                   style: ChautariTextStyles().listTitle,
                   decoration: ChautariDecoration().outlinedBorderTextField(
@@ -181,8 +205,24 @@ class AddProperty extends StatelessWidget {
 
                 // price
                 FormBuilderTextField(
+                  key: _priceKey,
+                  validator: (value) {
+                    if (value == null) {
+                      return "This field cannot be empty";
+                    } else if (int.parse(value.isEmpty ? "0" : value) < 100) {
+                      return "value must be greater than 100";
+                    } else {
+                      return null;
+                    }
+                  },
+                  inputFormatters: [NumericTextFormatter()],
                   keyboardType: TextInputType.number,
+                  focusNode: addController.priceFocusNode,
                   name: "price",
+                  onTap: () {
+                    print("price tapped");
+                    addController.priceFocusNode.requestFocus();
+                  },
                   decoration: ChautariDecoration().outlinedBorderTextField(
                       labelText: "Price", helperText: "price per month"),
                 ),
