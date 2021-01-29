@@ -7,6 +7,13 @@ class ChautariTextStyles {
     fontWeight: FontWeight.w600,
     color: ChautariColors.whiteAndBlackcolor(),
   );
+
+  TextStyle normal = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: ChautariColors.whiteAndBlackcolor(),
+  );
+
   TextStyle listSubtitle = TextStyle(
     fontSize: 13,
     fontWeight: FontWeight.w500,

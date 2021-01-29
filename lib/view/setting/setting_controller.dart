@@ -19,11 +19,7 @@ class SettingController extends GetxController {
   ];
 
   var _themeMenu = [
-    MenuItem(
-        title: AppConstant.darktheme,
-        index: 0,
-        subtitle: "abc",
-        selected: true),
+    MenuItem(title: AppConstant.darktheme, index: 0, selected: true),
     MenuItem(title: AppConstant.lighttheme, index: 1)
   ].obs;
 

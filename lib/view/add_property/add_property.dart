@@ -290,7 +290,9 @@ class AddProperty extends StatelessWidget {
                         validator: (value) {
                           if (value == null) {
                             return "This field cannot be empty";
-                          } else if (int.parse(value.isEmpty ? "0" : value) <
+                          } else if (int.parse(value.isEmpty
+                                  ? "0"
+                                  : value.replaceAll(",", "")) <
                               100) {
                             return "value must be greater than 100";
                           } else {
@@ -344,7 +346,12 @@ class AddProperty extends StatelessWidget {
                         onPressed: () {
                           addController.submit();
                         },
-                        child: Text("Submit"),
+                        child: Text(
+                          "Submit",
+                          style: ChautariTextStyles()
+                              .normal
+                              .copyWith(color: ChautariColors.white),
+                        ),
                       ),
                       SizedBox(height: ChautariPadding.standard),
                     ],
