@@ -11,6 +11,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:intl/intl.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 
 class NumericTextFormatter extends TextInputFormatter {
   @override
@@ -51,6 +52,17 @@ class AddProperty extends StatelessWidget {
   final _waterKey = ValueKey("water");
   final _priceKey = ValueKey("price");
 
+  KeyboardActionsConfig _buildConfig(BuildContext context) {
+    return KeyboardActionsConfig(
+        keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
+        keyboardBarColor: ChautariColors.black.withOpacity(0.3),
+        nextFocus: false,
+        actions: [
+          KeyboardActionsItem(focusNode: addController.priceFocusNode)
+          // KeyboardActionsItem(focusNode: addController.n)
+        ]);
+  }
+
   @override
   Widget build(BuildContext context) {
     _openSearch() async {
@@ -80,194 +92,207 @@ class AddProperty extends StatelessWidget {
       ),
       body: Container(
         padding: EdgeInsets.all(ChautariPadding.standard),
-        child: SingleChildScrollView(
-          child: FormBuilder(
-            key: _formKey,
-            autovalidateMode: AutovalidateMode.disabled,
-            child: Column(
-              children: [
-                SizedBox(height: ChautariPadding.standard),
-                // district
-                FormBuilderTextField(
-                  key: _districtKey,
-                  validator: FormBuilderValidators.required(context),
-                  controller: _districtTextController,
-                  focusNode: addController.districtFocusNode,
-                  name: "district_field",
-                  style: ChautariTextStyles().listTitle,
-                  decoration: ChautariDecoration().outlinedBorderTextField(
-                    helperText: "Select District",
-                    labelText: "District",
+        child: KeyboardActions(
+          config: _buildConfig(context),
+          child: SingleChildScrollView(
+            child: FormBuilder(
+              key: _formKey,
+              autovalidateMode: AutovalidateMode.disabled,
+              child: Column(
+                children: [
+                  SizedBox(height: ChautariPadding.standard),
+                  // district
+                  FormBuilderTextField(
+                    key: _districtKey,
+                    validator: FormBuilderValidators.required(context),
+                    controller: _districtTextController,
+                    focusNode: addController.districtFocusNode,
+                    name: "district_field",
+                    style: ChautariTextStyles().listTitle,
+                    decoration: ChautariDecoration().outlinedBorderTextField(
+                      helperText: "Select District",
+                      labelText: "District",
+                    ),
+                    onTap: () {
+                      _openSearch();
+                    },
                   ),
-                  onTap: () {
-                    _openSearch();
-                  },
-                ),
-                SizedBox(height: ChautariPadding.standard),
-                // address and map
+                  SizedBox(height: ChautariPadding.standard),
+                  // address and map
 
-                FormBuilderTextField(
-                  controller: null,
-                  focusNode: addController.addressFocusNode,
-                  name: "map_field",
-                  style: ChautariTextStyles().listTitle,
-                  decoration: ChautariDecoration().outlinedBorderTextField(
-                      helperText: "local address name", labelText: "address"),
-                  onTap: () => _openMap(),
-                ),
-                SizedBox(height: ChautariPadding.standard),
-
-                // parking
-                FormBuilderCheckboxGroup(
-                  key: _parkingKey,
-                  validator: (value) {
-                    return value == null ? "This field cannot be empty" : null;
-                  },
-                  decoration: ChautariDecoration().outlinedBorderTextField(
-                    labelText: "parkings",
-                    helperText: "Select all availabe options",
+                  FormBuilderTextField(
+                    controller: null,
+                    focusNode: addController.addressFocusNode,
+                    name: "map_field",
+                    style: ChautariTextStyles().listTitle,
+                    decoration: ChautariDecoration().outlinedBorderTextField(
+                        helperText: "local address name", labelText: "address"),
+                    onTap: () => _openMap(),
                   ),
-                  name: "parking",
-                  options: addController.parkings
-                      .map(
-                        (element) =>
-                            FormBuilderFieldOption(value: element.name),
-                      )
-                      .toList(),
-                ),
+                  SizedBox(height: ChautariPadding.standard),
 
-                SizedBox(height: ChautariPadding.standard),
-
-                // amenity
-                FormBuilderCheckboxGroup(
-                  key: _amenityKey,
-                  validator: (value) {
-                    return value == null ? "This field cannot be empty" : null;
-                  },
-                  wrapAlignment: WrapAlignment.spaceBetween,
-                  wrapSpacing: Get.width,
-                  decoration: ChautariDecoration().outlinedBorderTextField(
-                    labelText: "Amenities",
-                    helperText: "Select all availabe options",
+                  // parking
+                  FormBuilderCheckboxGroup(
+                    key: _parkingKey,
+                    validator: (value) {
+                      return value == null
+                          ? "This field cannot be empty"
+                          : null;
+                    },
+                    decoration: ChautariDecoration().outlinedBorderTextField(
+                      labelText: "parkings",
+                      helperText: "Select all availabe options",
+                    ),
+                    name: "parking",
+                    options: addController.parkings
+                        .map(
+                          (element) =>
+                              FormBuilderFieldOption(value: element.name),
+                        )
+                        .toList(),
                   ),
-                  name: "amenity",
-                  options: addController.amenities
-                      .map(
-                        (element) =>
-                            FormBuilderFieldOption(value: element.name),
-                      )
-                      .toList(),
-                ),
 
-                SizedBox(height: ChautariPadding.standard),
+                  SizedBox(height: ChautariPadding.standard),
 
-                // water
-                FormBuilderRadioGroup(
-                  key: _waterKey,
-                  wrapSpacing: Get.width,
-                  validator: (value) {
-                    return value == null ? "This field cannot be empty" : null;
-                  },
-                  decoration: ChautariDecoration().outlinedBorderTextField(
-                    labelText: "Water",
-                    helperText: "Select one options",
+                  // amenity
+                  FormBuilderCheckboxGroup(
+                    key: _amenityKey,
+                    validator: (value) {
+                      return value == null
+                          ? "This field cannot be empty"
+                          : null;
+                    },
+                    wrapAlignment: WrapAlignment.spaceBetween,
+                    wrapSpacing: Get.width,
+                    decoration: ChautariDecoration().outlinedBorderTextField(
+                      labelText: "Amenities",
+                      helperText: "Select all availabe options",
+                    ),
+                    name: "amenity",
+                    options: addController.amenities
+                        .map(
+                          (element) =>
+                              FormBuilderFieldOption(value: element.name),
+                        )
+                        .toList(),
                   ),
-                  name: "water",
-                  options: addController.waters
-                      .map(
-                        (element) =>
-                            FormBuilderFieldOption(value: element.name),
-                      )
-                      .toList(),
-                ),
-                SizedBox(height: ChautariPadding.standard),
 
-                // number of rooms
-                FormBuilderTouchSpin(
-                  addIcon: Icon(
-                    Icons.add,
-                    color: ChautariColors.whiteAndBlackcolor().withOpacity(0.5),
+                  SizedBox(height: ChautariPadding.standard),
+
+                  // water
+                  FormBuilderRadioGroup(
+                    key: _waterKey,
+                    wrapSpacing: Get.width,
+                    validator: (value) {
+                      return value == null
+                          ? "This field cannot be empty"
+                          : null;
+                    },
+                    decoration: ChautariDecoration().outlinedBorderTextField(
+                      labelText: "Water",
+                      helperText: "Select one options",
+                    ),
+                    name: "water",
+                    options: addController.waters
+                        .map(
+                          (element) =>
+                              FormBuilderFieldOption(value: element.name),
+                        )
+                        .toList(),
                   ),
-                  subtractIcon: Icon(
-                    Icons.remove,
-                    color: ChautariColors.whiteAndBlackcolor().withOpacity(0.5),
+                  SizedBox(height: ChautariPadding.standard),
+
+                  // number of rooms
+                  FormBuilderTouchSpin(
+                    addIcon: Icon(
+                      Icons.add,
+                      color:
+                          ChautariColors.whiteAndBlackcolor().withOpacity(0.5),
+                    ),
+                    subtractIcon: Icon(
+                      Icons.remove,
+                      color:
+                          ChautariColors.whiteAndBlackcolor().withOpacity(0.5),
+                    ),
+                    name: "noOfROoms",
+                    min: 1,
+                    max: 20,
+                    initialValue: 0,
+                    displayFormat: NumberFormat("##"),
+                    decoration: ChautariDecoration().outlinedBorderTextField(
+                        labelText: "Number of rooms",
+                        helperText: "Available number of rooms to rent"),
                   ),
-                  name: "noOfROoms",
-                  min: 1,
-                  max: 20,
-                  initialValue: 0,
-                  displayFormat: NumberFormat("##"),
-                  decoration: ChautariDecoration().outlinedBorderTextField(
-                      labelText: "Number of rooms",
-                      helperText: "Available number of rooms to rent"),
-                ),
-                SizedBox(height: ChautariPadding.standard),
+                  SizedBox(height: ChautariPadding.standard),
 
-                // price
-                FormBuilderTextField(
-                  key: _priceKey,
-                  validator: (value) {
-                    if (value == null) {
-                      return "This field cannot be empty";
-                    } else if (int.parse(value.isEmpty ? "0" : value) < 100) {
-                      return "value must be greater than 100";
-                    } else {
-                      return null;
-                    }
-                  },
-                  inputFormatters: [NumericTextFormatter()],
-                  keyboardType: TextInputType.number,
-                  focusNode: addController.priceFocusNode,
-                  name: "price",
-                  onTap: () {
-                    print("price tapped");
-                    addController.priceFocusNode.requestFocus();
-                  },
-                  decoration: ChautariDecoration().outlinedBorderTextField(
-                      labelText: "Price", helperText: "price per month"),
-                ),
-                SizedBox(height: ChautariPadding.standard),
+                  // price
+                  FormBuilderTextField(
+                    key: _priceKey,
+                    validator: (value) {
+                      if (value == null) {
+                        return "This field cannot be empty";
+                      } else if (int.parse(value.isEmpty ? "0" : value) < 100) {
+                        return "value must be greater than 100";
+                      } else {
+                        return null;
+                      }
+                    },
+                    inputFormatters: [NumericTextFormatter()],
+                    keyboardType: TextInputType.number,
+                    textInputAction: TextInputAction.done,
+                    focusNode: addController.priceFocusNode,
+                    name: "price",
+                    onTap: () {
+                      print("price tapped");
+                      addController.priceFocusNode.requestFocus();
+                    },
+                    decoration: ChautariDecoration().outlinedBorderTextField(
+                        labelText: "Price", helperText: "price per month"),
+                  ),
+                  SizedBox(height: ChautariPadding.standard),
 
-                // image
-                FormBuilderImagePicker(
-                  previewMargin: EdgeInsets.only(right: ChautariPadding.small5),
-                  previewWidth: 130,
-                  scrollController: _scrollController,
-                  imageQuality: 40,
-                  name: "images",
-                  iconColor: ChautariColors.whiteAndPrimarycolor(),
-                  onChanged: (value) {
-                    print("on changed");
-                    print(value.length);
-                    _scrollController.animateTo(
-                        _scrollController.position.maxScrollExtent + 130,
-                        duration: Duration(milliseconds: 100),
-                        curve: Curves.easeInOut);
-                  },
-                  decoration: ChautariDecoration().outlinedBorderTextField(
-                      labelText: 'Propery images',
-                      helperText: "Maximum 10 images are allowed"),
-                  maxImages: 15,
-                ),
+                  // image
+                  FormBuilderImagePicker(
+                    previewMargin:
+                        EdgeInsets.only(right: ChautariPadding.small5),
+                    previewWidth: 130,
+                    scrollController: _scrollController,
+                    imageQuality: 40,
+                    name: "images",
+                    iconColor: ChautariColors.whiteAndPrimarycolor(),
+                    onChanged: (value) {
+                      print("on changed");
+                      print(value.length);
+                      _scrollController.animateTo(
+                          _scrollController.position.maxScrollExtent + 130,
+                          duration: Duration(milliseconds: 100),
+                          curve: Curves.easeInOut);
+                    },
+                    decoration: ChautariDecoration().outlinedBorderTextField(
+                        labelText: 'Propery images',
+                        helperText: "Maximum 10 images are allowed"),
+                    maxImages: 15,
+                  ),
 
-                // submit
-                RaisedButton(
-                  onPressed: () {
-                    _formKey.currentState.save();
-                    if (_formKey.currentState.validate()) {
-                      print(_formKey.currentState.value);
-                    } else {
-                      var firstWidget =
-                          _formKey.currentState.fields.entries.firstWhere(
-                        (element) => element.value.hasError,
-                      );
-                      Scrollable.ensureVisible(firstWidget.value.context);
-                    }
-                  },
-                  child: Text("Submit"),
-                ),
-                SizedBox(height: ChautariPadding.standard),
-              ],
+                  // submit
+                  RaisedButton(
+                    onPressed: () {
+                      _formKey.currentState.save();
+                      if (_formKey.currentState.validate()) {
+                        print(_formKey.currentState.value);
+                      } else {
+                        var firstWidget =
+                            _formKey.currentState.fields.entries.firstWhere(
+                          (element) => element.value.hasError,
+                        );
+                        Scrollable.ensureVisible(firstWidget.value.context);
+                      }
+                    },
+                    child: Text("Submit"),
+                  ),
+                  SizedBox(height: ChautariPadding.standard),
+                ],
+              ),
             ),
           ),
         ),
