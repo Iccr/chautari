@@ -79,8 +79,6 @@ class ProfileView extends StatelessWidget {
                   ),
                   Expanded(
                     child: ListView.separated(
-                      keyboardDismissBehavior:
-                          ScrollViewKeyboardDismissBehavior.onDrag,
                       separatorBuilder: (context, index) =>
                           ChautariList().getSeperator(),
                       itemCount: c.menu.length,
