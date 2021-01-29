@@ -7,8 +7,12 @@ class ChautariDecoration {
       {String hintText,
       String helperText,
       String labelText,
-      String errorText}) {
+      String errorText,
+      Widget prefix,
+      String sufixText}) {
     return InputDecoration(
+      prefix: prefix,
+      suffixText: sufixText,
       focusedBorder: OutlineInputBorder(
         borderSide: BorderSide(
           color: ChautariColors.primary.withOpacity(1),
