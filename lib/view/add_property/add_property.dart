@@ -108,7 +108,7 @@ class AddProperty extends StatelessWidget {
                   controller: _districtTextController,
                   focusNode: addController.districtFocusNode,
                   name: "district_field",
-                  style: ChautariTextStyles().listTitle,
+                  style: ChautariTextStyles().listSubtitle,
                   decoration: ChautariDecoration().outlinedBorderTextField(
                     helperText: "Select District",
                     labelText: "District",
@@ -198,6 +198,7 @@ class AddProperty extends StatelessWidget {
 
                 // number of rooms
                 FormBuilderTouchSpin(
+                  textStyle: ChautariTextStyles().withBigText,
                   addIcon: Icon(
                     Icons.add,
                     color: ChautariColors.whiteAndBlackcolor().withOpacity(0.5),

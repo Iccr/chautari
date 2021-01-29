@@ -17,4 +17,10 @@ class ChautariTextStyles {
     fontWeight: FontWeight.w600,
     color: ChautariColors.white.withOpacity(.6),
   );
+
+  TextStyle withBigText = TextStyle(
+    fontWeight: FontWeight.w400,
+    fontSize: 24,
+    color: ChautariColors.whiteAndBlackcolor().withOpacity(0.8),
+  );
 }
