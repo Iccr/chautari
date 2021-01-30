@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chautari/model/app_info.dart';
 import 'package:chautari/model/menu_item.dart';
 import 'package:chautari/utilities/constants.dart';
@@ -8,10 +10,24 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
 
-class CreateRoomApiRequestModel {}
+class CreateRoomApiRequestModel {
+  int district;
+  String address;
+  double lat;
+  double long;
+  String price;
+  int noofROom;
+  List<Parking> parking;
+  List<Amenities> amenities;
+  bool available = true;
+  String water;
+  List<File> images;
+}
 
 class AddPropertyController extends GetxController {
   final AppinfoModel appInfo = Get.find(tag: AppConstant.appinfomodelsKey);
+
+  final CreateRoomApiRequestModel apiModel = CreateRoomApiRequestModel();
 
   var isValid = false;
 
@@ -87,6 +103,8 @@ class AddPropertyController extends GetxController {
   setLatLng(double lat, double long) {
     _lat.value = lat;
     _long.value = long;
+    apiModel.lat = lat;
+    apiModel.long = long;
     addressFocusNode.requestFocus();
   }
 
@@ -95,7 +113,8 @@ class AddPropertyController extends GetxController {
     _autovalidateMode.value = AutovalidateMode.always;
     formKey.currentState.save();
     if (formKey.currentState.validate()) {
-      print(formKey.currentState.value);
+      // TODo:- api call
+
     } else {
       var firstWidget = formKey.currentState.fields.entries.firstWhere(
         (element) => element.value.hasError,

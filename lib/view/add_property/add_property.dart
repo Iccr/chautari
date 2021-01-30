@@ -74,6 +74,7 @@ class AddProperty extends StatelessWidget {
             print(district);
             addController.districtTextController.text =
                 "${district.name}, province: ${district.state}";
+            addController.apiModel.district = district.id;
           },
         ),
       );
@@ -163,7 +164,7 @@ class AddProperty extends StatelessWidget {
                         focusNode: addController.addressFocusNode,
                         name: "map_field",
                         onSaved: (newValue) {
-                          // newValue.trim().toLowerCase();
+                          addController.apiModel.address = newValue;
                         },
                         validator: (value) {
                           return value == null || value.isEmpty
@@ -204,6 +205,9 @@ class AddProperty extends StatelessWidget {
                         onChanged: (value) {
                           print("parking value $value");
                         },
+                        onSaved: (newValue) {
+                          addController.apiModel.parking = newValue;
+                        },
                       ),
 
                       SizedBox(height: ChautariPadding.standard),
@@ -226,10 +230,14 @@ class AddProperty extends StatelessWidget {
                         name: "amenity",
                         options: addController.amenities
                             .map(
-                              (element) =>
-                                  FormBuilderFieldOption(value: element.name),
+                              (element) => FormBuilderFieldOption(
+                                value: element,
+                                child: Text(element.name.capitalize),
+                              ),
                             )
                             .toList(),
+                        onSaved: (newValue) =>
+                            addController.apiModel.amenities = newValue,
                       ),
 
                       SizedBox(height: ChautariPadding.standard),
@@ -251,10 +259,14 @@ class AddProperty extends StatelessWidget {
                         name: "water",
                         options: addController.waters
                             .map(
-                              (element) =>
-                                  FormBuilderFieldOption(value: element.name),
+                              (element) => FormBuilderFieldOption(
+                                value: element,
+                                child: Text(element.name.capitalize),
+                              ),
                             )
                             .toList(),
+                        onSaved: (newValue) =>
+                            addController.apiModel.water = newValue,
                       ),
                       SizedBox(height: ChautariPadding.standard),
 
@@ -281,6 +293,8 @@ class AddProperty extends StatelessWidget {
                                 labelText: "Number of rooms",
                                 helperText:
                                     "Available number of rooms to rent"),
+                        onSaved: (newValue) =>
+                            addController.apiModel.noofROom = newValue,
                       ),
                       SizedBox(height: ChautariPadding.standard),
 
@@ -313,6 +327,7 @@ class AddProperty extends StatelessWidget {
                                 prefix: Text("Rs. "),
                                 labelText: "Price",
                                 helperText: "price per month"),
+                        onSaved: (newValue) => addController.apiModel.price,
                       ),
                       SizedBox(height: ChautariPadding.standard),
 
@@ -333,6 +348,8 @@ class AddProperty extends StatelessWidget {
                               duration: Duration(milliseconds: 100),
                               curve: Curves.easeInOut);
                         },
+                        onSaved: (newValue) =>
+                            addController.apiModel.images = newValue,
                         decoration: ChautariDecoration()
                             .outlinedBorderTextField(
                                 labelText: 'Propery images',
