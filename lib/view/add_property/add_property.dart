@@ -164,6 +164,7 @@ class AddProperty extends StatelessWidget {
                         focusNode: addController.addressFocusNode,
                         name: "map_field",
                         onSaved: (newValue) {
+                          print(newValue);
                           addController.apiModel.address = newValue;
                         },
                         validator: (value) {
@@ -206,7 +207,8 @@ class AddProperty extends StatelessWidget {
                           print("parking value $value");
                         },
                         onSaved: (newValue) {
-                          addController.apiModel.parking = newValue;
+                          print(newValue);
+                          addController.apiModel.parkings = newValue;
                         },
                       ),
 
@@ -214,88 +216,92 @@ class AddProperty extends StatelessWidget {
 
                       // amenity
                       FormBuilderCheckboxGroup(
-                        key: _amenityKey,
-                        validator: (value) {
-                          return value == null
-                              ? "This field cannot be empty"
-                              : null;
-                        },
-                        wrapAlignment: WrapAlignment.spaceBetween,
-                        wrapSpacing: Get.width,
-                        decoration:
-                            ChautariDecoration().outlinedBorderTextField(
-                          labelText: "Amenities",
-                          helperText: "Select all availabe options",
-                        ),
-                        name: "amenity",
-                        options: addController.amenities
-                            .map(
-                              (element) => FormBuilderFieldOption(
-                                value: element,
-                                child: Text(element.name.capitalize),
-                              ),
-                            )
-                            .toList(),
-                        onSaved: (newValue) =>
-                            addController.apiModel.amenities = newValue,
-                      ),
+                          key: _amenityKey,
+                          validator: (value) {
+                            return value == null
+                                ? "This field cannot be empty"
+                                : null;
+                          },
+                          wrapAlignment: WrapAlignment.spaceBetween,
+                          wrapSpacing: Get.width,
+                          decoration:
+                              ChautariDecoration().outlinedBorderTextField(
+                            labelText: "Amenities",
+                            helperText: "Select all availabe options",
+                          ),
+                          name: "amenity",
+                          options: addController.amenities
+                              .map(
+                                (element) => FormBuilderFieldOption(
+                                  value: element,
+                                  child: Text(element.name.capitalize),
+                                ),
+                              )
+                              .toList(),
+                          onSaved: (newValue) {
+                            print(newValue);
+                            addController.apiModel.amenities = newValue;
+                          }),
 
                       SizedBox(height: ChautariPadding.standard),
 
                       // water
                       FormBuilderRadioGroup(
-                        key: _waterKey,
-                        wrapSpacing: Get.width,
-                        validator: (value) {
-                          return value == null
-                              ? "This field cannot be empty"
-                              : null;
-                        },
-                        decoration:
-                            ChautariDecoration().outlinedBorderTextField(
-                          labelText: "Water",
-                          helperText: "Select one options",
-                        ),
-                        name: "water",
-                        options: addController.waters
-                            .map(
-                              (element) => FormBuilderFieldOption(
-                                value: element,
-                                child: Text(element.name.capitalize),
-                              ),
-                            )
-                            .toList(),
-                        onSaved: (newValue) =>
-                            addController.apiModel.water = newValue,
-                      ),
+                          key: _waterKey,
+                          wrapSpacing: Get.width,
+                          validator: (value) {
+                            return value == null
+                                ? "This field cannot be empty"
+                                : null;
+                          },
+                          decoration:
+                              ChautariDecoration().outlinedBorderTextField(
+                            labelText: "Water",
+                            helperText: "Select one options",
+                          ),
+                          name: "water",
+                          options: addController.waters
+                              .map(
+                                (element) => FormBuilderFieldOption(
+                                  value: element,
+                                  child: Text(element.name.capitalize),
+                                ),
+                              )
+                              .toList(),
+                          onSaved: (newValue) {
+                            print(newValue);
+                            addController.apiModel.water = newValue;
+                          }),
                       SizedBox(height: ChautariPadding.standard),
 
                       // number of rooms
                       FormBuilderTouchSpin(
-                        textStyle: ChautariTextStyles().withBigText,
-                        addIcon: Icon(
-                          Icons.add,
-                          color: ChautariColors.whiteAndBlackcolor()
-                              .withOpacity(0.5),
-                        ),
-                        subtractIcon: Icon(
-                          Icons.remove,
-                          color: ChautariColors.whiteAndBlackcolor()
-                              .withOpacity(0.5),
-                        ),
-                        name: "noOfROoms",
-                        min: 1,
-                        max: 20,
-                        initialValue: 0,
-                        displayFormat: NumberFormat("##"),
-                        decoration: ChautariDecoration()
-                            .outlinedBorderTextField(
-                                labelText: "Number of rooms",
-                                helperText:
-                                    "Available number of rooms to rent"),
-                        onSaved: (newValue) =>
-                            addController.apiModel.noofROom = newValue,
-                      ),
+                          textStyle: ChautariTextStyles().withBigText,
+                          addIcon: Icon(
+                            Icons.add,
+                            color: ChautariColors.whiteAndBlackcolor()
+                                .withOpacity(0.5),
+                          ),
+                          subtractIcon: Icon(
+                            Icons.remove,
+                            color: ChautariColors.whiteAndBlackcolor()
+                                .withOpacity(0.5),
+                          ),
+                          name: "noOfROoms",
+                          min: 1,
+                          max: 20,
+                          initialValue: 0,
+                          displayFormat: NumberFormat("##"),
+                          decoration: ChautariDecoration()
+                              .outlinedBorderTextField(
+                                  labelText: "Number of rooms",
+                                  helperText:
+                                      "Available number of rooms to rent"),
+                          onSaved: (newValue) {
+                            print(newValue);
+                            addController.apiModel.numberOfRooms =
+                                newValue.toInt();
+                          }),
                       SizedBox(height: ChautariPadding.standard),
 
                       // price
@@ -327,7 +333,10 @@ class AddProperty extends StatelessWidget {
                                 prefix: Text("Rs. "),
                                 labelText: "Price",
                                 helperText: "price per month"),
-                        onSaved: (newValue) => addController.apiModel.price,
+                        onSaved: (newValue) {
+                          print(newValue);
+                          addController.apiModel.price;
+                        },
                       ),
                       SizedBox(height: ChautariPadding.standard),
 
@@ -342,14 +351,16 @@ class AddProperty extends StatelessWidget {
                         iconColor: ChautariColors.whiteAndPrimarycolor(),
                         onChanged: (value) {
                           print("on changed");
-                          print(value.length);
+                          print(value);
                           _scrollController.animateTo(
                               _scrollController.position.maxScrollExtent + 130,
                               duration: Duration(milliseconds: 100),
                               curve: Curves.easeInOut);
                         },
-                        onSaved: (newValue) =>
-                            addController.apiModel.images = newValue,
+                        onSaved: (newValue) {
+                          print(newValue);
+                          addController.apiModel.images = newValue;
+                        },
                         decoration: ChautariDecoration()
                             .outlinedBorderTextField(
                                 labelText: 'Propery images',

@@ -16,7 +16,7 @@ class ExploreController extends GetxController {
 
   _fetchRooms() async {
     isLoading = true;
-    var models = await RoomsRepository().fetchRoms();
+    var models = await RoomsRepository().fetchRooms();
     isLoading = false;
     if (models.errors?.isEmpty ?? false) {
       this.error = models.errors?.first?.value;
