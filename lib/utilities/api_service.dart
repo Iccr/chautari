@@ -64,12 +64,40 @@ class ApiService {
     return responseJson;
   }
 
+  Future postFormData(String url, dynamic params,
+      {bool shouldAppednBaseurl = true}) async {
+    var responseJson;
+    String _url = shouldAppednBaseurl ? _baseUrl + url : url;
+
+    print(_url);
+    print(params);
+    try {
+      var formdata = FormData.fromMap(params);
+      print(formdata);
+      Response response = await _http.post(_url, data: formdata);
+      print(response);
+
+      responseJson = response;
+    } catch (e) {
+      String err = e.error.toString();
+      Map<String, dynamic> val = {
+        'error': [
+          {'code': '1', 'detail': '$err'}
+        ]
+      };
+      Response res = Response(data: val);
+      responseJson = res;
+    }
+    return responseJson;
+  }
+
   Future post(String url, dynamic params,
       {bool shouldAppednBaseurl = true}) async {
     var responseJson;
     String _url = shouldAppednBaseurl ? _baseUrl + url : url;
 
     print(_url);
+    print(params);
     try {
       Response response = await _http.post(_url, data: params);
       print(response);

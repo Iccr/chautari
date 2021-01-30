@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:chautari/model/app_info.dart';
 import 'package:chautari/model/menu_item.dart';
+import 'package:chautari/repository/rooms_repository.dart';
 import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/router/router_name.dart';
 import 'package:flutter/widgets.dart';
@@ -11,17 +12,39 @@ import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
 
 class CreateRoomApiRequestModel {
+  int id;
   int district;
   String address;
   double lat;
   double long;
   String price;
-  int noofROom;
-  List<Parking> parking;
+  int numberOfRooms;
+  List<Parking> parkings;
   List<Amenities> amenities;
   bool available = true;
-  String water;
-  List<File> images;
+  Water water;
+  List<dynamic> images;
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['address'] = this.address;
+    data['available'] = this.available;
+    if (this.id != null) {
+      data['id'] = this.id;
+    }
+    data['lat'] = this.lat;
+    data['long'] = this.long;
+    data['number_of_rooms'] = this.numberOfRooms;
+    data['price'] = this.price;
+    data['water'] = this.water.value;
+    data['images'] = this.images;
+    data['parkings'] = this.parkings.map((e) => e.id);
+    data['amenities'] = this.amenities.map((e) => e.id);
+    data['available'] = this.available;
+    final Map<String, dynamic> room = new Map<String, dynamic>();
+    room['room'] = data;
+    return room;
+  }
 }
 
 class AddPropertyController extends GetxController {
@@ -111,10 +134,13 @@ class AddPropertyController extends GetxController {
 // functions
   submit() {
     _autovalidateMode.value = AutovalidateMode.always;
-    formKey.currentState.save();
+
     if (formKey.currentState.validate()) {
       // TODo:- api call
-
+      formKey.currentState.save();
+      RoomsRepository().addRoom(
+        apiModel.toJson(),
+      );
     } else {
       var firstWidget = formKey.currentState.fields.entries.firstWhere(
         (element) => element.value.hasError,
