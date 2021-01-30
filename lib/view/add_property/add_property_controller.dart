@@ -5,6 +5,7 @@ import 'package:chautari/model/menu_item.dart';
 import 'package:chautari/repository/rooms_repository.dart';
 import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/router/router_name.dart';
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -132,21 +133,41 @@ class AddPropertyController extends GetxController {
   }
 
 // functions
-  submit() {
+  submit() async {
     _autovalidateMode.value = AutovalidateMode.always;
 
     if (formKey.currentState.validate()) {
       // TODo:- api call
       formKey.currentState.save();
-      RoomsRepository().addRoom(
+      var model = await RoomsRepository().addRoom(
         apiModel.toJson(),
       );
+      if (model.errors == null) {
+        print(model.rooms);
+      } else {
+        String error = model.errors.first.value;
+        showError(error, () {
+          Get.back();
+        });
+      }
     } else {
       var firstWidget = formKey.currentState.fields.entries.firstWhere(
         (element) => element.value.hasError,
       );
       Scrollable.ensureVisible(firstWidget.value.context);
     }
+  }
+
+  showError(String message, Function onConfirm, {String title = "error"}) {
+    Get.defaultDialog(
+        title: title,
+        middleText: message,
+        textConfirm: "Ok",
+        confirmTextColor: ChautariColors.blackAndWhitecolor(),
+        onConfirm: () async {
+          onConfirm();
+        },
+        onCancel: () => {Get.back()});
   }
 
   openMap() async {
