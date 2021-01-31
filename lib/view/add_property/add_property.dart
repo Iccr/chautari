@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chautari/forked/form_builder_image_picker.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
@@ -360,7 +362,9 @@ class AddProperty extends StatelessWidget {
                         },
                         onSaved: (newValue) {
                           print(newValue);
-                          addController.apiModel.images = newValue;
+                          var imageLIst = List<File>.from(newValue);
+
+                          addController.apiModel.images = imageLIst;
                         },
                         decoration: ChautariDecoration()
                             .outlinedBorderTextField(
