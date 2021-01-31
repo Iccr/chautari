@@ -1,3 +1,4 @@
+import 'package:chautari/model/add_room_respons_model.dart';
 import 'package:chautari/model/rooms_model.dart';
 import 'package:chautari/utilities/api_service.dart';
 
@@ -14,8 +15,8 @@ class RoomsRepository {
     return RoomsResponseModel.fromJson(response.data);
   }
 
-  Future<RoomsResponseModel> addRoom(Map<String, dynamic> params) async {
+  Future<AddRoomResponseModel> addRoom(Map<String, dynamic> params) async {
     final response = await api.postFormData(_roomsURl, params);
-    return RoomsResponseModel.fromJson(response.data);
+    return AddRoomResponseModel.fromJson(response.data);
   }
 }

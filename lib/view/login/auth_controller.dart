@@ -2,17 +2,17 @@ import 'package:chautari/model/error.dart';
 import 'package:chautari/model/login_model.dart';
 import 'package:chautari/repository/login_repository.dart';
 import 'package:chautari/utilities/constants.dart';
+import 'package:chautari/utilities/storage.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:get_storage/get_storage.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthController extends GetxController {
   bool loading;
   bool loaded;
   var error = "".obs;
-  final GetStorage box = GetStorage();
+  final ChautariStorage box = ChautariStorage();
   var _user = UserModel().obs;
 
   onInit() {

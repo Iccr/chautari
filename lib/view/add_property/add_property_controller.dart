@@ -28,6 +28,7 @@ class CreateRoomApiRequestModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['district'] = this.district;
     data['address'] = this.address;
     data['available'] = this.available;
     if (this.id != null) {
@@ -39,8 +40,8 @@ class CreateRoomApiRequestModel {
     data['price'] = this.price;
     data['water'] = this.water.value;
     data['images'] = this.images;
-    data['parkings'] = this.parkings.map((e) => e.id);
-    data['amenities'] = this.amenities.map((e) => e.id);
+    data['parkings'] = this.parkings.map((e) => e.id).toList();
+    data['amenities'] = this.amenities.map((e) => e.id).toList();
     data['available'] = this.available;
     final Map<String, dynamic> room = new Map<String, dynamic>();
     room['room'] = data;
@@ -129,7 +130,6 @@ class AddPropertyController extends GetxController {
     _long.value = long;
     apiModel.lat = lat;
     apiModel.long = long;
-    addressFocusNode.requestFocus();
   }
 
 // functions
@@ -143,12 +143,29 @@ class AddPropertyController extends GetxController {
         apiModel.toJson(),
       );
       if (model.errors == null) {
-        print(model.rooms);
+        print(model.room);
+        await showAlert(
+          "Your property has been added for rent in chautari basti",
+          title: "Chautari Basti",
+          onConfirm: () {
+            Get.back();
+            // got ot my rents;
+            dismiss();
+          },
+        );
+
+        // await Get.snackbar(
+        //   "info",
+        //   "Property is added for Rent",
+        //   duration: Duration(seconds: 4),
+        //   snackPosition: SnackPosition.BOTTOM,
+        //   snackStyle: SnackStyle.GROUNDED,
+        // );
+
+        // Get.back();
       } else {
         String error = model.errors.first.value;
-        showError(error, () {
-          Get.back();
-        });
+        showAlert(error, onConfirm: () => Get.back());
       }
     } else {
       var firstWidget = formKey.currentState.fields.entries.firstWhere(
@@ -158,23 +175,36 @@ class AddPropertyController extends GetxController {
     }
   }
 
-  showError(String message, Function onConfirm, {String title = "error"}) {
+  showAlert(String message,
+      {String title = "Alert", Function onConfirm, Function onCancel}) async {
     Get.defaultDialog(
-        title: title,
-        middleText: message,
-        textConfirm: "Ok",
-        confirmTextColor: ChautariColors.blackAndWhitecolor(),
-        onConfirm: () async {
-          onConfirm();
-        },
-        onCancel: () => {Get.back()});
+      title: title,
+      middleText: message,
+      textConfirm: "Ok",
+      confirmTextColor: ChautariColors.blackAndWhitecolor(),
+      onConfirm: () async {
+        onConfirm();
+      },
+      onCancel: onCancel,
+    );
   }
 
   openMap() async {
     if (lat == null && long == null) {
       addressFocusNode.unfocus();
       await Get.toNamed(RouteName.map);
+      requestAddressFocus();
     }
+  }
+
+  requestAddressFocus() {
+    if (lat != null) {
+      addressFocusNode.requestFocus();
+    }
+  }
+
+  dismiss() {
+    Get.back();
   }
 
   validateAddress() {}

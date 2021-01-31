@@ -335,7 +335,8 @@ class AddProperty extends StatelessWidget {
                                 helperText: "price per month"),
                         onSaved: (newValue) {
                           print(newValue);
-                          addController.apiModel.price;
+                          addController.apiModel.price =
+                              newValue.replaceAll(",", "");
                         },
                       ),
                       SizedBox(height: ChautariPadding.standard),
