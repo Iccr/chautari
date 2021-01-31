@@ -1,6 +1,7 @@
 import 'package:chautari/model/rooms_model.dart';
 import 'package:chautari/utilities/api_service.dart';
 import 'package:chautari/utilities/theme/colors.dart';
+import 'package:chautari/utilities/theme/padding.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -34,9 +35,10 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
     items.asMap().forEach((index, val) {
       // For image dot indicator
       list.add(Container(
-        width: 8.0,
+        width: 7.0,
         height: items.length > 1 ? 8.0 : 0,
-        margin: EdgeInsets.symmetric(vertical: 0, horizontal: 4.0),
+        margin:
+            EdgeInsets.symmetric(vertical: 0, horizontal: ChautariPadding.xs),
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: _current == index
@@ -73,23 +75,23 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
           ),
         ),
       ),
+      // Positioned(
+      //   bottom: 0,
+      //   right: 0,
+      //   child: Container(
+      //     padding: EdgeInsets.all(2),
+      //     decoration: _glossyDecoration(),
+      //     child: Text(
+      //       "Rs ${room.price} /month",
+      //       style: Theme.of(context).textTheme.bodyText1,
+      //     ),
+      //   ),
+      // ),
       Positioned(
         bottom: 0,
-        right: 0,
         child: Container(
-          padding: EdgeInsets.all(2),
-          decoration: _glossyDecoration(),
-          child: Text(
-            "Rs ${room.price} /month",
-            style: Theme.of(context).textTheme.bodyText1,
-          ),
-        ),
-      ),
-      Positioned(
-        bottom: 0,
-        child: Container(
-          height: getItems().length > 1 ? 25 : 0,
-          padding: EdgeInsets.all(5),
+          height: getItems().length > 1 ? 15 : 0,
+          padding: EdgeInsets.all(ChautariPadding.unit),
           decoration: _glossyDecoration(),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -114,7 +116,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
             autoPlay: false,
             enlargeCenterPage: true,
             enableInfiniteScroll: false,
-            aspectRatio: 5 / 4,
+            aspectRatio: 1.25,
             onPageChanged: (index, reason) {
               setState(() {
                 _current = index;
