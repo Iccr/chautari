@@ -98,7 +98,9 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
     return [
       GestureDetector(
         onTap: () {
-          widget.onImageTapped();
+          if (widget.onImageTapped != null) {
+            widget.onImageTapped();
+          }
         },
         child: CarouselSlider(
           items: getItems(),
