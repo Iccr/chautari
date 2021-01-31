@@ -11,6 +11,12 @@ class RoomsRepository {
     api = ApiService();
   }
 
+  Future<RoomsResponseModel> fetchMyRooms(int id) async {
+    var url = _roomsURl + "/$id";
+    final response = await api.get(url);
+    return RoomsResponseModel.fromJson(response.data);
+  }
+
   Future<RoomsResponseModel> fetchRooms() async {
     final response = await api.get(_roomsURl);
     return RoomsResponseModel.fromJson(response.data);

@@ -5,7 +5,7 @@ import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/text_decoration.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
-import 'package:chautari/view/add_property/add_property_controller.dart';
+import 'package:chautari/view/room/add_room/add_room_controller.dart';
 import 'package:chautari/widgets/search/search.dart';
 import 'package:chautari/widgets/search/search_controller.dart';
 import 'package:flutter/material.dart';
@@ -39,9 +39,9 @@ class NumericTextFormatter extends TextInputFormatter {
   }
 }
 
-class AddProperty extends StatelessWidget {
+class AddROom extends StatelessWidget {
   final SearchController search = Get.put(SearchController());
-  final AddPropertyController addController = Get.put(AddPropertyController());
+  final AddROomController addController = Get.put(AddROomController());
 
   ScrollController _scrollController = new ScrollController();
 
@@ -91,8 +91,8 @@ class AddProperty extends StatelessWidget {
         appBar: AppBar(
           title: Text("Add"),
         ),
-        body: GetX<AddPropertyController>(
-            init: AddPropertyController(),
+        body: GetX<AddROomController>(
+            init: AddROomController(),
             builder: (addController) {
               return Container(
                 padding: EdgeInsets.all(ChautariPadding.standard),

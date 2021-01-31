@@ -5,14 +5,13 @@ import 'package:chautari/repository/rooms_repository.dart';
 import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/theme/colors.dart';
-import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
 
-class AddPropertyController extends GetxController {
+class AddROomController extends GetxController {
   final AppinfoModel appInfo = Get.find(tag: AppConstant.appinfomodelsKey);
 
   final CreateRoomApiRequestModel apiModel = CreateRoomApiRequestModel();

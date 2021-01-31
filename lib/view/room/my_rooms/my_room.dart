@@ -7,7 +7,7 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 class Exploreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<ExploreController>(
+    return GetX<ExploreController>(
       init: ExploreController(),
       builder: (c) => ProgressHud(
         isLoading: c.isLoading,

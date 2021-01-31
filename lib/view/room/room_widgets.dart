@@ -3,29 +3,6 @@ import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/widgets/carousel.dart';
 import 'package:flutter/material.dart';
 
-class RoomListWidget extends StatelessWidget {
-  final List<RoomsModel> rooms;
-  RoomListWidget({@required this.rooms});
-
-  @override
-  Widget build(BuildContext context) {
-    return ListView.separated(
-        separatorBuilder: (context, index) {
-          return Container(
-            height: 5,
-          );
-        },
-        itemCount: rooms.length,
-        itemBuilder: (BuildContext context, index) {
-          return Container(
-            child: RoomWidget(
-              room: this.rooms.elementAt(index),
-            ),
-          );
-        });
-  }
-}
-
 class RoomWidget extends StatelessWidget {
   final RoomsModel room;
   RoomWidget({@required this.room});
@@ -124,5 +101,28 @@ class ImageCarousel extends StatelessWidget {
     return Container(
       height: 250,
     );
+  }
+}
+
+class ListRoom extends StatelessWidget {
+  final List<RoomsModel> rooms;
+  ListRoom({@required this.rooms});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+        separatorBuilder: (context, index) {
+          return Container(
+            height: 5,
+          );
+        },
+        itemCount: rooms.length,
+        itemBuilder: (BuildContext context, index) {
+          return Container(
+            child: RoomWidget(
+              room: this.rooms.elementAt(index),
+            ),
+          );
+        });
   }
 }

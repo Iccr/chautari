@@ -1,7 +1,7 @@
 import 'dart:collection';
 
 import 'package:chautari/utilities/theme/colors.dart';
-import 'package:chautari/view/add_property/add_property_controller.dart';
+import 'package:chautari/view/room/add_room/add_room_controller.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -9,7 +9,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:app_settings/app_settings.dart';
 
 class MapController extends GetxController {
-  AddPropertyController addController = Get.find();
+  AddROomController addController = Get.find();
 
   GoogleMapController mapController;
   final double zoom = 14.4746;

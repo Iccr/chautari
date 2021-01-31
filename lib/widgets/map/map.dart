@@ -1,6 +1,7 @@
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
-import 'package:chautari/view/add_property/add_property_controller.dart';
+import 'package:chautari/view/room/add_room/add_room_controller.dart';
+
 import 'package:chautari/widgets/map/map_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,7 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapView extends StatelessWidget {
   MapController mapController = Get.put(MapController());
-  final AddPropertyController addController = Get.find();
+  final AddROomController addController = Get.find();
 
   @override
   Widget build(BuildContext context) {
