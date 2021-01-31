@@ -42,35 +42,34 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
         decoration: BoxDecoration(
           shape: BoxShape.circle,
           color: _current == index
-              ? ChautariColors.primaryColor()
-              : ChautariColors.black.withOpacity(0.4),
+              ? ChautariColors.white
+              : ChautariColors.black.withOpacity(0.8),
         ),
       ));
     });
     return list;
   }
 
-  BoxDecoration _glossyDecoration({double opacity = 1}) {
+  BoxDecoration _glossyDecoration({double opacity = 1, Color color}) {
     return BoxDecoration(
       borderRadius: BorderRadius.circular(5),
-      color: ChautariColors.primaryColor().shade200.withOpacity(opacity),
+      color: color?.withOpacity(opacity) ??
+          ChautariColors.primaryColor().shade600.withOpacity(opacity),
     );
   }
 
   List<Widget> _overlayWidgets() {
-    var room = widget.model;
     var overlays = [
       Positioned.fill(
         child: Align(
           alignment: Alignment.center,
           child: Container(
             padding: EdgeInsets.all(2),
-            decoration: _glossyDecoration(opacity: 0),
+            decoration: _glossyDecoration(opacity: 0.5, color: Colors.white),
             child: Text(
               "Chautari Basti",
               style: TextStyle(
-                  fontWeight: FontWeight.w200,
-                  color: ChautariColors.primaryColor().withOpacity(0.7)),
+                  fontWeight: FontWeight.w400, color: ChautariColors.black),
             ),
           ),
         ),
@@ -92,7 +91,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
         child: Container(
           height: getItems().length > 1 ? 15 : 0,
           padding: EdgeInsets.all(ChautariPadding.unit),
-          decoration: _glossyDecoration(),
+          decoration: _glossyDecoration(opacity: 0.8),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: getPagerIndicator(),
@@ -136,6 +135,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
   @override
   Widget build(BuildContext context) {
     return Container(
+      color: ChautariColors.whiteAndPrimarycolor().withOpacity(0.3),
       child: Stack(
         children: _carouselWithOverlay(),
       ),
