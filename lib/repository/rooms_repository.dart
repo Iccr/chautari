@@ -12,7 +12,7 @@ class RoomsRepository {
   }
 
   Future<RoomsResponseModel> fetchMyRooms(int id) async {
-    var url = _roomsURl + "/$id";
+    var url = _roomsURl + "?user_id=$id";
     final response = await api.get(url);
     return RoomsResponseModel.fromJson(response.data);
   }

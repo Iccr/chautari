@@ -1,5 +1,7 @@
 import 'package:chautari/model/rooms_model.dart';
 import 'package:chautari/utilities/theme/colors.dart';
+import 'package:chautari/utilities/theme/padding.dart';
+import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/widgets/carousel.dart';
 import 'package:flutter/material.dart';
 
@@ -9,14 +11,19 @@ class RoomWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 140,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(5),
+        borderRadius: BorderRadius.circular(ChautariPadding.small5),
         color: ChautariColors.white,
       ),
-      child: Column(
+      child: Row(
         children: [
-          CarouselWithIndicator(room),
-          RoomsInsight(room: this.room),
+          Container(
+            child: CarouselWithIndicator(room),
+          ),
+          Expanded(
+            child: RoomsInsight(room: this.room),
+          ),
         ],
       ),
     );
@@ -27,10 +34,8 @@ class RoomsInsight extends StatelessWidget {
   final RoomsModel room;
   RoomsInsight({@required this.room});
 
-  final double vgap = 2;
+  final double vgap = 1;
   final double hgap = 10;
-
-  final double padding = 10;
 
   @override
   Widget build(BuildContext context) {
@@ -46,37 +51,30 @@ class RoomsInsight extends StatelessWidget {
             ),
           ],
         ),
-        padding: EdgeInsets.all(padding),
+        padding: EdgeInsets.all(ChautariPadding.small5),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${room.address}, ${room.districtName}, Province: ${room.state}",
-                  style: Theme.of(context).textTheme.bodyText1,
+                  "${room.address}",
+                  style: ChautariTextStyles().listTitle,
+                  textAlign: TextAlign.left,
                 ),
+                Text("${room.districtName}-${room.state}")
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+            SizedBox(height: vgap),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   "${room.numberOfRooms}" +
                       " rooms, ${room.parkingCount}" +
-                      " parking + ${room.amenityCount} more facilities avalable",
-                ),
-              ],
-            ),
-            SizedBox(height: vgap),
-            Row(
-              children: [
-                Row(
-                  children: [
-                    Text("water: "),
-                    Text("${room.water}"),
-                  ],
+                      " parking + ${room.amenityCount} more",
                 ),
               ],
             ),
@@ -86,6 +84,22 @@ class RoomsInsight extends StatelessWidget {
                 Text("date: "),
                 Text(room.postedOn ?? "n/a",
                     style: TextStyle(color: ChautariColors.grey)),
+              ],
+            ),
+            Row(
+              // crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Text(
+                  "Rs. ${room.price}",
+                  textAlign: TextAlign.right,
+                  style: ChautariTextStyles().listTitle,
+                ),
+                Text(
+                  " /month",
+                  textAlign: TextAlign.right,
+                  style: ChautariTextStyles().listSubtitle,
+                ),
               ],
             ),
           ],
@@ -113,7 +127,7 @@ class ListRoom extends StatelessWidget {
     return ListView.separated(
         separatorBuilder: (context, index) {
           return Container(
-            height: 5,
+            height: ChautariPadding.small5,
           );
         },
         itemCount: rooms.length,

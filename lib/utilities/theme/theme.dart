@@ -20,7 +20,7 @@ extension AppTheme on ThemeData {
             fontWeight: FontWeight.w500,
             color: ChautariColors.white.withOpacity(0.8)),
         bodyText1: TextStyle(
-            fontSize: 15.0,
+            fontSize: 16.0,
             fontFamily: 'Poppins',
             fontWeight: FontWeight.w500,
             color: ChautariColors.white.withOpacity(0.9)),

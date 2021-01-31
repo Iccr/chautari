@@ -48,6 +48,8 @@ class ProfileController extends GetxController {
         Get.toNamed(RouteName.addPropery);
         break;
       case 1:
+        print("go to ${RouteName.myRooms}");
+        Get.toNamed(RouteName.myRooms);
         break;
       case 2:
         break;
