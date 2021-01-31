@@ -127,7 +127,7 @@ class ListRoom extends StatelessWidget {
     return ListView.separated(
         separatorBuilder: (context, index) {
           return Container(
-            height: ChautariPadding.small5,
+            height: ChautariPadding.medium,
           );
         },
         itemCount: rooms.length,
