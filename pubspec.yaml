@@ -48,6 +48,7 @@ dependencies:
   image_picker: ^0.6.7+17
   keyboard_actions: ^3.3.1+1
   http_parser: ^3.1.4
+  photo_view: ^0.10.3
   form_builder_map_field:
     git:
       url: git@github.com:Iccr/form_builder_map_field.git
