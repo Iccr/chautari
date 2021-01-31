@@ -1,53 +1,16 @@
-import 'dart:io';
-
+import 'package:chautari/model/add_room_multipart_model.dart';
 import 'package:chautari/model/app_info.dart';
 import 'package:chautari/model/menu_item.dart';
 import 'package:chautari/repository/rooms_repository.dart';
 import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/theme/colors.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
-
-class CreateRoomApiRequestModel {
-  int id;
-  int district;
-  String address;
-  double lat;
-  double long;
-  String price;
-  int numberOfRooms;
-  List<Parking> parkings;
-  List<Amenities> amenities;
-  bool available = true;
-  Water water;
-  List<dynamic> images;
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['district'] = this.district;
-    data['address'] = this.address;
-    data['available'] = this.available;
-    if (this.id != null) {
-      data['id'] = this.id;
-    }
-    data['lat'] = this.lat;
-    data['long'] = this.long;
-    data['number_of_rooms'] = this.numberOfRooms;
-    data['price'] = this.price;
-    data['water'] = this.water.value;
-    data['images'] = this.images;
-    data['parkings'] = this.parkings.map((e) => e.id).toList();
-    data['amenities'] = this.amenities.map((e) => e.id).toList();
-    data['available'] = this.available;
-    final Map<String, dynamic> room = new Map<String, dynamic>();
-    room['room'] = data;
-    return room;
-  }
-}
 
 class AddPropertyController extends GetxController {
   final AppinfoModel appInfo = Get.find(tag: AppConstant.appinfomodelsKey);
@@ -150,7 +113,7 @@ class AddPropertyController extends GetxController {
           onConfirm: () {
             Get.back();
             // got ot my rents;
-            dismiss();
+            // dismiss();
           },
         );
 
