@@ -1,3 +1,5 @@
+import 'package:chautari/utilities/constants.dart';
+import 'package:chautari/utilities/storage.dart';
 import 'package:dio/dio.dart';
 import 'dart:io' show Platform;
 
@@ -24,9 +26,11 @@ class BaseUrl {
 class ApiService {
   Dio _http;
   String _baseUrl = "";
+
   @override
   ApiService() {
     _baseUrl = BaseUrl().baseUrl;
+
     BaseOptions options = new BaseOptions(
       connectTimeout: 70000,
       receiveTimeout: 60000,
@@ -43,13 +47,21 @@ class ApiService {
   bool validation(int val) => val == 1;
 
   Map<String, String> _headers() {
-    return this._headerBeforeLogin();
+    String token = ChautariStorage().read(AppConstant.userKey)["token"];
+    var header = Map<String, String>();
+    header['Authorization'] = "Bearer " + token ?? "";
+    return header;
   }
 
   Future get(String url) async {
     var responseJson;
     try {
-      responseJson = await _http.get(_baseUrl + url);
+      responseJson = await _http.get(
+        _baseUrl + url,
+        options: Options(
+          headers: _headers(),
+        ),
+      );
       print(responseJson);
     } catch (e) {
       String err = e.error.toString();
@@ -74,7 +86,13 @@ class ApiService {
     try {
       var formdata = FormData.fromMap(params);
       print(formdata);
-      Response response = await _http.post(_url, data: formdata);
+      Response response = await _http.post(
+        _url,
+        data: formdata,
+        options: Options(
+          headers: _headers(),
+        ),
+      );
       print(response);
 
       responseJson = response;
@@ -99,7 +117,13 @@ class ApiService {
     print(_url);
     print(params);
     try {
-      Response response = await _http.post(_url, data: params);
+      Response response = await _http.post(
+        _url,
+        data: params,
+        options: Options(
+          headers: _headers(),
+        ),
+      );
       print(response);
 
       responseJson = response;

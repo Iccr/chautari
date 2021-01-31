@@ -8,7 +8,7 @@ class AddRoomResponseModel {
 
   AddRoomResponseModel.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      room = RoomsModel.fromJson(json);
+      room = RoomsModel.fromJson(json['data']);
 
       if (json['errors'] != null) {
         errors = new List<ApiError>();
