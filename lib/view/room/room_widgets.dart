@@ -11,10 +11,17 @@ class RoomWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      clipBehavior: Clip.antiAlias,
       height: 140,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(ChautariPadding.small5),
-        color: ChautariColors.white,
+        boxShadow: [
+          BoxShadow(
+              color: ChautariColors.whiteAndBlackcolor().withOpacity(0.24),
+              offset: Offset(0.0, 1.4), //(x,y)
+              blurRadius: 2.5,
+              spreadRadius: 0.5),
+        ],
       ),
       child: Row(
         children: [
@@ -42,14 +49,6 @@ class RoomsInsight extends StatelessWidget {
     return Container(
         decoration: BoxDecoration(
           color: ChautariColors.blackAndWhitecolor(),
-          borderRadius: BorderRadius.circular(5),
-          boxShadow: [
-            BoxShadow(
-              color: ChautariColors.black.withOpacity(0.24),
-              offset: Offset(0.0, 1.0), //(x,y)
-              blurRadius: 6.0,
-            ),
-          ],
         ),
         padding: EdgeInsets.all(ChautariPadding.small5),
         child: Column(
@@ -127,12 +126,13 @@ class ListRoom extends StatelessWidget {
     return ListView.separated(
         separatorBuilder: (context, index) {
           return Container(
-            height: ChautariPadding.medium,
+            height: 0,
           );
         },
         itemCount: rooms.length,
         itemBuilder: (BuildContext context, index) {
           return Container(
+            padding: EdgeInsets.all(ChautariPadding.medium),
             child: RoomWidget(
               room: this.rooms.elementAt(index),
             ),
