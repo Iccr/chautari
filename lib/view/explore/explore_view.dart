@@ -1,4 +1,5 @@
 import 'package:chautari/utilities/loading/progress_hud.dart';
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/view/explore/explore_controller.dart';
 import 'package:chautari/view/room/room_widgets.dart';
@@ -16,8 +17,11 @@ class Exploreview extends StatelessWidget {
           appBar: AppBar(
             title: Text("Explore"),
           ),
-          body: ListRoom(
-            rooms: c.models ?? [],
+          body: Container(
+            padding: EdgeInsets.all(ChautariPadding.xs),
+            child: ListRoom(
+              rooms: c.models ?? [],
+            ),
           ),
         ),
       ),
