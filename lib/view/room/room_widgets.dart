@@ -8,7 +8,8 @@ import 'package:photo_view/photo_view.dart';
 
 class RoomWidget extends StatelessWidget {
   final RoomsModel room;
-  RoomWidget({@required this.room});
+  Function onTap;
+  RoomWidget({@required this.room, this.onTap});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -30,6 +31,7 @@ class RoomWidget extends StatelessWidget {
             child: CarouselWithIndicator(
               room,
               showWaterMark: false,
+              onImageTapped: this.onTap,
             ),
           ),
           Expanded(
@@ -123,7 +125,8 @@ class ImageCarousel extends StatelessWidget {
 
 class ListRoom extends StatelessWidget {
   final List<RoomsModel> rooms;
-  ListRoom({@required this.rooms});
+  Function onTap;
+  ListRoom({@required this.rooms, this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -137,8 +140,17 @@ class ListRoom extends StatelessWidget {
         itemBuilder: (BuildContext context, index) {
           return Container(
             padding: EdgeInsets.all(ChautariPadding.medium),
-            child: RoomWidget(
-              room: this.rooms.elementAt(index),
+            child: GestureDetector(
+              behavior: HitTestBehavior.opaque,
+              onTap: () {
+                if (onTap != null) {
+                  onTap();
+                }
+              },
+              child: RoomWidget(
+                room: this.rooms.elementAt(index),
+                onTap: this.onTap,
+              ),
             ),
           );
         });

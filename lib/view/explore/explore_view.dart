@@ -20,6 +20,9 @@ class Exploreview extends StatelessWidget {
             padding: EdgeInsets.all(ChautariPadding.xs),
             child: ListRoom(
               rooms: c.models ?? [],
+              onTap: () {
+                print("open room detail");
+              },
             ),
           ),
         ),
