@@ -9,7 +9,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:app_settings/app_settings.dart';
 
 class MapController extends GetxController {
-  AddROomController addController = Get.find();
+  AddRoomController addController = Get.find();
 
   GoogleMapController mapController;
   final double zoom = 14.4746;

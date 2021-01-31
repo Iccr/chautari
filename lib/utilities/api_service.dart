@@ -69,9 +69,15 @@ class ApiService {
   bool validation(int val) => val == 1;
 
   Map<String, String> _headers() {
-    String token = ChautariStorage().read(AppConstant.userKey)["token"];
+    var userMap = ChautariStorage().read(AppConstant.userKey);
+    if (userMap != null) {
+      String token = userMap["token"];
+      var header = Map<String, String>();
+      header['Authorization'] = "Bearer " + token ?? "";
+      return header;
+    }
     var header = Map<String, String>();
-    header['Authorization'] = "Bearer " + token ?? "";
+    header['Authorization'] = "Bearer " + "" ?? "";
     return header;
   }
 

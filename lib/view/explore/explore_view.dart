@@ -16,14 +16,11 @@ class Exploreview extends StatelessWidget {
           appBar: AppBar(
             title: Text("Explore"),
           ),
-          body: Container(
-            padding: EdgeInsets.all(ChautariPadding.xs),
-            child: ListRoom(
-              rooms: c.models ?? [],
-              onTap: () {
-                print("open room detail");
-              },
-            ),
+          body: ListRoom(
+            rooms: c.models ?? [],
+            onTap: () {
+              print("open room detail");
+            },
           ),
         ),
       ),

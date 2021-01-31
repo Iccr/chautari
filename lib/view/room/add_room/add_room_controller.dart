@@ -11,7 +11,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
 
-class AddROomController extends GetxController {
+class AddRoomController extends GetxController {
   final AppinfoModel appInfo = Get.find(tag: AppConstant.appinfomodelsKey);
 
   final CreateRoomApiRequestModel apiModel = CreateRoomApiRequestModel();
@@ -111,8 +111,8 @@ class AddROomController extends GetxController {
           title: "Chautari Basti",
           onConfirm: () {
             Get.back();
-            // got ot my rents;
             // dismiss();
+            Get.offAndToNamed(RouteName.myRooms);
           },
         );
 
