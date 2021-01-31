@@ -11,8 +11,10 @@ typedef VoidCallback = void Function();
 class CarouselWithIndicator extends StatefulWidget {
   final VoidCallback onImageTapped;
   final RoomsModel model;
+  final bool showWaterMark;
 
-  CarouselWithIndicator(this.model, {this.onImageTapped});
+  CarouselWithIndicator(this.model,
+      {this.onImageTapped, this.showWaterMark = true});
 
   @override
   _CarouselWithIndicatorState createState() => _CarouselWithIndicatorState();
@@ -60,32 +62,22 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
 
   List<Widget> _overlayWidgets() {
     var overlays = [
-      Positioned.fill(
-        child: Align(
-          alignment: Alignment.center,
-          child: Container(
-            padding: EdgeInsets.all(2),
-            decoration: _glossyDecoration(opacity: 0.5, color: Colors.white),
-            child: Text(
-              "Chautari Basti",
-              style: TextStyle(
-                  fontWeight: FontWeight.w400, color: ChautariColors.black),
+      if (this.widget.showWaterMark ?? false) ...[
+        Positioned.fill(
+          child: Align(
+            alignment: Alignment.center,
+            child: Container(
+              padding: EdgeInsets.all(2),
+              decoration: _glossyDecoration(opacity: 0.5, color: Colors.white),
+              child: Text(
+                "Chautari Basti",
+                style: TextStyle(
+                    fontWeight: FontWeight.w400, color: ChautariColors.black),
+              ),
             ),
           ),
         ),
-      ),
-      // Positioned(
-      //   bottom: 0,
-      //   right: 0,
-      //   child: Container(
-      //     padding: EdgeInsets.all(2),
-      //     decoration: _glossyDecoration(),
-      //     child: Text(
-      //       "Rs ${room.price} /month",
-      //       style: Theme.of(context).textTheme.bodyText1,
-      //     ),
-      //   ),
-      // ),
+      ],
       Positioned(
         bottom: 0,
         child: Container(
@@ -135,7 +127,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: ChautariColors.whiteAndPrimarycolor().withOpacity(0.3),
+      color: ChautariColors.whiteAndBlackcolor().withOpacity(0.3),
       child: Stack(
         children: _carouselWithOverlay(),
       ),

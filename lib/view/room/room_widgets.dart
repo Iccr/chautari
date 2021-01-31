@@ -27,7 +27,10 @@ class RoomWidget extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            child: CarouselWithIndicator(room),
+            child: CarouselWithIndicator(
+              room,
+              showWaterMark: false,
+            ),
           ),
           Expanded(
             child: RoomsInsight(room: this.room),
