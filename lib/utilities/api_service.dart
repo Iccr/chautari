@@ -42,6 +42,28 @@ class ApiService {
     );
 
     _http = Dio(options);
+
+    _http.interceptors
+        .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
+      print("******** Request *********");
+      print("url: ${options.uri}");
+      print("contentType: ${options.contentType}");
+      print("headers: ${options.headers}");
+
+      return options;
+    }, onResponse: (Response response) async {
+      print("******** Response *********");
+      print("data: ${response.data}");
+      print("");
+      print("statusCode: ${response.statusCode}");
+      print("request: ${response.request}");
+
+      return response; // continue
+    }, onError: (DioError e) async {
+      print("******** Error *********");
+      print("error: ${e.error}");
+      return e; //continue
+    }));
   }
 
   bool validation(int val) => val == 1;
@@ -62,7 +84,6 @@ class ApiService {
           headers: _headers(),
         ),
       );
-      print(responseJson);
     } catch (e) {
       String err = e.error.toString();
       Map<String, dynamic> val = {
@@ -76,46 +97,40 @@ class ApiService {
     return responseJson;
   }
 
-  Future postFormData(String url, dynamic params,
-      {bool shouldAppednBaseurl = true}) async {
-    var responseJson;
-    String _url = shouldAppednBaseurl ? _baseUrl + url : url;
+  // Future postFormData(String url, dynamic params,
+  //     {bool shouldAppednBaseurl = true}) async {
+  //   var responseJson;
+  //   String _url = shouldAppednBaseurl ? _baseUrl + url : url;
 
-    print(_url);
-    print(params);
-    try {
-      var formdata = FormData.fromMap(params);
-      print(formdata);
-      Response response = await _http.post(
-        _url,
-        data: formdata,
-        options: Options(
-          headers: _headers(),
-        ),
-      );
-      print(response);
+  //   try {
+  //     var formdata = FormData.fromMap(params);
+  //     Response response = await _http.post(
+  //       _url,
+  //       data: formdata,
+  //       options: Options(
+  //         headers: _headers(),
+  //       ),
+  //     );
 
-      responseJson = response;
-    } catch (e) {
-      String err = e.error.toString();
-      Map<String, dynamic> val = {
-        'error': [
-          {'code': '1', 'detail': '$err'}
-        ]
-      };
-      Response res = Response(data: val);
-      responseJson = res;
-    }
-    return responseJson;
-  }
+  //     responseJson = response;
+  //   } catch (e) {
+  //     String err = e.error.toString();
+  //     Map<String, dynamic> val = {
+  //       'error': [
+  //         {'code': '1', 'detail': '$err'}
+  //       ]
+  //     };
+  //     Response res = Response(data: val);
+  //     responseJson = res;
+  //   }
+  //   return responseJson;
+  // }
 
   Future post(String url, dynamic params,
       {bool shouldAppednBaseurl = true}) async {
     var responseJson;
     String _url = shouldAppednBaseurl ? _baseUrl + url : url;
 
-    print(_url);
-    print(params);
     try {
       Response response = await _http.post(
         _url,
@@ -124,8 +139,6 @@ class ApiService {
           headers: _headers(),
         ),
       );
-      print(response);
-
       responseJson = response;
     } catch (e) {
       String err = e.error.toString();

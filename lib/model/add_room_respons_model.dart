@@ -9,13 +9,12 @@ class AddRoomResponseModel {
   AddRoomResponseModel.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
       room = RoomsModel.fromJson(json['data']);
-
-      if (json['errors'] != null) {
-        errors = new List<ApiError>();
-        json['errors'].forEach((v) {
-          errors.add(new ApiError.fromJson(v));
-        });
-      }
+    }
+    if (json['errors'] != null) {
+      errors = new List<ApiError>();
+      json['errors'].forEach((v) {
+        errors.add(new ApiError.fromJson(v));
+      });
     }
   }
 
