@@ -4,7 +4,7 @@ import 'package:chautari/view/room/room_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
-class Exploreview extends StatelessWidget {
+class MyRoom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetX<ExploreController>(

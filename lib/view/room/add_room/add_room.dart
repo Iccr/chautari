@@ -39,7 +39,7 @@ class NumericTextFormatter extends TextInputFormatter {
   }
 }
 
-class AddROom extends StatelessWidget {
+class AddRoom extends StatelessWidget {
   final SearchController search = Get.put(SearchController());
   final AddROomController addController = Get.put(AddROomController());
 
