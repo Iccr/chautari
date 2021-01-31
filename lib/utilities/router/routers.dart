@@ -3,6 +3,7 @@ import 'package:chautari/view/room/add_room/add_room.dart';
 
 import 'package:chautari/view/explore/explore_view.dart';
 import 'package:chautari/view/login/login_view.dart';
+import 'package:chautari/view/room/my_rooms/my_room.dart';
 import 'package:chautari/view/tab/tab_view.dart';
 import 'package:chautari/widgets/map/map.dart';
 import 'package:get/get.dart';
@@ -15,8 +16,9 @@ class ChautariRouters {
       GetPage(name: RouteName.tab, page: () => Tabbar()),
       GetPage(name: RouteName.roomsList, page: () => Exploreview()),
       GetPage(name: RouteName.login, page: () => LoginView()),
-      GetPage(name: RouteName.addPropery, page: () => AddROom()),
-      GetPage(name: RouteName.map, page: () => MapView())
+      GetPage(name: RouteName.addPropery, page: () => AddRoom()),
+      GetPage(name: RouteName.map, page: () => MapView()),
+      GetPage(name: RouteName.myRooms, page: () => MyRoom())
     ];
   }
 
