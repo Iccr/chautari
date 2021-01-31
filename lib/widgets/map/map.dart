@@ -9,7 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class MapView extends StatelessWidget {
   MapController mapController = Get.put(MapController());
-  final AddROomController addController = Get.find();
+  final AddRoomController addController = Get.find();
 
   @override
   Widget build(BuildContext context) {

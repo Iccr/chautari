@@ -41,7 +41,7 @@ class NumericTextFormatter extends TextInputFormatter {
 
 class AddRoom extends StatelessWidget {
   final SearchController search = Get.put(SearchController());
-  final AddROomController addController = Get.put(AddROomController());
+  final AddRoomController addController = Get.put(AddRoomController());
 
   ScrollController _scrollController = new ScrollController();
 
@@ -90,8 +90,8 @@ class AddRoom extends StatelessWidget {
       appBar: AppBar(
         title: Text("Add"),
       ),
-      body: GetX<AddROomController>(
-          init: AddROomController(),
+      body: GetX<AddRoomController>(
+          init: AddRoomController(),
           builder: (addController) {
             return Container(
               padding: EdgeInsets.all(ChautariPadding.standard),

@@ -1,5 +1,6 @@
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
+import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/utilities/theme/theme_controller.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:flutter/material.dart';
@@ -16,38 +17,49 @@ class LoginView extends StatelessWidget {
         title: Text("Login"),
       ),
       body: GetBuilder<AuthController>(
-        init: AuthController(),
-        builder: (c) => Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Column(
+          init: AuthController(),
+          builder: (c) {
+            return Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text("After Login you are able to use many features of "),
-                  Text(
-                    "Chautari Basti.",
-                    style: TextStyle(
-                      color: ChautariColors.primaryColor(),
-                      fontWeight: FontWeight.bold,
+                  Container(
+                    width: 250,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Text(
+                          "After Login you are able to use many features of ",
+                          style: ChautariTextStyles().listSubtitle,
+                          textAlign: TextAlign.center,
+                        ),
+                        SizedBox(height: ChautariPadding.medium),
+                        Text(
+                          "Chautari Basti.",
+                          style: ChautariTextStyles().listTitle.copyWith(
+                                color: ChautariColors.primaryColor(),
+                              ),
+                        ),
+                        SizedBox(height: ChautariPadding.standard),
+                        SizedBox(height: ChautariPadding.standard),
+                      ],
                     ),
                   ),
-                  SizedBox(height: ChautariPadding.standard),
+                  SignInButton(
+                    theme.mode == ThemeMode.dark
+                        ? Buttons.GoogleDark
+                        : Buttons.Google,
+                    onPressed: () => c.gleSignIn(),
+                  ),
+                  SignInButton(
+                    Buttons.FacebookNew,
+                    onPressed: () => c.fbLogin(),
+                  )
                 ],
               ),
-              SignInButton(
-                theme.mode == ThemeMode.dark
-                    ? Buttons.GoogleDark
-                    : Buttons.Google,
-                onPressed: () => c.gleSignIn(),
-              ),
-              SignInButton(
-                Buttons.FacebookNew,
-                onPressed: () => c.fbLogin(),
-              )
-            ],
-          ),
-        ),
-      ),
+            );
+          }),
     );
   }
 }

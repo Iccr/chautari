@@ -14,14 +14,10 @@ class MyRoom extends StatelessWidget {
         isLoading: c.isLoading,
         child: Scaffold(
           appBar: AppBar(
-            title: Text("Explore"),
+            title: Text("My Rooms"),
           ),
-          body: Container(
-            child: Center(
-              child: ListRoom(
-                rooms: c.models ?? [],
-              ),
-            ),
+          body: ListRoom(
+            rooms: c.models ?? [],
           ),
         ),
       ),
