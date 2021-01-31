@@ -17,7 +17,7 @@ class RoomsRepository {
   }
 
   Future<AddRoomResponseModel> addRoom(FormData params) async {
-    final response = await api.post(_roomsURl, params);
+    final response = await api.post(_roomsURl, {"room": params});
     return AddRoomResponseModel.fromJson(response.data);
   }
 }

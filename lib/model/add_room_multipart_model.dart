@@ -19,24 +19,6 @@ class CreateRoomApiRequestModel {
   List<File> images;
 
   FormData toJson() {
-    // final Map<String, dynamic> data = new Map<String, dynamic>();
-
-    // data['district'] = this.district;
-    // data['address'] = this.address;
-    // data['available'] = this.available;
-    // if (this.id != null) {
-    //   data['id'] = this.id;
-    // }
-    // data['lat'] = this.lat;
-    // data['long'] = this.long;
-    // data['number_of_rooms'] = this.numberOfRooms;
-    // data['price'] = this.price;
-    // data['water'] = this.water.value;
-
-    // data['parkings'] = this.parkings.map((e) => e.id).toList();
-    // data['amenities'] = this.amenities.map((e) => e.id).toList();
-    // data['available'] = this.available;
-
     var data = FormData.fromMap({
       'district': this.district,
       'address': this.address,
