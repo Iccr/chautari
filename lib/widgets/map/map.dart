@@ -216,6 +216,7 @@ class MapView extends StatelessWidget {
             children: [
               GoogleMap(
                 markers: this.mapController.markers,
+                mapToolbarEnabled: true,
                 myLocationEnabled: true,
                 zoomControlsEnabled: true,
                 mapType: MapType.normal,
