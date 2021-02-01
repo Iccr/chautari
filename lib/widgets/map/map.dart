@@ -1,7 +1,5 @@
 import 'package:app_settings/app_settings.dart';
 import 'package:chautari/utilities/theme/colors.dart';
-import 'package:chautari/utilities/theme/text_style.dart';
-
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
@@ -9,7 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 abstract class ChautariMapFunctions extends GetxController {
   GoogleMapController _mapController;
-  double _zoom;
+  RxDouble _zoom;
   RxSet<Marker> _markers;
   Rx<CameraPosition> _cameraPosition;
   Rx<Position> position_;
@@ -19,29 +17,36 @@ abstract class ChautariMapFunctions extends GetxController {
 
   LatLng selectedPosition;
 
+  setZoom(double val);
   setMap(GoogleMapController controller);
+  setMultipleMarker(Set<Marker> markers);
   onTapLocation(LatLng latLng);
   _showPermissionAlert({String title, String message, String textConfirm});
   Future<Position> _determinePosition();
   moveCamera(LatLng latLng);
   setMarker(LatLng latLng);
+
   setInitialMarker();
   Widget child;
 }
 
 class ChautariMapController extends ChautariMapFunctions {
   ChautariMapController() {
-    _zoom = 14.4746;
+    _zoom = 14.4746.obs;
     _cameraPosition =
         CameraPosition(target: LatLng(27.7172, 85.3240), zoom: zoom).obs;
     _markers = Set<Marker>().obs;
   }
 
-  double get zoom => _zoom;
+  double get zoom => _zoom.value;
   CameraPosition get cameraPosition => _cameraPosition.value;
 
   Set<Marker> get markers {
     return _markers?.value;
+  }
+
+  setZoom(double val) {
+    _zoom.value = val;
   }
 
   @override
@@ -104,15 +109,23 @@ class ChautariMapController extends ChautariMapFunctions {
 
   @override
   setMarker(LatLng latLng) {
-    var marker = Marker(
+    var marker = createMarker(latLng);
+    Set<Marker> newSet = Set<Marker>();
+    newSet.add(marker);
+    this._markers.value = newSet;
+    moveCamera(latLng);
+    // setLatLong(latLng);
+  }
+
+  Marker createMarker(LatLng latLng) {
+    return Marker(
       markerId: MarkerId("0"),
       position: latLng,
     );
-    Set<Marker> newSet = Set<Marker>();
-    newSet.add(marker);
-    this._markers.assignAll(newSet);
-    moveCamera(latLng);
-    // setLatLong(latLng);
+  }
+
+  setMultipleMarker(Set<Marker> markers) {
+    this._markers.value = markers;
   }
 
   @override
@@ -171,6 +184,11 @@ class Map {
   Widget build() {
     return mapView;
   }
+
+  Map setMarkers(Set<Marker> markers) {
+    controller.setMultipleMarker(markers);
+    return this;
+  }
 }
 
 class MapView extends StatelessWidget {
@@ -199,6 +217,7 @@ class MapView extends StatelessWidget {
               GoogleMap(
                 markers: this.mapController.markers,
                 myLocationEnabled: true,
+                zoomControlsEnabled: true,
                 mapType: MapType.normal,
                 initialCameraPosition: this.mapController.cameraPosition,
                 onMapCreated: (GoogleMapController controller) {

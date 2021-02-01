@@ -36,8 +36,8 @@ class RoomsModel {
   bool available;
   String districtName;
   int id;
-  String lat;
-  String long;
+  double lat;
+  double long;
   int numberOfRooms;
   int parkingCount;
   String price;
@@ -67,9 +67,16 @@ class RoomsModel {
     amenityCount = json['amenity_count'];
     available = json['available'];
     districtName = json['district_name'];
+
     id = json['id'];
-    lat = json['lat'];
-    long = json['long'];
+    if (json['lat'] != null) {
+      lat = double.parse(json['lat']);
+    }
+    // lat = json['lat'];
+    if (json['long'] != null) {
+      long = double.parse(json['long']);
+    }
+    // long = json['long'];
 
     numberOfRooms = json['number_of_rooms'];
     parkingCount = json['parking_count'];
