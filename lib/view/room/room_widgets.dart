@@ -4,7 +4,6 @@ import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/widgets/carousel.dart';
 import 'package:flutter/material.dart';
-import 'package:photo_view/photo_view.dart';
 
 class RoomWidget extends StatelessWidget {
   final RoomsModel room;

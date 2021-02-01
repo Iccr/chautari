@@ -1,5 +1,4 @@
 import 'package:chautari/utilities/loading/progress_hud.dart';
-import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/view/explore/explore_controller.dart';
 import 'package:chautari/view/room/room_widgets.dart';
 import 'package:flutter/material.dart';

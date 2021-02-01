@@ -16,7 +16,6 @@ class MapController extends GetxController {
 
   // observables
 
-  var _address = "".obs;
   Rx<CameraPosition> _cameraPosition;
   var _marker = HashSet<Marker>().obs;
   var _position = Position().obs;

@@ -31,9 +31,11 @@ class LocationPicker extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Map(
-            title: "Pick Location",
-            controller: mapController,
-            child: _doneButton())
-        .getLocationPicker();
+      title: "Pick Location",
+      controller: mapController,
+    )
+        .setOnTapLocation((latLng) => this.mapController.onTapLocation(latLng))
+        .setchild(_doneButton())
+        .build();
   }
 }
