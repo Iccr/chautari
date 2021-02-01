@@ -1,8 +1,8 @@
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/view/explore/explore_view.dart';
+import 'package:chautari/view/map/rooms_map.dart';
 import 'package:chautari/view/profile/profile_view.dart';
 import 'package:chautari/view/setting/setting_view.dart';
-import 'package:chautari/widgets/location_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
@@ -16,7 +16,7 @@ class _TabbarState extends State<Tabbar> {
   int _selectedIndex = 0;
 
   static List<Widget> _widgetOptions(TextStyle optionStyle) =>
-      <Widget>[Exploreview(), LocationPicker(), ProfileView(), SettingView()];
+      <Widget>[Exploreview(), RoomsMap(), ProfileView(), SettingView()];
 
   @override
   Widget build(BuildContext context) {

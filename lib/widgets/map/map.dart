@@ -30,12 +30,18 @@ abstract class ChautariMapFunctions extends GetxController {
 }
 
 class ChautariMapController extends ChautariMapFunctions {
+  ChautariMapController() {
+    _zoom = 14.4746;
+    _cameraPosition =
+        CameraPosition(target: LatLng(27.7172, 85.3240), zoom: zoom).obs;
+    _markers = Set<Marker>().obs;
+  }
+
   double get zoom => _zoom;
   CameraPosition get cameraPosition => _cameraPosition.value;
 
   Set<Marker> get markers {
-    print(_markers.value);
-    return _markers.value;
+    return _markers?.value;
   }
 
   @override
@@ -125,10 +131,6 @@ class ChautariMapController extends ChautariMapFunctions {
 
   @override
   void onInit() async {
-    _zoom = 14.4746;
-    _cameraPosition =
-        CameraPosition(target: LatLng(27.7172, 85.3240), zoom: zoom).obs;
-    _markers = Set<Marker>().obs;
     super.onInit();
     position_.value = await _determinePosition();
   }
@@ -144,31 +146,53 @@ class ChautariMapController extends ChautariMapFunctions {
 }
 
 class Map {
-  Widget _mapView;
+  MapView mapView;
   Widget child;
-  String _title;
-  ChautariMapFunctions _controller;
+  String title;
+  ChautariMapFunctions controller;
+  Function(LatLng) onTapLocation;
 
-  Map({@required String title, ChautariMapFunctions controller, this.child}) {
-    _controller = controller ?? Get.put(ChautariMapController());
-    _title = title;
+  Map(
+      {@required String title,
+      ChautariMapFunctions controller,
+      this.child,
+      this.onTapLocation}) {
+    this.title = title;
+    this.child = child;
+    this.controller = controller;
+    this.onTapLocation = onTapLocation;
+    this.mapView = MapView(
+      mapController: controller,
+      title: title,
+      child: child,
+      onTapLocation: (latLng) {
+        controller.onTapLocation(latLng);
+      },
+    );
   }
 
   Widget getLocationPicker() {
-    _mapView = MapView(
-      mapController: _controller,
-      title: _title,
-      child: child,
-    );
-    return _mapView;
+    mapView.onTapLocation = (latLng) => controller.onTapLocation(latLng);
+    return mapView;
+  }
+
+  Widget getRoomsMap() {
+    mapView.onTapLocation = (latLng) => {};
+    return mapView;
   }
 }
 
 class MapView extends StatelessWidget {
-  ChautariMapFunctions mapController = Get.put(ChautariMapController());
+  final ChautariMapFunctions mapController;
   final String title;
   Widget child;
-  MapView({@required this.mapController, @required this.title, this.child});
+  Function(LatLng) onTapLocation;
+  MapView(
+      {@required this.mapController,
+      @required this.title,
+      this.child,
+      this.onTapLocation});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -176,39 +200,43 @@ class MapView extends StatelessWidget {
         title: Text(title ?? "Map"),
       ),
       body: Obx(
-        () => Stack(
-          children: [
-            GoogleMap(
-              markers: this.mapController.markers,
-              myLocationEnabled: true,
-              mapType: MapType.normal,
-              initialCameraPosition: this.mapController.cameraPosition,
-              onMapCreated: (GoogleMapController controller) {
-                this.mapController.setMap(controller);
-              },
-              onTap: (latLng) => this.mapController.onTapLocation(latLng),
-            ),
-            if (child != null) ...[child]
-            // Positioned.fill(
-            //   bottom: 75,
-            //   child: Align(
-            //     alignment: Alignment.bottomCenter,
-            //     child: RaisedButton(
-            //       onPressed: () {
-            //         Get.back(result: mapController.selectedPosition);
-            //       },
-            //       child: Text(
-            //         "Done",
-            //         style: ChautariTextStyles()
-            //             .listTitle
-            //             .copyWith(color: ChautariColors.white),
-            //       ),
-            //       color: ChautariColors.primaryColor(),
-            //     ),
-            //   ),
-            // ),
-          ],
-        ),
+        () {
+          print("value is'");
+          print(mapController);
+          return Stack(
+            children: [
+              GoogleMap(
+                markers: this.mapController.markers,
+                myLocationEnabled: true,
+                mapType: MapType.normal,
+                initialCameraPosition: this.mapController.cameraPosition,
+                onMapCreated: (GoogleMapController controller) {
+                  this.mapController.setMap(controller);
+                },
+                onTap: (latLng) => onTapLocation(latLng),
+              ),
+              if (child != null) ...[child]
+              // Positioned.fill(
+              //   bottom: 75,
+              //   child: Align(
+              //     alignment: Alignment.bottomCenter,
+              //     child: RaisedButton(
+              //       onPressed: () {
+              //         Get.back(result: mapController.selectedPosition);
+              //       },
+              //       child: Text(
+              //         "Done",
+              //         style: ChautariTextStyles()
+              //             .listTitle
+              //             .copyWith(color: ChautariColors.white),
+              //       ),
+              //       color: ChautariColors.primaryColor(),
+              //     ),
+              //   ),
+              // ),
+            ],
+          );
+        },
       ),
     );
   }
