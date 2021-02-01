@@ -10,4 +10,5 @@ class RouteName {
   static String addPropery = "/addProperty";
   static String map = "/map";
   static String myRooms = "/myRooms";
+  static String pickLocation = "/pickLocation";
 }

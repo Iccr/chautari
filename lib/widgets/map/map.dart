@@ -144,22 +144,36 @@ class ChautariMapController extends ChautariMapFunctions {
 }
 
 class Map {
-  Widget mapView;
-  ChautariMapFunctions controller;
+  Widget _mapView;
+  Widget child;
+  String _title;
+  ChautariMapFunctions _controller;
 
-  Map(ChautariMapFunctions controller) {
-    // mapView = MapView(mapController: controller);
+  Map({@required String title, ChautariMapFunctions controller, this.child}) {
+    _controller = controller ?? Get.put(ChautariMapController());
+    _title = title;
+  }
+
+  Widget getLocationPicker() {
+    _mapView = MapView(
+      mapController: _controller,
+      title: _title,
+      child: child,
+    );
+    return _mapView;
   }
 }
 
 class MapView extends StatelessWidget {
   ChautariMapFunctions mapController = Get.put(ChautariMapController());
-
+  final String title;
+  Widget child;
+  MapView({@required this.mapController, @required this.title, this.child});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Map"),
+        title: Text(title ?? "Map"),
       ),
       body: Obx(
         () => Stack(
@@ -174,24 +188,25 @@ class MapView extends StatelessWidget {
               },
               onTap: (latLng) => this.mapController.onTapLocation(latLng),
             ),
-            Positioned.fill(
-              bottom: 75,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: RaisedButton(
-                  onPressed: () {
-                    Get.back(result: mapController.selectedPosition);
-                  },
-                  child: Text(
-                    "Done",
-                    style: ChautariTextStyles()
-                        .listTitle
-                        .copyWith(color: ChautariColors.white),
-                  ),
-                  color: ChautariColors.primaryColor(),
-                ),
-              ),
-            ),
+            if (child != null) ...[child]
+            // Positioned.fill(
+            //   bottom: 75,
+            //   child: Align(
+            //     alignment: Alignment.bottomCenter,
+            //     child: RaisedButton(
+            //       onPressed: () {
+            //         Get.back(result: mapController.selectedPosition);
+            //       },
+            //       child: Text(
+            //         "Done",
+            //         style: ChautariTextStyles()
+            //             .listTitle
+            //             .copyWith(color: ChautariColors.white),
+            //       ),
+            //       color: ChautariColors.primaryColor(),
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ),
