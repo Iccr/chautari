@@ -5,6 +5,6 @@ class RoomsMap extends StatelessWidget {
   ChautariMapController mapController = ChautariMapController();
   @override
   Widget build(BuildContext context) {
-    return Map(title: "Map", controller: mapController).getRoomsMap();
+    return Map(title: "Map", controller: mapController).build();
   }
 }

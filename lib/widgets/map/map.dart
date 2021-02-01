@@ -147,37 +147,28 @@ class ChautariMapController extends ChautariMapFunctions {
 
 class Map {
   MapView mapView;
-  Widget child;
   String title;
   ChautariMapFunctions controller;
-  Function(LatLng) onTapLocation;
 
-  Map(
-      {@required String title,
-      ChautariMapFunctions controller,
-      this.child,
-      this.onTapLocation}) {
-    this.title = title;
-    this.child = child;
+  Map({
+    @required this.title,
+    ChautariMapFunctions controller,
+  }) {
     this.controller = controller;
-    this.onTapLocation = onTapLocation;
-    this.mapView = MapView(
-      mapController: controller,
-      title: title,
-      child: child,
-      onTapLocation: (latLng) {
-        controller.onTapLocation(latLng);
-      },
-    );
+    this.mapView = MapView(mapController: controller, title: title);
   }
 
-  Widget getLocationPicker() {
-    mapView.onTapLocation = (latLng) => controller.onTapLocation(latLng);
-    return mapView;
+  Map setchild(Widget child) {
+    mapView.child = child;
+    return this;
   }
 
-  Widget getRoomsMap() {
-    mapView.onTapLocation = (latLng) => {};
+  Map setOnTapLocation(Function(LatLng) onTapLocation) {
+    mapView.onTapLocation = onTapLocation;
+    return this;
+  }
+
+  Widget build() {
     return mapView;
   }
 }
@@ -213,27 +204,13 @@ class MapView extends StatelessWidget {
                 onMapCreated: (GoogleMapController controller) {
                   this.mapController.setMap(controller);
                 },
-                onTap: (latLng) => onTapLocation(latLng),
+                onTap: (latLng) {
+                  if (onTapLocation != null) {
+                    onTapLocation(latLng);
+                  }
+                },
               ),
               if (child != null) ...[child]
-              // Positioned.fill(
-              //   bottom: 75,
-              //   child: Align(
-              //     alignment: Alignment.bottomCenter,
-              //     child: RaisedButton(
-              //       onPressed: () {
-              //         Get.back(result: mapController.selectedPosition);
-              //       },
-              //       child: Text(
-              //         "Done",
-              //         style: ChautariTextStyles()
-              //             .listTitle
-              //             .copyWith(color: ChautariColors.white),
-              //       ),
-              //       color: ChautariColors.primaryColor(),
-              //     ),
-              //   ),
-              // ),
             ],
           );
         },
