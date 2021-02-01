@@ -21,18 +21,11 @@ class MapController extends GetxController {
   var _marker = HashSet<Marker>().obs;
   var _position = Position().obs;
 
-  var _shouldShowAddressWidget = false.obs;
-
 // getters
   CameraPosition get cameraPosition => _cameraPosition.value;
-  bool get shouldShowAddressWidget => _shouldShowAddressWidget.value;
-
   Position get position => _position.value;
 
-  HashSet<Marker> get marker {
-    var marker = _marker.value;
-    return marker;
-  }
+  HashSet<Marker> get marker => _marker.value;
 
   // life cycle
   @override

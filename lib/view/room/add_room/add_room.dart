@@ -128,7 +128,7 @@ class AddRoom extends StatelessWidget {
                           addController.long != null) ...[
                         SizedBox(height: ChautariPadding.small5),
                         Text(
-                          "${addController.lat}, ${addController.long}",
+                          "Latitude: ${addController.lat}, Longitude: ${addController.long}",
                           textAlign: TextAlign.left,
                         ),
                         SizedBox(height: ChautariPadding.small5),

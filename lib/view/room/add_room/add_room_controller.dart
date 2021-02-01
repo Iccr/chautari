@@ -35,8 +35,11 @@ class AddRoomController extends GetxController {
   List<Parking> get parkings => appInfo.parkings;
   AutovalidateMode get autovalidateMode => _autovalidateMode.value;
 
-  double get lat => _lat.value == 1000.0 ? null : _lat.value;
-  double get long => _long.value == 1000.0 ? null : _long.value;
+  String get lat =>
+      _lat.value.toString() == "1000.0" ? null : _lat.value.toStringAsFixed(4);
+  String get long => _long.value.toString() == "1000.0"
+      ? null
+      : _long.value.toStringAsFixed(4);
 
   // properties
 
@@ -154,7 +157,9 @@ class AddRoomController extends GetxController {
   openMap() async {
     if (lat == null && long == null) {
       addressFocusNode.unfocus();
-      await Get.toNamed(RouteName.map);
+      var result = await Get.toNamed(RouteName.map);
+      this._lat.value = result.latitude;
+      this._long.value = result.longitude;
       requestAddressFocus();
     }
   }

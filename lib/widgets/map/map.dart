@@ -1,35 +1,178 @@
+import 'package:app_settings/app_settings.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
-import 'package:chautari/view/room/add_room/add_room_controller.dart';
 
-import 'package:chautari/widgets/map/map_controller.dart';
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+abstract class ChautariMapFunctions extends GetxController {
+  GoogleMapController _mapController;
+  double _zoom;
+  RxSet<Marker> _markers;
+  Rx<CameraPosition> _cameraPosition;
+  Rx<Position> position_;
+
+  Set<Marker> markers;
+  CameraPosition cameraPosition;
+
+  LatLng selectedPosition;
+
+  setMap(GoogleMapController controller);
+  onTapLocation(LatLng latLng);
+  _showPermissionAlert({String title, String message, String textConfirm});
+  Future<Position> _determinePosition();
+  moveCamera(LatLng latLng);
+  setMarker(LatLng latLng);
+  setInitialMarker();
+  Widget child;
+}
+
+class ChautariMapController extends ChautariMapFunctions {
+  double get zoom => _zoom;
+  CameraPosition get cameraPosition => _cameraPosition.value;
+
+  Set<Marker> get markers {
+    print(_markers.value);
+    return _markers.value;
+  }
+
+  @override
+  Future<Position> _determinePosition() async {
+    bool serviceEnabled;
+    LocationPermission permission;
+
+    serviceEnabled = await Geolocator.isLocationServiceEnabled();
+    if (!serviceEnabled) {
+      // return Future.error('Location services are disabled.');
+      _showPermissionAlert(
+        message: "Service disabled. would you like to enable now?",
+        textConfirm: "Ok",
+      );
+    }
+
+    permission = await Geolocator.checkPermission();
+    if (permission == LocationPermission.deniedForever) {
+      _showPermissionAlert(
+        message: "Service disabled. would you like to enable now?",
+        textConfirm: "Ok",
+      );
+    }
+
+    if (permission == LocationPermission.denied) {
+      permission = await Geolocator.requestPermission();
+      if (permission != LocationPermission.whileInUse &&
+          permission != LocationPermission.always) {
+        _showPermissionAlert(
+          message: "Service disabled. would you like to enable now?",
+          textConfirm: "Ok",
+        );
+      }
+    }
+
+    return await Geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+  }
+
+  @override
+  moveCamera(LatLng latLng) {
+    CameraPosition cameraPosition =
+        CameraPosition(target: latLng, zoom: this.zoom);
+    this._mapController?.moveCamera(
+          CameraUpdate.newCameraPosition(cameraPosition),
+        );
+  }
+
+  @override
+  onTapLocation(LatLng latLng) {
+    this.selectedPosition = latLng;
+    this.setMarker(latLng);
+    this.moveCamera(latLng);
+  }
+
+  @override
+  setMap(GoogleMapController controller) {
+    _mapController = controller;
+  }
+
+  @override
+  setMarker(LatLng latLng) {
+    var marker = Marker(
+      markerId: MarkerId("0"),
+      position: latLng,
+    );
+    Set<Marker> newSet = Set<Marker>();
+    newSet.add(marker);
+    this._markers.assignAll(newSet);
+    moveCamera(latLng);
+    // setLatLong(latLng);
+  }
+
+  @override
+  _showPermissionAlert({String title, String message, String textConfirm}) {
+    Get.defaultDialog(
+        title: title,
+        middleText: message,
+        textConfirm: textConfirm,
+        confirmTextColor: ChautariColors.blackAndWhitecolor(),
+        onConfirm: () async {
+          AppSettings.openLocationSettings();
+          Get.back();
+        },
+        onCancel: () => {Get.back()});
+  }
+
+  @override
+  void onInit() async {
+    _zoom = 14.4746;
+    _cameraPosition =
+        CameraPosition(target: LatLng(27.7172, 85.3240), zoom: zoom).obs;
+    _markers = Set<Marker>().obs;
+    super.onInit();
+    position_.value = await _determinePosition();
+  }
+
+  setInitialMarker() async {
+    if (position_.value.latitude == null) {
+      var currentPosition = await _determinePosition();
+      setMarker(
+        LatLng(currentPosition.latitude, currentPosition.longitude),
+      );
+    }
+  }
+}
+
+class Map {
+  Widget mapView;
+  ChautariMapFunctions controller;
+
+  Map(ChautariMapFunctions controller) {
+    // mapView = MapView(mapController: controller);
+  }
+}
+
 class MapView extends StatelessWidget {
-  MapController mapController = Get.put(MapController());
-  final AddRoomController addController = Get.find();
+  ChautariMapFunctions mapController = Get.put(ChautariMapController());
 
   @override
   Widget build(BuildContext context) {
-    return GetX<MapController>(
-      init: MapController(),
-      builder: (c) => Scaffold(
-        appBar: AppBar(
-          title: Text("Map"),
-        ),
-        body: Stack(
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Map"),
+      ),
+      body: Obx(
+        () => Stack(
           children: [
             GoogleMap(
-              markers: c.marker,
+              markers: this.mapController.markers,
               myLocationEnabled: true,
               mapType: MapType.normal,
-              initialCameraPosition: c.cameraPosition,
+              initialCameraPosition: this.mapController.cameraPosition,
               onMapCreated: (GoogleMapController controller) {
-                mapController.setMap(controller);
+                this.mapController.setMap(controller);
               },
-              onTap: (latLng) => c.onTapLocation(latLng),
+              onTap: (latLng) => this.mapController.onTapLocation(latLng),
             ),
             Positioned.fill(
               bottom: 75,
@@ -37,7 +180,7 @@ class MapView extends StatelessWidget {
                 alignment: Alignment.bottomCenter,
                 child: RaisedButton(
                   onPressed: () {
-                    Get.back();
+                    Get.back(result: mapController.selectedPosition);
                   },
                   child: Text(
                     "Done",
