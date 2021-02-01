@@ -1,6 +1,7 @@
 import 'package:chautari/utilities/router/routers.dart';
 import 'package:chautari/utilities/theme/theme.dart';
 import 'package:chautari/utilities/theme/theme_controller.dart';
+import 'package:chautari/view/explore/explore_controller.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/splash/splash_screen.dart';
@@ -17,6 +18,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   final ThemeController themeController = Get.put(ThemeController());
   final AuthController loginController = Get.put(AuthController());
+  final ExploreController exploreController = Get.put(ExploreController());
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(

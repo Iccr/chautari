@@ -158,9 +158,11 @@ class AddRoomController extends GetxController {
     if (lat == null && long == null) {
       addressFocusNode.unfocus();
       var result = await Get.toNamed(RouteName.pickLocation);
-      this._lat.value = result.latitude;
-      this._long.value = result.longitude;
-      requestAddressFocus();
+      if (result?.latitude != null) {
+        this._lat.value = result.latitude;
+        this._long.value = result.longitude;
+        requestAddressFocus();
+      }
     }
   }
 

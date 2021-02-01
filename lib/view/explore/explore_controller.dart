@@ -1,9 +1,11 @@
 import 'package:chautari/model/rooms_model.dart';
 import 'package:chautari/repository/rooms_repository.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
+
+import 'package:get/get.dart';
 
 class ExploreController extends GetxController {
-  bool isLoading = false;
+  var _isLoading = false.obs;
+  bool get isLoading => _isLoading.value;
   String error;
   List<RoomsModel> models;
 
@@ -15,9 +17,9 @@ class ExploreController extends GetxController {
   }
 
   _fetchRooms() async {
-    isLoading = true;
+    _isLoading.value = true;
     var models = await RoomsRepository().fetchRooms();
-    isLoading = false;
+    _isLoading.value = false;
     if (models.errors?.isEmpty ?? false) {
       this.error = models.errors?.first?.value;
     } else {
