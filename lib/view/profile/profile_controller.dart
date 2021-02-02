@@ -44,8 +44,8 @@ class ProfileController extends GetxController {
 
     switch (selectedItem.index) {
       case 0:
-        print("go to ${RouteName.addPropery}");
-        Get.toNamed(RouteName.addPropery);
+        print("go to ${RouteName.addRoom}");
+        Get.toNamed(RouteName.addRoom);
         break;
       case 1:
         print("go to ${RouteName.myRooms}");

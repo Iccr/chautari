@@ -5,10 +5,14 @@ class RouteName {
   // GetPage(name: "/addProperty", page: () => AddProperty())
 
   static String tab = "/tabs";
+
   static String roomsList = "/rooms";
-  static String login = "/login";
-  static String addPropery = "/addProperty";
-  static String map = "/map";
   static String myRooms = "/myRooms";
+  static String addRoom = "/addRoom";
+  static String roomDetail = "/roomDetail";
+
+  static String login = "/login";
+
+  static String map = "/map";
   static String pickLocation = "/pickLocation";
 }
