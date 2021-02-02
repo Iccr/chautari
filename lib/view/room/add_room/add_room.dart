@@ -214,7 +214,7 @@ class AddRoom extends StatelessWidget {
                                 .toList(),
                             onSaved: (newValue) {
                               print(newValue);
-                              addController.apiModel.water = newValue;
+                              addController.apiModel.type = newValue;
                             }),
                         SizedBox(height: ChautariPadding.standard),
 
@@ -384,7 +384,7 @@ class AddRoom extends StatelessWidget {
                             onChanged: (value) => addController
                                 .setContactNumbervisibility(value)),
 
-                        // contace number
+                        // contact number
                         FormBuilderTextField(
                           key: _contactKey,
                           validator: (value) {
@@ -409,8 +409,7 @@ class AddRoom extends StatelessWidget {
                                   "If vissible people can call to this number"),
                           onSaved: (newValue) {
                             print(newValue);
-                            addController.apiModel.price =
-                                newValue.replaceAll(",", "");
+                            addController.apiModel.contactNumber = newValue;
                           },
                         ),
                         SizedBox(height: ChautariPadding.standard),
