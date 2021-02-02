@@ -2,6 +2,7 @@ import 'package:chautari/model/amenity.dart';
 import 'package:chautari/model/districts.dart';
 import 'package:chautari/model/error.dart';
 import 'package:chautari/model/parkings.dart';
+import 'package:chautari/model/type.dart';
 import 'package:chautari/model/water.dart';
 
 class AppinfoResponseModel {
@@ -40,8 +41,10 @@ class AppinfoModel {
   List<Districts> districts;
   List<Parking> parkings;
   List<Water> waters;
+  List<RoomType> types;
 
-  AppinfoModel({this.amenities, this.districts, this.parkings, this.waters});
+  AppinfoModel(
+      {this.amenities, this.districts, this.parkings, this.waters, this.types});
 
   AppinfoModel.fromJson(Map<String, dynamic> json) {
     if (json['amenities'] != null) {
@@ -66,6 +69,13 @@ class AppinfoModel {
       waters = new List<Water>();
       json['waters'].forEach((v) {
         waters.add(new Water.fromJson(v));
+      });
+    }
+
+    if (json['types'] != null) {
+      types = new List<RoomType>();
+      json['types'].forEach((v) {
+        types.add(new RoomType.fromJson(v));
       });
     }
   }

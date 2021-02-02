@@ -208,7 +208,7 @@ class AddRoom extends StatelessWidget {
                                 .map(
                                   (element) => FormBuilderFieldOption(
                                     value: element,
-                                    child: Text(element.capitalize),
+                                    child: Text(element.name.capitalize),
                                   ),
                                 )
                                 .toList(),
