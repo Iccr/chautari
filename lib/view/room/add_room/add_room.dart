@@ -52,6 +52,8 @@ class AddRoom extends StatelessWidget {
   final _amenityKey = ValueKey("amenity");
   final _waterKey = ValueKey("water");
   final _priceKey = ValueKey("price");
+  final _contactKey = ValueKey("contact");
+  final _typesKey = ValueKey("types");
 
   KeyboardActionsConfig _buildConfig(BuildContext context) {
     return KeyboardActionsConfig(
@@ -59,7 +61,8 @@ class AddRoom extends StatelessWidget {
         keyboardBarColor: ChautariColors.black.withOpacity(0.3),
         nextFocus: false,
         actions: [
-          KeyboardActionsItem(focusNode: addController.priceFocusNode)
+          KeyboardActionsItem(focusNode: addController.priceFocusNode),
+          KeyboardActionsItem(focusNode: addController.contactFocusNode)
           // KeyboardActionsItem(focusNode: addController.n)
         ]);
   }
@@ -186,6 +189,63 @@ class AddRoom extends StatelessWidget {
                           onTap: () => _openMap(),
                         ),
                         SizedBox(height: ChautariPadding.standard),
+                        // types
+                        FormBuilderRadioGroup(
+                            key: _typesKey,
+                            wrapSpacing: Get.width,
+                            validator: (value) {
+                              return value == null
+                                  ? "This field cannot be empty"
+                                  : null;
+                            },
+                            decoration:
+                                ChautariDecoration().outlinedBorderTextField(
+                              labelText: "Type",
+                              helperText: "Select one options",
+                            ),
+                            name: "Type",
+                            options: addController.types
+                                .map(
+                                  (element) => FormBuilderFieldOption(
+                                    value: element,
+                                    child: Text(element.capitalize),
+                                  ),
+                                )
+                                .toList(),
+                            onSaved: (newValue) {
+                              print(newValue);
+                              addController.apiModel.water = newValue;
+                            }),
+                        SizedBox(height: ChautariPadding.standard),
+
+                        // water
+                        FormBuilderRadioGroup(
+                            key: _waterKey,
+                            wrapSpacing: Get.width,
+                            validator: (value) {
+                              return value == null
+                                  ? "This field cannot be empty"
+                                  : null;
+                            },
+                            decoration:
+                                ChautariDecoration().outlinedBorderTextField(
+                              labelText: "Water",
+                              helperText: "Select one options",
+                            ),
+                            name: "water",
+                            options: addController.waters
+                                .map(
+                                  (element) => FormBuilderFieldOption(
+                                    value: element,
+                                    child: Text(element.name.capitalize),
+                                  ),
+                                )
+                                .toList(),
+                            onSaved: (newValue) {
+                              print(newValue);
+                              addController.apiModel.water = newValue;
+                            }),
+                        SizedBox(height: ChautariPadding.standard),
 
                         // parking
                         FormBuilderCheckboxGroup(
@@ -251,35 +311,6 @@ class AddRoom extends StatelessWidget {
 
                         SizedBox(height: ChautariPadding.standard),
 
-                        // water
-                        FormBuilderRadioGroup(
-                            key: _waterKey,
-                            wrapSpacing: Get.width,
-                            validator: (value) {
-                              return value == null
-                                  ? "This field cannot be empty"
-                                  : null;
-                            },
-                            decoration:
-                                ChautariDecoration().outlinedBorderTextField(
-                              labelText: "Water",
-                              helperText: "Select one options",
-                            ),
-                            name: "water",
-                            options: addController.waters
-                                .map(
-                                  (element) => FormBuilderFieldOption(
-                                    value: element,
-                                    child: Text(element.name.capitalize),
-                                  ),
-                                )
-                                .toList(),
-                            onSaved: (newValue) {
-                              print(newValue);
-                              addController.apiModel.water = newValue;
-                            }),
-                        SizedBox(height: ChautariPadding.standard),
-
                         // number of rooms
                         FormBuilderTouchSpin(
                             textStyle: ChautariTextStyles().withBigText,
@@ -339,6 +370,43 @@ class AddRoom extends StatelessWidget {
                                   prefix: Text("Rs. "),
                                   labelText: "Price",
                                   helperText: "price per month"),
+                          onSaved: (newValue) {
+                            print(newValue);
+                            addController.apiModel.price =
+                                newValue.replaceAll(",", "");
+                          },
+                        ),
+                        SizedBox(height: ChautariPadding.standard),
+                        FormBuilderSwitch(
+                            initialValue: addController.contactNumberVisible,
+                            name: "contact number",
+                            title: Text("Contact number visibility"),
+                            onChanged: (value) => addController
+                                .setContactNumbervisibility(value)),
+
+                        // contace number
+                        FormBuilderTextField(
+                          key: _contactKey,
+                          validator: (value) {
+                            if (value == null) {
+                              return "This field cannot be empty";
+                            } else
+                              return null;
+                          },
+                          // inputFormatters: [NumericTextFormatter()],
+                          keyboardType: TextInputType.phone,
+                          textInputAction: TextInputAction.done,
+                          focusNode: addController.contactFocusNode,
+                          name: "contact",
+                          onTap: () {
+                            print("contact tapped");
+                            addController.contactFocusNode.requestFocus();
+                          },
+                          decoration: ChautariDecoration().outlinedBorderTextField(
+                              prefix: Text("+977-"),
+                              labelText: "Contact Number",
+                              helperText:
+                                  "If vissible people can call to this number"),
                           onSaved: (newValue) {
                             print(newValue);
                             addController.apiModel.price =
