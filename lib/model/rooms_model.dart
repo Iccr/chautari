@@ -1,4 +1,8 @@
+import 'package:chautari/model/amenity.dart';
+import 'package:chautari/model/districts.dart';
 import 'package:chautari/model/error.dart';
+import 'package:chautari/model/login_model.dart';
+import 'package:chautari/model/parkings.dart';
 
 class AllRoomsResponseModel {
   List<RoomsModel> rooms;
@@ -45,6 +49,10 @@ class RoomsModel {
   String water;
   List<String> images;
   String postedOn;
+  List<Parking> parkings;
+  List<Amenities> amenities;
+  Districts district;
+  UserModel user;
 
   RoomsModel(
       {this.address,
@@ -60,7 +68,11 @@ class RoomsModel {
       this.images,
       this.state,
       this.water,
-      this.postedOn});
+      this.postedOn,
+      this.parkings,
+      this.amenities,
+      this.district,
+      this.user});
 
   RoomsModel.fromJson(Map<String, dynamic> json) {
     address = json['address'];
@@ -89,6 +101,28 @@ class RoomsModel {
     json['images'].forEach((e) {
       images.add(e);
     });
+
+    if (json["parkings"] != null) {
+      this.parkings = List<Parking>();
+      json['parkings'].forEach((e) {
+        this.parkings.add(Parking.fromJson(e));
+      });
+    }
+
+    if (json["amenities"] != null) {
+      this.amenities = List<Amenities>();
+      json['amenities'].forEach((e) {
+        this.amenities.add(Amenities.fromJson(e));
+      });
+    }
+
+    if (json["district"] != null) {
+      this.district = Districts.fromJson(json["district"]);
+    }
+
+    if (json["user"] != null) {
+      this.user = UserModel.fromJson(json["user"]);
+    }
   }
 
   Map<String, dynamic> toJson() {

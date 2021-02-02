@@ -1,6 +1,10 @@
 import 'package:chautari/model/add_room_multipart_model.dart';
+import 'package:chautari/model/amenity.dart';
 import 'package:chautari/model/app_info.dart';
+import 'package:chautari/model/districts.dart';
 import 'package:chautari/model/menu_item.dart';
+import 'package:chautari/model/parkings.dart';
+import 'package:chautari/model/water.dart';
 import 'package:chautari/repository/rooms_repository.dart';
 import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/router/router_name.dart';
