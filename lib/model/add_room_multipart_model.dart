@@ -20,6 +20,9 @@ class CreateRoomApiRequestModel {
   Water water;
   List<File> images;
   bool contactNumbervisibile;
+  String contactNumber;
+
+  String type;
 
   Future<FormData> toJson() async {
     var compressed = await _compressFiles(this.images);
@@ -36,6 +39,8 @@ class CreateRoomApiRequestModel {
       'amenities': this.amenities.map((e) => e.id).toList(),
       'available': this.available,
       'show_contact_number': this.contactNumbervisibile,
+      'contact_number': this.contactNumber,
+      'type': this.type,
       "images": compressed.asMap().entries.map((e) {
         return MultipartFile.fromBytes(e.value.readAsBytesSync(),
             filename: e.key.toString() + ".jpg",
