@@ -1,4 +1,8 @@
+import 'package:chautari/model/amenity.dart';
+import 'package:chautari/model/districts.dart';
 import 'package:chautari/model/error.dart';
+import 'package:chautari/model/parkings.dart';
+import 'package:chautari/model/water.dart';
 
 class AppinfoResponseModel {
   AppinfoModel data;
@@ -80,101 +84,6 @@ class AppinfoModel {
     if (this.waters != null) {
       data['waters'] = this.waters.map((v) => v.toJson()).toList();
     }
-    return data;
-  }
-}
-
-class Amenities {
-  int id;
-  String name;
-  int tag;
-
-  Amenities({this.id, this.name, this.tag});
-
-  Amenities.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    tag = json['tag'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['tag'] = this.tag;
-    return data;
-  }
-}
-
-class Districts {
-  int id;
-  String name;
-
-  int state;
-
-  Districts({this.id, this.name, this.state});
-
-  Districts.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    // if (json['rooms'] != null) {
-    //   rooms = new List<Null>();
-    //   json['rooms'].forEach((v) {
-    //     rooms.add(new Null.fromJson(v));
-    //   });
-    // }
-    state = json['state'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    // if (this.rooms != null) {
-    //   data['rooms'] = this.rooms.map((v) => v.toJson()).toList();
-    // }
-    data['state'] = this.state;
-    return data;
-  }
-}
-
-class Water {
-  String name;
-  int value;
-
-  Water({this.name, this.value});
-
-  Water.fromJson(Map<String, dynamic> json) {
-    name = json['name'];
-    value = json['value'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['name'] = this.name;
-    data['value'] = this.value;
-    return data;
-  }
-}
-
-class Parking {
-  int id;
-  String name;
-  int tag;
-
-  Parking({this.id, this.name, this.tag});
-
-  Parking.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    tag = json['tag'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['tag'] = this.tag;
     return data;
   }
 }

@@ -1,4 +1,4 @@
-import 'package:chautari/model/rooms_model.dart';
+import 'package:chautari/utilities/loading/progress_hud.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/chautari_decoration.dart';
@@ -65,92 +65,99 @@ class RoomDetail extends StatelessWidget {
       appBar: AppBar(
         title: Text("Detail"),
       ),
-      body: ListView(
-        children: [
-          CarouselWithIndicator(controller.room),
-          Container(
-            padding: EdgeInsets.all(ChautariPadding.standard),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+      body: Obx(
+        () {
+          return ProgressHud(
+            isLoading: controller.isLoading,
+            child: ListView(
               children: [
+                CarouselWithIndicator(controller.room),
                 Container(
-                  clipBehavior: Clip.antiAlias,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(
-                      ChautariPadding.small5,
-                    ),
-                    boxShadow: [ChautariDecoration().standardBoxShadow],
-                  ),
-                  child: RoomsInsight(room: controller.room),
-                ),
-                SizedBox(height: ChautariPadding.standard),
-                ChautariList().getSeperator(),
-                SizedBox(height: ChautariPadding.standard),
-                Text(
-                  "Detail",
-                  style: ChautariTextStyles().listTitle,
-                ),
-                SizedBox(height: ChautariPadding.small5),
-                // RoomDetailInsight(room: controller.room)
-                detailBlock(controller.roomDetailHashContent.entries
-                    .map((e) => _getElement(e.key, e.value))
-                    .toList()),
-                SizedBox(height: ChautariPadding.standard),
-                Text(
-                  "Parkings",
-                  style: ChautariTextStyles().listTitle,
-                ),
-                SizedBox(height: ChautariPadding.small5),
-                wrapWithDecoratedContainer(
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: controller.roomParkings.map((e) {
-                      print(e);
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(e),
-                          SizedBox(
-                            height: ChautariPadding.standard,
-                          )
-                        ],
-                      );
-                    }).toList(),
-                  ),
-                ),
-                SizedBox(height: ChautariPadding.standard),
+                  padding: EdgeInsets.all(ChautariPadding.standard),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Container(
+                        clipBehavior: Clip.antiAlias,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(
+                            ChautariPadding.small5,
+                          ),
+                          boxShadow: [ChautariDecoration().standardBoxShadow],
+                        ),
+                        child: RoomsInsight(room: controller.room),
+                      ),
+                      SizedBox(height: ChautariPadding.standard),
+                      ChautariList().getSeperator(),
+                      SizedBox(height: ChautariPadding.standard),
+                      Text(
+                        "Detail",
+                        style: ChautariTextStyles().listTitle,
+                      ),
+                      SizedBox(height: ChautariPadding.small5),
+                      // RoomDetailInsight(room: controller.room)
+                      detailBlock(controller.roomDetailHashContent.entries
+                          .map((e) => _getElement(e.key, e.value))
+                          .toList()),
+                      SizedBox(height: ChautariPadding.standard),
+                      Text(
+                        "Parkings",
+                        style: ChautariTextStyles().listTitle,
+                      ),
+                      SizedBox(height: ChautariPadding.small5),
+                      wrapWithDecoratedContainer(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: controller.roomParkings.map((e) {
+                            print(e);
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(e),
+                                SizedBox(
+                                  height: ChautariPadding.standard,
+                                )
+                              ],
+                            );
+                          }).toList(),
+                        ),
+                      ),
+                      SizedBox(height: ChautariPadding.standard),
 
-                Text(
-                  "Amenities",
-                  style: ChautariTextStyles().listTitle,
-                ),
-                SizedBox(height: ChautariPadding.small5),
+                      Text(
+                        "Amenities",
+                        style: ChautariTextStyles().listTitle,
+                      ),
+                      SizedBox(height: ChautariPadding.small5),
 
-                wrapWithDecoratedContainer(
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: controller.roomAmenities.map((e) {
-                      print(e);
-                      return Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(e),
-                          SizedBox(
-                            height: ChautariPadding.standard,
-                          )
-                        ],
-                      );
-                    }).toList(),
+                      wrapWithDecoratedContainer(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: controller.roomAmenities.map((e) {
+                            print(e);
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(e),
+                                SizedBox(
+                                  height: ChautariPadding.standard,
+                                )
+                              ],
+                            );
+                          }).toList(),
+                        ),
+                      ),
+
+                      // detailBlock(controller.roomDetailHashContent.entries
+                      //     .map((e) => _getElement(e.key, e.value))
+                      //     .toList()),
+                    ],
                   ),
-                ),
-
-                // detailBlock(controller.roomDetailHashContent.entries
-                //     .map((e) => _getElement(e.key, e.value))
-                //     .toList()),
+                )
               ],
             ),
-          )
-        ],
+          );
+        },
       ),
     );
   }
