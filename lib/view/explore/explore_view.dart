@@ -1,4 +1,5 @@
 import 'package:chautari/utilities/loading/progress_hud.dart';
+import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/view/explore/explore_controller.dart';
 import 'package:chautari/view/room/room_widgets.dart';
 import 'package:flutter/material.dart';
@@ -17,8 +18,9 @@ class Exploreview extends StatelessWidget {
           ),
           body: ListRoom(
             rooms: c.models ?? [],
-            onTap: () {
+            onTap: (room) {
               print("open room detail");
+              Get.toNamed(RouteName.roomDetail, arguments: room);
             },
           ),
         ),

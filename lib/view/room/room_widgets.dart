@@ -1,6 +1,7 @@
 import 'package:chautari/model/rooms_model.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
+import 'package:chautari/utilities/theme/chautari_decoration.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/widgets/carousel.dart';
 import 'package:flutter/material.dart';
@@ -16,13 +17,7 @@ class RoomWidget extends StatelessWidget {
       height: 140,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(ChautariPadding.small5),
-        boxShadow: [
-          BoxShadow(
-              color: ChautariColors.whiteAndBlackcolor().withOpacity(0.24),
-              offset: Offset(0.0, 1.4), //(x,y)
-              blurRadius: 2.5,
-              spreadRadius: 0.5),
-        ],
+        boxShadow: [ChautariDecoration().standardBoxShadow],
       ),
       child: Row(
         children: [
@@ -53,7 +48,7 @@ class RoomsInsight extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-          color: ChautariColors.blackAndWhitecolor(),
+          color: ChautariColors.blackAndWhitecolor().withOpacity(0.7),
         ),
         padding: EdgeInsets.all(ChautariPadding.small5),
         child: Column(
@@ -124,7 +119,7 @@ class ImageCarousel extends StatelessWidget {
 
 class ListRoom extends StatelessWidget {
   final List<RoomsModel> rooms;
-  Function onTap;
+  Function(RoomsModel) onTap;
   ListRoom({@required this.rooms, this.onTap});
 
   @override
@@ -141,14 +136,19 @@ class ListRoom extends StatelessWidget {
             padding: EdgeInsets.all(ChautariPadding.medium),
             child: GestureDetector(
               behavior: HitTestBehavior.opaque,
-              onTap: () {
-                if (onTap != null) {
-                  onTap();
-                }
+              onTap: () => {
+                if (onTap != null)
+                  {
+                    onTap(
+                      this.rooms.elementAt(index),
+                    ),
+                  }
               },
               child: RoomWidget(
                 room: this.rooms.elementAt(index),
-                onTap: this.onTap,
+                onTap: () => this.onTap(
+                  this.rooms.elementAt(index),
+                ),
               ),
             ),
           );

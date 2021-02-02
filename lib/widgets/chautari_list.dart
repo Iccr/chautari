@@ -29,7 +29,7 @@ class ChautariList {
 
   Widget getSeperator({Color beginColor, Color endColor}) {
     return Container(
-      padding: EdgeInsets.only(
+      margin: EdgeInsets.only(
         left: ChautariPadding.standard,
         right: ChautariPadding.standard,
       ),
