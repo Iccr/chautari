@@ -112,13 +112,13 @@ class AddRoomController extends GetxController {
       formKey.currentState.save();
       _isLoading.value = true;
       var model = await RoomsRepository().addRoom(
-        apiModel.toJson(),
+        await apiModel.toJson(),
       );
       if (model.errors == null) {
         print(model.room);
-
-        await exploreController.fetchRooms();
-        _isLoading.value = exploreController.isLoading;
+        _isLoading.value = false;
+        // await exploreController.fetchRooms();
+        // _isLoading.value = exploreController.isLoading;
         await showAlert(
           "Your property has been added for rent in chautari basti",
           title: "Chautari Basti",

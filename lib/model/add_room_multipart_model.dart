@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
 import 'app_info.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
 
 class CreateRoomApiRequestModel {
   int id;
@@ -18,7 +19,9 @@ class CreateRoomApiRequestModel {
   Water water;
   List<File> images;
 
-  FormData toJson() {
+  Future<FormData> toJson() async {
+    var compressed = await _compressFiles(this.images);
+
     var data = FormData.fromMap({
       'district': this.district,
       'address': this.address,
@@ -30,7 +33,7 @@ class CreateRoomApiRequestModel {
       'parkings': this.parkings.map((e) => e.id).toList(),
       'amenities': this.amenities.map((e) => e.id).toList(),
       'available': this.available,
-      "images": this.images.asMap().entries.map((e) {
+      "images": compressed.asMap().entries.map((e) {
         return MultipartFile.fromBytes(e.value.readAsBytesSync(),
             filename: e.key.toString() + ".jpg",
             contentType: MediaType("image", "jpg"));
@@ -38,5 +41,17 @@ class CreateRoomApiRequestModel {
     });
 
     return data;
+  }
+
+  Future<List<File>> _compressFiles(List<File> files) async {
+    var futures = files.map((e) => _compressFile(e));
+    return await Future.wait(futures);
+  }
+
+  Future<File> _compressFile(File file) async {
+    int quality = 5;
+    int percentage = 60;
+    return FlutterNativeImage.compressImage(file.path,
+        quality: quality, percentage: percentage);
   }
 }
