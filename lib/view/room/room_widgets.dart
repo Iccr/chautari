@@ -48,7 +48,7 @@ class RoomsInsight extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
         decoration: BoxDecoration(
-          color: ChautariColors.blackAndWhitecolor().withOpacity(0.7),
+          color: ChautariColors.blackWithOpacityAndWhitecolor(),
         ),
         padding: EdgeInsets.all(ChautariPadding.small5),
         child: Column(

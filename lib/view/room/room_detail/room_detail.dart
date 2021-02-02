@@ -49,7 +49,7 @@ class RoomDetail extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(ChautariPadding.small5),
       decoration: BoxDecoration(
-        color: ChautariColors.blackAndWhitecolor().withOpacity(0.7),
+        color: ChautariColors.blackWithOpacityAndWhitecolor(),
         borderRadius: BorderRadius.circular(
           ChautariPadding.small5,
         ),
@@ -99,6 +99,31 @@ class RoomDetail extends StatelessWidget {
                           .toList()),
                       SizedBox(height: ChautariPadding.standard),
                       Text(
+                        "Water",
+                        style: ChautariTextStyles().listTitle,
+                      ),
+                      SizedBox(height: ChautariPadding.small5),
+
+                      wrapWithDecoratedContainer(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: controller.water.map((e) {
+                            print(e);
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(e),
+                                SizedBox(
+                                  height: ChautariPadding.standard,
+                                )
+                              ],
+                            );
+                          }).toList(),
+                        ),
+                      ),
+
+                      SizedBox(height: ChautariPadding.standard),
+                      Text(
                         "Parkings",
                         style: ChautariTextStyles().listTitle,
                       ),
@@ -106,12 +131,12 @@ class RoomDetail extends StatelessWidget {
                       wrapWithDecoratedContainer(
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: controller.roomParkings.map((e) {
+                          children: controller.parkings.map((e) {
                             print(e);
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(e),
+                                Text(e.name),
                                 SizedBox(
                                   height: ChautariPadding.standard,
                                 )
@@ -131,12 +156,12 @@ class RoomDetail extends StatelessWidget {
                       wrapWithDecoratedContainer(
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: controller.roomAmenities.map((e) {
+                          children: controller.amenities.map((e) {
                             print(e);
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(e),
+                                Text(e.name),
                                 SizedBox(
                                   height: ChautariPadding.standard,
                                 )
@@ -145,10 +170,7 @@ class RoomDetail extends StatelessWidget {
                           }).toList(),
                         ),
                       ),
-
-                      // detailBlock(controller.roomDetailHashContent.entries
-                      //     .map((e) => _getElement(e.key, e.value))
-                      //     .toList()),
+                      SizedBox(height: ChautariPadding.standard),
                     ],
                   ),
                 )
