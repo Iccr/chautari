@@ -1,8 +1,9 @@
 import 'dart:io';
-
+import 'package:chautari/model/amenity.dart';
+import 'package:chautari/model/parkings.dart';
+import 'package:chautari/model/water.dart';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
-import 'app_info.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 
 class CreateRoomApiRequestModel {
