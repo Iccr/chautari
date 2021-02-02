@@ -18,6 +18,11 @@ class ChautariColors extends GetxController {
     return mode == ThemeMode.dark ? black : white;
   }
 
+  static Color blackWithOpacityAndWhitecolor() {
+    var mode = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    return mode == ThemeMode.dark ? black.withOpacity(0.7) : white;
+  }
+
   // black and white => dark mode white, light mode black
 
   static Color whiteAndBlackcolor() {
