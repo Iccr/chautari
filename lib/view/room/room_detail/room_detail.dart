@@ -61,13 +61,11 @@ class RoomDetail extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Detail"),
-      ),
-      body: Obx(
-        () {
-          return ProgressHud(
+    return Obx(() => Scaffold(
+          appBar: AppBar(
+            title: Text("Detail"),
+          ),
+          body: ProgressHud(
             isLoading: controller.isLoading,
             child: ListView(
               children: [
@@ -156,9 +154,7 @@ class RoomDetail extends StatelessWidget {
                 )
               ],
             ),
-          );
-        },
-      ),
-    );
+          ),
+        ));
   }
 }
