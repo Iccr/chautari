@@ -5,6 +5,7 @@ import 'package:chautari/repository/rooms_repository.dart';
 import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/theme/colors.dart';
+import 'package:chautari/view/explore/explore_controller.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -13,12 +14,14 @@ import 'package:get/get.dart';
 
 class AddRoomController extends GetxController {
   final AppinfoModel appInfo = Get.find(tag: AppConstant.appinfomodelsKey);
-
+  final ExploreController exploreController = Get.find();
   final CreateRoomApiRequestModel apiModel = CreateRoomApiRequestModel();
 
   var isValid = false;
 
   // observers
+  var _isLoading = false.obs;
+  var _error = "".obs;
   var addressError = "".obs;
   var _lat = 1000.0.obs;
   var _long = 1000.0.obs;
@@ -34,6 +37,9 @@ class AddRoomController extends GetxController {
   List<Amenities> get amenities => appInfo.amenities;
   List<Parking> get parkings => appInfo.parkings;
   AutovalidateMode get autovalidateMode => _autovalidateMode.value;
+
+  bool get isLoading => _isLoading.value;
+  String get error => _error.value;
 
   String get lat =>
       _lat.value.toString() == "1000.0" ? null : _lat.value.toStringAsFixed(4);
@@ -104,32 +110,35 @@ class AddRoomController extends GetxController {
     if (formKey.currentState.validate()) {
       // TODo:- api call
       formKey.currentState.save();
+      _isLoading.value = true;
       var model = await RoomsRepository().addRoom(
         apiModel.toJson(),
       );
       if (model.errors == null) {
         print(model.room);
+
+        await exploreController.fetchRooms();
+        _isLoading.value = exploreController.isLoading;
         await showAlert(
           "Your property has been added for rent in chautari basti",
           title: "Chautari Basti",
           onConfirm: () {
             Get.back();
-            // dismiss();
             Get.offAndToNamed(RouteName.myRooms);
           },
         );
-
-        // await Get.snackbar(
-        //   "info",
-        //   "Property is added for Rent",
-        //   duration: Duration(seconds: 4),
-        //   snackPosition: SnackPosition.BOTTOM,
-        //   snackStyle: SnackStyle.GROUNDED,
-        // );
-
-        // Get.back();
       } else {
-        String error = model.errors.first.value;
+        _isLoading.value = false;
+        String error = "";
+        var errorObject = model.errors.first;
+        if (errorObject.name.contains("lat") ||
+            errorObject.name.contains("long")) {
+          error =
+              "Latitude and logitude is necessary for user to see your localit in map";
+        } else {
+          error = errorObject.value;
+        }
+
         showAlert(error, onConfirm: () => Get.back());
       }
     } else {
@@ -161,6 +170,8 @@ class AddRoomController extends GetxController {
       if (result?.latitude != null) {
         this._lat.value = result.latitude;
         this._long.value = result.longitude;
+        apiModel.lat = result.latitude;
+        apiModel.long = result.longitude;
         requestAddressFocus();
       }
     }

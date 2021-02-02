@@ -13,10 +13,10 @@ class ExploreController extends GetxController {
   @override
   void onReady() {
     super.onReady();
-    _fetchRooms();
+    fetchRooms();
   }
 
-  _fetchRooms() async {
+  fetchRooms() async {
     _isLoading.value = true;
     var models = await RoomsRepository().fetchRooms();
     _isLoading.value = false;
