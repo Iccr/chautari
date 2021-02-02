@@ -29,6 +29,7 @@ class AddRoomController extends GetxController {
   var addressError = "".obs;
   var _lat = 1000.0.obs;
   var _long = 1000.0.obs;
+  var _contactNumberVisible = false.obs;
   // observable keys
   var _formKey = GlobalKey<FormBuilderState>().obs;
   var districtViewmodels = List<MenuItem>().obs;
@@ -41,6 +42,8 @@ class AddRoomController extends GetxController {
   List<Amenities> get amenities => appInfo.amenities;
   List<Parking> get parkings => appInfo.parkings;
   AutovalidateMode get autovalidateMode => _autovalidateMode.value;
+
+  bool get contactNumberVisible => _contactNumberVisible.value;
 
   bool get isLoading => _isLoading.value;
   String get error => _error.value;
@@ -60,6 +63,7 @@ class AddRoomController extends GetxController {
   FocusNode districtFocusNode;
   FocusNode addressFocusNode;
   FocusNode priceFocusNode;
+  FocusNode contactFocusNode;
 
 // items
   var listItems = [
@@ -73,6 +77,15 @@ class AddRoomController extends GetxController {
     MenuItem(title: "images")
   ];
 
+  List<String> types = [
+    "Appartment",
+    "Room",
+    "Flat",
+    "Hostel",
+    "Shutter",
+    "Office",
+    "Commercial",
+  ];
   // life cycles
 
   @override
@@ -82,6 +95,7 @@ class AddRoomController extends GetxController {
     districtFocusNode = FocusNode();
     addressFocusNode = FocusNode();
     priceFocusNode = FocusNode();
+    contactFocusNode = FocusNode();
 
     districtViewmodels.assignAll(
       _districts.map(
@@ -192,4 +206,8 @@ class AddRoomController extends GetxController {
   }
 
   validateAddress() {}
+
+  setContactNumbervisibility(bool val) {
+    _contactNumberVisible.value = val;
+  }
 }
