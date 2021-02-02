@@ -47,6 +47,9 @@ class RoomsModel {
   String price;
   int state;
   String water;
+  String type;
+  String phone;
+  bool phone_visibility;
   List<String> images;
   String postedOn;
   List<Parking> parkings;
@@ -72,13 +75,19 @@ class RoomsModel {
       this.parkings,
       this.amenities,
       this.district,
-      this.user});
+      this.user,
+      this.type,
+      this.phone,
+      this.phone_visibility});
 
   RoomsModel.fromJson(Map<String, dynamic> json) {
     address = json['address'];
     amenityCount = json['amenity_count'];
     available = json['available'];
     districtName = json['district_name'];
+    phone = json['phone'];
+    type = json["type"];
+    phone_visibility = json["phone_visibility"];
 
     id = json['id'];
     if (json['lat'] != null) {

@@ -4,6 +4,7 @@ import 'package:chautari/model/app_info.dart';
 import 'package:chautari/model/districts.dart';
 import 'package:chautari/model/menu_item.dart';
 import 'package:chautari/model/parkings.dart';
+import 'package:chautari/model/type.dart';
 import 'package:chautari/model/water.dart';
 import 'package:chautari/repository/rooms_repository.dart';
 import 'package:chautari/utilities/constants.dart';
@@ -41,6 +42,7 @@ class AddRoomController extends GetxController {
   List<Water> get waters => appInfo.waters;
   List<Amenities> get amenities => appInfo.amenities;
   List<Parking> get parkings => appInfo.parkings;
+  List<RoomType> get types => appInfo.types;
   AutovalidateMode get autovalidateMode => _autovalidateMode.value;
 
   bool get contactNumberVisible => _contactNumberVisible.value;
@@ -77,15 +79,6 @@ class AddRoomController extends GetxController {
     MenuItem(title: "images")
   ];
 
-  List<String> types = [
-    "Appartment",
-    "Room",
-    "Flat",
-    "Hostel",
-    "Shutter",
-    "Office",
-    "Commercial",
-  ];
   // life cycles
 
   @override
@@ -208,6 +201,6 @@ class AddRoomController extends GetxController {
   validateAddress() {}
 
   setContactNumbervisibility(bool val) {
-    _contactNumberVisible.value = val;
+    // _contactNumberVisible.value = val;
   }
 }

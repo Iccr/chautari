@@ -53,7 +53,7 @@ class RoomsInsight extends StatelessWidget {
         padding: EdgeInsets.all(ChautariPadding.small5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -70,6 +70,13 @@ class RoomsInsight extends StatelessWidget {
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  "${room.type}",
+                  textAlign: TextAlign.left,
+                  style: ChautariTextStyles()
+                      .listSubtitle
+                      .copyWith(color: ChautariColors.primary),
+                ),
                 Text(
                   "${room.numberOfRooms}" +
                       " rooms, ${room.parkingCount}" +

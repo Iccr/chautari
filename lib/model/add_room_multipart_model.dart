@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:chautari/model/amenity.dart';
 import 'package:chautari/model/parkings.dart';
+import 'package:chautari/model/type.dart';
 import 'package:chautari/model/water.dart';
 import 'package:dio/dio.dart';
 import 'package:http_parser/http_parser.dart';
@@ -22,7 +23,7 @@ class CreateRoomApiRequestModel {
   bool contactNumbervisibile;
   String contactNumber;
 
-  String type;
+  RoomType type;
 
   Future<FormData> toJson() async {
     var compressed = await _compressFiles(this.images);
@@ -38,9 +39,9 @@ class CreateRoomApiRequestModel {
       'parkings': this.parkings.map((e) => e.id).toList(),
       'amenities': this.amenities.map((e) => e.id).toList(),
       'available': this.available,
-      'show_contact_number': this.contactNumbervisibile,
-      'contact_number': this.contactNumber,
-      'type': this.type,
+      'phone_visibility': this.contactNumbervisibile,
+      'phone': this.contactNumber,
+      'type': this.type.value,
       "images": compressed.asMap().entries.map((e) {
         return MultipartFile.fromBytes(e.value.readAsBytesSync(),
             filename: e.key.toString() + ".jpg",
