@@ -35,6 +35,7 @@ class AddRoom extends StatelessWidget {
   final _priceKey = ValueKey("price");
   final _contactKey = ValueKey("contact");
   final _typesKey = ValueKey("types");
+  final _numberOfRoomsKey = ValueKey("_numberOfRoomsKey");
 
   KeyboardActionsConfig _buildConfig(BuildContext context) {
     return KeyboardActionsConfig(
@@ -101,6 +102,7 @@ class AddRoom extends StatelessWidget {
                         AddRoomForm2(
                           contactKey: _contactKey,
                           pricekey: _priceKey,
+                          numberkey: _numberOfRoomsKey,
                           scrollController: _scrollController,
                         ),
 
