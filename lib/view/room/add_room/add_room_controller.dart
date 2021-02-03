@@ -22,6 +22,7 @@ class AddRoomController extends GetxController {
   final AppinfoModel appInfo = Get.find(tag: AppConstant.appinfomodelsKey);
   final ExploreController exploreController = Get.find();
   final CreateRoomApiRequestModel apiModel = CreateRoomApiRequestModel();
+  final PageController pageController = PageController();
 
   var isValid = false;
 
@@ -36,17 +37,35 @@ class AddRoomController extends GetxController {
   var _pageoffset = 0.0.obs;
   // observable keys
   var _formKey = GlobalKey<FormBuilderState>().obs;
+  var _form1Key = GlobalKey<FormBuilderState>().obs;
+  var _form2Key = GlobalKey<FormBuilderState>().obs;
+  var _form3Key = GlobalKey<FormBuilderState>().obs;
+  var _form4Key = GlobalKey<FormBuilderState>().obs;
+
   var districtViewmodels = List<MenuItem>().obs;
   var _autovalidateMode = AutovalidateMode.disabled.obs;
+  var _autovalidateForm1Mode = AutovalidateMode.disabled.obs;
+  var _autovalidateForm2Mode = AutovalidateMode.disabled.obs;
+  var _autovalidateForm3Mode = AutovalidateMode.disabled.obs;
+  var _autovalidateForm4Mode = AutovalidateMode.disabled.obs;
 
 // getters
   GlobalKey<FormBuilderState> get formKey => _formKey.value;
+  GlobalKey<FormBuilderState> get form1Key => _form1Key.value;
+  GlobalKey<FormBuilderState> get form2Key => _form2Key.value;
+  GlobalKey<FormBuilderState> get form3Key => _form3Key.value;
+  GlobalKey<FormBuilderState> get form4Key => _form3Key.value;
+
   List<Districts> get _districts => appInfo.districts;
   List<Water> get waters => appInfo.waters;
   List<Amenities> get amenities => appInfo.amenities;
   List<Parking> get parkings => appInfo.parkings;
   List<RoomType> get types => appInfo.types;
   AutovalidateMode get autovalidateMode => _autovalidateMode.value;
+  AutovalidateMode get autovalidateForm1Mode => _autovalidateForm1Mode.value;
+  AutovalidateMode get autovalidateForm2Mode => _autovalidateForm2Mode.value;
+  AutovalidateMode get autovalidateForm3Mode => _autovalidateForm3Mode.value;
+  AutovalidateMode get autovalidateForm4Mode => _autovalidateForm4Mode.value;
 
   bool get contactNumberVisible => _contactNumberVisible.value;
   double get pageOffset => _pageoffset.value;
@@ -129,49 +148,115 @@ class AddRoomController extends GetxController {
     apiModel.long = long;
   }
 
-// functions
-  submit() async {
-    _autovalidateMode.value = AutovalidateMode.always;
-
-    if (formKey.currentState.validate()) {
-      // TODo:- api call
-      formKey.currentState.save();
-      _isLoading.value = true;
-      var model = await RoomsRepository().addRoom(
-        await apiModel.toJson(),
-      );
-      if (model.errors == null) {
-        print(model.room);
-        _isLoading.value = false;
-        // await exploreController.fetchRooms();
-        // _isLoading.value = exploreController.isLoading;
-        await showAlert(
-          "Your property has been added for rent in chautari basti",
-          title: "Chautari Basti",
-          onConfirm: () {
-            Get.back();
-            Get.offAndToNamed(RouteName.myRooms);
-          },
-        );
-      } else {
-        _isLoading.value = false;
-        String error = "";
-        var errorObject = model.errors.first;
-        if (errorObject.name.contains("lat") ||
-            errorObject.name.contains("long")) {
-          error =
-              "Latitude and logitude is necessary for user to see your localit in map";
-        } else {
-          error = errorObject.value;
-        }
-
-        showAlert(error, onConfirm: () => Get.back());
-      }
+  submitPage1() {
+    _autovalidateForm1Mode.value = AutovalidateMode.always;
+    if (form1Key.currentState.validate()) {
+      form1Key.currentState.save();
+      print(apiModel.address);
+      _goToNextPage();
     } else {
-      var firstWidget = formKey.currentState.fields.entries.firstWhere(
+      var firstWidget = form1Key.currentState.fields.entries.firstWhere(
         (element) => element.value.hasError,
       );
       Scrollable.ensureVisible(firstWidget.value.context);
+    }
+  }
+
+  submitPage2() {
+    _autovalidateForm2Mode.value = AutovalidateMode.always;
+    if (form2Key.currentState.validate()) {
+      form2Key.currentState.save();
+      _goToNextPage();
+    } else {
+      var firstWidget = form2Key.currentState.fields.entries.firstWhere(
+        (element) => element.value.hasError,
+      );
+      Scrollable.ensureVisible(firstWidget.value.context);
+    }
+  }
+
+  submitPage3() {
+    _autovalidateForm3Mode.value = AutovalidateMode.always;
+    if (form3Key.currentState.validate()) {
+      form3Key.currentState.save();
+      _goToNextPage();
+    } else {
+      var firstWidget = form3Key.currentState.fields.entries.firstWhere(
+        (element) => element.value.hasError,
+      );
+      Scrollable.ensureVisible(firstWidget.value.context);
+    }
+  }
+
+  submitPage4() {
+    _autovalidateForm4Mode.value = AutovalidateMode.always;
+    if (form4Key.currentState.validate()) {
+      form4Key.currentState.save();
+
+      _submit();
+    } else {
+      var firstWidget = form4Key.currentState.fields.entries.firstWhere(
+        (element) => element.value.hasError,
+      );
+      Scrollable.ensureVisible(firstWidget.value.context);
+    }
+  }
+
+  _goToNextPage() {
+    pageController.nextPage(
+        duration: Duration(milliseconds: 333), curve: Curves.easeInOut);
+  }
+
+// functions
+  submit() {
+    print(pageController.page);
+    int page = pageController.page.toInt();
+    switch (page) {
+      case 0:
+        submitPage1();
+        break;
+      case 1:
+        submitPage2();
+        break;
+      case 2:
+        submitPage3();
+        break;
+      case 3:
+        submitPage4();
+        break;
+    }
+  }
+
+  _submit() async {
+    _isLoading.value = true;
+    var model = await RoomsRepository().addRoom(
+      await apiModel.toJson(),
+    );
+    if (model.errors == null) {
+      print(model.room);
+      _isLoading.value = false;
+
+      await showAlert(
+        "Your property has been added for rent in chautari basti",
+        title: "Chautari Basti",
+        onConfirm: () {
+          Get.back();
+          Get.offAndToNamed(RouteName.myRooms);
+        },
+      );
+    } else {
+      _isLoading.value = false;
+      String error = "";
+      var errorObject = model.errors.first;
+      if (errorObject.name.contains("lat") ||
+          errorObject.name.contains("long")) {
+        error =
+            "Latitude and logitude is necessary for user to see your localit in map";
+      } else {
+        error = errorObject.value;
+      }
+
+      showAlert(error, onConfirm: () => Get.back());
     }
   }
 

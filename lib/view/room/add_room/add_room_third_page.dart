@@ -7,14 +7,20 @@ import 'package:get/get.dart';
 
 class AddRoomForm3 extends StatelessWidget {
   final AddRoomController controller = Get.find();
+  final GlobalKey<FormBuilderState> formkey;
   final ValueKey typesKey;
   final ValueKey waterKey;
 
-  AddRoomForm3({@required this.typesKey, @required this.waterKey});
+  AddRoomForm3(
+      {@required this.formkey,
+      @required this.typesKey,
+      @required this.waterKey});
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: FormBuilder(
+        key: formkey,
+        autovalidateMode: controller.autovalidateForm3Mode,
         child: Column(
           children: [
             // types

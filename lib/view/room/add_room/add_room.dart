@@ -16,7 +16,6 @@ import 'package:get/get.dart';
 class AddRoom extends StatelessWidget {
   final SearchController search = Get.put(SearchController());
   final AddRoomController addController = Get.put(AddRoomController());
-  final PageController pageController = PageController();
 
   final ScrollController _scrollController = new ScrollController();
 
@@ -58,6 +57,7 @@ class AddRoom extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: AddRoomForm1(
+            formKey: addController.form1Key,
             districtKey: _districtKey,
             addressKey: _addressKey,
             openSearch: () => _openSearch(),
@@ -67,6 +67,7 @@ class AddRoom extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: AddRoomForm2(
+            formkey: addController.form2Key,
             contactKey: _contactKey,
             pricekey: _priceKey,
             numberkey: _numberOfRoomsKey,
@@ -76,6 +77,7 @@ class AddRoom extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: AddRoomForm3(
+            formkey: addController.form3Key,
             typesKey: _typesKey,
             waterKey: _waterKey,
           ),
@@ -105,7 +107,7 @@ class AddRoom extends StatelessWidget {
                   children: [
                     Expanded(
                         child: PageView.builder(
-                            controller: pageController,
+                            controller: addController.pageController,
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: _getPagerContents().length,
                             itemBuilder: (context, index) {
@@ -120,9 +122,6 @@ class AddRoom extends StatelessWidget {
                             RaisedButton(
                               color: ChautariColors.primaryColor(),
                               onPressed: () {
-                                pageController.nextPage(
-                                    duration: Duration(milliseconds: 333),
-                                    curve: Curves.easeInOut);
                                 addController.submit();
                               },
                               child: Text(
@@ -136,7 +135,6 @@ class AddRoom extends StatelessWidget {
                           SizedBox(height: ChautariPadding.standard),
                         ],
                       ),
-                      // ]
                     )
                   ],
                 ),
