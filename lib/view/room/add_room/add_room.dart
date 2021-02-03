@@ -37,18 +37,6 @@ class AddRoom extends StatelessWidget {
   final _typesKey = ValueKey("types");
   final _numberOfRoomsKey = ValueKey("_numberOfRoomsKey");
 
-  KeyboardActionsConfig _buildConfig(BuildContext context) {
-    return KeyboardActionsConfig(
-        keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
-        keyboardBarColor: ChautariColors.black.withOpacity(0.3),
-        nextFocus: false,
-        actions: [
-          KeyboardActionsItem(focusNode: addController.priceFocusNode),
-          KeyboardActionsItem(focusNode: addController.contactFocusNode)
-          // KeyboardActionsItem(focusNode: addController.n)
-        ]);
-  }
-
   @override
   Widget build(BuildContext context) {
     _openSearch() async {
@@ -83,55 +71,53 @@ class AddRoom extends StatelessWidget {
               isLoading: addController.isLoading,
               child: Container(
                 padding: EdgeInsets.all(ChautariPadding.standard),
-                child: KeyboardActions(
-                  overscroll: 50,
-                  config: _buildConfig(context),
-                  child: FormBuilder(
-                    key: addController.formKey,
-                    autovalidateMode: addController.autovalidateMode,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        AddRoomForm1(
-                          districtKey: _districtKey,
-                          addressKey: _addressKey,
-                          openSearch: () => _openSearch(),
-                          openMap: () => _openMap(),
+                child: FormBuilder(
+                  key: addController.formKey,
+                  autovalidateMode: addController.autovalidateMode,
+                  child: Column(
+                    children: [
+                      Expanded(
+                        child: PageView(
+                          children: [
+                            AddRoomForm1(
+                              districtKey: _districtKey,
+                              addressKey: _addressKey,
+                              openSearch: () => _openSearch(),
+                              openMap: () => _openMap(),
+                            ),
+                            AddRoomForm2(
+                              contactKey: _contactKey,
+                              pricekey: _priceKey,
+                              numberkey: _numberOfRoomsKey,
+                              scrollController: _scrollController,
+                            ),
+                            AddRoomForm3(
+                              typesKey: _typesKey,
+                              waterKey: _waterKey,
+                            ),
+                            AddRoomForm4(
+                              parkingKey: _parkingKey,
+                              amenityKey: _amenityKey,
+                            ),
+                          ],
                         ),
+                      ),
 
-                        AddRoomForm2(
-                          contactKey: _contactKey,
-                          pricekey: _priceKey,
-                          numberkey: _numberOfRoomsKey,
-                          scrollController: _scrollController,
+                      // submit
+                      RaisedButton(
+                        color: ChautariColors.primaryColor(),
+                        onPressed: () {
+                          addController.submit();
+                        },
+                        child: Text(
+                          "Submit",
+                          style: ChautariTextStyles()
+                              .normal
+                              .copyWith(color: ChautariColors.white),
                         ),
-
-                        AddRoomForm3(
-                          typesKey: _typesKey,
-                          waterKey: _waterKey,
-                        ),
-
-                        AddRoomForm4(
-                          parkingKey: _parkingKey,
-                          amenityKey: _amenityKey,
-                        ),
-
-                        // submit
-                        RaisedButton(
-                          color: ChautariColors.primaryColor(),
-                          onPressed: () {
-                            addController.submit();
-                          },
-                          child: Text(
-                            "Submit",
-                            style: ChautariTextStyles()
-                                .normal
-                                .copyWith(color: ChautariColors.white),
-                          ),
-                        ),
-                        SizedBox(height: ChautariPadding.standard),
-                      ],
-                    ),
+                      ),
+                      SizedBox(height: ChautariPadding.standard),
+                    ],
                   ),
                 ),
               ),

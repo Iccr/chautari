@@ -12,6 +12,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/services.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 
 class AddRoomForm2 extends StatelessWidget {
   final AddRoomController controller = Get.find();
@@ -30,150 +31,156 @@ class AddRoomForm2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Column(
-        children: [
-          // number of rooms
-          TopDownPaddingWrapper(
-            child: FormBuilderTouchSpin(
-                textStyle: ChautariTextStyles().withBigText,
-                addIcon: Icon(
-                  Icons.add,
-                  color: ChautariColors.whiteAndBlackcolor().withOpacity(0.5),
-                ),
-                subtractIcon: Icon(
-                  Icons.remove,
-                  color: ChautariColors.whiteAndBlackcolor().withOpacity(0.5),
-                ),
-                name: "noOfROoms",
-                min: 1,
-                max: 20,
-                initialValue: 1,
-                displayFormat: NumberFormat("##"),
-                decoration: ChautariDecoration().outlinedBorderTextField(
-                    labelText: "Number of rooms",
-                    helperText: "Available number of rooms to rent"),
-                onSaved: (newValue) {
-                  print(newValue);
-                  controller.apiModel.numberOfRooms = newValue.toInt();
-                }),
-          ),
-
-          // price
-          TopDownPaddingWrapper(
-            child: FormBuilderTextField(
-              key: pricekey,
-              validator: (value) {
-                if (value == null) {
-                  return "This field cannot be empty";
-                } else if (int.parse(
-                        value.isEmpty ? "0" : value.replaceAll(",", "")) <
-                    100) {
-                  return "value must be greater than 100";
-                } else {
-                  return null;
-                }
-              },
-              inputFormatters: [NumericTextFormatter()],
-              keyboardType: TextInputType.number,
-              textInputAction: TextInputAction.done,
-              focusNode: controller.priceFocusNode,
-              name: "price",
-              onTap: () {
-                print("price tapped");
-                controller.priceFocusNode.requestFocus();
-              },
-              decoration: ChautariDecoration().outlinedBorderTextField(
-                  prefix: Text("Rs. "),
-                  labelText: "Price",
-                  helperText: "price per month"),
-              onSaved: (newValue) {
-                print(newValue);
-                controller.apiModel.price = newValue.replaceAll(",", "");
-              },
+      () => KeyboardActions(
+        disableScroll: false,
+        overscroll: 50,
+        config: controller.keyboardActionConfig(context),
+        child: Column(
+          children: [
+            // number of rooms
+            TopDownPaddingWrapper(
+              child: FormBuilderTouchSpin(
+                  textStyle: ChautariTextStyles().withBigText,
+                  addIcon: Icon(
+                    Icons.add,
+                    color: ChautariColors.whiteAndBlackcolor().withOpacity(0.5),
+                  ),
+                  subtractIcon: Icon(
+                    Icons.remove,
+                    color: ChautariColors.whiteAndBlackcolor().withOpacity(0.5),
+                  ),
+                  name: "noOfROoms",
+                  min: 1,
+                  max: 20,
+                  initialValue: 1,
+                  displayFormat: NumberFormat("##"),
+                  decoration: ChautariDecoration().outlinedBorderTextField(
+                      labelText: "Number of rooms",
+                      helperText: "Available number of rooms to rent"),
+                  onSaved: (newValue) {
+                    print(newValue);
+                    controller.apiModel.numberOfRooms = newValue.toInt();
+                  }),
             ),
-          ),
 
-          // mobile visibility
-          TopDownPaddingWrapper(
-            child: FormBuilderSwitch(
-              initialValue: controller.contactNumberVisible,
-              name: "contact number",
-              title: Text(
-                "Let people contact you via phone",
-                style: ChautariTextStyles().listSubtitle,
-              ),
-              onChanged: (value) {
-                print(value);
-                controller.setContactNumbervisibility(value);
-              },
-              decoration: ChautariDecoration().outlinedBorderTextField(),
-            ),
-          ),
-
-          // contact number
-          if (controller.contactNumberVisible) ...[
+            // price
             TopDownPaddingWrapper(
               child: FormBuilderTextField(
-                key: contactKey,
-
+                key: pricekey,
                 validator: (value) {
                   if (value == null) {
                     return "This field cannot be empty";
-                  } else
+                  } else if (int.parse(
+                          value.isEmpty ? "0" : value.replaceAll(",", "")) <
+                      100) {
+                    return "value must be greater than 100";
+                  } else {
                     return null;
+                  }
                 },
-                // inputFormatters: [NumericTextFormatter()],
-                keyboardType: TextInputType.phone,
+                inputFormatters: [NumericTextFormatter()],
+                keyboardType: TextInputType.number,
                 textInputAction: TextInputAction.done,
-                focusNode: controller.contactFocusNode,
-                name: "contact",
+                focusNode: controller.priceFocusNode,
+                name: "price",
                 onTap: () {
-                  print("contact tapped");
-                  controller.contactFocusNode.requestFocus();
+                  print("price tapped");
+                  controller.priceFocusNode.requestFocus();
                 },
                 decoration: ChautariDecoration().outlinedBorderTextField(
-                    prefix: Text("+977-"),
-                    labelText: "Contact Number",
-                    helperText: "If vissible people can call to this number"),
-
+                    prefix: Text("Rs. "),
+                    labelText: "Price",
+                    helperText: "price per month"),
                 onSaved: (newValue) {
-                  controller.apiModel.contactNumber = newValue;
+                  print(newValue);
+                  controller.apiModel.price = newValue.replaceAll(",", "");
                 },
               ),
-            )
-          ],
-
-          // image
-          TopDownPaddingWrapper(
-            child: FormBuilderImagePicker(
-              bottomSheetPadding: EdgeInsets.only(bottom: ChautariPadding.huge),
-              previewMargin: EdgeInsets.only(right: ChautariPadding.small5),
-              previewWidth: 130,
-              scrollController: scrollController,
-              imageQuality: 40,
-              name: "images",
-              iconColor: ChautariColors.whiteAndPrimarycolor(),
-              onChanged: (value) {
-                print("on changed");
-                print(value);
-                scrollController.animateTo(
-                    scrollController.position.maxScrollExtent + 130,
-                    duration: Duration(milliseconds: 100),
-                    curve: Curves.easeInOut);
-              },
-              onSaved: (newValue) {
-                print(newValue);
-                var imageLIst = List<File>.from(newValue);
-
-                controller.apiModel.images = imageLIst;
-              },
-              decoration: ChautariDecoration().outlinedBorderTextField(
-                  labelText: 'Propery images',
-                  helperText: "Maximum 10 images are allowed"),
-              maxImages: 15,
             ),
-          ),
-        ],
+
+            // mobile visibility
+            TopDownPaddingWrapper(
+              child: FormBuilderSwitch(
+                initialValue: controller.contactNumberVisible,
+                name: "contact number",
+                title: Text(
+                  "Let people contact you via phone",
+                  style: ChautariTextStyles().listSubtitle,
+                ),
+                onChanged: (value) {
+                  print(value);
+                  controller.setContactNumbervisibility(value);
+                },
+                decoration: ChautariDecoration().outlinedBorderTextField(),
+              ),
+            ),
+
+            // contact number
+            if (controller.contactNumberVisible) ...[
+              TopDownPaddingWrapper(
+                child: FormBuilderTextField(
+                  key: contactKey,
+
+                  validator: (value) {
+                    if (value == null) {
+                      return "This field cannot be empty";
+                    } else
+                      return null;
+                  },
+                  // inputFormatters: [NumericTextFormatter()],
+                  keyboardType: TextInputType.phone,
+                  textInputAction: TextInputAction.done,
+                  focusNode: controller.contactFocusNode,
+                  name: "contact",
+                  onTap: () {
+                    print("contact tapped");
+                    controller.contactFocusNode.requestFocus();
+                  },
+                  decoration: ChautariDecoration().outlinedBorderTextField(
+                      prefix: Text("+977-"),
+                      labelText: "Contact Number",
+                      helperText: "If vissible people can call to this number"),
+
+                  onSaved: (newValue) {
+                    controller.apiModel.contactNumber = newValue;
+                  },
+                ),
+              )
+            ],
+
+            // image
+            TopDownPaddingWrapper(
+              child: FormBuilderImagePicker(
+                bottomSheetPadding:
+                    EdgeInsets.only(bottom: ChautariPadding.huge),
+                previewMargin: EdgeInsets.only(right: ChautariPadding.small5),
+                previewWidth: 130,
+                scrollController: scrollController,
+                imageQuality: 40,
+                name: "images",
+                iconColor: ChautariColors.whiteAndPrimarycolor(),
+                onChanged: (value) {
+                  print("on changed");
+                  print(value);
+                  scrollController.animateTo(
+                      scrollController.position.maxScrollExtent + 130,
+                      duration: Duration(milliseconds: 100),
+                      curve: Curves.easeInOut);
+                },
+                onSaved: (newValue) {
+                  print(newValue);
+                  var imageLIst = List<File>.from(newValue);
+
+                  controller.apiModel.images = imageLIst;
+                },
+                decoration: ChautariDecoration().outlinedBorderTextField(
+                    labelText: 'Propery images',
+                    helperText: "Maximum 10 images are allowed"),
+                maxImages: 15,
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
