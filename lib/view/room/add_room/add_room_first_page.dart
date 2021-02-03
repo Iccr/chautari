@@ -10,6 +10,9 @@ import 'package:get/get.dart';
 
 class AddRoomForm1 extends StatelessWidget {
   final AddRoomController controller = Get.find();
+
+  var _form1Key = GlobalKey();
+
   final ValueKey districtKey;
   final ValueKey addressKey;
 
@@ -26,6 +29,7 @@ class AddRoomForm1 extends StatelessWidget {
     return Obx(
       () => SingleChildScrollView(
         child: FormBuilder(
+          key: _form1Key,
           child: Column(
             children: [
               // district
@@ -82,6 +86,7 @@ class AddRoomForm1 extends StatelessWidget {
 
 // address
               TopDownPaddingWrapper(
+                shouldHideTopPadding: true,
                 child: FormBuilderTextField(
                   key: addressKey,
                   controller: controller.addressTextController,
