@@ -16,6 +16,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 
 class AddRoomController extends GetxController {
   final AppinfoModel appInfo = Get.find(tag: AppConstant.appinfomodelsKey);
@@ -51,10 +52,10 @@ class AddRoomController extends GetxController {
   String get error => _error.value;
 
   String get lat =>
-      _lat.value.toString() == "1000.0" ? null : _lat.value.toStringAsFixed(4);
+      _lat.value.toString() == "1000.0" ? null : _lat.value?.toStringAsFixed(4);
   String get long => _long.value.toString() == "1000.0"
       ? null
-      : _long.value.toStringAsFixed(4);
+      : _long.value?.toStringAsFixed(4);
 
   // properties
 
@@ -78,6 +79,18 @@ class AddRoomController extends GetxController {
     MenuItem(title: "preferences"),
     MenuItem(title: "images")
   ];
+
+  KeyboardActionsConfig keyboardActionConfig(BuildContext context) {
+    return KeyboardActionsConfig(
+        keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
+        keyboardBarColor: ChautariColors.black.withOpacity(0.3),
+        nextFocus: false,
+        actions: [
+          KeyboardActionsItem(focusNode: priceFocusNode),
+          KeyboardActionsItem(focusNode: contactFocusNode)
+          // KeyboardActionsItem(focusNode: addController.n)
+        ]);
+  }
 
   // life cycles
 
