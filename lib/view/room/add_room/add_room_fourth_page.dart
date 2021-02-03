@@ -14,52 +14,21 @@ class AddRoomForm4 extends StatelessWidget {
   AddRoomForm4({@required this.parkingKey, @required this.amenityKey});
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TopDownPaddingWrapper(
-          child: FormBuilderCheckboxGroup(
-            key: parkingKey,
-            validator: (value) {
-              return value == null ? "This field cannot be empty" : null;
-            },
-            decoration: ChautariDecoration().outlinedBorderTextField(
-              labelText: "parkings",
-              helperText: "Select all availabe options",
-            ),
-            name: "parking",
-            options: controller.parkings
-                .map(
-                  (element) => FormBuilderFieldOption(
-                    value: element,
-                    child: Text(element.name.capitalize),
-                  ),
-                )
-                .toList(),
-            onChanged: (value) {
-              print("parking value $value");
-            },
-            onSaved: (newValue) {
-              print(newValue);
-              controller.apiModel.parkings = newValue;
-            },
-          ),
-        ),
-
-        // amenity
-        TopDownPaddingWrapper(
-          child: FormBuilderCheckboxGroup(
-              key: amenityKey,
+    return FormBuilder(
+      child: Column(
+        children: [
+          TopDownPaddingWrapper(
+            child: FormBuilderCheckboxGroup(
+              key: parkingKey,
               validator: (value) {
                 return value == null ? "This field cannot be empty" : null;
               },
-              wrapAlignment: WrapAlignment.spaceBetween,
-              wrapSpacing: Get.width,
               decoration: ChautariDecoration().outlinedBorderTextField(
-                labelText: "Amenities",
+                labelText: "parkings",
                 helperText: "Select all availabe options",
               ),
-              name: "amenity",
-              options: controller.amenities
+              name: "parking",
+              options: controller.parkings
                   .map(
                     (element) => FormBuilderFieldOption(
                       value: element,
@@ -67,12 +36,45 @@ class AddRoomForm4 extends StatelessWidget {
                     ),
                   )
                   .toList(),
+              onChanged: (value) {
+                print("parking value $value");
+              },
               onSaved: (newValue) {
                 print(newValue);
-                controller.apiModel.amenities = newValue;
-              }),
-        ),
-      ],
+                controller.apiModel.parkings = newValue;
+              },
+            ),
+          ),
+
+          // amenity
+          TopDownPaddingWrapper(
+            child: FormBuilderCheckboxGroup(
+                key: amenityKey,
+                validator: (value) {
+                  return value == null ? "This field cannot be empty" : null;
+                },
+                wrapAlignment: WrapAlignment.spaceBetween,
+                wrapSpacing: Get.width,
+                decoration: ChautariDecoration().outlinedBorderTextField(
+                  labelText: "Amenities",
+                  helperText: "Select all availabe options",
+                ),
+                name: "amenity",
+                options: controller.amenities
+                    .map(
+                      (element) => FormBuilderFieldOption(
+                        value: element,
+                        child: Text(element.name.capitalize),
+                      ),
+                    )
+                    .toList(),
+                onSaved: (newValue) {
+                  print(newValue);
+                  controller.apiModel.amenities = newValue;
+                }),
+          ),
+        ],
+      ),
     );
   }
 }

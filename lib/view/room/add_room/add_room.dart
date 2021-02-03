@@ -102,45 +102,39 @@ class AddRoom extends StatelessWidget {
               isLoading: addController.isLoading,
               child: Container(
                 padding: EdgeInsets.all(ChautariPadding.standard),
-                child: FormBuilder(
-                  key: addController.formKey,
-                  autovalidateMode: addController.autovalidateMode,
-                  child: KeyboardVisibilityBuilder(
-                    builder: (context, child, isKeyboardVisible) => Column(
-                      children: [
-                        Expanded(
-                            child: PageView.builder(
-                                controller: pageController,
-                                physics: NeverScrollableScrollPhysics(),
-                                itemCount: _getPagerContents().length,
-                                itemBuilder: (context, index) {
-                                  return SingleChildScrollView(
-                                    child: _getPagerContents().elementAt(index),
-                                  );
-                                })),
+                child: KeyboardVisibilityBuilder(
+                  builder: (context, child, isKeyboardVisible) => Column(
+                    children: [
+                      Expanded(
+                          child: PageView.builder(
+                              controller: pageController,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: 1,
+                              itemBuilder: (context, index) {
+                                return _getPagerContents().elementAt(0);
+                              })),
 
-                        // submit
+                      // submit
 
-                        if (!isKeyboardVisible) ...[
-                          RaisedButton(
-                            color: ChautariColors.primaryColor(),
-                            onPressed: () {
-                              pageController.nextPage(
-                                  duration: Duration(milliseconds: 333),
-                                  curve: Curves.easeInOut);
-                              // addController.submit();
-                            },
-                            child: Text(
-                              "Submit",
-                              style: ChautariTextStyles()
-                                  .normal
-                                  .copyWith(color: ChautariColors.white),
-                            ),
+                      if (!isKeyboardVisible) ...[
+                        RaisedButton(
+                          color: ChautariColors.primaryColor(),
+                          onPressed: () {
+                            pageController.nextPage(
+                                duration: Duration(milliseconds: 333),
+                                curve: Curves.easeInOut);
+                            // addController.submit();
+                          },
+                          child: Text(
+                            "Submit",
+                            style: ChautariTextStyles()
+                                .normal
+                                .copyWith(color: ChautariColors.white),
                           ),
-                          SizedBox(height: ChautariPadding.standard),
-                        ]
-                      ],
-                    ),
+                        ),
+                        SizedBox(height: ChautariPadding.standard),
+                      ]
+                    ],
                   ),
                 ),
               ),

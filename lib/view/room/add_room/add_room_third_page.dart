@@ -13,62 +13,89 @@ class AddRoomForm3 extends StatelessWidget {
   AddRoomForm3({@required this.typesKey, @required this.waterKey});
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        // types
-        TopDownPaddingWrapper(
-          child: FormBuilderRadioGroup(
-              key: typesKey,
-              wrapSpacing: Get.width,
-              validator: (value) {
-                return value == null ? "This field cannot be empty" : null;
-              },
-              decoration: ChautariDecoration().outlinedBorderTextField(
-                labelText: "Type",
-                helperText: "Select one options",
-              ),
-              name: "Type",
-              options: controller.types
-                  .map(
-                    (element) => FormBuilderFieldOption(
-                      value: element,
-                      child: Text(element.name.capitalize),
-                    ),
-                  )
-                  .toList(),
-              onSaved: (newValue) {
-                print(newValue);
-                controller.apiModel.type = newValue;
-              }),
-        ),
+    return FormBuilder(
+      child: Column(
+        children: [
+          // types
+          TopDownPaddingWrapper(
+            child: FormBuilderRadioGroup(
+                key: typesKey,
+                wrapSpacing: Get.width,
+                validator: (value) {
+                  return value == null ? "This field cannot be empty" : null;
+                },
+                decoration: ChautariDecoration().outlinedBorderTextField(
+                  labelText: "Type",
+                  helperText: "Select one options",
+                ),
+                name: "Type",
+                options: controller.types
+                    .map(
+                      (element) => FormBuilderFieldOption(
+                        value: element,
+                        child: Text(element.name.capitalize),
+                      ),
+                    )
+                    .toList(),
+                onSaved: (newValue) {
+                  print(newValue);
+                  controller.apiModel.type = newValue;
+                }),
+          ),
 
-        // water
-        TopDownPaddingWrapper(
-          child: FormBuilderRadioGroup(
-              key: waterKey,
-              wrapSpacing: Get.width,
-              validator: (value) {
-                return value == null ? "This field cannot be empty" : null;
-              },
-              decoration: ChautariDecoration().outlinedBorderTextField(
-                labelText: "Water",
-                helperText: "Select one options",
-              ),
-              name: "water",
-              options: controller.waters
-                  .map(
-                    (element) => FormBuilderFieldOption(
-                      value: element,
-                      child: Text(element.name.capitalize),
-                    ),
-                  )
-                  .toList(),
-              onSaved: (newValue) {
-                print(newValue);
-                controller.apiModel.water = newValue;
-              }),
-        ),
-      ],
+          // water
+          TopDownPaddingWrapper(
+            child: FormBuilderRadioGroup(
+                key: waterKey,
+                wrapSpacing: Get.width,
+                validator: (value) {
+                  return value == null ? "This field cannot be empty" : null;
+                },
+                decoration: ChautariDecoration().outlinedBorderTextField(
+                  labelText: "Water",
+                  helperText: "Select one options",
+                ),
+                name: "water",
+                options: controller.waters
+                    .map(
+                      (element) => FormBuilderFieldOption(
+                        value: element,
+                        child: Text(element.name.capitalize),
+                      ),
+                    )
+                    .toList(),
+                onSaved: (newValue) {
+                  print(newValue);
+                  controller.apiModel.water = newValue;
+                }),
+          ),
+          TopDownPaddingWrapper(
+            child: FormBuilderRadioGroup(
+                key: waterKey,
+                wrapSpacing: Get.width,
+                validator: (value) {
+                  return value == null ? "This field cannot be empty" : null;
+                },
+                decoration: ChautariDecoration().outlinedBorderTextField(
+                  labelText: "Water",
+                  helperText: "Select one options",
+                ),
+                name: "water",
+                options: controller.waters
+                    .map(
+                      (element) => FormBuilderFieldOption(
+                        value: element,
+                        child: Text(element.name.capitalize),
+                      ),
+                    )
+                    .toList(),
+                onSaved: (newValue) {
+                  print(newValue);
+                  controller.apiModel.water = newValue;
+                }),
+          ),
+        ],
+      ),
     );
   }
 }
