@@ -28,7 +28,6 @@ class AddRoomForm1 extends StatelessWidget {
         children: [
           // district
           TopDownPaddingWrapper(
-            shouldHideTopPadding: true,
             child: FormBuilderTextField(
               key: districtKey,
               validator: FormBuilderValidators.required(context),

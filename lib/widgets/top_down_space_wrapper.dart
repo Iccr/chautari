@@ -13,7 +13,9 @@ class TopDownPaddingWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      if (shouldHideTopPadding) ...[SizedBox(height: ChautariPadding.standard)],
+      if (!shouldHideTopPadding) ...[
+        SizedBox(height: ChautariPadding.standard)
+      ],
       child,
       SizedBox(height: ChautariPadding.standard),
     ]);

@@ -1,10 +1,6 @@
-import 'dart:io';
-
-import 'package:chautari/forked/form_builder_image_picker.dart';
 import 'package:chautari/utilities/loading/progress_hud.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
-import 'package:chautari/utilities/theme/text_decoration.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/view/room/add_room/add_room_controller.dart';
 import 'package:chautari/view/room/add_room/add_room_first_page.dart';
@@ -13,19 +9,16 @@ import 'package:chautari/view/room/add_room/add_room_third_page.dart';
 import 'package:chautari/view/room/add_room/add_room_second_page.dart';
 import 'package:chautari/widgets/search/search.dart';
 import 'package:chautari/widgets/search/search_controller.dart';
-import 'package:chautari/widgets/top_down_space_wrapper.dart';
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
-import 'package:intl/intl.dart';
-import 'package:keyboard_actions/keyboard_actions.dart';
 
 class AddRoom extends StatelessWidget {
   final SearchController search = Get.put(SearchController());
   final AddRoomController addController = Get.put(AddRoomController());
+  final PageController pageController = PageController();
 
-  ScrollController _scrollController = new ScrollController();
+  final ScrollController _scrollController = new ScrollController();
 
   final _districtKey = ValueKey("district");
   final _addressKey = ValueKey("address");
@@ -60,6 +53,43 @@ class AddRoom extends StatelessWidget {
       addController.openMap();
     }
 
+    List<Widget> _getPagerContents() {
+      return [
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: AddRoomForm1(
+            districtKey: _districtKey,
+            addressKey: _addressKey,
+            openSearch: () => _openSearch(),
+            openMap: () => _openMap(),
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: AddRoomForm2(
+            contactKey: _contactKey,
+            pricekey: _priceKey,
+            numberkey: _numberOfRoomsKey,
+            scrollController: _scrollController,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: AddRoomForm3(
+            typesKey: _typesKey,
+            waterKey: _waterKey,
+          ),
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: AddRoomForm4(
+            parkingKey: _parkingKey,
+            amenityKey: _amenityKey,
+          ),
+        ),
+      ];
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Add"),
@@ -77,31 +107,11 @@ class AddRoom extends StatelessWidget {
                   child: Column(
                     children: [
                       Expanded(
-                        child: PageView(
-                          children: [
-                            AddRoomForm1(
-                              districtKey: _districtKey,
-                              addressKey: _addressKey,
-                              openSearch: () => _openSearch(),
-                              openMap: () => _openMap(),
-                            ),
-                            AddRoomForm2(
-                              contactKey: _contactKey,
-                              pricekey: _priceKey,
-                              numberkey: _numberOfRoomsKey,
-                              scrollController: _scrollController,
-                            ),
-                            AddRoomForm3(
-                              typesKey: _typesKey,
-                              waterKey: _waterKey,
-                            ),
-                            AddRoomForm4(
-                              parkingKey: _parkingKey,
-                              amenityKey: _amenityKey,
-                            ),
-                          ],
-                        ),
-                      ),
+                          child: PageView.builder(
+                              itemCount: _getPagerContents().length,
+                              itemBuilder: (context, index) {
+                                return _getPagerContents().elementAt(index);
+                              })),
 
                       // submit
                       RaisedButton(
