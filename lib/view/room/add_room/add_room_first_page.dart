@@ -24,83 +24,87 @@ class AddRoomForm1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => Column(
-        children: [
-          // district
-          TopDownPaddingWrapper(
-            child: FormBuilderTextField(
-              key: districtKey,
-              validator: FormBuilderValidators.required(context),
-              controller: controller.districtTextController,
-              focusNode: controller.districtFocusNode,
-              name: "district_field",
-              style: ChautariTextStyles().listSubtitle,
-              decoration: ChautariDecoration().outlinedBorderTextField(
-                helperText: "Select District",
-                labelText: "District",
+      () => SingleChildScrollView(
+        child: FormBuilder(
+          child: Column(
+            children: [
+              // district
+              TopDownPaddingWrapper(
+                child: FormBuilderTextField(
+                  key: districtKey,
+                  validator: FormBuilderValidators.required(context),
+                  controller: controller.districtTextController,
+                  focusNode: controller.districtFocusNode,
+                  name: "district_field",
+                  style: ChautariTextStyles().listSubtitle,
+                  decoration: ChautariDecoration().outlinedBorderTextField(
+                    helperText: "Select District",
+                    labelText: "District",
+                  ),
+                  onTap: () {
+                    openSearch();
+                  },
+                ),
               ),
-              onTap: () {
-                openSearch();
-              },
-            ),
-          ),
-          // map
-          if (controller.lat != null && controller.long != null) ...[
-            TopDownPaddingWrapper(
+              // map
+              if (controller.lat != null && controller.long != null) ...[
+                TopDownPaddingWrapper(
+                    shouldHideBottomPadding: true,
+                    child: Obx(
+                      () => Text(
+                        "Latitude: ${controller.lat}, Longitude: ${controller.long}",
+                        textAlign: TextAlign.left,
+                      ),
+                    )),
+              ],
+              TopDownPaddingWrapper(
                 shouldHideBottomPadding: true,
-                child: Obx(
-                  () => Text(
-                    "Latitude: ${controller.lat}, Longitude: ${controller.long}",
-                    textAlign: TextAlign.left,
-                  ),
-                )),
-          ],
-          TopDownPaddingWrapper(
-            shouldHideBottomPadding: true,
-            child: Text.rich(
-              TextSpan(
-                style: ChautariTextStyles().listSubtitle,
-                children: [
+                child: Text.rich(
                   TextSpan(
-                    text: "People will be serching with this address.",
-                    style: ChautariTextStyles().listSubtitle.copyWith(
-                        color: ChautariColors.whiteAndPrimarycolor()
-                            .withOpacity(0.8)),
+                    style: ChautariTextStyles().listSubtitle,
+                    children: [
+                      TextSpan(
+                        text: "People will be serching with this address.",
+                        style: ChautariTextStyles().listSubtitle.copyWith(
+                            color: ChautariColors.whiteAndPrimarycolor()
+                                .withOpacity(0.8)),
+                      ),
+                      TextSpan(
+                        text: "Try to make it as accurate as possible",
+                        style: ChautariTextStyles().listSubtitle.copyWith(
+                            color: ChautariColors.whiteAndPrimarycolor()
+                                .withOpacity(0.8)),
+                      ),
+                    ],
                   ),
-                  TextSpan(
-                    text: "Try to make it as accurate as possible",
-                    style: ChautariTextStyles().listSubtitle.copyWith(
-                        color: ChautariColors.whiteAndPrimarycolor()
-                            .withOpacity(0.8)),
-                  ),
-                ],
+                ),
               ),
-            ),
-          ),
 
 // address
-          TopDownPaddingWrapper(
-            child: FormBuilderTextField(
-              key: addressKey,
-              controller: controller.addressTextController,
-              focusNode: controller.addressFocusNode,
-              name: "map_field",
-              onSaved: (newValue) {
-                print(newValue);
-                controller.apiModel.address = newValue;
-              },
-              validator: (value) {
-                return value == null || value.isEmpty
-                    ? "This field cannot be empty"
-                    : null;
-              },
-              style: ChautariTextStyles().listSubtitle,
-              decoration: ChautariDecoration().outlinedBorderTextField(
-                  helperText: "local address name", labelText: "address"),
-              onTap: () => openMap(),
-            ),
+              TopDownPaddingWrapper(
+                child: FormBuilderTextField(
+                  key: addressKey,
+                  controller: controller.addressTextController,
+                  focusNode: controller.addressFocusNode,
+                  name: "map_field",
+                  onSaved: (newValue) {
+                    print(newValue);
+                    controller.apiModel.address = newValue;
+                  },
+                  validator: (value) {
+                    return value == null || value.isEmpty
+                        ? "This field cannot be empty"
+                        : null;
+                  },
+                  style: ChautariTextStyles().listSubtitle,
+                  decoration: ChautariDecoration().outlinedBorderTextField(
+                      helperText: "local address name", labelText: "address"),
+                  onTap: () => openMap(),
+                ),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
