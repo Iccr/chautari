@@ -32,6 +32,8 @@ class AddRoomController extends GetxController {
   var _lat = 1000.0.obs;
   var _long = 1000.0.obs;
   var _contactNumberVisible = false.obs;
+
+  var _pageoffset = 0.0.obs;
   // observable keys
   var _formKey = GlobalKey<FormBuilderState>().obs;
   var districtViewmodels = List<MenuItem>().obs;
@@ -47,7 +49,7 @@ class AddRoomController extends GetxController {
   AutovalidateMode get autovalidateMode => _autovalidateMode.value;
 
   bool get contactNumberVisible => _contactNumberVisible.value;
-
+  double get pageOffset => _pageoffset.value;
   bool get isLoading => _isLoading.value;
   String get error => _error.value;
 
@@ -216,5 +218,9 @@ class AddRoomController extends GetxController {
 
   setContactNumbervisibility(bool val) {
     _contactNumberVisible.value = val;
+  }
+
+  setPageOffset(int val) {
+    _pageoffset.value = val.toDouble();
   }
 }
