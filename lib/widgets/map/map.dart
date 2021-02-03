@@ -36,6 +36,7 @@ class ChautariMapController extends ChautariMapFunctions {
     _cameraPosition =
         CameraPosition(target: LatLng(27.7172, 85.3240), zoom: zoom).obs;
     _markers = Set<Marker>().obs;
+    position_ = Position().obs;
   }
 
   double get zoom => _zoom.value;

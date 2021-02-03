@@ -101,41 +101,46 @@ class AddRoom extends StatelessWidget {
               isLoading: addController.isLoading,
               child: Container(
                 padding: EdgeInsets.all(ChautariPadding.standard),
-                child: KeyboardVisibilityBuilder(
-                  builder: (context, child, isKeyboardVisible) => Column(
-                    children: [
-                      Expanded(
-                          child: PageView.builder(
-                              controller: pageController,
-                              physics: NeverScrollableScrollPhysics(),
-                              itemCount: 1,
-                              itemBuilder: (context, index) {
-                                return _getPagerContents().elementAt(3);
-                              })),
+                child: Column(
+                  children: [
+                    Expanded(
+                        child: PageView.builder(
+                            controller: pageController,
+                            physics: NeverScrollableScrollPhysics(),
+                            itemCount: _getPagerContents().length,
+                            itemBuilder: (context, index) {
+                              return _getPagerContents().elementAt(index);
+                            })),
 
-                      // submit
-
-                      if (!isKeyboardVisible) ...[
-                        RaisedButton(
-                          color: ChautariColors.primaryColor(),
-                          onPressed: () {
-                            pageController.nextPage(
-                                duration: Duration(milliseconds: 333),
-                                curve: Curves.easeInOut);
-                            // addController.submit();
-                          },
-                          child: Text(
-                            "Submit",
-                            style: ChautariTextStyles()
-                                .normal
-                                .copyWith(color: ChautariColors.white),
-                          ),
-                        ),
-                        SizedBox(height: ChautariPadding.standard),
-                      ]
-                    ],
-                  ),
+                    // submit
+                    KeyboardVisibilityBuilder(
+                      builder: (context, child, isKeyboardVisible) => Column(
+                        children: [
+                          if (!isKeyboardVisible) ...[
+                            RaisedButton(
+                              color: ChautariColors.primaryColor(),
+                              onPressed: () {
+                                pageController.nextPage(
+                                    duration: Duration(milliseconds: 333),
+                                    curve: Curves.easeInOut);
+                                addController.submit();
+                              },
+                              child: Text(
+                                "Submit",
+                                style: ChautariTextStyles()
+                                    .normal
+                                    .copyWith(color: ChautariColors.white),
+                              ),
+                            ),
+                          ],
+                          SizedBox(height: ChautariPadding.standard),
+                        ],
+                      ),
+                      // ]
+                    )
+                  ],
                 ),
+                // ),
               ),
             );
           }),
