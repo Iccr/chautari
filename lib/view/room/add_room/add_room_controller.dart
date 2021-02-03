@@ -201,6 +201,6 @@ class AddRoomController extends GetxController {
   validateAddress() {}
 
   setContactNumbervisibility(bool val) {
-    // _contactNumberVisible.value = val;
+    _contactNumberVisible.value = val;
   }
 }
