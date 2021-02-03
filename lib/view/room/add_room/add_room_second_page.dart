@@ -16,12 +16,14 @@ import 'package:keyboard_actions/keyboard_actions.dart';
 
 class AddRoomForm2 extends StatelessWidget {
   final AddRoomController controller = Get.find();
+  final GlobalKey<FormBuilderState> formkey;
   final ValueKey contactKey;
   final ValueKey pricekey;
   final ValueKey numberkey;
   final ScrollController scrollController;
 
   AddRoomForm2({
+    @required this.formkey,
     @required this.scrollController,
     @required this.contactKey,
     @required this.pricekey,
@@ -36,6 +38,8 @@ class AddRoomForm2 extends StatelessWidget {
         overscroll: 50,
         config: controller.keyboardActionConfig(context),
         child: FormBuilder(
+          key: formkey,
+          autovalidateMode: controller.autovalidateForm2Mode,
           child: Column(
             children: [
               // number of rooms
@@ -155,6 +159,12 @@ class AddRoomForm2 extends StatelessWidget {
               // image
               TopDownPaddingWrapper(
                 child: FormBuilderImagePicker(
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return "This field cannot be empty";
+                    } else
+                      return null;
+                  },
                   bottomSheetPadding:
                       EdgeInsets.only(bottom: ChautariPadding.huge),
                   previewMargin: EdgeInsets.only(right: ChautariPadding.small5),
@@ -174,7 +184,6 @@ class AddRoomForm2 extends StatelessWidget {
                   onSaved: (newValue) {
                     print(newValue);
                     var imageLIst = List<File>.from(newValue);
-
                     controller.apiModel.images = imageLIst;
                   },
                   decoration: ChautariDecoration().outlinedBorderTextField(

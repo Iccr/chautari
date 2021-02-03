@@ -16,6 +16,8 @@ class AddRoomForm4 extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: FormBuilder(
+        key: controller.form4Key,
+        autovalidateMode: controller.autovalidateForm4Mode,
         child: Column(
           children: [
             TopDownPaddingWrapper(

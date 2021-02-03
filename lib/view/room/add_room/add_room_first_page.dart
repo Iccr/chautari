@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 class AddRoomForm1 extends StatelessWidget {
   final AddRoomController controller = Get.find();
 
-  var _form1Key = GlobalKey();
+  final GlobalKey<FormBuilderState> formKey;
 
   final ValueKey districtKey;
   final ValueKey addressKey;
@@ -19,7 +19,8 @@ class AddRoomForm1 extends StatelessWidget {
   final Function openSearch;
   final Function openMap;
   AddRoomForm1(
-      {@required this.districtKey,
+      {@required this.formKey,
+      @required this.districtKey,
       @required this.addressKey,
       @required this.openSearch,
       @required this.openMap});
@@ -29,7 +30,8 @@ class AddRoomForm1 extends StatelessWidget {
     return Obx(
       () => SingleChildScrollView(
         child: FormBuilder(
-          key: _form1Key,
+          key: formKey,
+          autovalidateMode: controller.autovalidateForm1Mode,
           child: Column(
             children: [
               // district
@@ -89,11 +91,9 @@ class AddRoomForm1 extends StatelessWidget {
                 shouldHideTopPadding: true,
                 child: FormBuilderTextField(
                   key: addressKey,
-                  controller: controller.addressTextController,
                   focusNode: controller.addressFocusNode,
                   name: "map_field",
                   onSaved: (newValue) {
-                    print(newValue);
                     controller.apiModel.address = newValue;
                   },
                   validator: (value) {
