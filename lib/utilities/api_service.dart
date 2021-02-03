@@ -77,14 +77,15 @@ class ApiService {
 
   Map<String, String> _headers() {
     var userMap = ChautariStorage().read(AppConstant.userKey);
-    String token = userMap["token"] ?? "";
+    if (userMap != null && userMap["isLoggedIn"]) {
+      String token = userMap["token"] ?? "";
+      var header = Map<String, String>();
+      header['Authorization'] = "Bearer " + token;
+      return header;
+    }
     var header = Map<String, String>();
-    header['Authorization'] = "Bearer " + token;
+    header['Authorization'] = "Bearer " + "";
     return header;
-
-    // var header = Map<String, String>();
-    // header['Authorization'] = "Bearer " + "";
-    // return header;
   }
 
   Future get(String url) async {
