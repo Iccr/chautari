@@ -111,7 +111,7 @@ class AddRoom extends StatelessWidget {
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: 1,
                               itemBuilder: (context, index) {
-                                return _getPagerContents().elementAt(0);
+                                return _getPagerContents().elementAt(2);
                               })),
 
                       // submit
