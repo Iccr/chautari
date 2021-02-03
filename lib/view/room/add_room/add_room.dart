@@ -12,7 +12,6 @@ import 'package:chautari/widgets/search/search.dart';
 import 'package:chautari/widgets/search/search_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class AddRoom extends StatelessWidget {
   final SearchController search = Get.put(SearchController());
@@ -111,7 +110,7 @@ class AddRoom extends StatelessWidget {
                               physics: NeverScrollableScrollPhysics(),
                               itemCount: 1,
                               itemBuilder: (context, index) {
-                                return _getPagerContents().elementAt(2);
+                                return _getPagerContents().elementAt(3);
                               })),
 
                       // submit
