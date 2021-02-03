@@ -17,12 +17,15 @@ class AddRoomForm2 extends StatelessWidget {
   final AddRoomController controller = Get.find();
   final ValueKey contactKey;
   final ValueKey pricekey;
+  final ValueKey numberkey;
   final ScrollController scrollController;
 
-  AddRoomForm2(
-      {@required this.scrollController,
-      @required this.contactKey,
-      @required this.pricekey});
+  AddRoomForm2({
+    @required this.scrollController,
+    @required this.contactKey,
+    @required this.pricekey,
+    @required this.numberkey,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +47,7 @@ class AddRoomForm2 extends StatelessWidget {
                 name: "noOfROoms",
                 min: 1,
                 max: 20,
-                initialValue: 0,
+                initialValue: 1,
                 displayFormat: NumberFormat("##"),
                 decoration: ChautariDecoration().outlinedBorderTextField(
                     labelText: "Number of rooms",
