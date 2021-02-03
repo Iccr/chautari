@@ -108,6 +108,8 @@ class AddRoom extends StatelessWidget {
                     children: [
                       Expanded(
                           child: PageView.builder(
+                              controller: pageController,
+                              physics: NeverScrollableScrollPhysics(),
                               itemCount: _getPagerContents().length,
                               itemBuilder: (context, index) {
                                 return _getPagerContents().elementAt(index);
@@ -117,7 +119,10 @@ class AddRoom extends StatelessWidget {
                       RaisedButton(
                         color: ChautariColors.primaryColor(),
                         onPressed: () {
-                          addController.submit();
+                          pageController.nextPage(
+                              duration: Duration(milliseconds: 333),
+                              curve: Curves.easeInOut);
+                          // addController.submit();
                         },
                         child: Text(
                           "Submit",
