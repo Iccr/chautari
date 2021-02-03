@@ -188,8 +188,9 @@ class AddRoomController extends GetxController {
     }
   }
 
-  requestAddressFocus() {
+  requestAddressFocus() async {
     if (lat != null) {
+      await Future.delayed(Duration(milliseconds: 800));
       addressFocusNode.requestFocus();
     }
   }
