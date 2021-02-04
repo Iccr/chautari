@@ -1,4 +1,5 @@
 import 'package:chautari/model/login_model.dart';
+import 'package:chautari/model/rooms_model.dart';
 import 'package:chautari/utilities/loading/progress_hud.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
@@ -10,6 +11,7 @@ import 'package:chautari/widgets/chautari_list.dart';
 import 'package:chautari/widgets/top_down_space_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:line_icons/line_icons.dart';
 
 import '../room_widgets.dart';
 
@@ -184,8 +186,67 @@ class RoomDetail extends StatelessWidget {
                           style: ChautariTextStyles().listTitle,
                         ),
                       ),
-                      wrapWithDecoratedContainer(
-                          UserDetail(user: controller.room.user))
+
+                      detailBlock(
+                        [
+                          _getElement(
+                              "Added By", controller.room.user?.name ?? ""),
+                          if (controller.room.phone_visibility ?? false)
+                            _getElement("phone", controller.room.phone ?? ""),
+                          TopDownPaddingWrapper(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(
+                                          ChautariPadding.small5),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(Get.width),
+                                        border: Border.all(width: 0.5),
+                                      ),
+                                      child: IconButton(
+                                          icon: Icon(
+                                            LineIcons.phone,
+                                            color: ChautariColors
+                                                .primaryDarkAndWhite900color(),
+                                          ),
+                                          onPressed: () {}),
+                                    ),
+                                    Text("Call")
+                                  ],
+                                ),
+                                SizedBox(
+                                  width: ChautariPadding.standard,
+                                ),
+                                Column(
+                                  children: [
+                                    Container(
+                                      padding: EdgeInsets.all(
+                                          ChautariPadding.small5),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                            BorderRadius.circular(Get.width),
+                                        border: Border.all(width: 0.5),
+                                      ),
+                                      child: IconButton(
+                                          icon: Icon(
+                                            LineIcons.comments_o,
+                                            color: ChautariColors
+                                                .primaryDarkAndWhite900color(),
+                                          ),
+                                          onPressed: () {}),
+                                    ),
+                                    Text("Chat")
+                                  ],
+                                ),
+                              ],
+                            ),
+                          )
+                        ],
+                      ),
                     ],
                   ),
                 )
@@ -193,15 +254,5 @@ class RoomDetail extends StatelessWidget {
             ),
           ),
         ));
-  }
-}
-
-class UserDetail extends StatelessWidget {
-  final UserModel user;
-  UserDetail({this.user});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
