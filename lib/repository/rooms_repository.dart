@@ -5,15 +5,15 @@ import 'package:dio/dio.dart';
 
 class RoomsRepository {
   final String _roomsURl = "/rooms";
+  final String _myRooms = "/my_rooms";
 
   ApiService api;
   RoomsRepository() {
     api = ApiService();
   }
 
-  Future<AllRoomsResponseModel> fetchMyRooms(int id) async {
-    var url = _roomsURl + "?user_id=$id";
-    final response = await api.get(url);
+  Future<AllRoomsResponseModel> fetchMyRooms() async {
+    final response = await api.get(_myRooms);
     return AllRoomsResponseModel.fromJson(response.data);
   }
 
