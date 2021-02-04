@@ -2,7 +2,6 @@ import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/view/map/rooms_map_controller.dart';
 import 'package:chautari/view/room/room_widgets.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -41,7 +40,9 @@ class RoomsMap extends StatelessWidget {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: EdgeInsets.all(ChautariPadding.small5),
-                child: RoomWidget(room: controller.selectedRoom),
+                child: RoomWidget(
+                  room: controller.selectedRoom,
+                ),
               ),
             ),
           );

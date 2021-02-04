@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class RoomsMapController extends GetxController {
-  final ExploreController exploreController = Get.find();
+  ExploreController exploreController;
   final ChautariMapController mapController = ChautariMapController();
   Map map;
 
@@ -27,6 +27,13 @@ class RoomsMapController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    exploreController = Get.find();
+  }
+
+  @override
+  void onClose() {
+    super.onClose();
+    print("closing map view");
   }
 
   setChild(Widget child) {
