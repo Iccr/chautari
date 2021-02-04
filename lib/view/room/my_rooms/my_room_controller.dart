@@ -12,12 +12,14 @@ class MyRoomsController extends GetxController {
   get length => models.length;
   @override
   onInit() {
-    _fetchMyRooms();
+    if (auth.user.isLoggedIn) {
+      _fetchMyRooms();
+    }
   }
 
   _fetchMyRooms() async {
     isLoading = true;
-    var models = await RoomsRepository().fetchMyRooms(auth.user.id);
+    var models = await RoomsRepository().fetchMyRooms();
     isLoading = false;
     if (models.errors?.isEmpty ?? false) {
       this.error = models.errors?.first?.value;
