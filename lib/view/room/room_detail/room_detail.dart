@@ -1,3 +1,4 @@
+import 'package:chautari/model/login_model.dart';
 import 'package:chautari/utilities/loading/progress_hud.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
@@ -6,6 +7,7 @@ import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/view/room/room_detail/room_detail_controller.dart';
 import 'package:chautari/widgets/carousel.dart';
 import 'package:chautari/widgets/chautari_list.dart';
+import 'package:chautari/widgets/top_down_space_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -87,22 +89,25 @@ class RoomDetail extends StatelessWidget {
                       ),
                       SizedBox(height: ChautariPadding.standard),
                       ChautariList().getSeperator(),
-                      SizedBox(height: ChautariPadding.standard),
-                      Text(
-                        "Detail",
-                        style: ChautariTextStyles().listTitle,
+
+                      TopDownPaddingWrapper(
+                        child: Text(
+                          "Detail",
+                          style: ChautariTextStyles().listTitle,
+                        ),
                       ),
-                      SizedBox(height: ChautariPadding.small5),
+
                       // RoomDetailInsight(room: controller.room)
                       detailBlock(controller.roomDetailHashContent.entries
                           .map((e) => _getElement(e.key, e.value))
                           .toList()),
-                      SizedBox(height: ChautariPadding.standard),
-                      Text(
-                        "Water",
-                        style: ChautariTextStyles().listTitle,
+
+                      TopDownPaddingWrapper(
+                        child: Text(
+                          "Water",
+                          style: ChautariTextStyles().listTitle,
+                        ),
                       ),
-                      SizedBox(height: ChautariPadding.small5),
 
                       wrapWithDecoratedContainer(
                         Column(
@@ -122,12 +127,13 @@ class RoomDetail extends StatelessWidget {
                         ),
                       ),
 
-                      SizedBox(height: ChautariPadding.standard),
-                      Text(
-                        "Parkings",
-                        style: ChautariTextStyles().listTitle,
+                      TopDownPaddingWrapper(
+                        child: Text(
+                          "Parkings",
+                          style: ChautariTextStyles().listTitle,
+                        ),
                       ),
-                      SizedBox(height: ChautariPadding.small5),
+
                       wrapWithDecoratedContainer(
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -145,13 +151,13 @@ class RoomDetail extends StatelessWidget {
                           }).toList(),
                         ),
                       ),
-                      SizedBox(height: ChautariPadding.standard),
 
-                      Text(
-                        "Amenities",
-                        style: ChautariTextStyles().listTitle,
+                      TopDownPaddingWrapper(
+                        child: Text(
+                          "Amenities",
+                          style: ChautariTextStyles().listTitle,
+                        ),
                       ),
-                      SizedBox(height: ChautariPadding.small5),
 
                       wrapWithDecoratedContainer(
                         Column(
@@ -170,7 +176,16 @@ class RoomDetail extends StatelessWidget {
                           }).toList(),
                         ),
                       ),
-                      SizedBox(height: ChautariPadding.standard),
+                      // SizedBox(height: ChautariPadding.standard),
+
+                      TopDownPaddingWrapper(
+                        child: Text(
+                          "Contact",
+                          style: ChautariTextStyles().listTitle,
+                        ),
+                      ),
+                      wrapWithDecoratedContainer(
+                          UserDetail(user: controller.room.user))
                     ],
                   ),
                 )
@@ -178,5 +193,15 @@ class RoomDetail extends StatelessWidget {
             ),
           ),
         ));
+  }
+}
+
+class UserDetail extends StatelessWidget {
+  final UserModel user;
+  UserDetail({this.user});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container();
   }
 }
