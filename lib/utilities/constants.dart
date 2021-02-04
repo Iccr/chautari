@@ -5,4 +5,5 @@ class AppConstant {
   static String lighttheme = "Light Theme";
   static String themeKey = "Theme";
   static String appinfomodelsKey = "appinfomodels";
+  static String isMyRoomDetail = "isMyRoomDetail";
 }

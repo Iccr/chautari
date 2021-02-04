@@ -1,8 +1,10 @@
 import 'package:chautari/utilities/loading/progress_hud.dart';
+import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
 
 import 'package:chautari/view/room/my_rooms/my_room_controller.dart';
+import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
 
 import 'package:chautari/view/room/room_detail/room_detail_controller.dart';
 import 'package:chautari/view/room/room_widgets.dart';
@@ -24,6 +26,11 @@ class MyRoom extends StatelessWidget {
           ),
           body: ListRoom(
             rooms: c.models ?? [],
+            onTap: (room) {
+              print("open room detail");
+              Get.toNamed(RouteName.roomDetail,
+                  arguments: RoomDetailViewModel(room, isMyRoom: true));
+            },
           ),
         ),
       ),
@@ -31,9 +38,9 @@ class MyRoom extends StatelessWidget {
   }
 }
 
-class MyRoomAction extends StatelessWidget {
+class MyRoomDetailBottomBlock extends StatelessWidget {
   final RoomDetailController controller = Get.find();
-  MyRoomAction({Key key}) : super(key: key);
+  MyRoomDetailBottomBlock({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
