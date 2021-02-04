@@ -1,5 +1,3 @@
-import 'package:chautari/model/login_model.dart';
-import 'package:chautari/model/rooms_model.dart';
 import 'package:chautari/utilities/loading/progress_hud.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
@@ -12,33 +10,12 @@ import 'package:chautari/widgets/top_down_space_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../room_widgets.dart';
 
 class RoomDetail extends StatelessWidget {
   RoomDetailController controller = Get.put(RoomDetailController());
-
-  Widget _getElement(String key, String value) {
-    return Column(
-      children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text(key),
-            Spacer(),
-            Spacer(),
-            Text(
-              value,
-              textAlign: TextAlign.left,
-            ),
-          ],
-        ),
-        SizedBox(
-          height: ChautariPadding.standard,
-        )
-      ],
-    );
-  }
 
   Widget detailBlock(List<Widget> content) {
     return wrapWithDecoratedContainer(
@@ -62,6 +39,17 @@ class RoomDetail extends StatelessWidget {
       child: child,
     );
   }
+
+  _call() async {
+    var number = controller.room.phone ?? "";
+    var url = 'tel://977$number';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+  // tel:+1 555 010 999
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +89,8 @@ class RoomDetail extends StatelessWidget {
 
                       // RoomDetailInsight(room: controller.room)
                       detailBlock(controller.roomDetailHashContent.entries
-                          .map((e) => _getElement(e.key, e.value))
+                          .map((e) =>
+                              RowSpaceBetween(keyValue: e.key, value: e.value))
                           .toList()),
 
                       TopDownPaddingWrapper(
@@ -189,61 +178,22 @@ class RoomDetail extends StatelessWidget {
 
                       detailBlock(
                         [
-                          _getElement(
-                              "Added By", controller.room.user?.name ?? ""),
+                          RowSpaceBetween(
+                              keyValue: "Added By",
+                              value: controller.room.user?.name ?? ""),
                           if (controller.room.phone_visibility ?? false)
-                            _getElement("phone", controller.room.phone ?? ""),
+                            RowSpaceBetween(
+                                keyValue: "phone",
+                                value: controller.room.phone ?? ""),
                           TopDownPaddingWrapper(
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Column(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.all(
-                                          ChautariPadding.small5),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(Get.width),
-                                        border: Border.all(width: 0.5),
-                                      ),
-                                      child: IconButton(
-                                          icon: Icon(
-                                            LineIcons.phone,
-                                            color: ChautariColors
-                                                .primaryDarkAndWhite900color(),
-                                          ),
-                                          onPressed: () {}),
-                                    ),
-                                    Text("Call")
-                                  ],
-                                ),
-                                SizedBox(
-                                  width: ChautariPadding.standard,
-                                ),
-                                Column(
-                                  children: [
-                                    Container(
-                                      padding: EdgeInsets.all(
-                                          ChautariPadding.small5),
-                                      decoration: BoxDecoration(
-                                        borderRadius:
-                                            BorderRadius.circular(Get.width),
-                                        border: Border.all(width: 0.5),
-                                      ),
-                                      child: IconButton(
-                                          icon: Icon(
-                                            LineIcons.comments_o,
-                                            color: ChautariColors
-                                                .primaryDarkAndWhite900color(),
-                                          ),
-                                          onPressed: () {}),
-                                    ),
-                                    Text("Chat")
-                                  ],
-                                ),
-                              ],
+                            child: RoomDetailAction(
+                              call: this.controller.room.phone_visibility ??
+                                  false,
+                              callAction: () => _call(),
                             ),
+                          ),
+                          SizedBox(
+                            height: ChautariPadding.standard * 2,
                           )
                         ],
                       ),
@@ -254,5 +204,103 @@ class RoomDetail extends StatelessWidget {
             ),
           ),
         ));
+  }
+}
+
+class RowSpaceBetween extends StatelessWidget {
+  const RowSpaceBetween({
+    Key key,
+    @required this.keyValue,
+    this.valueStyle,
+    @required this.value,
+  }) : super(key: key);
+
+  final valueStyle;
+  final String keyValue;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(keyValue),
+            Spacer(),
+            Spacer(),
+            Text(
+              value,
+              textAlign: TextAlign.left,
+              style: valueStyle,
+            ),
+          ],
+        ),
+        SizedBox(
+          height: ChautariPadding.standard,
+        )
+      ],
+    );
+  }
+}
+
+class RoomDetailAction extends StatelessWidget {
+  final bool call;
+  final Function callAction;
+  const RoomDetailAction({Key key, this.call = false, this.callAction})
+      : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: [
+        if (call)
+          Column(
+            children: [
+              Container(
+                padding: EdgeInsets.all(ChautariPadding.small5),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(Get.width),
+                  border: Border.all(width: 0.5),
+                ),
+                child: IconButton(
+                    icon: Icon(
+                      LineIcons.phone,
+                      color: ChautariColors.primaryDarkAndWhite900color(),
+                    ),
+                    onPressed: () {
+                      callAction();
+                    }),
+              ),
+              Text("Call")
+            ],
+          ),
+        SizedBox(
+          width: ChautariPadding.standard * 2,
+        ),
+        Column(
+          children: [
+            Container(
+              padding: EdgeInsets.all(ChautariPadding.small5),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(Get.width),
+                border: Border.all(width: 0.5),
+              ),
+              child: IconButton(
+                  icon: Icon(
+                    LineIcons.comments_o,
+                    color: ChautariColors.primaryDarkAndWhite900color(),
+                  ),
+                  onPressed: () => {}),
+            ),
+            Text("Chat")
+          ],
+        ),
+        SizedBox(
+          width: ChautariPadding.standard * 2,
+        ),
+      ],
+    );
   }
 }
