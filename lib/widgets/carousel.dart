@@ -145,6 +145,10 @@ class ImageView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
+      fadeInDuration: Duration(milliseconds: 100),
+      fadeOutDuration: Duration(milliseconds: 100),
+      fadeInCurve: Curves.easeOut,
+      fadeOutCurve: Curves.easeIn,
       key: Key(imageurl),
       cacheKey: imageurl,
       imageUrl: imageurl,

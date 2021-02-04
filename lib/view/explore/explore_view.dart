@@ -7,12 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Exploreview extends StatelessWidget {
-  final ExploreController c = Get.find();
-
   getViewModel() {}
 
   @override
   Widget build(BuildContext context) {
+    final ExploreController c = Get.put(ExploreController());
     return Obx(
       () => ProgressHud(
         isLoading: c.isLoading,
@@ -22,11 +21,8 @@ class Exploreview extends StatelessWidget {
           ),
           body: ListRoom(
             rooms: c.models ?? [],
-            onTap: (room) {
-              print("open room detail");
-              Get.toNamed(RouteName.roomDetail,
-                  arguments: RoomDetailViewModel(room, isMyRoom: false));
-            },
+            onTap: (room) => Get.toNamed(RouteName.roomDetail,
+                arguments: RoomDetailViewModel(room, isMyRoom: false)),
           ),
         ),
       ),
