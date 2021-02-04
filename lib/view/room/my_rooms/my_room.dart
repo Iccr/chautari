@@ -3,9 +3,10 @@ import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
 
 import 'package:chautari/view/room/my_rooms/my_room_controller.dart';
-import 'package:chautari/view/room/room_detail/room_detail.dart';
+
 import 'package:chautari/view/room/room_detail/room_detail_controller.dart';
 import 'package:chautari/view/room/room_widgets.dart';
+import 'package:chautari/widgets/Row_with_space_between.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
