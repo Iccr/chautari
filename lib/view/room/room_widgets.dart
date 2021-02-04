@@ -13,27 +13,47 @@ class RoomWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      clipBehavior: Clip.antiAlias,
-      height: 140,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(ChautariPadding.small5),
-        boxShadow: [ChautariDecoration().standardBoxShadow],
-      ),
-      child: Row(
-        children: [
-          Container(
-            child: CarouselWithIndicator(
-              room,
-              showWaterMark: false,
-              onImageTapped: this.onTap,
+        padding: EdgeInsets.all(ChautariPadding.medium),
+        child: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () => {
+            if (onTap != null)
+              {
+                onTap(
+                  room,
+                ),
+              }
+          },
+          child: Container(
+            clipBehavior: Clip.antiAlias,
+            height: 140,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(ChautariPadding.small5),
+              boxShadow: [ChautariDecoration().standardBoxShadow],
+            ),
+            child: Row(
+              children: [
+                Container(
+                  child: CarouselWithIndicator(
+                    room,
+                    showWaterMark: false,
+                    onImageTapped: () => {
+                      if (onTap != null)
+                        {
+                          onTap(
+                            room,
+                          ),
+                        }
+                    },
+                  ),
+                ),
+                Expanded(
+                  child: RoomsInsight(room: this.room),
+                ),
+              ],
             ),
           ),
-          Expanded(
-            child: RoomsInsight(room: this.room),
-          ),
-        ],
-      ),
-    );
+        ));
   }
 }
 
@@ -139,25 +159,9 @@ class ListRoom extends StatelessWidget {
         },
         itemCount: rooms.length,
         itemBuilder: (BuildContext context, index) {
-          return Container(
-            padding: EdgeInsets.all(ChautariPadding.medium),
-            child: GestureDetector(
-              behavior: HitTestBehavior.opaque,
-              onTap: () => {
-                if (onTap != null)
-                  {
-                    onTap(
-                      this.rooms.elementAt(index),
-                    ),
-                  }
-              },
-              child: RoomWidget(
-                room: this.rooms.elementAt(index),
-                onTap: () => this.onTap(
-                  this.rooms.elementAt(index),
-                ),
-              ),
-            ),
+          return RoomWidget(
+            room: this.rooms.elementAt(index),
+            onTap: this.onTap,
           );
         });
   }

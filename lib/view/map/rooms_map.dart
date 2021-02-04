@@ -1,5 +1,7 @@
+import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/view/map/rooms_map_controller.dart';
+import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
 import 'package:chautari/view/room/room_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -10,7 +12,8 @@ class RoomsMap extends StatelessWidget {
 
   Set<Marker> getMarkers() {
     Set<Marker> markers = Set<Marker>();
-    controller.rooms.forEach(
+
+    controller.models.forEach(
       (e) {
         var latlng = LatLng(e.lat, e.long);
         markers.add(
@@ -42,6 +45,8 @@ class RoomsMap extends StatelessWidget {
                 padding: EdgeInsets.all(ChautariPadding.small5),
                 child: RoomWidget(
                   room: controller.selectedRoom,
+                  onTap: (room) => Get.toNamed(RouteName.roomDetail,
+                      arguments: RoomDetailViewModel(room, isMyRoom: false)),
                 ),
               ),
             ),
