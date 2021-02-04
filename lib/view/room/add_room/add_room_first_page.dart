@@ -55,7 +55,7 @@ class AddRoomForm1 extends StatelessWidget {
               // map
               if (controller.lat != null && controller.long != null) ...[
                 TopDownPaddingWrapper(
-                    shouldHideBottomPadding: true,
+                    bottom: 0,
                     child: Obx(
                       () => Text(
                         "Latitude: ${controller.lat}, Longitude: ${controller.long}",
@@ -64,7 +64,7 @@ class AddRoomForm1 extends StatelessWidget {
                     )),
               ],
               TopDownPaddingWrapper(
-                shouldHideBottomPadding: true,
+                bottom: 0,
                 child: Text.rich(
                   TextSpan(
                     style: ChautariTextStyles().listSubtitle,
@@ -88,7 +88,7 @@ class AddRoomForm1 extends StatelessWidget {
 
 // address
               TopDownPaddingWrapper(
-                shouldHideTopPadding: true,
+                top: 0,
                 child: FormBuilderTextField(
                   key: addressKey,
                   focusNode: controller.addressFocusNode,
