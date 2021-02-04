@@ -1,12 +1,16 @@
 import 'package:chautari/utilities/loading/progress_hud.dart';
 import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/view/explore/explore_controller.dart';
+import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
 import 'package:chautari/view/room/room_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class Exploreview extends StatelessWidget {
   final ExploreController c = Get.find();
+
+  getViewModel() {}
+
   @override
   Widget build(BuildContext context) {
     return Obx(
@@ -20,7 +24,8 @@ class Exploreview extends StatelessWidget {
             rooms: c.models ?? [],
             onTap: (room) {
               print("open room detail");
-              Get.toNamed(RouteName.roomDetail, arguments: room);
+              Get.toNamed(RouteName.roomDetail,
+                  arguments: RoomDetailViewModel(room, isMyRoom: false));
             },
           ),
         ),
