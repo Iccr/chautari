@@ -27,6 +27,11 @@ class RoomsRepository {
     return SingleRoomResponseModel.fromJson(response.data);
   }
 
+  Future<SingleRoomResponseModel> updateRoom(FormData params) async {
+    final response = await api.post(_roomsURl, params);
+    return SingleRoomResponseModel.fromJson(response.data);
+  }
+
   Future<SingleRoomResponseModel> fetchRoomDetail(int params) async {
     var url = _roomsURl + "/$params";
     final response = await api.get(url);

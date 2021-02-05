@@ -2,7 +2,7 @@ import 'package:chautari/utilities/router/routers.dart';
 import 'package:chautari/utilities/theme/theme.dart';
 import 'package:chautari/utilities/theme/theme_controller.dart';
 import 'package:chautari/view/explore/explore_controller.dart';
-import 'package:chautari/view/explore/fetch_room_service.dart';
+import 'package:chautari/services/fetch_room_service.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/splash/splash_screen.dart';

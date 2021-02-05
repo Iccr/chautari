@@ -1,4 +1,4 @@
-import 'package:chautari/model/rooms_model.dart';
+import 'package:chautari/model/room_model.dart';
 import 'package:chautari/repository/rooms_repository.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:get/get.dart';

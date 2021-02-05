@@ -1,5 +1,5 @@
-import 'package:chautari/model/rooms_model.dart';
-import 'package:chautari/view/explore/fetch_room_service.dart';
+import 'package:chautari/model/room_model.dart';
+import 'package:chautari/services/fetch_room_service.dart';
 import 'package:chautari/widgets/map/map.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
