@@ -7,7 +7,7 @@ import 'package:chautari/widgets/carousel.dart';
 import 'package:flutter/material.dart';
 
 class RoomWidget extends StatelessWidget {
-  final RoomsModel room;
+  final RoomModel room;
   Function onTap;
   RoomWidget({@required this.room, this.onTap});
   @override
@@ -58,7 +58,7 @@ class RoomWidget extends StatelessWidget {
 }
 
 class RoomsInsight extends StatelessWidget {
-  final RoomsModel room;
+  final RoomModel room;
   RoomsInsight({@required this.room});
 
   final double vgap = 1;
@@ -134,7 +134,7 @@ class RoomsInsight extends StatelessWidget {
 }
 
 class ImageCarousel extends StatelessWidget {
-  final RoomsModel room;
+  final RoomModel room;
   ImageCarousel({@required this.room});
   @override
   Widget build(BuildContext context) {
@@ -145,8 +145,8 @@ class ImageCarousel extends StatelessWidget {
 }
 
 class ListRoom extends StatelessWidget {
-  final List<RoomsModel> rooms;
-  Function(RoomsModel) onTap;
+  final List<RoomModel> rooms;
+  Function(RoomModel) onTap;
   ListRoom({@required this.rooms, this.onTap});
 
   @override

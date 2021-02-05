@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 
 class RoomDetailController extends GetxController {
   AuthController auth;
-  var _room = RoomsModel().obs;
+  var _room = RoomModel().obs;
   var _error = "".obs;
   var _isLoading = false.obs;
 
@@ -23,7 +23,7 @@ class RoomDetailController extends GetxController {
 
   var isMyRoomDetail = false;
   // getters
-  RoomsModel get room => _room.value.id == null ? null : _room.value;
+  RoomModel get room => _room.value.id == null ? null : _room.value;
   List<Parking> get parkings =>
       _room.value.parkings == null ? [] : _room.value.parkings;
   List<Amenities> get amenities =>

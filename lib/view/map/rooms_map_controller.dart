@@ -9,22 +9,22 @@ class RoomsMapController extends GetxController {
   Map map;
   FetchRoomService service;
 
-  var _models = List<RoomsModel>().obs;
-  List<RoomsModel> get models => _models.value;
+  var _models = List<RoomModel>().obs;
+  List<RoomModel> get models => _models.value;
 
   RoomsMapController() {
     mapController.setZoom(16.0);
     map = Map(title: "Map", controller: mapController);
   }
 
-  var _selectedRoom = RoomsModel().obs;
+  var _selectedRoom = RoomModel().obs;
 
   clearRoomCard() {
-    this._selectedRoom.value = RoomsModel();
+    this._selectedRoom.value = RoomModel();
   }
 
   // List<RoomsModel> get rooms => exploreController.models;
-  RoomsModel get selectedRoom =>
+  RoomModel get selectedRoom =>
       _selectedRoom.value.id == null ? null : _selectedRoom.value;
 
   @override
@@ -48,7 +48,7 @@ class RoomsMapController extends GetxController {
     map = map.setchild(child);
   }
 
-  onTapMarkerOf(RoomsModel room) {
+  onTapMarkerOf(RoomModel room) {
     _selectedRoom.value = room;
   }
 }

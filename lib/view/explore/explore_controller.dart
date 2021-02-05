@@ -8,8 +8,8 @@ class ExploreController extends GetxController {
   var _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
   String error;
-  var _models = List<RoomsModel>().obs;
-  List<RoomsModel> get models => _models.value;
+  var _models = List<RoomModel>().obs;
+  List<RoomModel> get models => _models.value;
 
   get length => models.length;
   @override
