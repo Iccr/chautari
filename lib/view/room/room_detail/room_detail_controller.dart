@@ -10,7 +10,6 @@ import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
 import 'package:get/get.dart';
 
 class RoomDetailController extends GetxController {
-  UpdateRoomService updateRoomService;
   AuthController auth;
 
   RoomDetailController() {
@@ -65,9 +64,44 @@ class RoomDetailController extends GetxController {
     _isLoading.value = false;
   }
 
-  updateRoomAvailability(bool availibiliy) {
-    var newRoom = RoomModel.fromJson(room.toJson());
+  updateRoomAvailability(bool availibiliy) async {
+    var newRoom = _clone(room: this.room);
     newRoom.available = availibiliy;
-    this._room.value = newRoom;
+    // _isLoading.value = true;
+    var model = await RoomsRepository()
+        .updateRoom(newRoom.id, await newRoom.toFormData());
+    // _isLoading.value = false;
+    if (model.errors != null && model.errors.isNotEmpty) {
+      _error.value = model.errors.first.value;
+    } else {
+      this._room.value = model.room;
+    }
+  }
+
+  RoomModel _clone({RoomModel room}) {
+    var model = RoomModel();
+    model.address = room.address;
+    model.amenityCount = room.amenityCount;
+    model.available = room.available;
+    model.districtName = room.districtName;
+    model.id = room.id;
+    model.lat = room.lat;
+    model.long = room.long;
+    model.numberOfRooms = room.numberOfRooms;
+    model.parkingCount = room.parkingCount;
+    model.price = room.price;
+    model.state = room.state;
+    model.water = room.water;
+    model.type = room.type;
+    model.phone = room.phone;
+    model.phone_visibility = room.phone_visibility;
+    model.images = room.images;
+    model.postedOn = room.postedOn;
+    model.parkings = room.parkings;
+    model.amenities = room.amenities;
+    model.district = room.district;
+    model.user = room.user;
+    model.rawImages = room.rawImages;
+    return model;
   }
 }
