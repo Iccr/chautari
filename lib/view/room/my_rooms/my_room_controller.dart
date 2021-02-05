@@ -7,7 +7,7 @@ class MyRoomsController extends GetxController {
   final AuthController auth = Get.find();
   bool isLoading = false;
   String error;
-  List<RoomsModel> models;
+  List<RoomModel> models;
 
   get length => models.length;
   @override

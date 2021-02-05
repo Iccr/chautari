@@ -10,7 +10,7 @@ typedef VoidCallback = void Function();
 
 class CarouselWithIndicator extends StatefulWidget {
   final VoidCallback onImageTapped;
-  final RoomsModel model;
+  final RoomModel model;
   final bool showWaterMark;
 
   CarouselWithIndicator(this.model,

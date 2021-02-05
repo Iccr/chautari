@@ -1,10 +1,15 @@
+import 'dart:io';
+
 import 'package:chautari/model/amenity.dart';
 import 'package:chautari/model/districts.dart';
 
 import 'package:chautari/model/login_model.dart';
 import 'package:chautari/model/parkings.dart';
+import 'package:dio/dio.dart';
+import 'package:flutter_native_image/flutter_native_image.dart';
+import 'package:http_parser/http_parser.dart';
 
-class RoomsModel {
+class RoomModel {
   String address;
   int amenityCount;
   bool available;
@@ -26,8 +31,9 @@ class RoomsModel {
   List<Amenities> amenities;
   Districts district;
   UserModel user;
+  List<File> rawImages = List<File>();
 
-  RoomsModel(
+  RoomModel(
       {this.address,
       this.amenityCount,
       this.available,
@@ -48,9 +54,10 @@ class RoomsModel {
       this.user,
       this.type,
       this.phone,
-      this.phone_visibility});
+      this.phone_visibility,
+      this.rawImages});
 
-  RoomsModel.fromJson(Map<String, dynamic> json) {
+  RoomModel.fromJson(Map<String, dynamic> json) {
     address = json['address'];
     amenityCount = json['amenity_count'];
     available = json['available'];
@@ -130,5 +137,44 @@ class RoomsModel {
     // List<Amenities> amenities;
 
     return data;
+  }
+
+  Future<FormData> toFormData() async {
+    var compressed = await _compressFiles(this.rawImages);
+
+    var data = FormData.fromMap({
+      'district': this.district,
+      'address': this.address,
+      'lat': this.lat,
+      'long': this.long,
+      'number_of_rooms': this.numberOfRooms,
+      'price': this.price,
+      'water': this.water,
+      'parkings': this.parkings.map((e) => e.id).toList(),
+      'amenities': this.amenities.map((e) => e.id).toList(),
+      'available': this.available,
+      'phone_visibility': this.phone_visibility,
+      'phone': this.phone,
+      'type': this.type,
+      "images": compressed.asMap().entries.map((e) {
+        return MultipartFile.fromBytes(e.value.readAsBytesSync(),
+            filename: e.key.toString() + ".jpg",
+            contentType: MediaType("image", "jpg"));
+      }).toList(),
+    });
+
+    return data;
+  }
+
+  Future<List<File>> _compressFiles(List<File> files) async {
+    var futures = files.map((e) => _compressFile(e));
+    return await Future.wait(futures);
+  }
+
+  Future<File> _compressFile(File file) async {
+    int quality = 5;
+    int percentage = 60;
+    return FlutterNativeImage.compressImage(file.path,
+        quality: quality, percentage: percentage);
   }
 }

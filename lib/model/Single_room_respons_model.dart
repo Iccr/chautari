@@ -2,14 +2,14 @@ import 'package:chautari/model/error.dart';
 import 'package:chautari/model/room_model.dart';
 
 class SingleRoomResponseModel {
-  RoomsModel room;
+  RoomModel room;
   List<ApiError> errors;
 
   SingleRoomResponseModel({this.room});
 
   SingleRoomResponseModel.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      room = RoomsModel.fromJson(json['data']);
+      room = RoomModel.fromJson(json['data']);
     }
     if (json['errors'] != null) {
       errors = new List<ApiError>();

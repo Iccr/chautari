@@ -165,6 +165,30 @@ class ApiService {
     }
     return responseJson;
   }
+
+  Future update(String url, dynamic params) async {
+    var responseJson;
+    try {
+      Response response = await _http.patch(
+        url,
+        data: params,
+        options: Options(
+          headers: _headers(),
+        ),
+      );
+      responseJson = response;
+    } catch (e) {
+      String err = e.error.toString();
+      Map<String, dynamic> val = {
+        'error': [
+          {'code': '1', 'detail': '$err'}
+        ]
+      };
+      Response res = Response(data: val);
+      responseJson = res;
+    }
+    return responseJson;
+  }
 }
 
 extension on ApiService {
