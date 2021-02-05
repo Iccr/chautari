@@ -1,4 +1,3 @@
-import 'package:chautari/utilities/theme/chautari_decoration.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
