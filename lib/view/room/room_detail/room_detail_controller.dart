@@ -3,39 +3,44 @@ import 'package:chautari/model/parkings.dart';
 import 'package:chautari/model/room_model.dart';
 
 import 'package:chautari/repository/rooms_repository.dart';
+import 'package:chautari/services/update_room_availability_service.dart';
+
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
 import 'package:get/get.dart';
 
 class RoomDetailController extends GetxController {
+  UpdateRoomService updateRoomService;
   AuthController auth;
-  var _room = RoomModel().obs;
-  var _error = "".obs;
-  var _isLoading = false.obs;
 
   RoomDetailController() {
     auth = Get.find();
   }
 
+  var _room = RoomModel().obs;
+  var _error = "".obs;
+  var _isLoading = false.obs;
+
   List<String> roomParkings = List<String>();
   List<String> roomAmenities = List<String>();
   Map<String, String> roomDetailHashContent = Map<String, String>();
-
   var isMyRoomDetail = false;
+
   // getters
-  RoomModel get room => _room.value.id == null ? null : _room.value;
+
   List<Parking> get parkings =>
       _room.value.parkings == null ? [] : _room.value.parkings;
   List<Amenities> get amenities =>
       _room.value.amenities == null ? [] : _room.value.amenities;
+  List<String> get water => [_room.value.water];
+
   bool get isLoading => _isLoading.value;
   String get error => (_error.value?.isEmpty ?? false) ? null : _error.value;
-
-  List<String> get water => [_room.value.water];
+  RoomModel get room => _room.value.id == null ? null : _room.value;
+  bool get availability => _room.value.available;
 
   @override
   void onInit() {
-    // TODO: implement onInit
     super.onInit();
     RoomDetailViewModel viewmodel = Get.arguments;
     this.isMyRoomDetail = viewmodel.isMyRoom;
@@ -45,8 +50,6 @@ class RoomDetailController extends GetxController {
     roomDetailHashContent["Number Of Rooms"] = "${room.numberOfRooms}";
     roomDetailHashContent["Number Of Bathrooms"] = "${room.numberOfRooms}";
     roomDetailHashContent["Kitchen available"] = "${room.numberOfRooms}";
-
-    // roomParkings = ["Bike", "Car", "Jeep"];
     roomParkings = [];
   }
 
@@ -60,5 +63,11 @@ class RoomDetailController extends GetxController {
     }
 
     _isLoading.value = false;
+  }
+
+  updateRoomAvailability(bool availibiliy) {
+    var newRoom = RoomModel.fromJson(room.toJson());
+    newRoom.available = availibiliy;
+    this._room.value = newRoom;
   }
 }
