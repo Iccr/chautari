@@ -4,6 +4,7 @@ import 'package:chautari/model/room_model.dart';
 
 import 'package:chautari/repository/rooms_repository.dart';
 import 'package:chautari/services/appinfo_service.dart';
+import 'package:chautari/services/delete_room_service.dart';
 
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
@@ -12,6 +13,14 @@ import 'package:get/get.dart';
 class RoomDetailController extends GetxController {
   AuthController auth;
   AppInfoService appIinfoService = Get.find();
+
+  DeleteRoomService deleteRoomService;
+  bool get deleteSuccess {
+    if (deleteRoomService.deleteSuccess) {
+      Get.back();
+    }
+    return deleteRoomService.deleteSuccess;
+  }
 
   RoomDetailController() {
     auth = Get.find();
@@ -51,8 +60,11 @@ class RoomDetailController extends GetxController {
   void onInit() {
     super.onInit();
     RoomDetailViewModel viewmodel = Get.arguments;
+
     this.isMyRoomDetail = viewmodel.isMyRoom;
     _room.value = viewmodel.room;
+
+    deleteRoomService = DeleteRoomService(room);
 
     _fetchRoomDetail();
     roomDetailHashContent["Type"] = "Appartment";
@@ -86,6 +98,10 @@ class RoomDetailController extends GetxController {
     } else {
       this._room.value = model.room;
     }
+  }
+
+  delete() async {
+    var model = await this.deleteRoomService.deleteRooms();
   }
 
   RoomModel _clone({RoomModel room}) {

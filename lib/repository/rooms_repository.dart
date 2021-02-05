@@ -38,4 +38,10 @@ class RoomsRepository {
     final response = await api.get(url);
     return SingleRoomResponseModel.fromJson(response.data);
   }
+
+  Future<SingleRoomResponseModel> deleteRoom(int params) async {
+    var url = _roomsURl + "/$params";
+    final response = await api.delete(url);
+    return SingleRoomResponseModel.fromJson(response.data);
+  }
 }
