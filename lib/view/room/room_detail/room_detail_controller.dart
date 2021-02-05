@@ -21,6 +21,8 @@ class RoomDetailController extends GetxController {
   var _error = "".obs;
   var _isLoading = false.obs;
 
+  var _statusMessage = "".obs;
+
   List<String> roomParkings = List<String>();
   List<String> roomAmenities = List<String>();
   Map<String, String> roomDetailHashContent = Map<String, String>();
@@ -38,6 +40,8 @@ class RoomDetailController extends GetxController {
             .name
       ];
 
+  String get statusMessage =>
+      _room.value.available ? "Available for rent" : "Not Available For Rent";
   bool get isLoading => _isLoading.value;
   String get error => (_error.value?.isEmpty ?? false) ? null : _error.value;
   RoomModel get room => _room.value.id == null ? null : _room.value;
@@ -49,6 +53,7 @@ class RoomDetailController extends GetxController {
     RoomDetailViewModel viewmodel = Get.arguments;
     this.isMyRoomDetail = viewmodel.isMyRoom;
     _room.value = viewmodel.room;
+
     _fetchRoomDetail();
     roomDetailHashContent["Type"] = "Appartment";
     roomDetailHashContent["Number Of Rooms"] = "${room.numberOfRooms}";

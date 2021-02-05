@@ -53,7 +53,7 @@ class MyRoomDetailBottomBlock extends StatelessWidget {
           children: [
             RowSpaceBetween(
               keyValue: "Status",
-              value: "Available for rent",
+              value: controller.statusMessage,
               valueStyle: ChautariTextStyles()
                   .listSubtitle
                   .copyWith(color: ChautariColors.primary),
@@ -67,7 +67,7 @@ class MyRoomDetailBottomBlock extends StatelessWidget {
                     Spacer(),
                     Container(
                       width: 65,
-                      height: 65,
+                      height: 35,
                       child: Transform.scale(
                         scale: 1.3,
                         child: Switch(
@@ -85,7 +85,7 @@ class MyRoomDetailBottomBlock extends StatelessWidget {
                   ],
                 ),
                 Text(
-                    "Note: If turned off, people will not be able to find this property in chautari basti"),
+                    "Note: If switch is turned off, people will not be able to find this property in Chautari basti"),
                 TopDownPaddingWrapper(
                   child: RaisedButton(
                     color: ChautariColors.primaryColor(),
@@ -104,7 +104,28 @@ class MyRoomDetailBottomBlock extends StatelessWidget {
                       ),
                     ),
                   ),
-                )
+                ),
+                TopDownPaddingWrapper(
+                  child: RaisedButton(
+                    color: ChautariColors.primaryColor(),
+                    onPressed: () => {print("Delete from Chautari basti")},
+                    child: Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(ChautariPadding.small5)),
+                      padding: EdgeInsets.all(ChautariPadding.standard),
+                      child: Text(
+                        "Delete",
+                        style: ChautariTextStyles()
+                            .normal
+                            .copyWith(color: ChautariColors.white),
+                      ),
+                    ),
+                  ),
+                ),
+                Text(
+                    "Warning: All of the data related with this propery is permanently lost."),
               ],
             ),
           ],
