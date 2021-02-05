@@ -1,7 +1,7 @@
+import 'package:chautari/services/appinfo_service.dart';
 import 'package:chautari/utilities/router/routers.dart';
 import 'package:chautari/utilities/theme/theme.dart';
 import 'package:chautari/utilities/theme/theme_controller.dart';
-import 'package:chautari/view/explore/explore_controller.dart';
 import 'package:chautari/services/fetch_room_service.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
@@ -12,7 +12,18 @@ import 'package:get_storage/get_storage.dart';
 
 void main() async {
   await GetStorage.init();
+  await initServices();
   runApp(MyApp());
+}
+
+void initServices() async {
+  print('starting services ...');
+
+  /// Here is where you put get_storage, hive, shared_pref initialization.
+  /// or moor connection, or whatever that's async.
+  await Get.putAsync(() => FetchRoomService().init());
+  await Get.putAsync(() => AppInfoService().init());
+  print('All services started...');
 }
 
 class MyApp extends StatelessWidget {
