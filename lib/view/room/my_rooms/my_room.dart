@@ -70,18 +70,16 @@ class MyRoomDetailBottomBlock extends StatelessWidget {
                       height: 65,
                       child: Transform.scale(
                         scale: 1.3,
-                        child: ObxValue(
-                            (data) => Switch(
-                                  activeTrackColor:
-                                      ChautariColors.primary.withOpacity(0.5),
-                                  value: data.value,
-                                  onChanged: (value) {
-                                    print(value);
-// update availibility of room
-                                    data.value = value;
-                                  },
-                                ),
-                            false.obs),
+                        child: Switch(
+                          activeTrackColor:
+                              ChautariColors.primary.withOpacity(0.5),
+                          value: controller.availability,
+                          onChanged: (value) {
+                            print(value);
+                            // controller.room
+                            controller.updateRoomAvailability(value);
+                          },
+                        ),
                       ),
                     ),
                   ],
@@ -89,23 +87,24 @@ class MyRoomDetailBottomBlock extends StatelessWidget {
                 Text(
                     "Note: If turned off, people will not be able to find this property in chautari basti"),
                 TopDownPaddingWrapper(
-                    child: RaisedButton(
-                  color: ChautariColors.primaryColor(),
-                  onPressed: () {},
-                  child: Container(
-                    clipBehavior: Clip.antiAlias,
-                    decoration: BoxDecoration(
-                        borderRadius:
-                            BorderRadius.circular(ChautariPadding.small5)),
-                    padding: EdgeInsets.all(ChautariPadding.standard),
-                    child: Text(
-                      "Update More detail",
-                      style: ChautariTextStyles()
-                          .normal
-                          .copyWith(color: ChautariColors.white),
+                  child: RaisedButton(
+                    color: ChautariColors.primaryColor(),
+                    onPressed: () => {print("update more view")},
+                    child: Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(ChautariPadding.small5)),
+                      padding: EdgeInsets.all(ChautariPadding.standard),
+                      child: Text(
+                        "Update More detail",
+                        style: ChautariTextStyles()
+                            .normal
+                            .copyWith(color: ChautariColors.white),
+                      ),
                     ),
                   ),
-                ))
+                )
               ],
             ),
           ],
