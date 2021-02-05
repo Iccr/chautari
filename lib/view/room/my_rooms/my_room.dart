@@ -9,6 +9,8 @@ import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
 import 'package:chautari/view/room/room_detail/room_detail_controller.dart';
 import 'package:chautari/view/room/room_widgets.dart';
 import 'package:chautari/widgets/Row_with_space_between.dart';
+import 'package:chautari/widgets/decorated_container_wrapper.dart';
+import 'package:chautari/widgets/top_down_space_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -44,29 +46,42 @@ class MyRoomDetailBottomBlock extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        RowSpaceBetween(
-          keyValue: "Status",
-          value: "Available for rent",
-          valueStyle: ChautariTextStyles()
-              .listSubtitle
-              .copyWith(color: ChautariColors.primary),
-        ),
-        Row(
+    return TopDownPaddingWrapper(
+      child: DecoratedContainerWrapper(
+        child: Column(
           children: [
-            Spacer(),
-            Container(
-              width: 65,
-              child: Switch(
-                activeTrackColor: ChautariColors.primary.withOpacity(0.5),
-                value: controller.room.available ?? false,
-                onChanged: (value) {},
-              ),
+            RowSpaceBetween(
+              keyValue: "Status",
+              value: "Available for rent",
+              valueStyle: ChautariTextStyles()
+                  .listSubtitle
+                  .copyWith(color: ChautariColors.primary),
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Text("Update status"),
+                    Spacer(),
+                    Container(
+                      width: 65,
+                      child: Switch(
+                        activeTrackColor:
+                            ChautariColors.primary.withOpacity(0.5),
+                        value: controller.room.available ?? false,
+                        onChanged: (value) {},
+                      ),
+                    ),
+                  ],
+                ),
+                Text(
+                    "Note: If turned off, people will not be able to find this property in chautari basti"),
+              ],
             ),
           ],
         ),
-      ],
+      ),
     );
   }
 }

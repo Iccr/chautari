@@ -1,5 +1,5 @@
 import 'package:chautari/model/error.dart';
-import 'package:chautari/model/rooms_model.dart';
+import 'package:chautari/model/room_model.dart';
 
 class SingleRoomResponseModel {
   RoomsModel room;

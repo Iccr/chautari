@@ -1,4 +1,4 @@
-import 'package:chautari/model/rooms_model.dart';
+import 'package:chautari/model/room_model.dart';
 import 'package:chautari/utilities/api_service.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
