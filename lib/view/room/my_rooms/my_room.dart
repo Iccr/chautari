@@ -1,6 +1,7 @@
 import 'package:chautari/utilities/loading/progress_hud.dart';
 import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/theme/colors.dart';
+import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
 
 import 'package:chautari/view/room/my_rooms/my_room_controller.dart';
@@ -77,6 +78,22 @@ class MyRoomDetailBottomBlock extends StatelessWidget {
                 ),
                 Text(
                     "Note: If turned off, people will not be able to find this property in chautari basti"),
+                TopDownPaddingWrapper(
+                  child: RaisedButton(
+                    color: ChautariColors.primaryColor(),
+                    onPressed: () {},
+                    child: Container(
+                      clipBehavior: Clip.antiAlias,
+                      decoration: BoxDecoration(
+                          borderRadius:
+                              BorderRadius.circular(ChautariPadding.small5)),
+                      padding: EdgeInsets.all(ChautariPadding.standard),
+                      child: Text("Update More detail", style: ChautariTextStyles()
+                                    .normal
+                                    .copyWith(color: ChautariColors.white),
+                    ),
+                  ),
+                )
               ],
             ),
           ],
