@@ -22,8 +22,8 @@ class RoomModel {
   int parkingCount;
   String price;
   int state;
-  String water;
-  String type;
+  int water;
+  int type;
   String phone;
   bool phone_visibility;
   List<String> images;
@@ -155,14 +155,8 @@ class RoomModel {
       'available': this.available,
       'phone_visibility': this.phone_visibility,
       'phone': this.phone,
-      'water': AppinfoModel()
-          .waters
-          .firstWhere((element) => element.name == this.water)
-          .value,
-      'type': AppinfoModel()
-          .types
-          .firstWhere((element) => element.name == this.type)
-          .value,
+      'water': this.water,
+      'type': this.type,
       "images": compressed.asMap().entries.map((e) {
         return MultipartFile.fromBytes(e.value.readAsBytesSync(),
             filename: e.key.toString() + ".jpg",

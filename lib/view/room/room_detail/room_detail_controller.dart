@@ -3,7 +3,7 @@ import 'package:chautari/model/parkings.dart';
 import 'package:chautari/model/room_model.dart';
 
 import 'package:chautari/repository/rooms_repository.dart';
-import 'package:chautari/services/update_room_availability_service.dart';
+import 'package:chautari/services/appinfo_service.dart';
 
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
@@ -11,6 +11,7 @@ import 'package:get/get.dart';
 
 class RoomDetailController extends GetxController {
   AuthController auth;
+  AppInfoService appIinfoService = Get.find();
 
   RoomDetailController() {
     auth = Get.find();
@@ -31,7 +32,11 @@ class RoomDetailController extends GetxController {
       _room.value.parkings == null ? [] : _room.value.parkings;
   List<Amenities> get amenities =>
       _room.value.amenities == null ? [] : _room.value.amenities;
-  List<String> get water => [_room.value.water];
+  List<String> get water => [
+        appIinfoService.appInfo.waters
+            .firstWhere((e) => e.value == _room.value.water)
+            .name
+      ];
 
   bool get isLoading => _isLoading.value;
   String get error => (_error.value?.isEmpty ?? false) ? null : _error.value;

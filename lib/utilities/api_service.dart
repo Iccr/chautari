@@ -170,7 +170,7 @@ class ApiService {
     var responseJson;
     try {
       Response response = await _http.patch(
-        url,
+        _baseUrl + url,
         data: params,
         options: Options(
           headers: _headers(),
