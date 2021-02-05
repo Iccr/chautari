@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:chautari/model/amenity.dart';
+import 'package:chautari/model/app_info.dart';
 import 'package:chautari/model/districts.dart';
 
 import 'package:chautari/model/login_model.dart';
@@ -143,19 +144,25 @@ class RoomModel {
     var compressed = await _compressFiles(this.rawImages);
 
     var data = FormData.fromMap({
-      'district': this.district,
+      'district': this.district.id,
       'address': this.address,
       'lat': this.lat,
       'long': this.long,
       'number_of_rooms': this.numberOfRooms,
       'price': this.price,
-      'water': this.water,
       'parkings': this.parkings.map((e) => e.id).toList(),
       'amenities': this.amenities.map((e) => e.id).toList(),
       'available': this.available,
       'phone_visibility': this.phone_visibility,
       'phone': this.phone,
-      'type': this.type,
+      'water': AppinfoModel()
+          .waters
+          .firstWhere((element) => element.name == this.water)
+          .value,
+      'type': AppinfoModel()
+          .types
+          .firstWhere((element) => element.name == this.type)
+          .value,
       "images": compressed.asMap().entries.map((e) {
         return MultipartFile.fromBytes(e.value.readAsBytesSync(),
             filename: e.key.toString() + ".jpg",
