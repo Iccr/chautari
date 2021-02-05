@@ -110,6 +110,28 @@ class ApiService {
     return responseJson;
   }
 
+  Future delete(String url) async {
+    var responseJson;
+    try {
+      responseJson = await _http.delete(
+        _baseUrl + url,
+        options: Options(
+          headers: _headers(),
+        ),
+      );
+    } catch (e) {
+      String err = e.error.toString();
+      Map<String, dynamic> val = {
+        'error': [
+          {'code': '1', 'detail': '$err'}
+        ]
+      };
+      Response res = Response(data: val);
+      responseJson = res;
+    }
+    return responseJson;
+  }
+
   // Future postFormData(String url, dynamic params,
   //     {bool shouldAppednBaseurl = true}) async {
   //   var responseJson;

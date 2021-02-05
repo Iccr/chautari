@@ -108,7 +108,7 @@ class MyRoomDetailBottomBlock extends StatelessWidget {
                 TopDownPaddingWrapper(
                   child: RaisedButton(
                     color: ChautariColors.primaryColor(),
-                    onPressed: () => {print("Delete from Chautari basti")},
+                    onPressed: () => {controller.delete()},
                     child: Container(
                       clipBehavior: Clip.antiAlias,
                       decoration: BoxDecoration(
