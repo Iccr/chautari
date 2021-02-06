@@ -2,6 +2,7 @@ import 'dart:collection';
 
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/view/room/add_room/add_room_controller.dart';
+import 'package:chautari/widgets/alert.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
@@ -38,17 +39,11 @@ class MapController extends GetxController {
     );
   }
 
-  _showPermissionAlert({String title, String message, String textConfirm}) {
-    Get.defaultDialog(
-        title: title,
-        middleText: message,
-        textConfirm: textConfirm,
-        confirmTextColor: ChautariColors.blackAndWhitecolor(),
-        onConfirm: () async {
-          AppSettings.openLocationSettings();
-          Get.back();
-        },
-        onCancel: () => {Get.back()});
+  _showPermissionAlert({
+    String message = "Service disabled. would you like to enable now?",
+  }) {
+    Alert.show(
+        message: message, onConfirm: () => AppSettings.openLocationSettings());
   }
 
   Future<Position> _determinePosition() async {
@@ -58,28 +53,19 @@ class MapController extends GetxController {
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       // return Future.error('Location services are disabled.');
-      _showPermissionAlert(
-        message: "Service disabled. would you like to enable now?",
-        textConfirm: "Ok",
-      );
+      _showPermissionAlert();
     }
 
     permission = await Geolocator.checkPermission();
     if (permission == LocationPermission.deniedForever) {
-      _showPermissionAlert(
-        message: "Service disabled. would you like to enable now?",
-        textConfirm: "Ok",
-      );
+      _showPermissionAlert();
     }
 
     if (permission == LocationPermission.denied) {
       permission = await Geolocator.requestPermission();
       if (permission != LocationPermission.whileInUse &&
           permission != LocationPermission.always) {
-        _showPermissionAlert(
-          message: "Service disabled. would you like to enable now?",
-          textConfirm: "Ok",
-        );
+        _showPermissionAlert();
       }
     }
 

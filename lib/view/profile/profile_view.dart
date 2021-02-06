@@ -6,6 +6,7 @@ import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/profile/avatar_component.dart';
 import 'package:chautari/view/profile/profile_controller.dart';
+import 'package:chautari/widgets/alert.dart';
 import 'package:chautari/widgets/chautari_list.dart';
 import 'package:chautari/widgets/chautari_widgets.dart';
 import 'package:flutter/gestures.dart';
@@ -111,17 +112,15 @@ class UserInfoView extends StatelessWidget {
     }
 
     showLogoutDialogue() {
-      Get.defaultDialog(
-          title: "Do you want to Logout?",
-          middleText:
-              "your will not be able to get notification and other services",
-          textConfirm: "Logout",
-          confirmTextColor: ChautariColors.blackAndWhitecolor(),
-          onConfirm: () async {
-            await _logout();
-            Get.back();
-          },
-          onCancel: () => {Get.back()});
+      Alert.show(
+        title: "Do you want to Logout?",
+        message: "your will not be able to get notification and other services",
+        textConfirm: "Logout",
+        onConfirm: () async {
+          await _logout();
+          Get.back();
+        },
+      );
     }
 
     return !loginController.isLoggedIn

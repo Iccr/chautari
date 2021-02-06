@@ -20,16 +20,6 @@ class SettingView extends StatelessWidget {
   Widget build(BuildContext context) {
     final title = 'setting screen';
 
-    // _selectedIndex(int index, SettingController c) {
-    //   switch (index) {
-    //     case 0:
-    //       // _showThemeSelectionView();
-    //       break;
-    //     case 1:
-    //       break;
-    //   }
-    // }
-
     return Scaffold(
       appBar: AppBar(
         title: Text(title),
