@@ -7,6 +7,7 @@ import 'package:chautari/model/parkings.dart';
 import 'package:chautari/model/type.dart';
 import 'package:chautari/model/water.dart';
 import 'package:chautari/repository/rooms_repository.dart';
+import 'package:chautari/services/fetch_room_service.dart';
 import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/theme/colors.dart';
@@ -23,6 +24,7 @@ class AddRoomController extends GetxController {
   final ExploreController exploreController = Get.find();
   final CreateRoomApiRequestModel apiModel = CreateRoomApiRequestModel();
   final PageController pageController = PageController();
+  FetchRoomService fetchRoomService;
 
   var isValid = false;
 
@@ -118,7 +120,7 @@ class AddRoomController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
+    fetchRoomService = Get.find();
     districtFocusNode = FocusNode();
     addressFocusNode = FocusNode();
     priceFocusNode = FocusNode();
@@ -235,6 +237,8 @@ class AddRoomController extends GetxController {
     if (model.errors == null) {
       print(model.room);
       _isLoading.value = false;
+
+      fetchRoomService.fetchRooms();
 
       await showAlert(
         "Your property has been added for rent in chautari basti",
