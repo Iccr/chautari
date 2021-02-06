@@ -241,8 +241,8 @@ class AddRoomController extends GetxController {
 
       fetchRoomService.fetchRooms();
 
-      await showAlert(
-        "Your property has been added for rent in chautari basti",
+      await Alert.show(
+        message: "Your property has been added for rent in chautari basti",
         title: "Chautari Basti",
         onConfirm: () {
           Get.back();
@@ -265,9 +265,6 @@ class AddRoomController extends GetxController {
         message: error,
       );
     }
-  }
-
-  
   }
 
   openMap() async {

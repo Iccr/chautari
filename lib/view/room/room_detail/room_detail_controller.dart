@@ -9,6 +9,7 @@ import 'package:chautari/services/fetch_my_room_service.dart';
 
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
+import 'package:chautari/widgets/alert.dart';
 import 'package:get/get.dart';
 
 class RoomDetailController extends GetxController {
@@ -110,6 +111,16 @@ class RoomDetailController extends GetxController {
     } else {
       print(deleteRoomService.error);
     }
+  }
+
+  askForPermissionToDelete() async {
+    Alert.show(
+        message:
+            "This action will remove all data related to this room from chautari bast. It cannot be undone. Are your sure?",
+        onConfirm: () async {
+          Get.back();
+          delete();
+        });
   }
 
   RoomModel _clone({RoomModel room}) {
