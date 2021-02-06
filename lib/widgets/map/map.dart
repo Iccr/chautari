@@ -122,18 +122,6 @@ class ChautariMapController extends ChautariMapFunctions {
   }
 
   @override
-  _showPermissionAlert({
-    String message = "Service disabled. would you like to enable now?",
-  }) {
-    Alert.show(
-        onConfirm: () {
-          AppSettings.openLocationSettings();
-          Get.back();
-        },
-        message: message);
-  }
-
-  @override
   void onInit() async {
     super.onInit();
     position_.value = await _determinePosition();
@@ -145,6 +133,20 @@ class ChautariMapController extends ChautariMapFunctions {
       setMarker(
         LatLng(currentPosition.latitude, currentPosition.longitude),
       );
+    }
+  }
+
+  @override
+  _showPermissionAlert({String title, String message, String textConfirm}) {
+    _showPermissionAlert({
+      String message = "Service disabled. would you like to enable now?",
+    }) {
+      Alert.show(
+          onConfirm: () {
+            AppSettings.openLocationSettings();
+            Get.back();
+          },
+          message: message);
     }
   }
 }

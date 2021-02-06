@@ -14,13 +14,12 @@ class Alert extends StatelessWidget {
   }) {
     Get.defaultDialog(
       title: title,
-      middleText:
-          "your will not be able to get notification and other services",
+      middleText: message,
       textConfirm: textConfirm,
       textCancel: textCancel,
       confirmTextColor: confirmTextColor ?? ChautariColors.blackAndWhitecolor(),
-      onConfirm: () => onConfirm() ?? Get.back,
-      onCancel: () => onCancel() ?? Get.back(),
+      onConfirm: () => onConfirm == null ? Get.back : onConfirm(),
+      onCancel: () => onCancel == null ? null : onCancel(),
     );
   }
 
