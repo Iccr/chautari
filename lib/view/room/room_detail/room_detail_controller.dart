@@ -15,12 +15,6 @@ class RoomDetailController extends GetxController {
   AppInfoService appIinfoService = Get.find();
 
   DeleteRoomService deleteRoomService;
-  bool get deleteSuccess {
-    if (deleteRoomService.deleteSuccess) {
-      Get.back();
-    }
-    return deleteRoomService.deleteSuccess;
-  }
 
   RoomDetailController() {
     auth = Get.find();
@@ -101,7 +95,13 @@ class RoomDetailController extends GetxController {
   }
 
   delete() async {
-    var model = await this.deleteRoomService.deleteRooms();
+    _isLoading.value = deleteRoomService.isLoading.value;
+    await this.deleteRoomService.deleteRooms();
+    if (deleteRoomService.success.value) {
+      Get.back();
+    } else {
+      print(deleteRoomService.error);
+    }
   }
 
   RoomModel _clone({RoomModel room}) {
