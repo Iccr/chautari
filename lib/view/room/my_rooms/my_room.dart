@@ -19,10 +19,10 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 class MyRoom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<MyRoomsController>(
+    return GetX<MyRoomsController>(
       init: MyRoomsController(),
       builder: (c) => ProgressHud(
-        isLoading: c.isLoading,
+        isLoading: c.isLoading.value,
         child: Scaffold(
           appBar: AppBar(
             title: Text("My Rooms"),

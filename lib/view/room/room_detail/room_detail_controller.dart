@@ -5,6 +5,7 @@ import 'package:chautari/model/room_model.dart';
 import 'package:chautari/repository/rooms_repository.dart';
 import 'package:chautari/services/appinfo_service.dart';
 import 'package:chautari/services/delete_room_service.dart';
+import 'package:chautari/services/fetch_my_room_service.dart';
 
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
@@ -13,8 +14,8 @@ import 'package:get/get.dart';
 class RoomDetailController extends GetxController {
   AuthController auth;
   AppInfoService appIinfoService = Get.find();
-
   DeleteRoomService deleteRoomService;
+  FetchMyRoomService myRoomService;
 
   RoomDetailController() {
     auth = Get.find();
@@ -60,6 +61,12 @@ class RoomDetailController extends GetxController {
 
     deleteRoomService = DeleteRoomService(room);
 
+    try {
+      myRoomService = Get.find();
+    } catch (e) {
+      myRoomService = Get.put(FetchMyRoomService());
+    }
+
     _fetchRoomDetail();
     roomDetailHashContent["Type"] = "Appartment";
     roomDetailHashContent["Number Of Rooms"] = "${room.numberOfRooms}";
@@ -97,6 +104,7 @@ class RoomDetailController extends GetxController {
   delete() async {
     _isLoading.value = deleteRoomService.isLoading.value;
     await this.deleteRoomService.deleteRooms();
+    myRoomService.fetchMyRooms();
     if (deleteRoomService.success.value) {
       Get.back();
     } else {

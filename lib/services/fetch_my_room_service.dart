@@ -4,18 +4,12 @@ import 'package:chautari/repository/rooms_repository.dart';
 
 import 'package:get/get.dart';
 
-class FetchMyRoomService extends GetxService {
-  var _rooms = List<RoomModel>().obs;
+class FetchMyRoomService extends GetxController {
+  var rooms = List<RoomModel>().obs;
   var isLoading = false.obs;
   var _error = "".obs;
 
   String get error => _error.value.isEmpty ? null : _error.value;
-  List<RoomModel> get rooms => _rooms.value;
-
-  Future<FetchMyRoomService> init() async {
-    fetchMyRooms();
-    return this;
-  }
 
   fetchMyRooms() async {
     isLoading.value = true;
@@ -24,7 +18,7 @@ class FetchMyRoomService extends GetxService {
     if (models.errors?.isEmpty ?? false) {
       this._error.value = models.errors?.first?.value;
     } else {
-      this._rooms.assignAll(models.rooms);
+      this.rooms.assignAll(models.rooms);
     }
   }
 }
