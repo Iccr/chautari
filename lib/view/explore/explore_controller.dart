@@ -16,7 +16,7 @@ class ExploreController extends GetxController {
   void onInit() {
     super.onInit();
     service = Get.find();
-    this._isLoading.value = service.isLoading;
-    this._models.assignAll(this.service.rooms);
+    this._isLoading = service.isLoading;
+    this._models = service.rooms;
   }
 }
