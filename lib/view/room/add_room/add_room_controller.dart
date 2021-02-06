@@ -12,6 +12,7 @@ import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/view/explore/explore_controller.dart';
+import 'package:chautari/widgets/alert.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
@@ -260,22 +261,13 @@ class AddRoomController extends GetxController {
         error = errorObject.value;
       }
 
-      showAlert(error, onConfirm: () => Get.back());
+      Alert.show(
+        message: error,
+      );
     }
   }
 
-  showAlert(String message,
-      {String title = "Alert", Function onConfirm, Function onCancel}) async {
-    Get.defaultDialog(
-      title: title,
-      middleText: message,
-      textConfirm: "Ok",
-      confirmTextColor: ChautariColors.blackAndWhitecolor(),
-      onConfirm: () async {
-        onConfirm();
-      },
-      onCancel: onCancel,
-    );
+  
   }
 
   openMap() async {
