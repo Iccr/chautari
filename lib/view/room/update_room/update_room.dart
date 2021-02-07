@@ -14,36 +14,28 @@ class UpdateRoom extends StatelessWidget {
       appBar: AppBar(
         title: Text("Update room"),
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: AddRoomForm2(
-                formkey: controller.formKeys.form2Key,
+      body: Column(
+        children: [
+          NumberOfRoomWidget(controller: controller),
+
+          // price
+          PriceWidget(
+              pricekey: controller.formKeys.priceKey, controller: controller),
+
+          // mobile visibility
+          MobileVisibilityWidget(controller: controller),
+
+          // contact number
+          if (controller.contactNumberVisible.value) ...[
+            ContactNumberWidget(
                 contactKey: controller.formKeys.contactKey,
-                pricekey: controller.formKeys.priceKey,
-                numberkey: controller.formKeys.numberOfRoomsKey,
-                scrollController: _scrollController,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: AddRoomForm3(
-                formkey: controller.formKeys.form3Key,
-                typesKey: controller.formKeys.typesKey,
-                waterKey: controller.formKeys.waterKey,
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: AddRoomForm4(
-                parkingKey: controller.formKeys.parkingKey,
-                amenityKey: controller.formKeys.amenityKey,
-              ),
-            ),
+                controller: controller)
           ],
-        ),
+
+          // image
+          ImageWidget(
+              controller: controller, scrollController: _scrollController),
+        ],
       ),
     );
   }
