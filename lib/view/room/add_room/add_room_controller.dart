@@ -40,6 +40,17 @@ class AddRoomController extends GetxController {
   var form3Key = GlobalKey<FormBuilderState>();
   var form4Key = GlobalKey<FormBuilderState>();
 
+// value keys
+  var districtKey = ValueKey("district");
+  var addressKey = ValueKey("address");
+  var parkingKey = ValueKey("parking");
+  var amenityKey = ValueKey("amenity");
+  var waterKey = ValueKey("water");
+  var priceKey = ValueKey("price");
+  var contactKey = ValueKey("contact");
+  var typesKey = ValueKey("types");
+  var numberOfRoomsKey = ValueKey("_numberOfRoomsKey");
+
   var districtViewmodels = List<MenuItem>().obs;
   var autovalidateMode = AutovalidateMode.disabled.obs;
   var autovalidateForm1Mode = AutovalidateMode.disabled.obs;
