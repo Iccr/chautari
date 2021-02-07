@@ -22,6 +22,7 @@ class AddRoomForm4 extends StatelessWidget {
           children: [
             TopDownPaddingWrapper(
               child: FormBuilderCheckboxGroup(
+                focusNode: controller.parkingFocusNode,
                 key: parkingKey,
                 validator: (value) {
                   return value == null ? "This field cannot be empty" : null;
@@ -52,6 +53,7 @@ class AddRoomForm4 extends StatelessWidget {
             // amenity
             TopDownPaddingWrapper(
               child: FormBuilderCheckboxGroup(
+                  focusNode: controller.amenitiesFocusNode,
                   key: amenityKey,
                   validator: (value) {
                     return value == null ? "This field cannot be empty" : null;
