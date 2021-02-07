@@ -19,16 +19,6 @@ class AddRoom extends StatelessWidget {
 
   final ScrollController _scrollController = new ScrollController();
 
-  final _districtKey = ValueKey("district");
-  final _addressKey = ValueKey("address");
-  final _parkingKey = ValueKey("parking");
-  final _amenityKey = ValueKey("amenity");
-  final _waterKey = ValueKey("water");
-  final _priceKey = ValueKey("price");
-  final _contactKey = ValueKey("contact");
-  final _typesKey = ValueKey("types");
-  final _numberOfRoomsKey = ValueKey("_numberOfRoomsKey");
-
   @override
   Widget build(BuildContext context) {
     _openSearch() async {
@@ -58,8 +48,8 @@ class AddRoom extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: AddRoomForm1(
             formKey: addController.form1Key,
-            districtKey: _districtKey,
-            addressKey: _addressKey,
+            districtKey: addController.districtKey,
+            addressKey: addController.addressKey,
             openSearch: () => _openSearch(),
             openMap: () => _openMap(),
           ),
@@ -68,9 +58,9 @@ class AddRoom extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: AddRoomForm2(
             formkey: addController.form2Key,
-            contactKey: _contactKey,
-            pricekey: _priceKey,
-            numberkey: _numberOfRoomsKey,
+            contactKey: addController.contactKey,
+            pricekey: addController.priceKey,
+            numberkey: addController.numberOfRoomsKey,
             scrollController: _scrollController,
           ),
         ),
@@ -78,15 +68,15 @@ class AddRoom extends StatelessWidget {
           padding: const EdgeInsets.all(8.0),
           child: AddRoomForm3(
             formkey: addController.form3Key,
-            typesKey: _typesKey,
-            waterKey: _waterKey,
+            typesKey: addController.typesKey,
+            waterKey: addController.waterKey,
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: AddRoomForm4(
-            parkingKey: _parkingKey,
-            amenityKey: _amenityKey,
+            parkingKey: addController.parkingKey,
+            amenityKey: addController.amenityKey,
           ),
         ),
       ];
