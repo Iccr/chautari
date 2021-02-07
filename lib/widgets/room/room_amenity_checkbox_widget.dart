@@ -6,43 +6,38 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 
 class RoomAmenityCheckBoxWidget extends StatelessWidget {
+  final FocusNode focusNode;
+  final Function(dynamic value) onSaved;
+  final List<FormBuilderFieldOption<dynamic>> options;
+  final ValueKey amenityKey;
+
   const RoomAmenityCheckBoxWidget({
     Key key,
-    @required this.controller,
+    @required this.focusNode,
     @required this.amenityKey,
+    @required this.onSaved,
+    @required this.options,
   }) : super(key: key);
-
-  final AddRoomController controller;
-  final ValueKey amenityKey;
 
   @override
   Widget build(BuildContext context) {
     return TopDownPaddingWrapper(
       child: FormBuilderCheckboxGroup(
-          focusNode: controller.focusNodes.amenitiesFocusNode,
-          key: amenityKey,
-          validator: (value) {
-            return value == null ? "This field cannot be empty" : null;
-          },
-          wrapAlignment: WrapAlignment.spaceBetween,
-          wrapSpacing: Get.width,
-          decoration: ChautariDecoration().outlinedBorderTextField(
-            labelText: "Amenities",
-            helperText: "Select all availabe options",
-          ),
-          name: "amenity",
-          options: controller.appInfo.amenities
-              .map(
-                (element) => FormBuilderFieldOption(
-                  value: element,
-                  child: Text(element.name.capitalize),
-                ),
-              )
-              .toList(),
-          onSaved: (newValue) {
-            print(newValue);
-            controller.apiModel.amenities = newValue;
-          }),
+        focusNode: focusNode,
+        key: amenityKey,
+        validator: (value) {
+          return value == null ? "This field cannot be empty" : null;
+        },
+        wrapAlignment: WrapAlignment.spaceBetween,
+        wrapSpacing: Get.width,
+        decoration: ChautariDecoration().outlinedBorderTextField(
+          labelText: "Amenities",
+          helperText: "Select all availabe options",
+        ),
+        name: "amenity",
+        options: options,
+        onSaved: (newValue) => onSaved(newValue),
+      ),
     );
   }
 }
