@@ -11,7 +11,6 @@ import 'package:chautari/view/room/form_keys.dart';
 import 'package:chautari/view/room/room_form_focusnode.dart';
 import 'package:chautari/widgets/alert.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
@@ -38,6 +37,7 @@ class AddRoomController extends GetxController {
   // observable keys
 
   RoomFormKeys formKeys = RoomFormKeys();
+  RoomFocusNodes focusNodes = RoomFocusNodes();
 
   var districtViewmodels = List<MenuItem>().obs;
   var autovalidateMode = AutovalidateMode.disabled.obs;
@@ -60,7 +60,6 @@ class AddRoomController extends GetxController {
   final TextEditingController addressTextController = TextEditingController();
   //focus
 
-  RoomFocusNodes focusNodes = RoomFocusNodes();
 // items
   var listItems = [
     MenuItem(title: "District"),
