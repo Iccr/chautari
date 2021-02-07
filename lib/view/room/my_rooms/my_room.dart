@@ -86,51 +86,51 @@ class MyRoomDetailBottomBlock extends StatelessWidget {
                 ),
                 Text(
                     "Note: If switch is turned off, people will not be able to find this property in Chautari basti"),
-                TopDownPaddingWrapper(
-                  child: RaisedButton(
-                    color: ChautariColors.primaryColor(),
-                    onPressed: () => {
-                      Get.toNamed(RouteName.updateRoom),
-                    },
-                    child: Container(
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(ChautariPadding.small5)),
-                      padding: EdgeInsets.all(ChautariPadding.standard),
-                      child: Text(
-                        "Update More detail",
-                        style: ChautariTextStyles()
-                            .normal
-                            .copyWith(color: ChautariColors.white),
-                      ),
-                    ),
-                  ),
+                ChautariRaisedButton(
+                  title: "Update More detail",
+                  onPressed: () => Get.toNamed(RouteName.updateRoom),
                 ),
-                TopDownPaddingWrapper(
-                  child: RaisedButton(
-                    color: ChautariColors.primaryColor(),
-                    onPressed: () => {controller.askForPermissionToDelete()},
-                    child: Container(
-                      clipBehavior: Clip.antiAlias,
-                      decoration: BoxDecoration(
-                          borderRadius:
-                              BorderRadius.circular(ChautariPadding.small5)),
-                      padding: EdgeInsets.all(ChautariPadding.standard),
-                      child: Text(
-                        "Delete",
-                        style: ChautariTextStyles()
-                            .normal
-                            .copyWith(color: ChautariColors.white),
-                      ),
-                    ),
-                  ),
+                ChautariRaisedButton(
+                  title: "Delete",
+                  onPressed: () => controller.askForPermissionToDelete(),
                 ),
                 Text(
                     "Warning: All of the data related with this propery is permanently lost."),
               ],
             ),
           ],
+        ),
+      ),
+    );
+  }
+}
+
+class ChautariRaisedButton extends StatelessWidget {
+  final String title;
+  final Function onPressed;
+  const ChautariRaisedButton({
+    this.title,
+    this.onPressed,
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TopDownPaddingWrapper(
+      child: RaisedButton(
+        color: ChautariColors.primaryColor(),
+        onPressed: () => onPressed(),
+        child: Container(
+          clipBehavior: Clip.antiAlias,
+          decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(ChautariPadding.small5)),
+          padding: EdgeInsets.all(ChautariPadding.standard),
+          child: Text(
+            title,
+            style: ChautariTextStyles()
+                .normal
+                .copyWith(color: ChautariColors.white),
+          ),
         ),
       ),
     );

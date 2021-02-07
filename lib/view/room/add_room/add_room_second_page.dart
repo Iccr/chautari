@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:chautari/utilities/theme/text_decoration.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/view/room/add_room/add_room_controller.dart';
@@ -42,23 +44,51 @@ class AddRoomForm2 extends StatelessWidget {
           child: Column(
             children: [
               // number of rooms
-              NumberOfRoomWidget(controller: controller),
+              NumberOfRoomWidget(
+                focusNode: controller.focusNodes.numberOfRoomsFocusNode,
+                onSaved: (value) =>
+                    controller.apiModel.numberOfRooms = value.toInt(),
+              ),
 
               // price
-              RoomPriceWidget(pricekey: pricekey, controller: controller),
+              RoomPriceWidget(
+                focusNode: controller.focusNodes.priceFocusNode,
+                onTap: () =>
+                    controller.focusNodes.priceFocusNode.requestFocus(),
+                pricekey: pricekey,
+                onSaved: (value) =>
+                    controller.apiModel.price = value.replaceAll(",", ""),
+              ),
 
               // mobile visibility
-              ContactNumberVisibilityWidget(controller: controller),
+              ContactNumberVisibilityWidget(
+                initialValue: controller.contactNumberVisible.value,
+                focusNode: controller.focusNodes.contactSwitchFocusNode,
+                onChanged: (value) =>
+                    controller.setContactNumbervisibility(value),
+              ),
 
               // contact number
               if (controller.contactNumberVisible.value) ...[
                 ContactNumberWidget(
-                    contactKey: contactKey, controller: controller)
+                  contactKey: contactKey,
+                  focusNode: controller.focusNodes.contactTextFocusNode,
+                  onTap: () =>
+                      controller.focusNodes.contactTextFocusNode.requestFocus(),
+                  onSaved: (value) => controller.apiModel.contactNumber = value,
+                )
               ],
 
               // image
               RoomImageWidget(
-                  controller: controller, scrollController: scrollController),
+                  focusNode: controller.focusNodes.imageFocusNode,
+                  onChange: (value) => scrollController.animateTo(
+                      scrollController.position.maxScrollExtent + 130,
+                      duration: Duration(milliseconds: 100),
+                      curve: Curves.easeInOut),
+                  onSaved: (value) =>
+                      controller.apiModel.images = List<File>.from(value),
+                  scrollController: scrollController),
             ],
           ),
         ),
