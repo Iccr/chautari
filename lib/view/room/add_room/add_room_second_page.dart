@@ -1,14 +1,11 @@
 import 'dart:io';
 
-import 'package:chautari/utilities/theme/text_decoration.dart';
-import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/view/room/add_room/add_room_controller.dart';
 import 'package:chautari/widgets/room/Room_Image_widget.dart';
 import 'package:chautari/widgets/room/number_of_room_widget.dart';
 import 'package:chautari/widgets/room/room_contact_number_widget.dart';
 import 'package:chautari/widgets/room/room_contact_visibility_widget.dart';
 import 'package:chautari/widgets/room/room_price_widget.dart';
-import 'package:chautari/widgets/top_down_space_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
@@ -45,6 +42,7 @@ class AddRoomForm2 extends StatelessWidget {
             children: [
               // number of rooms
               NumberOfRoomWidget(
+                numberOfroomKey: controller.formKeys.numberOfRoomsKey,
                 focusNode: controller.focusNodes.numberOfRoomsFocusNode,
                 onSaved: (value) =>
                     controller.apiModel.numberOfRooms = value.toInt(),
@@ -52,16 +50,17 @@ class AddRoomForm2 extends StatelessWidget {
 
               // price
               RoomPriceWidget(
+                pricekey: pricekey,
                 focusNode: controller.focusNodes.priceFocusNode,
                 onTap: () =>
                     controller.focusNodes.priceFocusNode.requestFocus(),
-                pricekey: pricekey,
                 onSaved: (value) =>
                     controller.apiModel.price = value.replaceAll(",", ""),
               ),
 
               // mobile visibility
               ContactNumberVisibilityWidget(
+                contactVisibilityKey: controller.formKeys.contactVisibilityKey,
                 initialValue: controller.contactNumberVisible.value,
                 focusNode: controller.focusNodes.contactSwitchFocusNode,
                 onChanged: (value) =>
@@ -81,6 +80,7 @@ class AddRoomForm2 extends StatelessWidget {
 
               // image
               RoomImageWidget(
+                  roomImageKey: controller.formKeys.imageKey,
                   focusNode: controller.focusNodes.imageFocusNode,
                   onChange: (value) => scrollController.animateTo(
                       scrollController.position.maxScrollExtent + 130,
