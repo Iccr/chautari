@@ -20,7 +20,7 @@ class AddRoomForm3 extends StatelessWidget {
     return SingleChildScrollView(
       child: FormBuilder(
         key: formkey,
-        autovalidateMode: controller.autovalidateForm3Mode,
+        autovalidateMode: controller.autovalidateForm3Mode.value,
         child: Column(
           children: [
             // types
@@ -36,7 +36,7 @@ class AddRoomForm3 extends StatelessWidget {
                     helperText: "Select one options",
                   ),
                   name: "Type",
-                  options: controller.types
+                  options: controller.appInfo.types
                       .map(
                         (element) => FormBuilderFieldOption(
                           value: element,
@@ -63,7 +63,7 @@ class AddRoomForm3 extends StatelessWidget {
                     helperText: "Select one options",
                   ),
                   name: "water",
-                  options: controller.waters
+                  options: controller.appInfo.waters
                       .map(
                         (element) => FormBuilderFieldOption(
                           value: element,

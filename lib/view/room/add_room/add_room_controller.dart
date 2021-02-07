@@ -1,11 +1,6 @@
 import 'package:chautari/model/add_room_multipart_model.dart';
-import 'package:chautari/model/amenity.dart';
 import 'package:chautari/model/app_info.dart';
-import 'package:chautari/model/districts.dart';
 import 'package:chautari/model/menu_item.dart';
-import 'package:chautari/model/parkings.dart';
-import 'package:chautari/model/type.dart';
-import 'package:chautari/model/water.dart';
 import 'package:chautari/repository/rooms_repository.dart';
 import 'package:chautari/services/fetch_room_service.dart';
 import 'package:chautari/utilities/constants.dart';
@@ -30,49 +25,28 @@ class AddRoomController extends GetxController {
   var isValid = false;
 
   // observers
-  var _isLoading = false.obs;
+  var isLoading = false.obs;
   var _error = "".obs;
   var addressError = "".obs;
   var _lat = 1000.0.obs;
   var _long = 1000.0.obs;
-  var _contactNumberVisible = false.obs;
+  var contactNumberVisible = false.obs;
 
-  var _pageoffset = 0.0.obs;
+  var pageoffset = 0.0.obs;
   // observable keys
-  var _formKey = GlobalKey<FormBuilderState>().obs;
-  var _form1Key = GlobalKey<FormBuilderState>().obs;
-  var _form2Key = GlobalKey<FormBuilderState>().obs;
-  var _form3Key = GlobalKey<FormBuilderState>().obs;
-  var _form4Key = GlobalKey<FormBuilderState>().obs;
+  var formKey = GlobalKey<FormBuilderState>();
+  var form1Key = GlobalKey<FormBuilderState>();
+  var form2Key = GlobalKey<FormBuilderState>();
+  var form3Key = GlobalKey<FormBuilderState>();
+  var form4Key = GlobalKey<FormBuilderState>();
 
   var districtViewmodels = List<MenuItem>().obs;
-  var _autovalidateMode = AutovalidateMode.disabled.obs;
-  var _autovalidateForm1Mode = AutovalidateMode.disabled.obs;
-  var _autovalidateForm2Mode = AutovalidateMode.disabled.obs;
-  var _autovalidateForm3Mode = AutovalidateMode.disabled.obs;
-  var _autovalidateForm4Mode = AutovalidateMode.disabled.obs;
+  var autovalidateMode = AutovalidateMode.disabled.obs;
+  var autovalidateForm1Mode = AutovalidateMode.disabled.obs;
+  var autovalidateForm2Mode = AutovalidateMode.disabled.obs;
+  var autovalidateForm3Mode = AutovalidateMode.disabled.obs;
+  var autovalidateForm4Mode = AutovalidateMode.disabled.obs;
 
-// getters
-  GlobalKey<FormBuilderState> get formKey => _formKey.value;
-  GlobalKey<FormBuilderState> get form1Key => _form1Key.value;
-  GlobalKey<FormBuilderState> get form2Key => _form2Key.value;
-  GlobalKey<FormBuilderState> get form3Key => _form3Key.value;
-  GlobalKey<FormBuilderState> get form4Key => _form3Key.value;
-
-  List<Districts> get _districts => appInfo.districts;
-  List<Water> get waters => appInfo.waters;
-  List<Amenities> get amenities => appInfo.amenities;
-  List<Parking> get parkings => appInfo.parkings;
-  List<RoomType> get types => appInfo.types;
-  AutovalidateMode get autovalidateMode => _autovalidateMode.value;
-  AutovalidateMode get autovalidateForm1Mode => _autovalidateForm1Mode.value;
-  AutovalidateMode get autovalidateForm2Mode => _autovalidateForm2Mode.value;
-  AutovalidateMode get autovalidateForm3Mode => _autovalidateForm3Mode.value;
-  AutovalidateMode get autovalidateForm4Mode => _autovalidateForm4Mode.value;
-
-  bool get contactNumberVisible => _contactNumberVisible.value;
-  double get pageOffset => _pageoffset.value;
-  bool get isLoading => _isLoading.value;
   String get error => _error.value;
 
   String get lat =>
@@ -87,10 +61,10 @@ class AddRoomController extends GetxController {
   final TextEditingController addressTextController = TextEditingController();
   //focus
 
-  FocusNode districtFocusNode;
-  FocusNode addressFocusNode;
-  FocusNode priceFocusNode;
-  FocusNode contactFocusNode;
+  FocusNode districtFocusNode = FocusNode();
+  FocusNode addressFocusNode = FocusNode();
+  FocusNode priceFocusNode = FocusNode();
+  FocusNode contactFocusNode = FocusNode();
 
 // items
   var listItems = [
@@ -122,27 +96,13 @@ class AddRoomController extends GetxController {
   void onInit() {
     super.onInit();
     fetchRoomService = Get.find();
-    districtFocusNode = FocusNode();
-    addressFocusNode = FocusNode();
-    priceFocusNode = FocusNode();
-    contactFocusNode = FocusNode();
 
     districtViewmodels.assignAll(
-      _districts.map(
+      appInfo.districts.map(
         (e) => MenuItem(title: e.name, subtitle: "${e.state}"),
       ),
     );
   }
-
-  @override
-  onClose() {
-    super.onClose();
-    // districtFocusNode.dispose();
-    // addressFocusNode.dispose();
-    // priceFocusNode.dispose();
-  }
-
-// setters
 
   setLatLng(double lat, double long) {
     _lat.value = lat;
@@ -152,10 +112,10 @@ class AddRoomController extends GetxController {
   }
 
   submitPage1() {
-    _autovalidateForm1Mode.value = AutovalidateMode.always;
+    autovalidateForm1Mode.value = AutovalidateMode.always;
     if (form1Key.currentState.validate()) {
       form1Key.currentState.save();
-      print(apiModel.address);
+
       _goToNextPage();
     } else {
       var firstWidget = form1Key.currentState.fields.entries.firstWhere(
@@ -166,7 +126,7 @@ class AddRoomController extends GetxController {
   }
 
   submitPage2() {
-    _autovalidateForm2Mode.value = AutovalidateMode.always;
+    autovalidateForm2Mode.value = AutovalidateMode.always;
     if (form2Key.currentState.validate()) {
       form2Key.currentState.save();
       _goToNextPage();
@@ -179,7 +139,7 @@ class AddRoomController extends GetxController {
   }
 
   submitPage3() {
-    _autovalidateForm3Mode.value = AutovalidateMode.always;
+    autovalidateForm3Mode.value = AutovalidateMode.always;
     if (form3Key.currentState.validate()) {
       form3Key.currentState.save();
       _goToNextPage();
@@ -192,7 +152,7 @@ class AddRoomController extends GetxController {
   }
 
   submitPage4() {
-    _autovalidateForm4Mode.value = AutovalidateMode.always;
+    autovalidateForm4Mode.value = AutovalidateMode.always;
     if (form4Key.currentState.validate()) {
       form4Key.currentState.save();
 
@@ -231,26 +191,25 @@ class AddRoomController extends GetxController {
   }
 
   _submit() async {
-    _isLoading.value = true;
+    isLoading.value = true;
     var model = await RoomsRepository().addRoom(
       await apiModel.toJson(),
     );
     if (model.errors == null) {
       print(model.room);
-      _isLoading.value = false;
+      isLoading.value = false;
 
       fetchRoomService.fetchRooms();
 
       await Alert.show(
         message: "Your property has been added for rent in chautari basti",
-        title: "Chautari Basti",
         onConfirm: () {
           Get.back();
           Get.offAndToNamed(RouteName.myRooms);
         },
       );
     } else {
-      _isLoading.value = false;
+      isLoading.value = false;
       String error = "";
       var errorObject = model.errors.first;
       if (errorObject.name.contains("lat") ||
@@ -295,10 +254,10 @@ class AddRoomController extends GetxController {
   validateAddress() {}
 
   setContactNumbervisibility(bool val) {
-    _contactNumberVisible.value = val;
+    contactNumberVisible.value = val;
   }
 
   setPageOffset(int val) {
-    _pageoffset.value = val.toDouble();
+    pageoffset.value = val.toDouble();
   }
 }

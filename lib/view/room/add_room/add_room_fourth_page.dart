@@ -17,7 +17,7 @@ class AddRoomForm4 extends StatelessWidget {
     return SingleChildScrollView(
       child: FormBuilder(
         key: controller.form4Key,
-        autovalidateMode: controller.autovalidateForm4Mode,
+        autovalidateMode: controller.autovalidateForm4Mode.value,
         child: Column(
           children: [
             TopDownPaddingWrapper(
@@ -31,7 +31,7 @@ class AddRoomForm4 extends StatelessWidget {
                   helperText: "Select all availabe options",
                 ),
                 name: "parking",
-                options: controller.parkings
+                options: controller.appInfo.parkings
                     .map(
                       (element) => FormBuilderFieldOption(
                         value: element,
@@ -63,7 +63,7 @@ class AddRoomForm4 extends StatelessWidget {
                     helperText: "Select all availabe options",
                   ),
                   name: "amenity",
-                  options: controller.amenities
+                  options: controller.appInfo.amenities
                       .map(
                         (element) => FormBuilderFieldOption(
                           value: element,

@@ -39,7 +39,7 @@ class AddRoomForm2 extends StatelessWidget {
         config: controller.keyboardActionConfig(context),
         child: FormBuilder(
           key: formkey,
-          autovalidateMode: controller.autovalidateForm2Mode,
+          autovalidateMode: controller.autovalidateForm2Mode.value,
           child: Column(
             children: [
               // number of rooms
@@ -108,7 +108,7 @@ class AddRoomForm2 extends StatelessWidget {
               // mobile visibility
               TopDownPaddingWrapper(
                 child: FormBuilderSwitch(
-                  initialValue: controller.contactNumberVisible,
+                  initialValue: controller.contactNumberVisible.value,
                   name: "contact number",
                   title: Text(
                     "Let people contact you via phone",
@@ -123,7 +123,7 @@ class AddRoomForm2 extends StatelessWidget {
               ),
 
               // contact number
-              if (controller.contactNumberVisible) ...[
+              if (controller.contactNumberVisible.value) ...[
                 TopDownPaddingWrapper(
                   child: FormBuilderTextField(
                     key: contactKey,
