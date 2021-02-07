@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 class Alert extends StatelessWidget {
   static show({
     @required String message,
-    String title = "Alert",
+    String title = "Info",
     String textConfirm = "ok",
     String textCancel = "cancel",
     Function onConfirm,
