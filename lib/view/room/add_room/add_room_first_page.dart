@@ -40,7 +40,7 @@ class AddRoomForm1 extends StatelessWidget {
                   key: districtKey,
                   validator: FormBuilderValidators.required(context),
                   controller: controller.districtTextController,
-                  focusNode: controller.districtFocusNode,
+                  focusNode: controller.focusNodes.districtFocusNode,
                   name: "district_field",
                   style: ChautariTextStyles().listSubtitle,
                   decoration: ChautariDecoration().outlinedBorderTextField(
@@ -91,7 +91,7 @@ class AddRoomForm1 extends StatelessWidget {
                 top: 0,
                 child: FormBuilderTextField(
                   key: addressKey,
-                  focusNode: controller.addressFocusNode,
+                  focusNode: controller.focusNodes.addressFocusNode,
                   name: "map_field",
                   onSaved: (newValue) {
                     controller.apiModel.address = newValue;
