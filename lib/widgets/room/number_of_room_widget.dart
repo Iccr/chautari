@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 class NumberOfRoomWidget extends StatelessWidget {
   final FocusNode focusNode;
   final Function(num value) onSaved;
+
   const NumberOfRoomWidget({
     Key key,
     @required this.focusNode,
