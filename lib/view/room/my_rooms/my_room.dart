@@ -89,7 +89,9 @@ class MyRoomDetailBottomBlock extends StatelessWidget {
                 TopDownPaddingWrapper(
                   child: RaisedButton(
                     color: ChautariColors.primaryColor(),
-                    onPressed: () => {print("update more view")},
+                    onPressed: () => {
+                      Get.toNamed(RouteName.updateRoom),
+                    },
                     child: Container(
                       clipBehavior: Clip.antiAlias,
                       decoration: BoxDecoration(

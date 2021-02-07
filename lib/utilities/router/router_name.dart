@@ -10,6 +10,7 @@ class RouteName {
   static String myRooms = "/myRooms";
   static String addRoom = "/addRoom";
   static String roomDetail = "/roomDetail";
+  static String updateRoom = "/updateRoom";
 
   static String login = "/login";
 

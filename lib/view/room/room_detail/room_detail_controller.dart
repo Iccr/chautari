@@ -113,6 +113,8 @@ class RoomDetailController extends GetxController {
     }
   }
 
+  goToUpdate() {}
+
   askForPermissionToDelete() async {
     Alert.show(
         message:
