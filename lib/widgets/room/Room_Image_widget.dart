@@ -12,18 +12,21 @@ class RoomImageWidget extends StatelessWidget {
   final Function(List<dynamic> value) onChange;
   final ScrollController scrollController;
   final Function(List<dynamic> value) onSaved;
+  final ValueKey roomImageKey;
   const RoomImageWidget({
     Key key,
     @required this.focusNode,
     @required this.onChange,
     @required this.onSaved,
     @required this.scrollController,
+    @required this.roomImageKey,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TopDownPaddingWrapper(
       child: FormBuilderImagePicker(
+        key: roomImageKey,
         focusNode: focusNode,
         validator: (value) {
           if (value == null || value.isEmpty) {

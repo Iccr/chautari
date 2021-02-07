@@ -15,6 +15,8 @@ class RoomFormKeys {
   var waterKey = ValueKey("water");
   var priceKey = ValueKey("price");
   var contactKey = ValueKey("contact");
+  var imageKey = ValueKey("image");
+  var contactVisibilityKey = ValueKey("contactVisibilityKey");
   var typesKey = ValueKey("types");
   var numberOfRoomsKey = ValueKey("_numberOfRoomsKey");
 }

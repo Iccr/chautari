@@ -10,17 +10,20 @@ import 'package:intl/intl.dart';
 class NumberOfRoomWidget extends StatelessWidget {
   final FocusNode focusNode;
   final Function(num value) onSaved;
+  final ValueKey numberOfroomKey;
 
   const NumberOfRoomWidget({
     Key key,
     @required this.focusNode,
     @required this.onSaved,
+    @required this.numberOfroomKey,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TopDownPaddingWrapper(
       child: FormBuilderTouchSpin(
+          key: numberOfroomKey,
           textStyle: ChautariTextStyles().withBigText,
           focusNode: focusNode,
           addIcon: Icon(
