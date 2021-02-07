@@ -7,49 +7,46 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class RoomPriceWidget extends StatelessWidget {
-  const RoomPriceWidget({
-    Key key,
-    @required this.pricekey,
-    @required this.controller,
-  }) : super(key: key);
+  final FocusNode focusNode;
 
   final ValueKey pricekey;
-  final AddRoomController controller;
+  final Function(String value) onSaved;
+  final Function onTap;
+  const RoomPriceWidget(
+      {Key key,
+      @required this.pricekey,
+      @required this.focusNode,
+      @required this.onSaved,
+      @required this.onTap})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TopDownPaddingWrapper(
       child: FormBuilderTextField(
-        key: pricekey,
-        validator: (value) {
-          if (value == null) {
-            return "This field cannot be empty";
-          } else if (int.parse(
-                  value.isEmpty ? "0" : value.replaceAll(",", "")) <
-              100) {
-            return "value must be greater than 100";
-          } else {
-            return null;
-          }
-        },
-        inputFormatters: [NumericTextFormatter()],
-        keyboardType: TextInputType.number,
-        textInputAction: TextInputAction.done,
-        focusNode: controller.focusNodes.priceFocusNode,
-        name: "price",
-        onTap: () {
-          print("price tapped");
-          controller.focusNodes.priceFocusNode.requestFocus();
-        },
-        decoration: ChautariDecoration().outlinedBorderTextField(
-            prefix: Text("Rs. "),
-            labelText: "Price",
-            helperText: "price per month"),
-        onSaved: (newValue) {
-          print(newValue);
-          controller.apiModel.price = newValue.replaceAll(",", "");
-        },
-      ),
+          key: pricekey,
+          validator: (value) {
+            if (value == null) {
+              return "This field cannot be empty";
+            } else if (int.parse(
+                    value.isEmpty ? "0" : value.replaceAll(",", "")) <
+                100) {
+              return "value must be greater than 100";
+            } else {
+              return null;
+            }
+          },
+          inputFormatters: [NumericTextFormatter()],
+          keyboardType: TextInputType.number,
+          textInputAction: TextInputAction.done,
+          focusNode: focusNode,
+          name: "price",
+          onTap: () => onTap(),
+          decoration: ChautariDecoration().outlinedBorderTextField(
+              prefix: Text("Rs. "),
+              labelText: "Price",
+              helperText: "price per month"),
+          onSaved: (newValue) => onSaved),
     );
   }
 }

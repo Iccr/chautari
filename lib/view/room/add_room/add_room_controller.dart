@@ -9,10 +9,9 @@ import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/view/explore/explore_controller.dart';
 import 'package:chautari/view/room/form_keys.dart';
 import 'package:chautari/view/room/room_form_focusnode.dart';
+import 'package:chautari/view/room/update_room_viewmodel.dart';
 import 'package:chautari/widgets/alert.dart';
 import 'package:flutter/widgets.dart';
-
-import 'package:get/state_manager.dart';
 import 'package:get/get.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
@@ -20,6 +19,8 @@ class AddRoomController extends GetxController {
   final AppinfoModel appInfo = Get.find(tag: AppConstant.appinfomodelsKey);
   final ExploreController exploreController = Get.find();
   final CreateRoomApiRequestModel apiModel = CreateRoomApiRequestModel();
+
+  Rx<UpdateRoomViewModel> room;
   final PageController pageController = PageController();
   FetchRoomService fetchRoomService;
 
@@ -40,6 +41,7 @@ class AddRoomController extends GetxController {
   RoomFocusNodes focusNodes = RoomFocusNodes();
 
   var districtViewmodels = List<MenuItem>().obs;
+
   var autovalidateMode = AutovalidateMode.disabled.obs;
   var autovalidateForm1Mode = AutovalidateMode.disabled.obs;
   var autovalidateForm2Mode = AutovalidateMode.disabled.obs;
@@ -90,6 +92,7 @@ class AddRoomController extends GetxController {
   void onInit() {
     super.onInit();
     fetchRoomService = Get.find();
+    room.value = Get.arguments;
 
     districtViewmodels.assignAll(
       appInfo.districts.map(

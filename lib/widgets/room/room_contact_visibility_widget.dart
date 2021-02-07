@@ -6,28 +6,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class ContactNumberVisibilityWidget extends StatelessWidget {
+  final bool initialValue;
+  final FocusNode focusNode;
+  final Function(bool value) onChanged;
+
   const ContactNumberVisibilityWidget({
     Key key,
-    @required this.controller,
+    @required this.initialValue,
+    @required this.focusNode,
+    @required this.onChanged,
   }) : super(key: key);
-
-  final AddRoomController controller;
 
   @override
   Widget build(BuildContext context) {
     return TopDownPaddingWrapper(
       child: FormBuilderSwitch(
-        initialValue: controller.contactNumberVisible.value,
-        focusNode: controller.focusNodes.contactSwitchFocusNode,
+        initialValue: initialValue,
+        focusNode: focusNode,
         name: "contact number",
         title: Text(
           "Let people contact you via phone",
           style: ChautariTextStyles().listSubtitle,
         ),
-        onChanged: (value) {
-          print(value);
-          controller.setContactNumbervisibility(value);
-        },
+        onChanged: (value) => onChanged(value),
         decoration: ChautariDecoration().outlinedBorderTextField(),
       ),
     );
