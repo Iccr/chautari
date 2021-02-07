@@ -26,6 +26,7 @@ class AddRoomForm3 extends StatelessWidget {
             // types
             TopDownPaddingWrapper(
               child: FormBuilderRadioGroup(
+                  focusNode: controller.typeFocusNode,
                   key: typesKey,
                   wrapSpacing: Get.width,
                   validator: (value) {
@@ -54,6 +55,7 @@ class AddRoomForm3 extends StatelessWidget {
             TopDownPaddingWrapper(
               child: FormBuilderRadioGroup(
                   key: waterKey,
+                  focusNode: controller.waterFocusNode,
                   wrapSpacing: Get.width,
                   validator: (value) {
                     return value == null ? "This field cannot be empty" : null;

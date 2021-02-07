@@ -75,7 +75,15 @@ class AddRoomController extends GetxController {
   FocusNode districtFocusNode = FocusNode();
   FocusNode addressFocusNode = FocusNode();
   FocusNode priceFocusNode = FocusNode();
-  FocusNode contactFocusNode = FocusNode();
+
+  FocusNode typeFocusNode = FocusNode();
+  FocusNode waterFocusNode = FocusNode();
+  FocusNode parkingFocusNode = FocusNode();
+  FocusNode amenitiesFocusNode = FocusNode();
+  FocusNode numberOfRoomsFocusNode = FocusNode();
+  FocusNode contactSwitchFocusNode = FocusNode();
+  FocusNode contactTextFocusNode = FocusNode();
+  FocusNode imageFocusNode = FocusNode();
 
 // items
   var listItems = [
@@ -96,7 +104,7 @@ class AddRoomController extends GetxController {
         nextFocus: false,
         actions: [
           KeyboardActionsItem(focusNode: priceFocusNode),
-          KeyboardActionsItem(focusNode: contactFocusNode)
+          KeyboardActionsItem(focusNode: contactTextFocusNode)
           // KeyboardActionsItem(focusNode: addController.n)
         ]);
   }
@@ -113,6 +121,16 @@ class AddRoomController extends GetxController {
         (e) => MenuItem(title: e.name, subtitle: "${e.state}"),
       ),
     );
+  }
+
+  @override
+  onClose() {
+    // districtFocusNode.dispose();
+    // addressFocusNode.dispose();
+    // priceFocusNode.dispose();
+    // contactTextFocusNode.dispose();
+
+    super.onClose();
   }
 
   setLatLng(double lat, double long) {
