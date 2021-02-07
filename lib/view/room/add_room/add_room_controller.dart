@@ -7,6 +7,8 @@ import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/view/explore/explore_controller.dart';
+import 'package:chautari/view/room/form_keys.dart';
+import 'package:chautari/view/room/room_form_focusnode.dart';
 import 'package:chautari/widgets/alert.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -34,22 +36,8 @@ class AddRoomController extends GetxController {
 
   var pageoffset = 0.0.obs;
   // observable keys
-  var formKey = GlobalKey<FormBuilderState>();
-  var form1Key = GlobalKey<FormBuilderState>();
-  var form2Key = GlobalKey<FormBuilderState>();
-  var form3Key = GlobalKey<FormBuilderState>();
-  var form4Key = GlobalKey<FormBuilderState>();
 
-// value keys
-  var districtKey = ValueKey("district");
-  var addressKey = ValueKey("address");
-  var parkingKey = ValueKey("parking");
-  var amenityKey = ValueKey("amenity");
-  var waterKey = ValueKey("water");
-  var priceKey = ValueKey("price");
-  var contactKey = ValueKey("contact");
-  var typesKey = ValueKey("types");
-  var numberOfRoomsKey = ValueKey("_numberOfRoomsKey");
+  RoomFormKeys formKeys = RoomFormKeys();
 
   var districtViewmodels = List<MenuItem>().obs;
   var autovalidateMode = AutovalidateMode.disabled.obs;
@@ -72,19 +60,7 @@ class AddRoomController extends GetxController {
   final TextEditingController addressTextController = TextEditingController();
   //focus
 
-  FocusNode districtFocusNode = FocusNode();
-  FocusNode addressFocusNode = FocusNode();
-  FocusNode priceFocusNode = FocusNode();
-
-  FocusNode typeFocusNode = FocusNode();
-  FocusNode waterFocusNode = FocusNode();
-  FocusNode parkingFocusNode = FocusNode();
-  FocusNode amenitiesFocusNode = FocusNode();
-  FocusNode numberOfRoomsFocusNode = FocusNode();
-  FocusNode contactSwitchFocusNode = FocusNode();
-  FocusNode contactTextFocusNode = FocusNode();
-  FocusNode imageFocusNode = FocusNode();
-
+  RoomFocusNodes focusNodes = RoomFocusNodes();
 // items
   var listItems = [
     MenuItem(title: "District"),
@@ -103,8 +79,8 @@ class AddRoomController extends GetxController {
         keyboardBarColor: ChautariColors.black.withOpacity(0.3),
         nextFocus: false,
         actions: [
-          KeyboardActionsItem(focusNode: priceFocusNode),
-          KeyboardActionsItem(focusNode: contactTextFocusNode)
+          KeyboardActionsItem(focusNode: focusNodes.priceFocusNode),
+          KeyboardActionsItem(focusNode: focusNodes.contactTextFocusNode)
           // KeyboardActionsItem(focusNode: addController.n)
         ]);
   }
@@ -123,16 +99,6 @@ class AddRoomController extends GetxController {
     );
   }
 
-  @override
-  onClose() {
-    // districtFocusNode.dispose();
-    // addressFocusNode.dispose();
-    // priceFocusNode.dispose();
-    // contactTextFocusNode.dispose();
-
-    super.onClose();
-  }
-
   setLatLng(double lat, double long) {
     _lat.value = lat;
     _long.value = long;
@@ -142,12 +108,13 @@ class AddRoomController extends GetxController {
 
   submitPage1() {
     autovalidateForm1Mode.value = AutovalidateMode.always;
-    if (form1Key.currentState.validate()) {
-      form1Key.currentState.save();
+    if (formKeys.form1Key.currentState.validate()) {
+      formKeys.form1Key.currentState.save();
 
       _goToNextPage();
     } else {
-      var firstWidget = form1Key.currentState.fields.entries.firstWhere(
+      var firstWidget =
+          formKeys.form1Key.currentState.fields.entries.firstWhere(
         (element) => element.value.hasError,
       );
       Scrollable.ensureVisible(firstWidget.value.context);
@@ -156,11 +123,12 @@ class AddRoomController extends GetxController {
 
   submitPage2() {
     autovalidateForm2Mode.value = AutovalidateMode.always;
-    if (form2Key.currentState.validate()) {
-      form2Key.currentState.save();
+    if (formKeys.form2Key.currentState.validate()) {
+      formKeys.form2Key.currentState.save();
       _goToNextPage();
     } else {
-      var firstWidget = form2Key.currentState.fields.entries.firstWhere(
+      var firstWidget =
+          formKeys.form2Key.currentState.fields.entries.firstWhere(
         (element) => element.value.hasError,
       );
       Scrollable.ensureVisible(firstWidget.value.context);
@@ -169,11 +137,12 @@ class AddRoomController extends GetxController {
 
   submitPage3() {
     autovalidateForm3Mode.value = AutovalidateMode.always;
-    if (form3Key.currentState.validate()) {
-      form3Key.currentState.save();
+    if (formKeys.form3Key.currentState.validate()) {
+      formKeys.form3Key.currentState.save();
       _goToNextPage();
     } else {
-      var firstWidget = form3Key.currentState.fields.entries.firstWhere(
+      var firstWidget =
+          formKeys.form3Key.currentState.fields.entries.firstWhere(
         (element) => element.value.hasError,
       );
       Scrollable.ensureVisible(firstWidget.value.context);
@@ -182,12 +151,13 @@ class AddRoomController extends GetxController {
 
   submitPage4() {
     autovalidateForm4Mode.value = AutovalidateMode.always;
-    if (form4Key.currentState.validate()) {
-      form4Key.currentState.save();
+    if (formKeys.form4Key.currentState.validate()) {
+      formKeys.form4Key.currentState.save();
 
       _submit();
     } else {
-      var firstWidget = form4Key.currentState.fields.entries.firstWhere(
+      var firstWidget =
+          formKeys.form4Key.currentState.fields.entries.firstWhere(
         (element) => element.value.hasError,
       );
       Scrollable.ensureVisible(firstWidget.value.context);
@@ -257,7 +227,7 @@ class AddRoomController extends GetxController {
 
   openMap() async {
     if (lat == null && long == null) {
-      addressFocusNode.unfocus();
+      focusNodes.addressFocusNode.unfocus();
       var result = await Get.toNamed(RouteName.pickLocation);
       if (result?.latitude != null) {
         this._lat.value = result.latitude;
@@ -272,7 +242,7 @@ class AddRoomController extends GetxController {
   requestAddressFocus() async {
     if (lat != null) {
       await Future.delayed(Duration(milliseconds: 800));
-      addressFocusNode.requestFocus();
+      focusNodes.addressFocusNode.requestFocus();
     }
   }
 

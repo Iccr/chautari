@@ -16,13 +16,13 @@ class AddRoomForm4 extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: FormBuilder(
-        key: controller.form4Key,
+        key: controller.formKeys.form4Key,
         autovalidateMode: controller.autovalidateForm4Mode.value,
         child: Column(
           children: [
             TopDownPaddingWrapper(
               child: FormBuilderCheckboxGroup(
-                focusNode: controller.parkingFocusNode,
+                focusNode: controller.focusNodes.parkingFocusNode,
                 key: parkingKey,
                 validator: (value) {
                   return value == null ? "This field cannot be empty" : null;
@@ -53,7 +53,7 @@ class AddRoomForm4 extends StatelessWidget {
             // amenity
             TopDownPaddingWrapper(
               child: FormBuilderCheckboxGroup(
-                  focusNode: controller.amenitiesFocusNode,
+                  focusNode: controller.focusNodes.amenitiesFocusNode,
                   key: amenityKey,
                   validator: (value) {
                     return value == null ? "This field cannot be empty" : null;

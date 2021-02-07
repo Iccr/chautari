@@ -22,7 +22,7 @@ class AddRoom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     _openSearch() async {
-      addController.districtFocusNode.unfocus();
+      addController.focusNodes.districtFocusNode.unfocus();
       var _ = await showSearch(
         context: context,
         delegate: SearchBar(
@@ -47,9 +47,9 @@ class AddRoom extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: AddRoomForm1(
-            formKey: addController.form1Key,
-            districtKey: addController.districtKey,
-            addressKey: addController.addressKey,
+            formKey: addController.formKeys.form1Key,
+            districtKey: addController.formKeys.districtKey,
+            addressKey: addController.formKeys.addressKey,
             openSearch: () => _openSearch(),
             openMap: () => _openMap(),
           ),
@@ -57,26 +57,26 @@ class AddRoom extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: AddRoomForm2(
-            formkey: addController.form2Key,
-            contactKey: addController.contactKey,
-            pricekey: addController.priceKey,
-            numberkey: addController.numberOfRoomsKey,
+            formkey: addController.formKeys.form2Key,
+            contactKey: addController.formKeys.contactKey,
+            pricekey: addController.formKeys.priceKey,
+            numberkey: addController.formKeys.numberOfRoomsKey,
             scrollController: _scrollController,
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: AddRoomForm3(
-            formkey: addController.form3Key,
-            typesKey: addController.typesKey,
-            waterKey: addController.waterKey,
+            formkey: addController.formKeys.form3Key,
+            typesKey: addController.formKeys.typesKey,
+            waterKey: addController.formKeys.waterKey,
           ),
         ),
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: AddRoomForm4(
-            parkingKey: addController.parkingKey,
-            amenityKey: addController.amenityKey,
+            parkingKey: addController.formKeys.parkingKey,
+            amenityKey: addController.formKeys.amenityKey,
           ),
         ),
       ];

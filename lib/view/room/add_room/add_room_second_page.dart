@@ -46,7 +46,7 @@ class AddRoomForm2 extends StatelessWidget {
               TopDownPaddingWrapper(
                 child: FormBuilderTouchSpin(
                     textStyle: ChautariTextStyles().withBigText,
-                    focusNode: controller.numberOfRoomsFocusNode,
+                    focusNode: controller.focusNodes.numberOfRoomsFocusNode,
                     addIcon: Icon(
                       Icons.add,
                       color:
@@ -89,11 +89,11 @@ class AddRoomForm2 extends StatelessWidget {
                   inputFormatters: [NumericTextFormatter()],
                   keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.done,
-                  focusNode: controller.priceFocusNode,
+                  focusNode: controller.focusNodes.priceFocusNode,
                   name: "price",
                   onTap: () {
                     print("price tapped");
-                    controller.priceFocusNode.requestFocus();
+                    controller.focusNodes.priceFocusNode.requestFocus();
                   },
                   decoration: ChautariDecoration().outlinedBorderTextField(
                       prefix: Text("Rs. "),
@@ -110,7 +110,7 @@ class AddRoomForm2 extends StatelessWidget {
               TopDownPaddingWrapper(
                 child: FormBuilderSwitch(
                   initialValue: controller.contactNumberVisible.value,
-                  focusNode: controller.contactSwitchFocusNode,
+                  focusNode: controller.focusNodes.contactSwitchFocusNode,
                   name: "contact number",
                   title: Text(
                     "Let people contact you via phone",
@@ -139,11 +139,11 @@ class AddRoomForm2 extends StatelessWidget {
                     // inputFormatters: [NumericTextFormatter()],
                     keyboardType: TextInputType.phone,
                     textInputAction: TextInputAction.done,
-                    focusNode: controller.contactTextFocusNode,
+                    focusNode: controller.focusNodes.contactTextFocusNode,
                     name: "contact",
                     onTap: () {
                       print("contact tapped");
-                      controller.contactTextFocusNode.requestFocus();
+                      controller.focusNodes.contactTextFocusNode.requestFocus();
                     },
                     decoration: ChautariDecoration().outlinedBorderTextField(
                         prefix: Text("+977-"),
@@ -161,7 +161,7 @@ class AddRoomForm2 extends StatelessWidget {
               // image
               TopDownPaddingWrapper(
                 child: FormBuilderImagePicker(
-                  focusNode: controller.imageFocusNode,
+                  focusNode: controller.focusNodes.imageFocusNode,
                   validator: (value) {
                     if (value == null || value.isEmpty) {
                       return "This field cannot be empty";
