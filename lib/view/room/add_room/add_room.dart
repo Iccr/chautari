@@ -100,7 +100,7 @@ class AddRoom extends StatelessWidget {
           init: AddRoomController(),
           builder: (addController) {
             return ProgressHud(
-              isLoading: addController.isLoading,
+              isLoading: addController.isLoading.value,
               child: Container(
                 padding: EdgeInsets.all(ChautariPadding.standard),
                 child: Column(

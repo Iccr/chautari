@@ -31,7 +31,7 @@ class AddRoomForm1 extends StatelessWidget {
       () => SingleChildScrollView(
         child: FormBuilder(
           key: formKey,
-          autovalidateMode: controller.autovalidateForm1Mode,
+          autovalidateMode: controller.autovalidateForm1Mode.value,
           child: Column(
             children: [
               // district
