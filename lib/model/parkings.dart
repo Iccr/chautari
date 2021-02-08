@@ -18,4 +18,11 @@ class Parking {
     data['tag'] = this.tag;
     return data;
   }
+
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Parking &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          tag == other.tag;
 }

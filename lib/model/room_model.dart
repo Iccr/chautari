@@ -6,11 +6,16 @@ import 'package:chautari/model/districts.dart';
 
 import 'package:chautari/model/login_model.dart';
 import 'package:chautari/model/parkings.dart';
+import 'package:chautari/services/appinfo_service.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
+import 'package:get/get.dart' as GetX;
+
 import 'package:http_parser/http_parser.dart';
 
 class RoomModel {
+  AppInfoService service = GetX.Get.find();
+
   String address;
   int amenityCount;
   bool available;
@@ -57,6 +62,16 @@ class RoomModel {
       this.phone,
       this.phone_visibility,
       this.rawImages});
+
+  String get typeName {
+    if (this.type == null) {
+      return "";
+    }
+    return service.appInfo.types
+            .firstWhere((element) => element.value == this.type)
+            .name ??
+        "";
+  }
 
   RoomModel.fromJson(Map<String, dynamic> json) {
     address = json['address'];

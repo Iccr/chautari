@@ -41,7 +41,7 @@ class UpdateRoom extends StatelessWidget {
                             controller.room.numberOfRooms = value.toInt(),
                       ),
 
-                      // price
+                      // // price
                       RoomPriceWidget(
                         initialValue: controller.price,
                         pricekey: controller.formKeys.parkingKey,
@@ -52,7 +52,7 @@ class UpdateRoom extends StatelessWidget {
                             controller.room.price = value.replaceAll(",", ""),
                       ),
 
-                      // mobile visibility
+                      // // mobile visibility
                       ContactNumberVisibilityWidget(
                         contactVisibilityKey: controller.formKeys.contactKey,
                         initialValue: controller.contactNumberVisible.value,
@@ -63,7 +63,7 @@ class UpdateRoom extends StatelessWidget {
                         },
                       ),
 
-                      // contact number
+                      // // contact number
                       if (controller.contactNumberVisible.value) ...[
                         ContactNumberWidget(
                           initialValue: controller.room.phone,
@@ -76,7 +76,7 @@ class UpdateRoom extends StatelessWidget {
                         )
                       ],
 
-                      // image
+                      // // image
                       RoomImageWidget(
                           roomImageKey: controller.formKeys.imageKey,
                           focusNode: controller.focusNodes.imageFocusNode,
@@ -87,7 +87,10 @@ class UpdateRoom extends StatelessWidget {
                           onSaved: (value) => controller.room.rawImages =
                               List<File>.from(value),
                           scrollController: scrollController),
+
+                      // parkings
                       RoomParkingCheckBoxWidget(
+                        initialValue: controller.room.parkings,
                         parkingKey: controller.formKeys.parkingKey,
                         focusNode: controller.focusNodes.parkingFocusNode,
                         options: controller.appInfoService.appInfo.parkings
@@ -103,6 +106,7 @@ class UpdateRoom extends StatelessWidget {
 
                       // amenity
                       RoomAmenityCheckBoxWidget(
+                        initialValue: controller.room.amenities,
                         amenityKey: controller.formKeys.amenityKey,
                         focusNode: controller.focusNodes.parkingFocusNode,
                         options: controller.appInfoService.appInfo.amenities

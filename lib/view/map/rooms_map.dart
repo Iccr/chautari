@@ -42,7 +42,9 @@ class RoomsMap extends StatelessWidget {
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: EdgeInsets.all(ChautariPadding.small5),
+                padding: EdgeInsets.only(
+                    left: ChautariPadding.small5,
+                    right: ChautariPadding.small5),
                 child: RoomWidget(
                   room: controller.selectedRoom,
                   onTap: (room) => Get.toNamed(RouteName.roomDetail,

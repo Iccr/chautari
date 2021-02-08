@@ -49,6 +49,7 @@ class RoomsMapController extends GetxController {
   }
 
   onTapMarkerOf(RoomModel room) {
+    print(room);
     _selectedRoom.value = room;
   }
 }

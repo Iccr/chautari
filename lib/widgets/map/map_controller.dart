@@ -1,6 +1,5 @@
 import 'dart:collection';
 
-import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/view/room/add_room/add_room_controller.dart';
 import 'package:chautari/widgets/alert.dart';
 import 'package:get/get.dart';

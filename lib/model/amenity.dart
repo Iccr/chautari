@@ -18,4 +18,14 @@ class Amenities {
     data['tag'] = this.tag;
     return data;
   }
+
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is Amenities &&
+          runtimeType == other.runtimeType &&
+          id == other.id &&
+          tag == other.tag;
+
+  @override
+  int get hashCode => tag.hashCode;
 }

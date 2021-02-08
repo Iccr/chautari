@@ -1,4 +1,5 @@
 import 'package:chautari/model/room_model.dart';
+import 'package:chautari/services/appinfo_service.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/chautari_decoration.dart';
@@ -26,7 +27,7 @@ class RoomWidget extends StatelessWidget {
           },
           child: Container(
             clipBehavior: Clip.antiAlias,
-            height: 140,
+            height: 160,
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(ChautariPadding.small5),
               boxShadow: [ChautariDecoration().standardBoxShadow],
@@ -91,7 +92,7 @@ class RoomsInsight extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${room.type}",
+                  "${room?.typeName ?? "a"}",
                   textAlign: TextAlign.left,
                   style: ChautariTextStyles()
                       .listSubtitle
