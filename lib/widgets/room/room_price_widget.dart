@@ -12,18 +12,24 @@ class RoomPriceWidget extends StatelessWidget {
   final ValueKey pricekey;
   final Function(String value) onSaved;
   final Function onTap;
-  const RoomPriceWidget(
-      {Key key,
-      @required this.pricekey,
-      @required this.focusNode,
-      @required this.onSaved,
-      @required this.onTap})
-      : super(key: key);
+  final String price;
+  final String initialValue;
+
+  const RoomPriceWidget({
+    Key key,
+    @required this.pricekey,
+    @required this.focusNode,
+    @required this.onSaved,
+    @required this.onTap,
+    this.initialValue,
+    this.price,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TopDownPaddingWrapper(
       child: FormBuilderTextField(
+          initialValue: initialValue,
           key: pricekey,
           validator: (value) {
             if (value == null) {

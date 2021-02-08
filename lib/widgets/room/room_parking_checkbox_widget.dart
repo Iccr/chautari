@@ -8,18 +8,21 @@ class RoomParkingCheckBoxWidget extends StatelessWidget {
   final Function(dynamic value) onSaved;
   final ValueKey parkingKey;
   final List<FormBuilderFieldOption<dynamic>> options;
-  const RoomParkingCheckBoxWidget({
-    Key key,
-    @required this.focusNode,
-    @required this.onSaved,
-    @required this.parkingKey,
-    @required this.options,
-  }) : super(key: key);
+  final List<dynamic> initialValue;
+  const RoomParkingCheckBoxWidget(
+      {Key key,
+      @required this.focusNode,
+      @required this.onSaved,
+      @required this.parkingKey,
+      @required this.options,
+      this.initialValue})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TopDownPaddingWrapper(
       child: FormBuilderCheckboxGroup(
+        initialValue: initialValue,
         focusNode: focusNode,
         key: parkingKey,
         validator: (value) {

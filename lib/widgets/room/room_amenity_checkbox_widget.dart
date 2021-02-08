@@ -9,20 +9,23 @@ class RoomAmenityCheckBoxWidget extends StatelessWidget {
   final FocusNode focusNode;
   final Function(dynamic value) onSaved;
   final List<FormBuilderFieldOption<dynamic>> options;
+  final List<FormBuilderFieldOption<dynamic>> initialValue;
   final ValueKey amenityKey;
 
-  const RoomAmenityCheckBoxWidget({
-    Key key,
-    @required this.focusNode,
-    @required this.amenityKey,
-    @required this.onSaved,
-    @required this.options,
-  }) : super(key: key);
+  const RoomAmenityCheckBoxWidget(
+      {Key key,
+      @required this.focusNode,
+      @required this.amenityKey,
+      @required this.onSaved,
+      @required this.options,
+      this.initialValue})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TopDownPaddingWrapper(
       child: FormBuilderCheckboxGroup(
+        initialValue: initialValue,
         focusNode: focusNode,
         key: amenityKey,
         validator: (value) {

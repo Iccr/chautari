@@ -11,12 +11,14 @@ class NumberOfRoomWidget extends StatelessWidget {
   final FocusNode focusNode;
   final Function(num value) onSaved;
   final ValueKey numberOfroomKey;
+  final double initialVaue;
 
   const NumberOfRoomWidget({
     Key key,
     @required this.focusNode,
     @required this.onSaved,
     @required this.numberOfroomKey,
+    this.initialVaue,
   }) : super(key: key);
 
   @override
@@ -37,7 +39,7 @@ class NumberOfRoomWidget extends StatelessWidget {
           name: "noOfROoms",
           min: 1,
           max: 20,
-          initialValue: 1,
+          initialValue: initialVaue,
           displayFormat: NumberFormat("##"),
           decoration: ChautariDecoration().outlinedBorderTextField(
               labelText: "Number of rooms",
