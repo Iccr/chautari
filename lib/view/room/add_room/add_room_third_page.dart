@@ -49,8 +49,7 @@ class AddRoomForm3 extends StatelessWidget {
                     ),
                   )
                   .toList(),
-
-                onSaved: (value) => controller.apiModel.water = value;,
+              onSaved: (value) => controller.apiModel.water = value,
             ),
           ],
         ),

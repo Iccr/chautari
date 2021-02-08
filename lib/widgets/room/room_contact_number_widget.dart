@@ -9,19 +9,22 @@ class ContactNumberWidget extends StatelessWidget {
   final Function onTap;
   final Function(String value) onSaved;
   final ValueKey contactKey;
+  final String initialValue;
 
   const ContactNumberWidget(
       {Key key,
       @required this.contactKey,
       @required this.focusNode,
       @required this.onTap,
-      @required this.onSaved})
+      @required this.onSaved,
+      this.initialValue})
       : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return TopDownPaddingWrapper(
       child: FormBuilderTextField(
+        initialValue: initialValue,
         key: contactKey,
         validator: (value) {
           if (value == null) {

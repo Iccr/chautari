@@ -20,7 +20,6 @@ class AddRoomController extends GetxController {
   final ExploreController exploreController = Get.find();
   final CreateRoomApiRequestModel apiModel = CreateRoomApiRequestModel();
 
-  Rx<UpdateRoomViewModel> room;
   final PageController pageController = PageController();
   FetchRoomService fetchRoomService;
 
@@ -92,7 +91,6 @@ class AddRoomController extends GetxController {
   void onInit() {
     super.onInit();
     fetchRoomService = Get.find();
-    room.value = Get.arguments;
 
     districtViewmodels.assignAll(
       appInfo.districts.map(

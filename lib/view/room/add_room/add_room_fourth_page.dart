@@ -36,7 +36,7 @@ class AddRoomForm4 extends StatelessWidget {
 
             // amenity
             RoomAmenityCheckBoxWidget(
-                amenityKey: controller.formKeys.amenityKey,
+              amenityKey: controller.formKeys.amenityKey,
               focusNode: controller.focusNodes.parkingFocusNode,
               options: controller.appInfo.amenities
                   .map(
@@ -47,6 +47,7 @@ class AddRoomForm4 extends StatelessWidget {
                   )
                   .toList(),
               onSaved: (value) => controller.apiModel.amenities = value,
+            )
           ],
         ),
       ),

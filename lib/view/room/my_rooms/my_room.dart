@@ -88,7 +88,8 @@ class MyRoomDetailBottomBlock extends StatelessWidget {
                     "Note: If switch is turned off, people will not be able to find this property in Chautari basti"),
                 ChautariRaisedButton(
                   title: "Update More detail",
-                  onPressed: () => Get.toNamed(RouteName.updateRoom),
+                  onPressed: () => Get.toNamed(RouteName.updateRoom,
+                      arguments: controller.room),
                 ),
                 ChautariRaisedButton(
                   title: "Delete",
