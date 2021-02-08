@@ -18,7 +18,7 @@ class NumberOfRoomWidget extends StatelessWidget {
     @required this.focusNode,
     @required this.onSaved,
     @required this.numberOfroomKey,
-    this.initialVaue,
+    this.initialVaue = 1,
   }) : super(key: key);
 
   @override

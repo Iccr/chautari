@@ -52,7 +52,7 @@ class RoomPriceWidget extends StatelessWidget {
               prefix: Text("Rs. "),
               labelText: "Price",
               helperText: "price per month"),
-          onSaved: (newValue) => onSaved),
+          onSaved: (newValue) => onSaved(newValue)),
     );
   }
 }

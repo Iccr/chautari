@@ -1,3 +1,4 @@
+import 'package:chautari/model/parkings.dart';
 import 'package:chautari/utilities/theme/text_decoration.dart';
 import 'package:chautari/widgets/top_down_space_wrapper.dart';
 import 'package:flutter/material.dart';
@@ -5,10 +6,10 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 
 class RoomParkingCheckBoxWidget extends StatelessWidget {
   final FocusNode focusNode;
-  final Function(dynamic value) onSaved;
+  final Function(List<Parking> value) onSaved;
   final ValueKey parkingKey;
-  final List<FormBuilderFieldOption<dynamic>> options;
-  final List<dynamic> initialValue;
+  final List<FormBuilderFieldOption<Parking>> options;
+  final List<Parking> initialValue;
   const RoomParkingCheckBoxWidget(
       {Key key,
       @required this.focusNode,
