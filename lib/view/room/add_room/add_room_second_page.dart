@@ -54,8 +54,10 @@ class AddRoomForm2 extends StatelessWidget {
                 focusNode: controller.focusNodes.priceFocusNode,
                 onTap: () =>
                     controller.focusNodes.priceFocusNode.requestFocus(),
-                onSaved: (value) =>
-                    controller.apiModel.price = value.replaceAll(",", ""),
+                onSaved: (value) => {
+                  controller.apiModel.price = value.replaceAll(",", ""),
+                  print(controller.apiModel)
+                },
               ),
 
               // mobile visibility
@@ -63,8 +65,10 @@ class AddRoomForm2 extends StatelessWidget {
                 contactVisibilityKey: controller.formKeys.contactVisibilityKey,
                 initialValue: controller.contactNumberVisible.value,
                 focusNode: controller.focusNodes.contactSwitchFocusNode,
-                onChanged: (value) =>
-                    controller.setContactNumbervisibility(value),
+                onChanged: (value) => {
+                  controller.apiModel.contactNumbervisibile = value,
+                  controller.setContactNumbervisibility(value),
+                },
               ),
 
               // contact number

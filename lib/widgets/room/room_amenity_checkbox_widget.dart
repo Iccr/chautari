@@ -1,3 +1,4 @@
+import 'package:chautari/model/amenity.dart';
 import 'package:chautari/utilities/theme/text_decoration.dart';
 import 'package:chautari/view/room/add_room/add_room_controller.dart';
 import 'package:chautari/widgets/top_down_space_wrapper.dart';
@@ -7,9 +8,9 @@ import 'package:get/get.dart';
 
 class RoomAmenityCheckBoxWidget extends StatelessWidget {
   final FocusNode focusNode;
-  final Function(dynamic value) onSaved;
-  final List<FormBuilderFieldOption<dynamic>> options;
-  final List<FormBuilderFieldOption<dynamic>> initialValue;
+  final Function(List<Amenities> values) onSaved;
+  final List<FormBuilderFieldOption<Amenities>> options;
+  final List<Amenities> initialValue;
   final ValueKey amenityKey;
 
   const RoomAmenityCheckBoxWidget(

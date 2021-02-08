@@ -1,3 +1,4 @@
+import 'package:chautari/model/parkings.dart';
 import 'package:chautari/widgets/room/room_amenity_checkbox_widget.dart';
 import 'package:chautari/widgets/room/room_parking_checkbox_widget.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,7 @@ class AddRoomForm4 extends StatelessWidget {
                     ),
                   )
                   .toList(),
-              onSaved: (value) => controller.apiModel.parkings = value,
+              onSaved: (values) => controller.apiModel.parkings = values,
             ),
 
             // amenity
@@ -46,7 +47,7 @@ class AddRoomForm4 extends StatelessWidget {
                     ),
                   )
                   .toList(),
-              onSaved: (value) => controller.apiModel.amenities = value,
+              onSaved: (values) => controller.apiModel.amenities = values,
             )
           ],
         ),

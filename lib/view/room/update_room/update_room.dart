@@ -88,11 +88,6 @@ class UpdateRoom extends StatelessWidget {
                               List<File>.from(value),
                           scrollController: scrollController),
                       RoomParkingCheckBoxWidget(
-                        initialValue: controller.room.parkings
-                            .map(
-                              (element) => element,
-                            )
-                            .toList(),
                         parkingKey: controller.formKeys.parkingKey,
                         focusNode: controller.focusNodes.parkingFocusNode,
                         options: controller.appInfoService.appInfo.parkings
