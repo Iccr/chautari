@@ -22,7 +22,7 @@ class RoomParkingCheckBoxWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TopDownPaddingWrapper(
-      child: FormBuilderCheckboxGroup(
+      child: FormBuilderCheckboxGroup<Parking>(
         initialValue: initialValue,
         focusNode: focusNode,
         key: parkingKey,
