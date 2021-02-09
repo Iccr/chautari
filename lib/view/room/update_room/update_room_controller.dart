@@ -46,7 +46,11 @@ class UpdateRoomController extends GetxController {
     super.onInit();
     room = Get.arguments;
 
-    myRoomService = FetchMyRoomService();
+    try {
+      myRoomService = Get.find();
+    } catch (e) {
+      myRoomService = Get.put(FetchMyRoomService());
+    }
     contactNumberVisible.value = room.phone_visibility;
   }
 
@@ -72,7 +76,9 @@ class UpdateRoomController extends GetxController {
     if (updateService.success.value) {
       isLoading.value = myRoomService.isLoading.value;
       await myRoomService.fetchMyRooms();
-      Get.offAllNamed(RouteName.myRooms);
+
+      // Get.offNamed(RouteName.myRooms);
+      Get.until((route) => Get.currentRoute == RouteName.myRooms);
     }
   }
 

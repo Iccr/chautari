@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 
 class MyRoomsController extends GetxController {
   final AuthController auth = Get.find();
-  FetchMyRoomService myRoomService = Get.put(FetchMyRoomService());
+  FetchMyRoomService myRoomService;
   var isLoading = false.obs;
   String error;
   var models = List<RoomModel>().obs;
@@ -14,12 +14,17 @@ class MyRoomsController extends GetxController {
 
   @override
   onInit() {
+    try {
+      myRoomService = Get.find();
+    } catch (e) {
+      myRoomService = Get.put(FetchMyRoomService());
+    }
     if (auth.user.isLoggedIn) {
-      _fetchMyRooms();
+      _fetchMyRoom();
     }
   }
 
-  _fetchMyRooms() {
+  _fetchMyRoom() {
     isLoading = myRoomService.isLoading;
     models = myRoomService.rooms;
     myRoomService.fetchMyRooms();
