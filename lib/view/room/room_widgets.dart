@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 
 class RoomWidget extends StatelessWidget {
   final RoomModel room;
-  Function onTap;
+  final Function onTap;
   RoomWidget({@required this.room, this.onTap});
   @override
   Widget build(BuildContext context) {
@@ -117,7 +117,7 @@ class RoomsInsight extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Text(
-                  "Rs. ${room.price}",
+                  "Rs. ${room.formattedPrice()}",
                   textAlign: TextAlign.right,
                   style: ChautariTextStyles().listTitle,
                 ),
