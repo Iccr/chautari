@@ -22,7 +22,7 @@ class RoomDetailController extends GetxController {
     auth = Get.find();
   }
 
-  var _room = RoomModel().obs;
+  Rx<RoomModel> _room;
   var _error = "".obs;
   var _isLoading = false.obs;
 
@@ -55,6 +55,7 @@ class RoomDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _room = RoomModel().obs;
     RoomDetailViewModel viewmodel = Get.arguments;
 
     this.isMyRoomDetail = viewmodel.isMyRoom;

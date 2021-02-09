@@ -109,7 +109,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
             autoPlay: false,
             enlargeCenterPage: true,
             enableInfiniteScroll: false,
-            aspectRatio: 1.25,
+            aspectRatio: 1.1,
             onPageChanged: (index, reason) {
               setState(() {
                 _current = index;
