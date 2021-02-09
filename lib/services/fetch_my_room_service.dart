@@ -20,5 +20,6 @@ class FetchMyRoomService extends GetxController {
     } else {
       this.rooms.assignAll(models.rooms);
     }
+    update();
   }
 }

@@ -1,5 +1,4 @@
 import 'package:chautari/model/room_model.dart';
-import 'package:chautari/services/appinfo_service.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/chautari_decoration.dart';
@@ -74,7 +73,7 @@ class RoomsInsight extends StatelessWidget {
         padding: EdgeInsets.all(ChautariPadding.small5),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
