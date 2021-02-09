@@ -142,7 +142,7 @@ class RoomDetailController extends GetxController {
     model.water = room.water;
     model.type = room.type;
     model.phone = room.phone;
-    model.phone_visibility = room.phone_visibility;
+    model.phoneVisibility = room.phoneVisibility;
     model.images = room.images;
     model.postedOn = room.postedOn;
     model.parkings = room.parkings;

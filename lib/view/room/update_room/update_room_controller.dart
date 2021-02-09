@@ -51,7 +51,7 @@ class UpdateRoomController extends GetxController {
     } catch (e) {
       myRoomService = Get.put(FetchMyRoomService());
     }
-    contactNumberVisible.value = room.phone_visibility;
+    contactNumberVisible.value = room.phoneVisibility;
   }
 
   updateRoom() {

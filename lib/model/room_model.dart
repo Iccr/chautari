@@ -7,6 +7,7 @@ import 'package:chautari/model/districts.dart';
 import 'package:chautari/model/login_model.dart';
 import 'package:chautari/model/parkings.dart';
 import 'package:chautari/services/appinfo_service.dart';
+import 'package:chautari/utilities/NepaliRupeeTextFormatter.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 import 'package:get/get.dart' as GetX;
@@ -30,7 +31,7 @@ class RoomModel {
   int water;
   int type;
   String phone;
-  bool phone_visibility;
+  bool phoneVisibility;
   List<String> images;
   String postedOn;
   List<Parking> parkings;
@@ -60,7 +61,7 @@ class RoomModel {
       this.user,
       this.type,
       this.phone,
-      this.phone_visibility,
+      this.phoneVisibility,
       this.rawImages});
 
   String get typeName {
@@ -73,6 +74,10 @@ class RoomModel {
         "";
   }
 
+  String formattedPrice() {
+    return NepaliRupeeFormatter().getDecoratedString(price);
+  }
+
   RoomModel.fromJson(Map<String, dynamic> json) {
     address = json['address'];
     amenityCount = json['amenity_count'];
@@ -80,7 +85,7 @@ class RoomModel {
     districtName = json['district_name'];
     phone = json['phone'];
     type = json["type"];
-    phone_visibility = json["phone_visibility"];
+    phoneVisibility = json["phone_visibility"];
 
     id = json['id'];
     if (json['lat'] != null) {
@@ -144,7 +149,7 @@ class RoomModel {
     data['type'] = this.type;
     data['phone'] = this.phone;
 
-    data['phone_visibility'] = this.phone_visibility;
+    data['phone_visibility'] = this.phoneVisibility;
     data['postedOn'] = this.postedOn;
 
     // List<String> images;
@@ -169,7 +174,7 @@ class RoomModel {
       'parkings': this.parkings.map((e) => e.id).toList(),
       'amenities': this.amenities.map((e) => e.id).toList(),
       'available': this.available,
-      'phone_visibility': this.phone_visibility,
+      'phone_visibility': this.phoneVisibility,
       'phone': this.phone,
       'type': this.type,
       "images": compressed.asMap().entries.map((e) {

@@ -45,14 +45,14 @@ class RoomDetailBottomBlock extends StatelessWidget {
           [
             RowSpaceBetween(
                 keyValue: "Added By", value: controller.room.user?.name ?? ""),
-            if (controller.room.phone_visibility ?? false)
+            if (controller.room.phoneVisibility ?? false)
               RowSpaceBetween(
                   keyValue: "phone", value: controller.room.phone ?? ""),
             TopDownPaddingWrapper(
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
-                  if (controller.room.phone_visibility ?? false)
+                  if (controller.room.phoneVisibility ?? false)
                     Column(
                       children: [
                         Container(
