@@ -9,7 +9,6 @@ import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/view/explore/explore_controller.dart';
 import 'package:chautari/view/room/form_keys.dart';
 import 'package:chautari/view/room/room_form_focusnode.dart';
-import 'package:chautari/view/room/update_room_viewmodel.dart';
 import 'package:chautari/widgets/alert.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
