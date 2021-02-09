@@ -67,7 +67,7 @@ class UpdateRoom extends StatelessWidget {
                           focusNode:
                               controller.focusNodes.contactSwitchFocusNode,
                           onChanged: (value) {
-                            controller.room.phone_visibility = value;
+                            controller.room.phoneVisibility = value;
                             controller.contactNumberVisible.value = value;
                           },
                         ),
