@@ -5,6 +5,8 @@ import 'package:chautari/view/explore/explore_view.dart';
 import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/room/my_rooms/my_room.dart';
 import 'package:chautari/view/room/room_detail/room_detail.dart';
+import 'package:chautari/view/room/room_location_map/room_location_map.dart';
+import 'package:chautari/view/room/room_location_map/show_room_location_map_controller.dart';
 import 'package:chautari/view/room/update_room/update_room.dart';
 import 'package:chautari/view/tab/tab_view.dart';
 import 'package:chautari/widgets/location_picker.dart';
@@ -24,7 +26,10 @@ class ChautariRouters {
       GetPage(name: RouteName.pickLocation, page: () => LocationPicker()),
       GetPage(name: RouteName.myRooms, page: () => MyRoom()),
       GetPage(name: RouteName.roomDetail, page: () => RoomDetail()),
-      GetPage(name: RouteName.updateRoom, page: () => UpdateRoom())
+      GetPage(name: RouteName.updateRoom, page: () => UpdateRoom()),
+      GetPage(
+          name: RouteName.showRoomLocationOnMap,
+          page: () => ShowRoomLocationMap())
     ];
   }
 
