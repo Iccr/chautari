@@ -1,6 +1,8 @@
+import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/theme/chautari_decoration.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
+import 'package:chautari/view/room/my_rooms/my_room.dart';
 import 'package:chautari/view/room/room_detail/room_detail_controller.dart';
 import 'package:chautari/view/room/room_widgets.dart';
 import 'package:chautari/widgets/Row_with_space_between.dart';
@@ -105,22 +107,38 @@ class RoomDetailContent extends StatelessWidget {
           ),
         ),
 
+        // amenities
+
         DecoratedContainerWrapper(
-            child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: controller.amenities.map((e) {
-            print(e);
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(e.name),
-                SizedBox(
-                  height: ChautariPadding.standard,
-                )
-              ],
-            );
-          }).toList(),
-        )),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: controller.amenities.map((e) {
+              print(e);
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(e.name),
+                  SizedBox(
+                    height: ChautariPadding.standard,
+                  )
+                ],
+              );
+            }).toList(),
+          ),
+        ),
+
+// show map
+        TopDownPaddingWrapper(
+          top: 0,
+          bottom: 0,
+          child: ChautariRaisedButton(
+            title: "Show in map",
+            onPressed: () {
+              Get.toNamed(RouteName.showRoomLocationOnMap,
+                  arguments: controller.room);
+            },
+          ),
+        ),
       ],
     );
   }

@@ -30,12 +30,8 @@ class RoomsMapController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-
     service = Get.find();
-    // this._isLoading.value = service.isLoading;
     this._models.assignAll(this.service.rooms);
-
-    // exploreController = Get.find();
   }
 
   @override

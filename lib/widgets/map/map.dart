@@ -1,5 +1,4 @@
 import 'package:app_settings/app_settings.dart';
-import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/widgets/alert.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -8,6 +7,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 abstract class ChautariMapFunctions extends GetxController {
   GoogleMapController _mapController;
+  RxBool _isReadyMap = false.obs;
   RxDouble _zoom;
   RxSet<Marker> _markers;
   Rx<CameraPosition> _cameraPosition;
@@ -98,6 +98,11 @@ class ChautariMapController extends ChautariMapFunctions {
   @override
   setMap(GoogleMapController controller) {
     _mapController = controller;
+    _isReadyMap.value = true;
+  }
+
+  RxBool isMapReady() {
+    return _isReadyMap ?? false;
   }
 
   @override
@@ -180,6 +185,11 @@ class Map {
 
   Map setMarkers(Set<Marker> markers) {
     controller.setMultipleMarker(markers);
+    return this;
+  }
+
+  Map setMarkerWithLatLng(LatLng latLng) {
+    controller.setMarker(latLng);
     return this;
   }
 }
