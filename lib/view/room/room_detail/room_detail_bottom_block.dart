@@ -1,3 +1,4 @@
+import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
@@ -91,7 +92,9 @@ class RoomDetailBottomBlock extends StatelessWidget {
                               color:
                                   ChautariColors.primaryDarkAndWhite900color(),
                             ),
-                            onPressed: () => {}),
+                            onPressed: () => {
+                                  Get.toNamed(RouteName.chat),
+                                }),
                       ),
                       Text("Chat")
                     ],

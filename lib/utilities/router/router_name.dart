@@ -15,4 +15,5 @@ class RouteName {
   static String map = "/map";
   static String pickLocation = "/pickLocation";
   static String showRoomLocationOnMap = "/ShowRoomLocationMapController";
+  static String chat = "/chat";
 }

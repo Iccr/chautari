@@ -1,4 +1,5 @@
 import 'package:chautari/utilities/router/router_name.dart';
+import 'package:chautari/view/chat/chat_view.dart';
 import 'package:chautari/view/room/add_room/add_room.dart';
 
 import 'package:chautari/view/explore/explore_view.dart';
@@ -29,7 +30,8 @@ class ChautariRouters {
       GetPage(name: RouteName.updateRoom, page: () => UpdateRoom()),
       GetPage(
           name: RouteName.showRoomLocationOnMap,
-          page: () => ShowRoomLocationMap())
+          page: () => ShowRoomLocationMap()),
+      GetPage(name: RouteName.chat, page: () => ChatView())
     ];
   }
 
