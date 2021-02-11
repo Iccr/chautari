@@ -6,6 +6,9 @@ class NewConversationService extends GetxController {
   var conversation = Conversation().obs;
   var isLoading = false.obs;
   var _error = "".obs;
+
+  var isSuccess = false.obs;
+
   String get error => _error.value.isEmpty ? null : _error.value;
 
   createConversation(int senderId, int recipientId) async {
@@ -19,6 +22,7 @@ class NewConversationService extends GetxController {
       this._error.value = model.errors?.first?.value;
     } else {
       this.conversation.value = model.conversation;
+      isSuccess.value = true;
     }
   }
 }
