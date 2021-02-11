@@ -6,15 +6,17 @@ import 'package:get/get.dart';
 
 class RoomsMapController extends GetxController {
   final ChautariMapController mapController = ChautariMapController();
-  Map map;
+  Rx<Map> map = Map(title: "").obs;
   FetchRoomService service;
 
   var _models = List<RoomModel>().obs;
   List<RoomModel> get models => _models.value;
 
+  RxBool isMapReady = false.obs;
+
   RoomsMapController() {
     mapController.setZoom(16.0);
-    map = Map(title: "Map", controller: mapController);
+    map.value = Map(title: "Map", controller: mapController);
   }
 
   var _selectedRoom = RoomModel().obs;
@@ -32,6 +34,7 @@ class RoomsMapController extends GetxController {
     super.onInit();
     service = Get.find();
     this._models.assignAll(this.service.rooms);
+    isMapReady = mapController.isMapReady();
   }
 
   @override
@@ -41,7 +44,7 @@ class RoomsMapController extends GetxController {
   }
 
   setChild(Widget child) {
-    map = map.setchild(child);
+    map.value = map.value.setchild(child);
   }
 
   onTapMarkerOf(RoomModel room) {

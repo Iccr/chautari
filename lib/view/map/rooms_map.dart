@@ -56,7 +56,16 @@ class RoomsMap extends StatelessWidget {
   }
 
   Widget getMapWidget() {
-    return controller.map
+    controller.isMapReady.listen((value) {
+      if (value) {
+        return controller.map.value
+            .setMarkers(getMarkers())
+            .setchild(getchildWidget())
+            .setOnTapLocation((latLng) => controller.clearRoomCard())
+            .build();
+      }
+    });
+    return controller.map.value
         .setMarkers(getMarkers())
         .setchild(getchildWidget())
         .setOnTapLocation((latLng) => controller.clearRoomCard())

@@ -569,6 +569,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "3.1.0"
+  phoenix_wings:
+    dependency: "direct main"
+    description:
+      path: "../phoenix_wings"
+      relative: true
+    source: path
+    version: "0.2.1"
   photo_view:
     dependency: "direct main"
     description:

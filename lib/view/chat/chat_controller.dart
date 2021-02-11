@@ -1,8 +1,11 @@
+import 'package:chautari/view/login/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:phoenix_socket/phoenix_socket.dart';
+// import 'package:phoenix_socket/phoenix_socket.dart';
+import 'package:phoenix_wings/phoenix_wings.dart';
 
 class ChatController extends GetxController {
+  AuthController auth = Get.find();
   PhoenixSocket _socket;
   PhoenixChannel _channel;
   TextEditingController messageTextField;
@@ -11,30 +14,26 @@ class ChatController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    var token = auth.user.token ?? "";
 
     messageTextField = TextEditingController();
 
     _socket = new PhoenixSocket("ws://localhost:4000/socket/websocket",
-        socketOptions: PhoenixSocketOptions(params: {"token": "blabla"}));
+        socketOptions: PhoenixSocketOptions(params: {"token": token}));
 
-    _socket.connect();
+    await _socket.connect();
+    // _channel = _socket.channel("rent_room:lobby", {});
+    // _channel.on("shout", (payload, ref, joinRef) {
+    //   print(payload);
+    //   print(ref);
+    //   print(joinRef);
+    //   var message = ChatMessages.fromJson(payload);
+    //   this.messages.add(message);
+    //   this.messages.refresh();
+    // }
+    // );
 
-    _socket.openStream.listen((event) {
-      print("connected");
-    });
-
-    // await _socket.connect();
-    // // _channel = _socket.channel("rent_room:lobby", {});
-    // // _channel.on("shout", (payload, ref, joinRef) {
-    // //   print(payload);
-    // //   print(ref);
-    // //   print(joinRef);
-    // //   var message = ChatMessages.fromJson(payload);
-    // //   this.messages.add(message);
-    // //   this.messages.refresh();
-    // // });
-
-    // // _channel.join();
+    // _channel.join();
 
     _fakeMessages();
   }
@@ -42,8 +41,8 @@ class ChatController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    _socket.close();
-    // var value = _socket.disconnect();
+
+    _socket.disconnect();
   }
 
   sendMessage() {
