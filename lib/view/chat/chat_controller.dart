@@ -1,4 +1,6 @@
-import 'package:chautari/services/new_conversations.dart';
+import 'package:chautari/model/conversation_model.dart';
+import 'package:chautari/model/login_model.dart';
+import 'package:chautari/services/fetch_conversations.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -6,12 +8,13 @@ import 'package:get/get.dart';
 import 'package:phoenix_wings/phoenix_wings.dart';
 
 class ChatController extends GetxController {
+  UserModel owner;
   AuthController auth = Get.find();
   PhoenixSocket _socket;
   PhoenixChannel _channel;
-  NewConversationService newConversationService;
+  FetchConversatiosnService conversationService;
   TextEditingController messageTextField;
-  var messages = List<ChatMessages>().obs;
+  var messages = List<Messages>().obs;
   var isLoading = false.obs;
   var _error = "".obs;
 
@@ -20,18 +23,22 @@ class ChatController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+    owner = Get.arguments;
     messageTextField = TextEditingController();
 
-    newConversationService = NewConversationService();
-    isLoading = newConversationService.isLoading;
+    conversationService = FetchConversatiosnService();
+    isLoading = conversationService.isLoading;
+    conversationService.createConversation(auth.user.id, owner.id);
 
-    newConversationService.isSuccess.listen((value) async {
+    conversationService.isSuccess.listen((value) async {
       if (value) {
+        messages.assignAll(conversationService.conversation.first.messages);
         var socket = await _initConnection();
         _channel = _createChannel(socket)..join();
-        _channel.on("shout", (payload, ref, joinRef) {
+        _channel?.on("shout", (payload, ref, joinRef) {
           print(payload);
-          var message = ChatMessages.fromJson(payload);
+          var message = Messages.fromJson(payload);
+          // message.isMine = message.senderId == auth.user.id;
           messages.add(message);
           messages.refresh();
         });
@@ -48,23 +55,22 @@ class ChatController extends GetxController {
         socketOptions:
             PhoenixSocketOptions(params: {"token": auth.user.token ?? ""}));
     await _socket.connect();
+    return _socket;
   }
 
   @override
   void onClose() {
     super.onClose();
-    _socket.disconnect();
+    _socket?.disconnect();
   }
-
-  _fetchConversation() {}
 
   sendMessage() {
     var message = messageTextField.text;
     if (message.isNotEmpty) {
       var _params = {
-        "message": message,
+        "content": message,
         "sender_id": auth?.user?.id ?? "",
-        "conversation_id": newConversationService.conversation.value.id
+        "conversation_id": conversationService.conversation.value.first.id
       };
 
       _channel?.push(
@@ -72,33 +78,5 @@ class ChatController extends GetxController {
         payload: _params,
       );
     }
-    //   var _message = ChatMessages(message: message, isMine: true);
-    //   // _channel.push(event: "ping", payload: {"message": message});
-    //   messages.add(_message);
-    //   messages.refresh();
-    //   messageTextField.clear();
-    // }
-  }
-
-  _fakeMessages() {
-    var messages = [
-      ChatMessages(message: "hello is this room still available", isMine: true),
-      ChatMessages(message: "hi, Yes this is still available", isMine: false),
-      ChatMessages(message: "hello is this room still available", isMine: true),
-      ChatMessages(message: "hi, Yes this is still available", isMine: false),
-    ];
-
-    this.messages.assignAll(messages);
-  }
-}
-
-class ChatMessages {
-  String message;
-  bool isMine;
-  ChatMessages({@required this.message, this.isMine = false});
-
-  ChatMessages.fromJson(Map<String, dynamic> json) {
-    message = json["message"];
-    isMine = false;
   }
 }

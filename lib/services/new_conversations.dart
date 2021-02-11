@@ -3,7 +3,7 @@ import 'package:chautari/repository/chat_repository.dart';
 import 'package:get/get.dart';
 
 class NewConversationService extends GetxController {
-  var conversation = Conversation().obs;
+  var conversation = List<Conversation>().obs;
   var isLoading = false.obs;
   var _error = "".obs;
 
@@ -15,13 +15,14 @@ class NewConversationService extends GetxController {
     isLoading.value = true;
     var params = {"sender_id": senderId, "recipient_id": recipientId};
 
-    var model = await ChatRepository().newConversations(params);
+    var model = await ChatRepository().fetchConversations(params);
 
     isLoading.value = false;
     if (model.errors?.isEmpty ?? false) {
       this._error.value = model.errors?.first?.value;
     } else {
-      this.conversation.value = model.conversation;
+      conversation.assignAll(model.conversations);
+
       isSuccess.value = true;
     }
   }

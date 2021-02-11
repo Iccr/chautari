@@ -17,6 +17,7 @@ class ChatResponseModel {
         ),
       );
     }
+
     if (json['error'] != null) {
       errors = new List<ApiError>();
       json['error'].forEach((v) {
@@ -33,7 +34,9 @@ class CreateConversationResponseModel {
   CreateConversationResponseModel({this.conversation});
 
   CreateConversationResponseModel.fromJson(Map<String, dynamic> json) {
-    json['data'] != null ? Conversation.fromJson(json['data']) : null;
+    if (json['data'] != null) {
+      conversation = Conversation.fromJson(json['data']);
+    }
 
     if (json['error'] != null) {
       errors = new List<ApiError>();
@@ -46,8 +49,9 @@ class CreateConversationResponseModel {
 
 class Conversation {
   int id;
-  String recipientId;
+  int recipientId;
   int senderId;
+  List<Messages> messages;
 
   Conversation({this.id, this.recipientId, this.senderId});
 
@@ -55,6 +59,12 @@ class Conversation {
     id = json['id'];
     recipientId = json['recipient_id'];
     senderId = json['sender_id'];
+    if (json['messages'] != null) {
+      messages = new List<Messages>();
+      json['messages'].forEach((v) {
+        messages.add(new Messages.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
@@ -74,4 +84,26 @@ class Conversation {
 
   // @override
   // int get hashCode => tag.hashCode;
+}
+
+class Messages {
+  String content;
+  int conversationId;
+  int senderId;
+
+  Messages({this.content, this.conversationId, this.senderId});
+
+  Messages.fromJson(Map<String, dynamic> json) {
+    content = json['content'];
+    conversationId = json['conversation_id'];
+    senderId = json['sender_id'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['content'] = this.content;
+    data['conversation_id'] = this.conversationId;
+    data['sender_id'] = this.senderId;
+    return data;
+  }
 }

@@ -93,7 +93,8 @@ class RoomDetailBottomBlock extends StatelessWidget {
                                   ChautariColors.primaryDarkAndWhite900color(),
                             ),
                             onPressed: () => {
-                                  Get.toNamed(RouteName.chat),
+                                  Get.toNamed(RouteName.chat,
+                                      arguments: controller.room.user),
                                 }),
                       ),
                       Text("Chat")

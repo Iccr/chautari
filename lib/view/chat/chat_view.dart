@@ -4,12 +4,14 @@ import 'package:chautari/utilities/theme/text_decoration.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/view/chat/bubble.dart';
 import 'package:chautari/view/chat/chat_controller.dart';
+import 'package:chautari/view/login/auth_controller.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChatView extends StatelessWidget {
   final ChatController controller = Get.put(ChatController());
+  AuthController auth = Get.find();
   @override
   Widget build(BuildContext context) {
     double pixelRatio = MediaQuery.of(context).devicePixelRatio;
@@ -46,9 +48,11 @@ class ChatView extends StatelessWidget {
                   padding: EdgeInsets.all(8.0),
                   children: controller.messages
                       .map((element) => Bubble(
-                            style: element.isMine ? styleMe : styleSomebody,
+                            style: element.senderId == auth.user.id
+                                ? styleMe
+                                : styleSomebody,
                             child: Text(
-                              element.message,
+                              element.content,
                               style: ChautariTextStyles().listSubtitle,
                             ),
                           ))
