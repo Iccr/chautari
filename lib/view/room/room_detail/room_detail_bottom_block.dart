@@ -34,86 +34,88 @@ class RoomDetailBottomBlock extends StatelessWidget {
   }
 
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        TopDownPaddingWrapper(
-          child: Text(
-            "Contact",
-            style: ChautariTextStyles().listTitle,
+    return Obx(
+      () => Column(
+        children: [
+          TopDownPaddingWrapper(
+            child: Text(
+              "Contact",
+              style: ChautariTextStyles().listTitle,
+            ),
           ),
-        ),
-        detailBlock(
-          [
-            RowSpaceBetween(
-                keyValue: "Added By", value: controller.room.user?.name ?? ""),
-            if (controller.room.phoneVisibility ?? false)
+          detailBlock(
+            [
               RowSpaceBetween(
-                  keyValue: "phone", value: controller.room.phone ?? ""),
-            TopDownPaddingWrapper(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  if (controller.room.phoneVisibility ?? false)
-                    Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(ChautariPadding.small5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(Get.width),
-                            border: Border.all(width: 0.5),
+                  keyValue: "Added By",
+                  value: controller.room.user?.name ?? ""),
+              if (controller.room.phoneVisibility ?? false)
+                RowSpaceBetween(
+                    keyValue: "phone", value: controller.room.phone ?? ""),
+              TopDownPaddingWrapper(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    if (controller.room.phoneVisibility ?? false)
+                      Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(ChautariPadding.small5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(Get.width),
+                              border: Border.all(width: 0.5),
+                            ),
+                            child: IconButton(
+                                icon: Icon(
+                                  LineIcons.phone,
+                                  color: ChautariColors
+                                      .primaryDarkAndWhite900color(),
+                                ),
+                                onPressed: () {
+                                  _call();
+                                }),
                           ),
-                          child: IconButton(
-                              icon: Icon(
-                                LineIcons.phone,
-                                color: ChautariColors
-                                    .primaryDarkAndWhite900color(),
-                              ),
-                              onPressed: () {
-                                _call();
-                              }),
-                        ),
-                        Text("Call")
-                      ],
-                    ),
-                  SizedBox(
-                    width: ChautariPadding.standard * 2,
-                  ),
-                  if (!controller.isMyRoom.value) ...[
-                    Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.all(ChautariPadding.small5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(Get.width),
-                            border: Border.all(width: 0.5),
-                          ),
-                          child: IconButton(
-                              icon: Icon(
-                                LineIcons.comments_o,
-                                color: ChautariColors
-                                    .primaryDarkAndWhite900color(),
-                              ),
-                              onPressed: () => {
-                                    Get.toNamed(RouteName.chat,
-                                        arguments: controller.room.user),
-                                  }),
-                        ),
-                        Text("Chat")
-                      ],
-                    ),
+                          Text("Call")
+                        ],
+                      ),
                     SizedBox(
                       width: ChautariPadding.standard * 2,
                     ),
-                  ]
-                ],
+                    if (!controller.isMyRoom.value) ...[
+                      Column(
+                        children: [
+                          Container(
+                            padding: EdgeInsets.all(ChautariPadding.small5),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(Get.width),
+                              border: Border.all(width: 0.5),
+                            ),
+                            child: IconButton(
+                                icon: Icon(
+                                  LineIcons.comments_o,
+                                  color: ChautariColors
+                                      .primaryDarkAndWhite900color(),
+                                ),
+                                onPressed: () => {
+                                      controller.goTOLogin(context),
+                                    }),
+                          ),
+                          Text("Chat")
+                        ],
+                      ),
+                      SizedBox(
+                        width: ChautariPadding.standard * 2,
+                      ),
+                    ]
+                  ],
+                ),
               ),
-            ),
-            SizedBox(
-              height: ChautariPadding.standard * 2,
-            )
-          ],
-        ),
-      ],
+              SizedBox(
+                height: ChautariPadding.standard * 2,
+              )
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

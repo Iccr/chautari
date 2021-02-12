@@ -6,11 +6,15 @@ import 'package:chautari/repository/rooms_repository.dart';
 import 'package:chautari/services/appinfo_service.dart';
 import 'package:chautari/services/delete_room_service.dart';
 import 'package:chautari/services/fetch_my_room_service.dart';
+import 'package:chautari/utilities/router/router_name.dart';
 
 import 'package:chautari/view/login/auth_controller.dart';
+import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
 import 'package:chautari/widgets/alert.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class RoomDetailController extends GetxController {
   AuthController auth;
@@ -58,6 +62,12 @@ class RoomDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+
+    auth.stateDidChanged.listen((changed) {
+      isMyRoom.value = _room.value.user.id == auth.user.id;
+      isMyRoom.refresh();
+    });
+
     _room = RoomModel().obs;
     RoomDetailViewModel viewmodel = Get.arguments;
 
@@ -155,5 +165,22 @@ class RoomDetailController extends GetxController {
     model.user = room.user;
     model.rawImages = room.rawImages;
     return model;
+  }
+
+  goToChats() {
+    Get.toNamed(RouteName.chat, arguments: room.user);
+  }
+
+  goTOLogin(BuildContext context) async {
+    if (auth.isLoggedIn) {
+      goToChats();
+    } else {
+      await showCupertinoModalBottomSheet(
+        expand: true,
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context) => LoginView(),
+      );
+    }
   }
 }

@@ -15,6 +15,8 @@ class AuthController extends GetxController {
   final ChautariStorage box = ChautariStorage();
   var _user = UserModel().obs;
 
+  var stateDidChanged = false.obs;
+
   onInit() {
     super.onInit();
 
@@ -39,6 +41,8 @@ class AuthController extends GetxController {
     var emptyUser = UserModel();
     await _saveuser(emptyUser);
     this._user.value = emptyUser;
+    stateDidChanged.value = true;
+    stateDidChanged.refresh();
   }
 
   final FacebookLogin facebookSignIn = new FacebookLogin();
@@ -123,6 +127,8 @@ class AuthController extends GetxController {
       user.isLoggedIn = true;
       await _saveuser(user);
       this._user.value = user;
+      stateDidChanged.value = true;
+      stateDidChanged.refresh();
 
       Get.back();
     } else {
