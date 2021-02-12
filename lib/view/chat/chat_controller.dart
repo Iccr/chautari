@@ -4,7 +4,7 @@ import 'package:chautari/services/fetch_conversations.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-// import 'package:phoenix_socket/phoenix_socket.dart';
+import 'package:keyboard_actions/external/platform_check/platform_check.dart';
 import 'package:phoenix_wings/phoenix_wings.dart';
 
 class ChatController extends GetxController {
@@ -35,10 +35,11 @@ class ChatController extends GetxController {
         messages.assignAll(conversationService.conversation.first.messages);
         var socket = await _initConnection();
         _channel = _createChannel(socket)..join();
+
         _channel?.on("shout", (payload, ref, joinRef) {
           print(payload);
           var message = Messages.fromJson(payload);
-          // message.isMine = message.senderId == auth.user.id;
+
           messages.add(message);
           messages.refresh();
         });
@@ -46,14 +47,28 @@ class ChatController extends GetxController {
     });
   }
 
+  String _get_room_name() {
+    if (auth?.user?.id != null &&
+        conversationService?.conversation?.first?.id != null) {
+      return "rent_room:" + ("${conversationService.conversation.first.id}");
+    }
+  }
+
   PhoenixChannel _createChannel(PhoenixSocket socket) {
-    return socket.channel("rent_room:lobby", {});
+    return socket.channel(_get_room_name(), {});
   }
 
   Future<PhoenixSocket> _initConnection() async {
-    _socket = new PhoenixSocket("ws://localhost:4000/socket/websocket",
-        socketOptions:
-            PhoenixSocketOptions(params: {"token": auth.user.token ?? ""}));
+    if (PlatformCheck.isIOS) {
+      _socket = new PhoenixSocket("ws://localhost:4000/socket/websocket",
+          socketOptions:
+              PhoenixSocketOptions(params: {"token": auth.user.token ?? ""}));
+    } else {
+      _socket = new PhoenixSocket("ws://10.0.2.2:4000/socket/websocket",
+          socketOptions:
+              PhoenixSocketOptions(params: {"token": auth.user.token ?? ""}));
+    }
+
     await _socket.connect();
     return _socket;
   }
