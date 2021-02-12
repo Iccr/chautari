@@ -12,11 +12,10 @@ class FetchConversatiosnService extends GetxController {
 
   String get error => _error.value.isEmpty ? null : _error.value;
 
-  createConversation(int senderId, int recipientId) async {
+  fetchConversation() async {
     isLoading.value = true;
-    var params = {"sender_id": senderId, "recipient_id": recipientId};
 
-    var model = await ChatRepository().fetchConversations(params);
+    var model = await ChatRepository().fetchConversations();
 
     isLoading.value = false;
     if (model.errors?.isEmpty ?? false) {

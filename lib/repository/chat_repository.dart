@@ -9,9 +9,13 @@ class ChatRepository {
     api = ApiService();
   }
 
-  Future<ChatResponseModel> fetchConversations(
-      Map<String, dynamic> params) async {
+  Future<ChatResponseModel> fetchMessages(Map<String, dynamic> params) async {
     final response = await api.post(_chatUrl, params);
+    return ChatResponseModel.fromJson(response.data);
+  }
+
+  Future<ChatResponseModel> fetchConversations() async {
+    final response = await api.get(_chatUrl);
     return ChatResponseModel.fromJson(response.data);
   }
 

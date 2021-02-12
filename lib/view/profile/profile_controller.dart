@@ -54,6 +54,8 @@ class ProfileController extends GetxController {
       case 2:
         break;
       case 3:
+        print("got ot chat");
+        Get.toNamed(RouteName.conversation);
         break;
       default:
     }

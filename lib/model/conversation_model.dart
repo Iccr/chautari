@@ -50,7 +50,9 @@ class CreateConversationResponseModel {
 class Conversation {
   int id;
   int recipientId;
+  String recipientName;
   int senderId;
+  String senderName;
   List<Messages> messages;
 
   Conversation({this.id, this.recipientId, this.senderId});
@@ -58,6 +60,8 @@ class Conversation {
   Conversation.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     recipientId = json['recipient_id'];
+    recipientName = json['recipient_name'];
+    senderName = json['sender_name'];
     senderId = json['sender_id'];
     if (json['messages'] != null) {
       messages = new List<Messages>();

@@ -52,6 +52,9 @@ class RoomDetailController extends GetxController {
   RoomModel get room => _room.value.id == null ? null : _room.value;
   bool get availability => _room.value.available;
 
+  // bool get isMyRoom => room?.id == null ? false : auth.user.id == room.id;
+  var isMyRoom = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -82,6 +85,7 @@ class RoomDetailController extends GetxController {
     var model = await RoomsRepository().fetchRoomDetail(room.id);
     if (model.errors == null) {
       _room.value = model.room;
+      isMyRoom.value = _room.value.user.id == auth.user.id;
     } else {
       _error.value = model.errors.first.value;
     }
