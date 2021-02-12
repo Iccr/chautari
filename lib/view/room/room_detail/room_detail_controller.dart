@@ -7,6 +7,7 @@ import 'package:chautari/services/appinfo_service.dart';
 import 'package:chautari/services/delete_room_service.dart';
 import 'package:chautari/services/fetch_my_room_service.dart';
 import 'package:chautari/utilities/router/router_name.dart';
+import 'package:chautari/view/chat/chat_controller.dart';
 
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
@@ -168,7 +169,9 @@ class RoomDetailController extends GetxController {
   }
 
   goToChats() {
-    Get.toNamed(RouteName.chat, arguments: room.user);
+    var viewModel = ChatViewModel();
+    viewModel.recipient = room.user.id;
+    Get.toNamed(RouteName.chat, arguments: viewModel);
   }
 
   goTOLogin(BuildContext context) async {

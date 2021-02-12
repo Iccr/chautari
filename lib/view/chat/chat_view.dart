@@ -5,7 +5,6 @@ import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/view/chat/bubble.dart';
 import 'package:chautari/view/chat/chat_controller.dart';
 import 'package:chautari/view/login/auth_controller.dart';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -45,6 +44,7 @@ class ChatView extends StatelessWidget {
             children: [
               Expanded(
                 child: ListView(
+                  controller: controller.scrollController,
                   padding: EdgeInsets.all(8.0),
                   children: controller.messages
                       .map((element) => Bubble(

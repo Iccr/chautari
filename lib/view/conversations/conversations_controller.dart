@@ -1,10 +1,14 @@
 import 'package:chautari/model/conversation_model.dart';
 import 'package:chautari/model/menu_item.dart';
 import 'package:chautari/services/fetch_conversations.dart';
+import 'package:chautari/utilities/router/router_name.dart';
+import 'package:chautari/view/chat/chat_controller.dart';
+import 'package:chautari/view/login/auth_controller.dart';
 import 'package:get/get.dart';
 
 class ConversationsController extends GetxController {
   FetchConversatiosnService conversationService;
+  AuthController auth;
   var isLoading = false.obs;
   var error = "".obs;
   var conversations = List<Conversation>().obs;
@@ -19,6 +23,8 @@ class ConversationsController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    auth = Get.find();
+
     conversationService = FetchConversatiosnService();
     isLoading = conversationService.isLoading;
     conversationService.fetchConversation();
@@ -30,5 +36,14 @@ class ConversationsController extends GetxController {
         error.value = conversationService.error;
       }
     });
+  }
+
+  goToChats(int index) {
+    var viewModel = ChatViewModel();
+    viewModel.conversation = conversations.value;
+    viewModel.recipient = conversations.elementAt(index).recipientId;
+    viewModel.messages = conversations.elementAt(index).messages;
+
+    Get.toNamed(RouteName.chat, arguments: viewModel);
   }
 }
