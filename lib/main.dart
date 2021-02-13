@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:chautari/services/appinfo_service.dart';
 import 'package:chautari/utilities/router/routers.dart';
+import 'package:chautari/utilities/socket.dart';
 import 'package:chautari/utilities/theme/theme.dart';
 import 'package:chautari/utilities/theme/theme_controller.dart';
 import 'package:chautari/services/fetch_room_service.dart';
@@ -18,11 +21,11 @@ void main() async {
 
 void initServices() async {
   print('starting services ...');
-
-  /// Here is where you put get_storage, hive, shared_pref initialization.
-  /// or moor connection, or whatever that's async.
+  Get.put(AuthController());
   await Get.putAsync(() => FetchRoomService().init());
   await Get.putAsync(() => AppInfoService().init());
+  await Get.putAsync(() => PresenceService().init());
+  await Get.putAsync(() => SocketController().init());
   print('All services started...');
 }
 

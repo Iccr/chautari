@@ -31,16 +31,16 @@ class ChatView extends StatelessWidget {
       alignment: Alignment.topRight,
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Chautari Basti'),
-      ),
-      body: Container(
-        // color: Colors.yellow.withAlpha(64),
-        color: ChautariColors.primary.withAlpha(64),
-        // color: ChautariColors.primary.withAlpha(64),
-        child: Obx(
-          () => Column(
+    return Obx(
+      () => Scaffold(
+        appBar: AppBar(
+          title: Text(controller.isSenderOnline.value ? 'Online' : 'Offline'),
+        ),
+        body: Container(
+          // color: Colors.yellow.withAlpha(64),
+          color: ChautariColors.primary.withAlpha(64),
+          // color: ChautariColors.primary.withAlpha(64),
+          child: Column(
             children: [
               Expanded(
                 child: ListView(

@@ -29,7 +29,7 @@ class ProfileView extends StatelessWidget {
         backgroundColor: Colors.transparent,
         builder: (context) => LoginView(),
       );
-      if (loginController.isLoggedIn &&
+      if (loginController.isLoggedIn.value &&
           _redirectTo != null &&
           controller != null) {
         controller.selectedIndex(_redirectTo);
@@ -38,11 +38,11 @@ class ProfileView extends StatelessWidget {
     }
 
     double _getHeight() {
-      return loginController.isLoggedIn ? 60 : 60;
+      return loginController.isLoggedIn.value ? 60 : 60;
     }
 
     Widget _getFAB() {
-      return loginController.isLoggedIn
+      return loginController.isLoggedIn.value
           ? null
           : FloatingActionButton(
               onPressed: () => {_goTOLogin()},
@@ -55,7 +55,7 @@ class ProfileView extends StatelessWidget {
     }
 
     _selectedIndex(int index, ProfileController c) {
-      if (loginController.isLoggedIn) {
+      if (loginController.isLoggedIn.value) {
         c.selectedIndex(index);
       } else {
         _redirectTo = index;
@@ -123,7 +123,7 @@ class UserInfoView extends StatelessWidget {
       );
     }
 
-    return !loginController.isLoggedIn
+    return !loginController.isLoggedIn.value
         ? Container(
             child: Row(
               children: [

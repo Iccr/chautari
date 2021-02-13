@@ -175,7 +175,7 @@ class RoomDetailController extends GetxController {
   }
 
   goTOLogin(BuildContext context) async {
-    if (auth.isLoggedIn) {
+    if (auth.isLoggedIn.value) {
       goToChats();
     } else {
       await showCupertinoModalBottomSheet(

@@ -27,12 +27,13 @@ class AuthController extends GetxController {
       UserModel user = UserModel.fromJson(_userMap);
       print(user.email);
       print(user.isLoggedIn);
+      isLoggedIn.value = user.isLoggedIn;
       this._user.value = user;
     }
   }
 
   UserModel get user => _user.value;
-  bool get isLoggedIn => this._user.value.isLoggedIn ?? false;
+  var isLoggedIn = false.obs;
 
   String get token => this._user.value.token;
 
@@ -41,6 +42,7 @@ class AuthController extends GetxController {
     var emptyUser = UserModel();
     await _saveuser(emptyUser);
     this._user.value = emptyUser;
+    isLoggedIn.value = false;
     stateDidChanged.value = true;
     stateDidChanged.refresh();
   }
@@ -128,6 +130,7 @@ class AuthController extends GetxController {
       await _saveuser(user);
       this._user.value = user;
       stateDidChanged.value = true;
+      isLoggedIn.value = true;
       stateDidChanged.refresh();
 
       Get.back();

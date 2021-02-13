@@ -1,6 +1,6 @@
-import 'package:chautari/utilities/constants.dart';
-import 'package:chautari/utilities/storage.dart';
+import 'package:chautari/view/login/auth_controller.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' as Get;
 import 'dart:io' show Platform;
 
 import '../environment.dart';
@@ -14,7 +14,12 @@ class BaseUrl {
 
   BaseUrl() {
     if (development) {
-      if (Platform.isAndroid) {
+      if (device) {
+        String ip = "192.168.0.100";
+        _serverUrl = "http://$ip:4000/api/";
+        _imageServerUrl = "http://$ip:4000/";
+        _socketUrl = "ws://$ip:4000/socket/websocket";
+      } else if (Platform.isAndroid) {
         _serverUrl = "http://10.0.2.2:4000/api/";
         _imageServerUrl = "http://10.0.2.2:4000/";
         _socketUrl = "ws://10.0.2.2:4000/socket/websocket";
@@ -39,6 +44,8 @@ class ApiService {
   Dio _http;
   String _baseUrl = "";
 
+  final AuthController auth = Get.Get.find();
+
   @override
   ApiService() {
     _baseUrl = BaseUrl().baseUrl;
@@ -55,35 +62,36 @@ class ApiService {
 
     _http = Dio(options);
 
-    _http.interceptors
-        .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
-      print("******** Request *********");
-      print("url: ${options.uri}");
-      print("contentType: ${options.contentType}");
-      print("headers: ${options.headers}");
+    // _http.interceptors
+    //     .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
+    //   print("******** Request *********");
+    //   print("url: ${options.uri}");
+    //   print("contentType: ${options.contentType}");
+    //   print("headers: ${options.headers}");
 
-      return options;
-    }, onResponse: (Response response) async {
-      print("******** Response *********");
-      print("data: ${response.data}");
-      print("");
-      print("statusCode: ${response.statusCode}");
-      print("request: ${response.request}");
+    //   return options;
+    // }, onResponse: (Response response) async {
+    //   print("******** Response *********");
+    //   print("data: ${response.data}");
+    //   print("");
+    //   print("statusCode: ${response.statusCode}");
+    //   print("request: ${response.request}");
 
-      return response; // continue
-    }, onError: (DioError e) async {
-      print("******** Error *********");
-      print("error: ${e.error}");
-      return e; //continue
-    }));
+    //   return response; // continue
+    // }, onError: (DioError e) async {
+    //   print("******** Error *********");
+    //   print("error: ${e.error}");
+    //   return e; //continue
+    // }));
   }
 
   bool validation(int val) => val == 1;
 
   Map<String, String> _headers() {
-    var userMap = ChautariStorage().read(AppConstant.userKey);
-    if (userMap != null && userMap["isLoggedIn"]) {
-      String token = userMap["token"] ?? "";
+    // var userMap = ChautariStorage().read(AppConstant.userKey);
+
+    if (auth.isLoggedIn.value) {
+      String token = auth.user.token;
       var header = Map<String, String>();
       header['Authorization'] = "Bearer " + token;
       return header;

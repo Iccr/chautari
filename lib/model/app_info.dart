@@ -37,11 +37,11 @@ class AppinfoResponseModel {
 }
 
 class AppinfoModel {
-  List<Amenities> amenities;
-  List<Districts> districts;
-  List<Parking> parkings;
-  List<Water> waters;
-  List<RoomType> types;
+  List<Amenities> amenities = [];
+  List<Districts> districts = [];
+  List<Parking> parkings = [];
+  List<Water> waters = [];
+  List<RoomType> types = [];
 
   AppinfoModel(
       {this.amenities, this.districts, this.parkings, this.waters, this.types});

@@ -13,6 +13,7 @@ class ChatViewModel {
 
 class ChatController extends GetxController {
   int recipient;
+  PresenceService presence = Get.find();
   AuthController auth = Get.find();
   NewConversatiosnService conversationService;
   TextEditingController messageTextField;
@@ -26,6 +27,8 @@ class ChatController extends GetxController {
 
   var conversation = List<Conversation>().obs;
 
+  RxBool isSenderOnline = false.obs;
+
   var isLoading = false.obs;
   var _error = "".obs;
 
@@ -36,6 +39,10 @@ class ChatController extends GetxController {
     super.onInit();
     _viewModel = Get.arguments;
     recipient = _viewModel.recipient;
+    presence.presence.stream.listen((event) {
+      print("event in chat controller stream listner");
+      isSenderOnline.value = presence.isPresent(conversation.first.senderId);
+    });
     if (_viewModel.conversation != null) {
       updateConversation(_viewModel.conversation);
     }
@@ -54,9 +61,12 @@ class ChatController extends GetxController {
 
   initsocket() async {
     print("init socket");
-    socket = SocketController(
-        token: auth.token, conversationId: conversation.first.id);
-    await socket.initSocketAndListenChannel();
+    SocketController _socket = Get.find();
+    _socket.conversationId = conversation.first.id;
+    socket = _socket;
+
+    await socket.initAndListenChannel();
+
     socket.message.listen((message) async {
       this.messages.add(message);
       await scrollToLast();

@@ -68,7 +68,7 @@ class RoomModel {
     if (this.type == null) {
       return "";
     }
-    return service.appInfo.types
+    return (service.appInfo.types ?? [])
             .firstWhere((element) => element.value == this.type)
             .name ??
         "";

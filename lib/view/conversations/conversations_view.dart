@@ -1,3 +1,4 @@
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/view/conversations/conversations_controller.dart';
 import 'package:chautari/widgets/chautari_list.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +20,24 @@ class ConversationView extends StatelessWidget {
           separatorBuilder: (context, index) => ChautariList().getSeperator(),
           itemCount: controller.conversations.length,
           itemBuilder: (context, index) {
-            return ChautariList().getListTile(
-              () {
-                controller.goToChats(index);
-              },
-              controller.conversationViewModel.elementAt(index),
-            );
+            return ChautariList().getListTile(() {
+              controller.goToChats(index);
+            }, controller.conversationViewModel.elementAt(index),
+                trailing: IconButton(
+                  icon: Obx(
+                    () => Icon(
+                      Icons.circle,
+                      size: 20,
+                      color: controller.isOnline(controller
+                              .conversationViewModel
+                              .elementAt(index)
+                              .index)
+                          ? ChautariColors.green
+                          : ChautariColors.grey,
+                    ),
+                  ),
+                  onPressed: null,
+                ));
           },
         ),
       ),

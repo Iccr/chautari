@@ -33,7 +33,8 @@ class ProfileController extends GetxController {
         subtitle: "See Your properties in Chautari Basti"),
   ];
 
-  List<MenuItem> get menu => auth.isLoggedIn ? _loggedInMenu : _normalMenu;
+  List<MenuItem> get menu =>
+      auth.isLoggedIn.value ? _loggedInMenu : _normalMenu;
 
   String get userInsightMessage =>
       "Log in to access chats, suscribtions and many more features.";

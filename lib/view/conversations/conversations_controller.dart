@@ -2,11 +2,14 @@ import 'package:chautari/model/conversation_model.dart';
 import 'package:chautari/model/menu_item.dart';
 import 'package:chautari/services/fetch_conversations.dart';
 import 'package:chautari/utilities/router/router_name.dart';
+import 'package:chautari/utilities/socket.dart';
 import 'package:chautari/view/chat/chat_controller.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:get/get.dart';
 
 class ConversationsController extends GetxController {
+  RxMap<dynamic, dynamic> _presence;
+  final PresenceService presenceService = Get.find();
   FetchConversatiosnService conversationService;
   AuthController auth;
   var isLoading = false.obs;
@@ -15,6 +18,7 @@ class ConversationsController extends GetxController {
 
   List<MenuItem> get conversationViewModel => conversations
       .map((element) => MenuItem(
+          index: element.senderId,
           title: "${element.senderName}",
           subtitle:
               element.messages.isEmpty ? "" : element.messages.last.content))
@@ -24,7 +28,7 @@ class ConversationsController extends GetxController {
   void onInit() {
     super.onInit();
     auth = Get.find();
-
+    _presence = presenceService.presence;
     conversationService = FetchConversatiosnService();
     isLoading = conversationService.isLoading;
     conversationService.fetchConversation();
@@ -36,6 +40,10 @@ class ConversationsController extends GetxController {
         error.value = conversationService.error;
       }
     });
+  }
+
+  isOnline(int id) {
+    return _presence.containsKey("$id");
   }
 
   goToChats(int index) {
