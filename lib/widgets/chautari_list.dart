@@ -49,7 +49,7 @@ class ChautariList {
     );
   }
 
-  Widget getListTile(Function tap, MenuItem item) {
+  Widget getListTile(Function tap, MenuItem item, {Widget trailing}) {
     List<Widget> _getContent() {
       return [
         Text(
@@ -82,17 +82,7 @@ class ChautariList {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: _getContent(),
               ),
-              if (item.selected ?? false) ...[
-                Spacer(),
-                IconButton(
-                  icon: Icon(
-                    Icons.check,
-                    size: 20,
-                    color: ChautariColors.whiteAndBlackcolor(),
-                  ),
-                  onPressed: null,
-                )
-              ]
+              if (trailing != null) ...[Spacer(), trailing]
             ],
           ),
         ),

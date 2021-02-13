@@ -32,6 +32,16 @@ class ThemeSelectionView extends StatelessWidget {
             return ChautariList().getListTile(
               () => _setTheme(item),
               item,
+              trailing: (item?.selected ?? false)
+                  ? IconButton(
+                      icon: Icon(
+                        Icons.check,
+                        size: 20,
+                        color: ChautariColors.whiteAndBlackcolor(),
+                      ),
+                      onPressed: null,
+                    )
+                  : null,
             );
           },
         ),
