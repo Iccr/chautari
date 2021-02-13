@@ -101,7 +101,8 @@ class ChatController extends GetxController {
   @override
   void onClose() {
     super.onClose();
-    socket?.disconnect();
+
+    // socket?.disconnect();
   }
 
   sendMessage() {
