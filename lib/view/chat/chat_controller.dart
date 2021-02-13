@@ -63,12 +63,6 @@ class ChatController extends GetxController {
     });
   }
 
-  isOnline(user_id) {
-    socket.presences.listen((presences) {
-      print(presences);
-    });
-  }
-
   fetchConversations() {
     conversationService = NewConversatiosnService();
     isLoading = conversationService.isLoading;

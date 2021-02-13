@@ -7,12 +7,27 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:phoenix_wings/phoenix_wings.dart';
 
+class PresenceService extends GetxService {
+  var presence = {}.obs;
+
+  joined(PresenceModel user) {
+    presence["${user.metas.first.userId}"] = user;
+    print("joined: ${user.metas.first.userId}");
+  }
+
+  leave(PresenceModel user) {
+    if (presence.containsKey("${user.metas.first.userId}")) {
+      presence.remove("${user.metas.first.userId}");
+    }
+  }
+}
+
 class SocketController extends GetxController {
   PhoenixSocket _socket;
   PhoenixChannel _channel;
   final String token;
   final int conversationId;
-  var presences = {}.obs;
+  final PresenceService presences = Get.find();
 
   SocketController({@required this.token, @required this.conversationId}) {
     _initConnection(token);
@@ -39,17 +54,13 @@ class SocketController extends GetxController {
   onJoin(String key, dynamic currentPresence, dynamic newPresence) {
     var jsn = jsonDecode(jsonEncode(newPresence));
     var presenceModel = PresenceModel.fromJson(jsn);
-    presences["${presenceModel.metas.first.userId}"] = presenceModel;
-    print("joined: ${presenceModel.metas.first.userId}");
+    presences.joined(presenceModel);
   }
 
   onLeave(String key, dynamic currentPresence, dynamic newPresence) {
     var jsn = jsonDecode(jsonEncode(newPresence));
     var presenceModel = PresenceModel.fromJson(jsn);
-    if (presences.containsKey("${presenceModel.metas.first.userId}")) {
-      presences.remove("${presenceModel.metas.first.userId}");
-    }
-    print("left: ${presenceModel.metas.first.userId}");
+    presences.leave(presenceModel);
   }
 
   initSocketAndListenChannel() async {
@@ -60,12 +71,14 @@ class SocketController extends GetxController {
     });
 
     _channel.on("presence_state", (payload, ref, joinRef) {
-      PhoenixPresence.syncState(presences.value, payload, onJoin, onLeave);
+      PhoenixPresence.syncState(
+          presences.presence.value, payload, onJoin, onLeave);
     });
 
     _channel.on("presence_diff", (payload, ref, joinRef) {
       print("presence_diff");
-      PhoenixPresence.syncDiff(presences.value, payload, onJoin, onLeave);
+      PhoenixPresence.syncDiff(
+          presences.presence.value, payload, onJoin, onLeave);
     });
 
     _channel.join();
