@@ -13,6 +13,8 @@ class ChatViewModel {
 
 class ChatController extends GetxController {
   int recipient;
+
+  RxMap<dynamic, dynamic> _presence;
   PresenceService presence = Get.find();
   AuthController auth = Get.find();
   NewConversatiosnService conversationService;
@@ -27,8 +29,6 @@ class ChatController extends GetxController {
 
   var conversation = List<Conversation>().obs;
 
-  RxBool isSenderOnline = false.obs;
-
   var isLoading = false.obs;
   var _error = "".obs;
 
@@ -39,10 +39,7 @@ class ChatController extends GetxController {
     super.onInit();
     _viewModel = Get.arguments;
     recipient = _viewModel.recipient;
-    presence.presence.stream.listen((event) {
-      print("event in chat controller stream listner");
-      isSenderOnline.value = presence.isPresent(conversation.first.senderId);
-    });
+    _presence = presence.presence;
     if (_viewModel.conversation != null) {
       updateConversation(_viewModel.conversation);
     }
@@ -71,6 +68,10 @@ class ChatController extends GetxController {
       this.messages.add(message);
       await scrollToLast();
     });
+  }
+
+  isOnline() {
+    return _presence.containsKey("${conversation.first.senderId}");
   }
 
   fetchConversations() {

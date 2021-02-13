@@ -34,7 +34,7 @@ class ChatView extends StatelessWidget {
     return Obx(
       () => Scaffold(
         appBar: AppBar(
-          title: Text(controller.isSenderOnline.value ? 'Online' : 'Offline'),
+          title: Text(controller.isOnline() ? 'Online' : 'Offline'),
         ),
         body: Container(
           // color: Colors.yellow.withAlpha(64),
