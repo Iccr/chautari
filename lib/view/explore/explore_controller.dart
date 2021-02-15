@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 
 class ExploreController extends GetxController {
   FetchRoomService service;
+
+  var isSearching = false.obs;
   var _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
   String error;

@@ -61,15 +61,15 @@ class AddRoomForm2 extends StatelessWidget {
               ),
 
               // mobile visibility
-              ContactNumberVisibilityWidget(
-                contactVisibilityKey: controller.formKeys.contactVisibilityKey,
-                initialValue: controller.contactNumberVisible.value,
-                focusNode: controller.focusNodes.contactSwitchFocusNode,
-                onChanged: (value) => {
-                  controller.apiModel.contactNumbervisibile = value,
-                  controller.setContactNumbervisibility(value),
-                },
-              ),
+              // ContactNumberVisibilityWidget(
+              //   contactVisibilityKey: controller.formKeys.contactVisibilityKey,
+              //   initialValue: controller.contactNumberVisible.value,
+              //   focusNode: controller.focusNodes.contactSwitchFocusNode,
+              //   onChanged: (value) => {
+              //     controller.apiModel.contactNumbervisibile = value,
+              //     controller.setContactNumbervisibility(value),
+              //   },
+              // ),
 
               // contact number
               if (controller.contactNumberVisible.value) ...[

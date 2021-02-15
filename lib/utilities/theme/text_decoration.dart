@@ -39,4 +39,11 @@ class ChautariDecoration {
       errorText: errorText,
     );
   }
+
+  InputDecoration searchTextField() {
+    return InputDecoration(
+      fillColor: Colors.red,
+      focusColor: Colors.green,
+    );
+  }
 }
