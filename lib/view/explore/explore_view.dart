@@ -21,14 +21,7 @@ class Exploreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final ExploreController c = Get.put(ExploreController());
 
-    _goTOLogin({ExploreController controller}) async {
-      await showCupertinoModalBottomSheet(
-        expand: true,
-        context: context,
-        backgroundColor: Colors.transparent,
-        builder: (context) => FilterView(),
-      );
-    }
+    _goTOLogin({ExploreController controller}) async {}
 
     return Obx(
       () => ProgressHud(
@@ -40,6 +33,7 @@ class Exploreview extends StatelessWidget {
               IconButton(
                   icon: Icon(LineIcons.filter),
                   onPressed: () {
+                    Get.toNamed(RouteName.filterRoom);
                     print("filter");
                   }),
             ],

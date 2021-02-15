@@ -11,6 +11,7 @@ class RouteName {
   static String addRoom = "/addRoom";
   static String roomDetail = "/roomDetail";
   static String updateRoom = "/updateRoom";
+  static String filterRoom = "/filterRoom";
   static String login = "/login";
   static String map = "/map";
   static String pickLocation = "/pickLocation";
