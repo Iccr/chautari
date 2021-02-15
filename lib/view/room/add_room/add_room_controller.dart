@@ -2,7 +2,7 @@ import 'package:chautari/model/add_room_multipart_model.dart';
 import 'package:chautari/model/app_info.dart';
 import 'package:chautari/model/menu_item.dart';
 import 'package:chautari/repository/rooms_repository.dart';
-import 'package:chautari/services/fetch_room_service.dart';
+import 'package:chautari/services/room_service.dart';
 import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/theme/colors.dart';
@@ -20,7 +20,7 @@ class AddRoomController extends GetxController {
   final CreateRoomApiRequestModel apiModel = CreateRoomApiRequestModel();
 
   final PageController pageController = PageController();
-  FetchRoomService fetchRoomService;
+  RoomService fetchRoomService;
 
   var isValid = false;
 

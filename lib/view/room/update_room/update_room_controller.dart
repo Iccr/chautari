@@ -1,7 +1,7 @@
 import 'package:chautari/model/room_model.dart';
 import 'package:chautari/services/appinfo_service.dart';
-import 'package:chautari/services/fetch_my_room_service.dart';
-import 'package:chautari/services/update_room_service.dart';
+import 'package:chautari/services/room_service.dart';
+
 import 'package:chautari/utilities/NepaliRupeeTextFormatter.dart';
 import 'package:chautari/utilities/api_service.dart';
 import 'package:chautari/utilities/router/router_name.dart';
@@ -21,8 +21,7 @@ class UpdateRoomController extends GetxController {
   var _error = "".obs;
   String get error => _error.value;
 
-  UpdateRoomService updateService;
-  FetchMyRoomService myRoomService;
+  RoomService roomService;
 
   List<String> get roomImages =>
       room.images.map((e) => BaseUrl().imageBaseUrl + e).toList();
@@ -45,12 +44,8 @@ class UpdateRoomController extends GetxController {
   void onInit() {
     super.onInit();
     room = Get.arguments;
+    roomService = Get.find();
 
-    try {
-      myRoomService = Get.find();
-    } catch (e) {
-      myRoomService = Get.put(FetchMyRoomService());
-    }
     contactNumberVisible.value = room.phoneVisibility;
   }
 
@@ -70,12 +65,11 @@ class UpdateRoomController extends GetxController {
   }
 
   _update() async {
-    updateService = UpdateRoomService(room);
     isLoading.value = true;
-    await updateService.updateRoom();
-    if (updateService.success.value) {
-      isLoading.value = myRoomService.isLoading.value;
-      await myRoomService.fetchMyRooms();
+    await roomService.updateRoom(room);
+    if (roomService.success.value) {
+      isLoading.value = roomService.isLoading.value;
+      await roomService.fetchMyRooms();
 
       // Get.offNamed(RouteName.myRooms);
       Get.until((route) => Get.currentRoute == RouteName.myRooms);

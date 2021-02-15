@@ -2,7 +2,7 @@ import 'package:chautari/services/appinfo_service.dart';
 import 'package:chautari/utilities/router/routers.dart';
 import 'package:chautari/utilities/theme/theme.dart';
 import 'package:chautari/utilities/theme/theme_controller.dart';
-import 'package:chautari/services/fetch_room_service.dart';
+import 'package:chautari/services/room_service.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/splash/splash_screen.dart';
@@ -21,16 +21,18 @@ void initServices() async {
 
   /// Here is where you put get_storage, hive, shared_pref initialization.
   /// or moor connection, or whatever that's async.
-  await Get.putAsync(() => FetchRoomService().init());
   await Get.putAsync(() => AppInfoService().init());
+  await Get.putAsync(() => RoomService().init());
+
   print('All services started...');
 }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+
   final ThemeController themeController = Get.put(ThemeController());
   final AuthController loginController = Get.put(AuthController());
-  final FetchRoomService fetchRoomsService = Get.put(FetchRoomService());
+
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
