@@ -1,12 +1,9 @@
 import 'package:chautari/model/room_model.dart';
-import 'package:chautari/services/fetch_room_service.dart';
-import 'package:chautari/services/searc_room_service.dart';
-
+import 'package:chautari/services/room_service.dart';
 import 'package:get/get.dart';
 
 class ExploreController extends GetxController {
-  FetchRoomService _service;
-  SearchRoomService _searchService;
+  RoomService _service;
 
   var height = 45.0.obs;
   var duration = 150.obs;
@@ -23,14 +20,13 @@ class ExploreController extends GetxController {
   void onInit() {
     super.onInit();
     _service = Get.find();
-    _searchService = SearchRoomService();
     this._isLoading = _service.isLoading;
     this._models = _service.rooms;
   }
 
   search({String address}) async {
-    this._isLoading = _searchService.isLoading;
-    this._models = _searchService.rooms;
-    _searchService.search(address: address);
+    this._isLoading = _service.isLoading;
+    this._models = _service.rooms;
+    _service.search(address: address);
   }
 }

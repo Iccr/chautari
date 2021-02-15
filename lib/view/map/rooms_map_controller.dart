@@ -1,5 +1,5 @@
 import 'package:chautari/model/room_model.dart';
-import 'package:chautari/services/fetch_room_service.dart';
+import 'package:chautari/services/room_service.dart';
 import 'package:chautari/widgets/map/map.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 class RoomsMapController extends GetxController {
   final ChautariMapController mapController = ChautariMapController();
   Map map;
-  FetchRoomService service;
+  RoomService service;
 
   var _models = List<RoomModel>().obs;
   List<RoomModel> get models => _models.value;

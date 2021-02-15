@@ -75,30 +75,30 @@ class RoomDetailBottomBlock extends StatelessWidget {
                       ],
                     ),
                   SizedBox(
-                    width: ChautariPadding.standard * 2,
+                    width: ChautariPadding.standard,
                   ),
-                  Column(
-                    children: [
-                      Container(
-                        padding: EdgeInsets.all(ChautariPadding.small5),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(Get.width),
-                          border: Border.all(width: 0.5),
-                        ),
-                        child: IconButton(
-                            icon: Icon(
-                              LineIcons.comments_o,
-                              color:
-                                  ChautariColors.primaryDarkAndWhite900color(),
-                            ),
-                            onPressed: () => {}),
-                      ),
-                      Text("Chat")
-                    ],
-                  ),
-                  SizedBox(
-                    width: ChautariPadding.standard * 2,
-                  ),
+                  // Column(
+                  //   children: [
+                  //     Container(
+                  //       padding: EdgeInsets.all(ChautariPadding.small5),
+                  //       decoration: BoxDecoration(
+                  //         borderRadius: BorderRadius.circular(Get.width),
+                  //         border: Border.all(width: 0.5),
+                  //       ),
+                  //       child: IconButton(
+                  //           icon: Icon(
+                  //             LineIcons.comments_o,
+                  //             color:
+                  //                 ChautariColors.primaryDarkAndWhite900color(),
+                  //           ),
+                  //           onPressed: () => {}),
+                  //     ),
+                  //     Text("Chat")
+                  //   ],
+                  // ),
+                  // SizedBox(
+                  //   width: ChautariPadding.standard * 2,
+                  // ),
                 ],
               ),
             ),

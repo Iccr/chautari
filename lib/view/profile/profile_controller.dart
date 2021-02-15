@@ -15,11 +15,11 @@ class ProfileController extends GetxController {
         title: "My Rents",
         index: 1,
         subtitle: "See Your properties in Chautari Basti"),
-    MenuItem(
-        title: "My Subscriptions",
-        index: 2,
-        subtitle: "We will notify you when your preference is matched"),
-    MenuItem(title: "chats", index: 3, subtitle: "Your chats history")
+    // MenuItem(
+    //     title: "My Subscriptions",
+    //     index: 2,
+    //     subtitle: "We will notify you when your preference is matched"),
+    // MenuItem(title: "chats", index: 3, subtitle: "Your chats history")
   ];
 
   List<MenuItem> _normalMenu = [

@@ -4,12 +4,14 @@ import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/view/explore/explore_controller.dart';
+import 'package:chautari/view/explore/filter_view.dart';
 import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
 import 'package:chautari/view/room/room_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class Exploreview extends StatelessWidget {
   ScrollController scrollController = ScrollController();
@@ -19,6 +21,15 @@ class Exploreview extends StatelessWidget {
   Widget build(BuildContext context) {
     final ExploreController c = Get.put(ExploreController());
 
+    _goTOLogin({ExploreController controller}) async {
+      await showCupertinoModalBottomSheet(
+        expand: true,
+        context: context,
+        backgroundColor: Colors.transparent,
+        builder: (context) => FilterView(),
+      );
+    }
+
     return Obx(
       () => ProgressHud(
         isLoading: c.isLoading,
@@ -26,11 +37,11 @@ class Exploreview extends StatelessWidget {
           appBar: AppBar(
             title: Text("Chautari Basti"),
             actions: [
-              // IconButton(
-              //   icon: Icon(Icons.search),
-              //   onPressed: () => c.isSearching.toggle(),
-              // ),
-              IconButton(icon: Icon(LineIcons.filter), onPressed: null),
+              IconButton(
+                  icon: Icon(LineIcons.filter),
+                  onPressed: () {
+                    print("filter");
+                  }),
             ],
           ),
           body: NotificationListener<ScrollNotification>(
@@ -53,9 +64,7 @@ class Exploreview extends StatelessWidget {
                   padding: EdgeInsets.all(ChautariPadding.small5),
                   child: TextField(
                     onSubmitted: (value) {
-                      if (value.isNotEmpty) {
-                        c.search(address: value);
-                      }
+                      c.search(address: value);
                     },
                     style: ChautariTextStyles().listSubtitle,
                     cursorColor: Colors.white,

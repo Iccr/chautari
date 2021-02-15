@@ -4,8 +4,8 @@ import 'package:chautari/model/room_model.dart';
 
 import 'package:chautari/repository/rooms_repository.dart';
 import 'package:chautari/services/appinfo_service.dart';
-import 'package:chautari/services/delete_room_service.dart';
-import 'package:chautari/services/fetch_my_room_service.dart';
+
+import 'package:chautari/services/room_service.dart';
 
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
@@ -15,8 +15,7 @@ import 'package:get/get.dart';
 class RoomDetailController extends GetxController {
   AuthController auth;
   AppInfoService appIinfoService = Get.find();
-  DeleteRoomService deleteRoomService;
-  FetchMyRoomService myRoomService;
+  RoomService roomService;
 
   RoomDetailController() {
     auth = Get.find();
@@ -61,12 +60,12 @@ class RoomDetailController extends GetxController {
     this.isMyRoomDetail = viewmodel.isMyRoom;
     _room.value = viewmodel.room;
 
-    deleteRoomService = DeleteRoomService(room);
+    roomService = RoomService();
 
     try {
-      myRoomService = Get.find();
+      roomService = Get.find();
     } catch (e) {
-      myRoomService = Get.put(FetchMyRoomService());
+      roomService = Get.put(RoomService());
     }
 
     _fetchRoomDetail();
@@ -104,13 +103,14 @@ class RoomDetailController extends GetxController {
   }
 
   delete() async {
-    _isLoading.value = deleteRoomService.isLoading.value;
-    await this.deleteRoomService.deleteRooms();
-    myRoomService.fetchMyRooms();
-    if (deleteRoomService.success.value) {
+    _isLoading.value = roomService.isLoading.value;
+
+    await this.roomService.deleteRooms(room);
+    roomService.fetchMyRooms();
+    if (roomService.success.value) {
       Get.back();
     } else {
-      print(deleteRoomService.error);
+      print(roomService.error);
     }
   }
 

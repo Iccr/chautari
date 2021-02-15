@@ -1,11 +1,11 @@
 import 'package:chautari/model/room_model.dart';
-import 'package:chautari/services/fetch_my_room_service.dart';
+import 'package:chautari/services/room_service.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:get/get.dart';
 
 class MyRoomsController extends GetxController {
   final AuthController auth = Get.find();
-  FetchMyRoomService myRoomService;
+  RoomService roomService;
   var isLoading = false.obs;
   String error;
   var models = List<RoomModel>().obs;
@@ -15,9 +15,9 @@ class MyRoomsController extends GetxController {
   @override
   onInit() {
     try {
-      myRoomService = Get.find();
+      roomService = Get.find();
     } catch (e) {
-      myRoomService = Get.put(FetchMyRoomService());
+      roomService = Get.put(RoomService());
     }
     if (auth.user.isLoggedIn) {
       _fetchMyRoom();
@@ -25,8 +25,8 @@ class MyRoomsController extends GetxController {
   }
 
   _fetchMyRoom() {
-    isLoading = myRoomService.isLoading;
-    models = myRoomService.rooms;
-    myRoomService.fetchMyRooms();
+    isLoading = roomService.isLoading;
+    models = roomService.myRooms;
+    roomService.fetchMyRooms();
   }
 }
