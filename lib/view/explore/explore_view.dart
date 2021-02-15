@@ -39,17 +39,10 @@ class Exploreview extends StatelessWidget {
                 print(notification.metrics.pixels / 10);
                 c.height.value = 0;
               }
-
               if (notification.metrics.pixels / 10 < -5) {
                 print(notification.metrics.pixels / 10);
-                c.height.value = 40;
+                c.height.value = 45;
               }
-
-              // if (notification is UserScrollNotification &&
-              //     notification.direction == ScrollDirection.reverse) {
-              //   print(notification.metrics.pixels);
-              //   print("animate");
-              // }
             },
             child: Column(
               children: [
@@ -60,9 +53,11 @@ class Exploreview extends StatelessWidget {
                   padding: EdgeInsets.all(ChautariPadding.small5),
                   child: TextField(
                     onSubmitted: (value) {
-                      print(value);
+                      if (value.isNotEmpty) {
+                        c.search(address: value);
+                      }
                     },
-                    style: ChautariTextStyles().listTitle,
+                    style: ChautariTextStyles().listSubtitle,
                     cursorColor: Colors.white,
                     decoration: InputDecoration(
                       hintText: "Quick Search",
@@ -72,7 +67,7 @@ class Exploreview extends StatelessWidget {
                       fillColor:
                           ChautariColors.blackAndSearchcolor().withOpacity(0.6),
                       filled: true,
-                      isDense: true,
+                      isDense: false,
                     ),
                   ),
                 ),
