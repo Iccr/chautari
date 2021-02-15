@@ -30,7 +30,7 @@ class AddRoomController extends GetxController {
   var addressError = "".obs;
   var _lat = 1000.0.obs;
   var _long = 1000.0.obs;
-  var contactNumberVisible = false.obs;
+  var contactNumberVisible = true.obs;
 
   var pageoffset = 0.0.obs;
   // observable keys

@@ -38,9 +38,10 @@ class ContactNumberWidget extends StatelessWidget {
         name: "contact",
         onTap: () => onTap(),
         decoration: ChautariDecoration().outlinedBorderTextField(
-            prefix: Text("+977-"),
-            labelText: "Contact Number",
-            helperText: "If vissible people can call to this number"),
+          prefix: Text("+977-"),
+          labelText: "Contact Number",
+          // helperText: "If vissible people can call to this number",
+        ),
         onSaved: (newValue) => onSaved(newValue),
       ),
     );
