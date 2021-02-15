@@ -1,8 +1,15 @@
 import 'package:flutter/material.dart';
 
-class FilterView extends StatelessWidget {
+class FilterRoom extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Filter"),
+      ),
+      body: Center(
+        child: Text("filter"),
+      ),
+    );
   }
 }
