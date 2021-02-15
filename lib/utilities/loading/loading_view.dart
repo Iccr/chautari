@@ -94,7 +94,7 @@ class _AnimatedProgressHudState extends State<AnimatedProgressHud>
   @override
   Widget build(BuildContext context) {
     return SpinKitRipple(
-      color: ChautariColors.primaryColor(),
+      color: ChautariColors.primary,
       size: 50.0,
     );
   }
