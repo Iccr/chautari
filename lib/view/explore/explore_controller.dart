@@ -6,6 +6,9 @@ import 'package:get/get.dart';
 class ExploreController extends GetxController {
   FetchRoomService service;
 
+  var height = 40.0.obs;
+  var duration = 150.obs;
+  double get containerHeight => height.value;
   var isSearching = false.obs;
   var _isLoading = false.obs;
   bool get isLoading => _isLoading.value;

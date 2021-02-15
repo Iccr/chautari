@@ -13,7 +13,7 @@ class RoomWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: EdgeInsets.all(ChautariPadding.medium),
+        padding: EdgeInsets.all(ChautariPadding.small5),
         child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () => {
@@ -146,12 +146,14 @@ class ImageCarousel extends StatelessWidget {
 
 class ListRoom extends StatelessWidget {
   final List<RoomModel> rooms;
-  Function(RoomModel) onTap;
-  ListRoom({@required this.rooms, this.onTap});
+  final Function(RoomModel) onTap;
+  final ScrollController controller;
+  ListRoom({@required this.rooms, this.onTap, this.controller});
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
+        controller: controller,
         separatorBuilder: (context, index) {
           return Container(
             height: 0,

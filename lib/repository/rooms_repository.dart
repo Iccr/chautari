@@ -6,6 +6,7 @@ import 'package:dio/dio.dart';
 class RoomsRepository {
   final String _roomsURl = "/rooms";
   final String _myRooms = "/my_rooms";
+  final String _searchRoom = "/rooms/search";
 
   ApiService api;
   RoomsRepository() {
@@ -14,6 +15,11 @@ class RoomsRepository {
 
   Future<AllRoomsResponseModel> fetchMyRooms() async {
     final response = await api.get(_myRooms);
+    return AllRoomsResponseModel.fromJson(response.data);
+  }
+
+  Future<AllRoomsResponseModel> searchRoom(Map<String, dynamic> params) async {
+    final response = await api.post(_searchRoom, params);
     return AllRoomsResponseModel.fromJson(response.data);
   }
 
