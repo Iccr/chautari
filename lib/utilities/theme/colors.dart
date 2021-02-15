@@ -37,6 +37,13 @@ class ChautariColors extends GetxController {
     return mode == ThemeMode.dark ? black : primary;
   }
 
+  static Color blackAndSearchcolor() {
+    var mode = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    return mode == ThemeMode.dark
+        ? black
+        : ChautariColors.primaryColor().shade100;
+  }
+
   static MaterialColor primaryColor() {
     return primary;
   }
