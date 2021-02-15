@@ -50,8 +50,8 @@ class Exploreview extends StatelessWidget {
                       hintStyle: ChautariTextStyles().listSubtitle,
                       enabledBorder: InputBorder.none,
                       focusedBorder: InputBorder.none,
-                      fillColor: ChautariColors.blackAndPrimarycolor()
-                          .withOpacity(0.5),
+                      fillColor:
+                          ChautariColors.blackAndSearchcolor().withOpacity(0.8),
                       filled: true,
                       isDense: true,
                     ),
