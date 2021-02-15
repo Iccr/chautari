@@ -4,21 +4,20 @@ import 'package:chautari/repository/rooms_repository.dart';
 
 import 'package:get/get.dart';
 
-class FetchRoomService extends GetxService {
+class SearchRoomService extends GetxController {
   var rooms = List<RoomModel>().obs;
   var isLoading = false.obs;
   var _error = "".obs;
   String get error => _error.value.isEmpty ? null : _error.value;
 
-  Future<FetchRoomService> init() async {
-    fetchRooms();
-    return this;
-  }
+  search({String address}) async {
+    Map<String, dynamic> params = Map<String, dynamic>();
 
-  fetchRooms() async {
+    params["address"] = address;
+
     isLoading.value = true;
 
-    var models = await RoomsRepository().fetchRooms();
+    var models = await RoomsRepository().searchRoom(params);
 
     isLoading.value = false;
     if (models.errors.isEmpty ?? false) {

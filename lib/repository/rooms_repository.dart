@@ -6,7 +6,7 @@ import 'package:dio/dio.dart';
 class RoomsRepository {
   final String _roomsURl = "/rooms";
   final String _myRooms = "/my_rooms";
-  final String _searchRoom = "/rooms/search";
+  final String _searchRoom = "/search_room";
 
   ApiService api;
   RoomsRepository() {

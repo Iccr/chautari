@@ -54,6 +54,7 @@ class ApiService {
         .add(InterceptorsWrapper(onRequest: (RequestOptions options) async {
       print("******** Request *********");
       print("url: ${options.uri}");
+      print("request: ${options.data}");
       print("contentType: ${options.contentType}");
       print("headers: ${options.headers}");
 
