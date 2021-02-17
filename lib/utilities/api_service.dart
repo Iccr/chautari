@@ -13,16 +13,18 @@ class BaseUrl {
 
   BaseUrl() {
     if (development) {
-      if (Platform.isAndroid) {
-        _serverUrl = "http://10.0.2.2:4000/api/";
-        _imageServerUrl = "http://10.0.2.2:4000/";
-      } else if (Platform.isIOS) {
-        _serverUrl = "http://localhost:4000/api/";
-        _imageServerUrl = "http://localhost:4000/";
-      }
-    } else {
-      _serverUrl = "http://143.110.252.83:4000/api/";
-      _imageServerUrl = "http://143.110.252.83:4000/";
+      _serverUrl = "http://localhost:4000/api/";
+      _imageServerUrl = "http://localhost:4000/";
+      //   if (Platform.isAndroid) {
+      //     _serverUrl = "http://10.0.2.2:4000/api/";
+      //     _imageServerUrl = "http://10.0.2.2:4000/";
+      //   } else if (Platform.isIOS) {
+      //     _serverUrl = "http://localhost:4000/api/";
+      //     _imageServerUrl = "http://localhost:4000/";
+      //   }
+      // } else {
+      //   _serverUrl = "http://143.110.252.83:4000/api/";
+      //   _imageServerUrl = "http://143.110.252.83:4000/";
     }
   }
 

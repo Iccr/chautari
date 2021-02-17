@@ -3,6 +3,8 @@ import 'package:chautari/model/login_model.dart';
 import 'package:chautari/repository/login_repository.dart';
 import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/storage.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -14,6 +16,8 @@ class AuthController extends GetxController {
   var error = "".obs;
   final ChautariStorage box = ChautariStorage();
   var _user = UserModel().obs;
+
+  FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
 
   onInit() {
     super.onInit();
@@ -38,6 +42,7 @@ class AuthController extends GetxController {
     await _removeUser();
     var emptyUser = UserModel();
     await _saveuser(emptyUser);
+    await firebaseAuth.signOut();
     this._user.value = emptyUser;
   }
 
@@ -50,8 +55,7 @@ class AuthController extends GetxController {
   );
 
   Future fbLogin() async {
-    final FacebookLoginResult result =
-        await facebookSignIn.logIn(['email', 'public_profile']);
+    final FacebookLoginResult result = await facebookSignIn.logIn(['email']);
     // var _result = false;
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
@@ -59,14 +63,21 @@ class AuthController extends GetxController {
 
         var model = await LoginRepository().getFacebookUser(accessToken.token);
 
+        var firebaseUser = await _loginWithFacebookFirebase(accessToken.token);
+        if (firebaseUser == null) {
+          print("firebase login failed");
+        }
+
         Map<String, dynamic> params = {
           "user": {
             "token": accessToken.token,
             "user_id": accessToken.userId,
             "provider": "facebook",
-            "name": model.name,
+            "name": firebaseUser.displayName,
             "email": model.email,
-            "imageurl": model.picture ?? ""
+            "imageurl": firebaseUser.photoURL ?? "",
+            "fuid": firebaseUser.uid
+            // "fcm"
           }
         };
 
@@ -90,6 +101,10 @@ class AuthController extends GetxController {
       } else {
         var auth = await result.authentication;
 
+        var firebaseUser = await _loginWithGoogleFirebase(auth);
+        if (firebaseUser == null) {
+          print("firebase login failed");
+        }
         Map<String, dynamic> params = {
           "user": {
             "token": auth.accessToken,
@@ -97,14 +112,17 @@ class AuthController extends GetxController {
             "provider": "google",
             "name": result.displayName,
             "email": result.email,
-            "imageurl": result.photoUrl
+            "imageurl": result.photoUrl,
+            "fuid": firebaseUser.uid,
+            // "fcm":
           }
         };
+
         await _loginWithApi(params);
       }
     } catch (e) {
       print(e);
-      error = e.message;
+      error.value = e.message;
     }
   }
 
@@ -128,6 +146,67 @@ class AuthController extends GetxController {
     } else {
       List<ApiError> errors = model.errors ?? [];
       error.value = errors.first?.value ?? "";
+    }
+  }
+
+  Future<User> _loginWithGoogleFirebase(
+      GoogleSignInAuthentication googleAuth) async {
+    final AuthCredential credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth.accessToken,
+      idToken: googleAuth.idToken,
+    );
+    User firebaseUser =
+        (await firebaseAuth.signInWithCredential(credential)).user;
+    if (firebaseUser != null) {
+      // Check is already sign up
+
+      final QuerySnapshot result = await FirebaseFirestore.instance
+          .collection('users')
+          .where('id', isEqualTo: firebaseUser.uid)
+          .get();
+
+      final List<DocumentSnapshot> documents = result.docs;
+      if (documents.length == 0) {
+        // Update data to server if new user
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(firebaseUser.uid)
+            .set({
+          'nickname': firebaseUser.displayName,
+          'photoUrl': firebaseUser.photoURL,
+          'id': firebaseUser.uid
+        });
+      }
+      return firebaseUser;
+    }
+  }
+
+  Future<User> _loginWithFacebookFirebase(String accesstoken) async {
+    final OAuthCredential credential =
+        FacebookAuthProvider.credential(accesstoken);
+
+    var result = (await firebaseAuth.signInWithCredential(credential));
+    var firebaseUser = result.user;
+    if (firebaseUser != null) {
+      // Check is already sign up
+      final QuerySnapshot result = await FirebaseFirestore.instance
+          .collection('users')
+          .where('id', isEqualTo: firebaseUser.uid)
+          .get();
+
+      final List<DocumentSnapshot> documents = result.docs;
+      if (documents.length == 0) {
+        // Update data to server if new user
+        FirebaseFirestore.instance
+            .collection('users')
+            .doc(firebaseUser.uid)
+            .set({
+          'nickname': firebaseUser.displayName,
+          'photoUrl': firebaseUser.photoURL,
+          'id': firebaseUser.uid
+        });
+      }
+      return firebaseUser;
     }
   }
 }

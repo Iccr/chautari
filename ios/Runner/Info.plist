@@ -41,27 +41,23 @@
 	</array>
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<false/>
-	<key>CFBundleURLTypes</key>
+	
+
+<key>CFBundleURLTypes</key>
 <array>
-    <dict>
-        <key>CFBundleTypeRole</key>
-        <string>Editor</string>
-        <key>CFBundleURLSchemes</key>
-        <array>
-        <string>com.googleusercontent.apps.739135606863-4s1456p5mleefs6l8u9hcbcuc6k016vf</string>
-        </array>
-    </dict>
   <dict>
   <key>CFBundleURLSchemes</key>
   <array>
-    <string>fb260397471937162</string>
+    <string>fb431411358129409</string>
   </array>
   </dict>
 </array>
 <key>FacebookAppID</key>
-<string>260397471937162</string>
+<string>431411358129409</string>
 <key>FacebookDisplayName</key>
-<string>MarketPalace</string>
+<string>Chautari</string>
+
+
 
 <key>LSApplicationQueriesSchemes</key>
 <array>
