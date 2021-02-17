@@ -118,7 +118,7 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   readLocal() async {
-    id = "${auth.user.id}" ?? '';
+    id = "${auth.user.fuid}" ?? '';
     if (id.hashCode <= peerId.hashCode) {
       groupChatId = '$id-$peerId';
     } else {
@@ -135,29 +135,51 @@ class ChatScreenState extends State<ChatScreen> {
     }
   }
 
-  void onSendMessage(String content, int type) {
-    // type: 0 = text, 1 = image, 2 = sticker
+  void onSendMessage(
+      {@required String content,
+      @required String myId,
+      @required String peerId}) {
     if (content.trim() != '') {
       textEditingController.clear();
-
-      var documentReference = FirebaseFirestore.instance
-          .collection('messages')
-          .doc(groupChatId)
+      var documentReference1 = FirebaseFirestore.instance
+          .collection('chats')
+          .doc(myId)
           .collection(groupChatId)
-          .doc(DateTime.now().millisecondsSinceEpoch.toString());
+          .doc(
+            DateTime.now().millisecondsSinceEpoch.toString(),
+          );
 
-      FirebaseFirestore.instance.runTransaction((transaction) async {
-        transaction.set(
-          documentReference,
-          {
-            'idFrom': id,
-            'idTo': peerId,
-            'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
-            'content': content,
-            'type': type
-          },
-        );
-      });
+      var documentReference2 = FirebaseFirestore.instance
+          .collection('messages')
+          .doc(peerId)
+          .collection(groupChatId)
+          .doc(
+            DateTime.now().millisecondsSinceEpoch.toString(),
+          );
+
+      FirebaseFirestore.instance.runTransaction(
+        (transaction) async {
+          transaction.set(
+            documentReference1,
+            {
+              'idFrom': id,
+              'idTo': peerId,
+              'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
+              'content': content,
+            },
+          );
+
+          transaction.set(
+            documentReference2,
+            {
+              'idFrom': id,
+              'idTo': peerId,
+              'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
+              'content': content,
+            },
+          );
+        },
+      );
 
       listScrollController.animateTo(0.0,
           duration: Duration(milliseconds: 300), curve: Curves.easeOut);
@@ -174,37 +196,19 @@ class ChatScreenState extends State<ChatScreen> {
       // Right (my message)
       return Row(
         children: <Widget>[
-          document.data()['type'] == 0
-              // Text
-              ? Container(
-                  child: Text(
-                    document.data()['content'],
-                    style: TextStyle(color: primaryColor),
-                  ),
-                  padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
-                  width: 200.0,
-                  decoration: BoxDecoration(
-                      color: greyColor2,
-                      borderRadius: BorderRadius.circular(8.0)),
-                  margin: EdgeInsets.only(
-                      bottom: isLastMessageRight(index) ? 20.0 : 10.0,
-                      right: 10.0),
-                )
-              : document.data()['type'] == 1
-                  // Image
-                  ? Container()
-                  // Sticker
-                  : Container(
-                      child: Image.asset(
-                        'images/${document.data()['content']}.gif',
-                        width: 100.0,
-                        height: 100.0,
-                        fit: BoxFit.cover,
-                      ),
-                      margin: EdgeInsets.only(
-                          bottom: isLastMessageRight(index) ? 20.0 : 10.0,
-                          right: 10.0),
-                    ),
+          // Text
+          Container(
+            child: Text(
+              document.data()['content'],
+              style: TextStyle(color: primaryColor),
+            ),
+            padding: EdgeInsets.fromLTRB(15.0, 10.0, 15.0, 10.0),
+            width: 200.0,
+            decoration: BoxDecoration(
+                color: greyColor2, borderRadius: BorderRadius.circular(8.0)),
+            margin: EdgeInsets.only(
+                bottom: isLastMessageRight(index) ? 20.0 : 10.0, right: 10.0),
+          )
         ],
         mainAxisAlignment: MainAxisAlignment.end,
       );
@@ -300,7 +304,7 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   Future<QuerySnapshot> checkReferenceExist() {
-    return FirebaseFirestore.instance.collection("messages").get();
+    return FirebaseFirestore.instance.collection("chats").get();
   }
 
   @override
@@ -340,7 +344,10 @@ class ChatScreenState extends State<ChatScreen> {
             child: Container(
               child: TextField(
                 onSubmitted: (value) {
-                  onSendMessage(textEditingController.text, 0);
+                  onSendMessage(
+                      content: textEditingController.text,
+                      myId: auth.user.fuid,
+                      peerId: this.peerId);
                 },
                 style: TextStyle(color: primaryColor, fontSize: 15.0),
                 controller: textEditingController,
@@ -359,7 +366,10 @@ class ChatScreenState extends State<ChatScreen> {
               margin: EdgeInsets.symmetric(horizontal: 8.0),
               child: IconButton(
                 icon: Icon(Icons.send),
-                onPressed: () => onSendMessage(textEditingController.text, 0),
+                onPressed: () => onSendMessage(
+                    content: textEditingController.text,
+                    myId: auth.user.fuid,
+                    peerId: this.peerId),
                 color: primaryColor,
               ),
             ),
@@ -381,10 +391,19 @@ class ChatScreenState extends State<ChatScreen> {
           ? Center(
               child: CircularProgressIndicator(
                   valueColor: AlwaysStoppedAnimation<Color>(themeColor)))
+
+          //           var documentReference1 = FirebaseFirestore.instance
+          // .collection('chats')
+          // .doc(myId)
+          // .collection(groupChatId)
+          // .doc(
+          //   DateTime.now().millisecondsSinceEpoch.toString(),
+          // );
+
           : StreamBuilder(
               stream: FirebaseFirestore.instance
-                  .collection('messages')
-                  .doc(groupChatId)
+                  .collection('chats')
+                  .doc(auth.user.fuid)
                   .collection(groupChatId)
                   .orderBy('timestamp', descending: true)
                   .limit(_limit)

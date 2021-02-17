@@ -6,11 +6,16 @@ import 'package:chautari/repository/rooms_repository.dart';
 import 'package:chautari/services/appinfo_service.dart';
 
 import 'package:chautari/services/room_service.dart';
+import 'package:chautari/utilities/router/router_name.dart';
+import 'package:chautari/view/chats/chat_view.dart';
 
 import 'package:chautari/view/login/auth_controller.dart';
+import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
 import 'package:chautari/widgets/alert.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class RoomDetailController extends GetxController {
   AuthController auth;
@@ -112,6 +117,25 @@ class RoomDetailController extends GetxController {
     } else {
       print(roomService.error);
     }
+  }
+
+  goToChat() {
+    if (auth.isLoggedIn) {
+      var viewModel =
+          ChatViewModel(peerId: room.user.fuid, photoUrl: room.user.imageurl);
+      Get.toNamed(RouteName.chat, arguments: viewModel);
+    } else {
+      goToLogin();
+    }
+  }
+
+  goToLogin() async {
+    await showCupertinoModalBottomSheet(
+      expand: true,
+      context: Get.context,
+      backgroundColor: Colors.transparent,
+      builder: (context) => LoginView(),
+    );
   }
 
   goToUpdate() {}

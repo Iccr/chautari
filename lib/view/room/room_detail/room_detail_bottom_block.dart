@@ -96,11 +96,7 @@ class RoomDetailBottomBlock extends StatelessWidget {
                                     .primaryDarkAndWhite900color(),
                               ),
                               onPressed: () {
-                                var viewModel = ChatViewModel(
-                                    peerId: controller.room.user.fuid,
-                                    photoUrl: controller.room.user.imageurl);
-                                Get.toNamed(RouteName.chat,
-                                    arguments: viewModel);
+                                controller.goToChat();
                               }),
                         ),
                         Text("Chat")
