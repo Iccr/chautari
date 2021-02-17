@@ -1,10 +1,11 @@
+import 'dart:io';
+
 import 'package:chautari/utilities/loading/progress_hud.dart';
 import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/view/explore/explore_controller.dart';
-import 'package:chautari/view/explore/filter_view.dart';
 import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
 import 'package:chautari/view/room/room_widgets.dart';
 import 'package:flutter/material.dart';
@@ -19,8 +20,6 @@ class Exploreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ExploreController c = Get.put(ExploreController());
-
-    _goTOLogin({ExploreController controller}) async {}
 
     return Obx(
       () => ProgressHud(
@@ -86,7 +85,8 @@ class Exploreview extends StatelessWidget {
                     // controller: scrollController,
                     rooms: c.models ?? [],
                     onTap: (room) => Get.toNamed(RouteName.roomDetail,
-                        arguments: RoomDetailViewModel(room, isMyRoom: false)),
+                        arguments: RoomDetailViewModel(room,
+                            isMyRoom: room.id == false)),
                   ),
                 ),
               ],

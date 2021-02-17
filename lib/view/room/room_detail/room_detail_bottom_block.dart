@@ -1,6 +1,8 @@
+import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
+import 'package:chautari/view/chats/chat_view.dart';
 import 'package:chautari/view/room/room_detail/room_detail_controller.dart';
 import 'package:chautari/widgets/Row_with_space_between.dart';
 import 'package:chautari/widgets/decorated_container_wrapper.dart';
@@ -77,28 +79,37 @@ class RoomDetailBottomBlock extends StatelessWidget {
                   SizedBox(
                     width: ChautariPadding.standard,
                   ),
-                  // Column(
-                  //   children: [
-                  //     Container(
-                  //       padding: EdgeInsets.all(ChautariPadding.small5),
-                  //       decoration: BoxDecoration(
-                  //         borderRadius: BorderRadius.circular(Get.width),
-                  //         border: Border.all(width: 0.5),
-                  //       ),
-                  //       child: IconButton(
-                  //           icon: Icon(
-                  //             LineIcons.comments_o,
-                  //             color:
-                  //                 ChautariColors.primaryDarkAndWhite900color(),
-                  //           ),
-                  //           onPressed: () => {}),
-                  //     ),
-                  //     Text("Chat")
-                  //   ],
-                  // ),
-                  // SizedBox(
-                  //   width: ChautariPadding.standard * 2,
-                  // ),
+                  if (!(controller.room.user.id ==
+                      controller.auth.user.id)) ...[
+                    Column(
+                      children: [
+                        Container(
+                          padding: EdgeInsets.all(ChautariPadding.small5),
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(Get.width),
+                            border: Border.all(width: 0.5),
+                          ),
+                          child: IconButton(
+                              icon: Icon(
+                                LineIcons.comments_o,
+                                color: ChautariColors
+                                    .primaryDarkAndWhite900color(),
+                              ),
+                              onPressed: () {
+                                var viewModel = ChatViewModel(
+                                    peerId: controller.room.user.fuid,
+                                    photoUrl: controller.room.user.imageurl);
+                                Get.toNamed(RouteName.chat,
+                                    arguments: viewModel);
+                              }),
+                        ),
+                        Text("Chat")
+                      ],
+                    ),
+                    SizedBox(
+                      width: ChautariPadding.standard * 2,
+                    )
+                  ],
                 ],
               ),
             ),
