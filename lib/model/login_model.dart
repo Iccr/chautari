@@ -37,6 +37,8 @@ class UserModel {
   String provider;
   String token;
   bool isLoggedIn = false;
+  String fuid;
+  String fcm;
 
   UserModel(
       {this.authToken,
@@ -45,7 +47,9 @@ class UserModel {
       this.imageurl,
       this.name,
       this.provider,
-      this.token});
+      this.token,
+      this.fuid,
+      this.fcm});
 
   UserModel.fromJson(Map<String, dynamic> json) {
     authToken = json['auth_token'];
@@ -56,6 +60,8 @@ class UserModel {
     provider = json['provider'];
     token = json['token'];
     isLoggedIn = json['isLoggedIn'];
+    fuid = json['fuid'];
+    fcm = json['fcm'];
   }
 
   Map<String, dynamic> toJson() {
@@ -68,6 +74,8 @@ class UserModel {
     data['provider'] = this.provider;
     data['token'] = this.token;
     data['isLoggedIn'] = this.isLoggedIn;
+    data['fuid'] = this.fuid;
+    data['fcm'] = this.fcm;
     return data;
   }
 }

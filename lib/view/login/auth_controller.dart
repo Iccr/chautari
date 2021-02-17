@@ -5,6 +5,7 @@ import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
@@ -135,6 +136,17 @@ class AuthController extends GetxController {
   }
 
   Future _loginWithApi(Map<String, dynamic> params) async {
+    String fuid = params['user']['fuid'];
+    String fcm;
+    if (fuid != null) {
+      fcm = await getFcmToken(fuid);
+      params["user"]["fcm"] = fcm;
+
+      FirebaseFirestore.instance.collection('users').doc(fuid ?? "").update(
+        {'fcm': fcm},
+      );
+    }
+
     var model = await LoginRepository().social(params);
     if ((model.errors ?? []).isEmpty) {
       UserModel user = model.data;
@@ -149,35 +161,45 @@ class AuthController extends GetxController {
     }
   }
 
+  Future<String> getFcmToken(String fuid) async {
+    return FirebaseMessaging.instance.getToken();
+  }
+
   Future<User> _loginWithGoogleFirebase(
       GoogleSignInAuthentication googleAuth) async {
     final AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
     );
-    User firebaseUser =
-        (await firebaseAuth.signInWithCredential(credential)).user;
-    if (firebaseUser != null) {
-      // Check is already sign up
 
-      final QuerySnapshot result = await FirebaseFirestore.instance
-          .collection('users')
-          .where('id', isEqualTo: firebaseUser.uid)
-          .get();
+    try {
+      User firebaseUser =
+          (await firebaseAuth.signInWithCredential(credential)).user;
+      if (firebaseUser != null) {
+        // Check is already sign up
 
-      final List<DocumentSnapshot> documents = result.docs;
-      if (documents.length == 0) {
-        // Update data to server if new user
-        FirebaseFirestore.instance
+        final QuerySnapshot result = await FirebaseFirestore.instance
             .collection('users')
-            .doc(firebaseUser.uid)
-            .set({
-          'nickname': firebaseUser.displayName,
-          'photoUrl': firebaseUser.photoURL,
-          'id': firebaseUser.uid
-        });
+            .where('id', isEqualTo: firebaseUser.uid)
+            .get();
+
+        final List<DocumentSnapshot> documents = result.docs;
+        if (documents.length == 0) {
+          // Update data to server if new user
+          FirebaseFirestore.instance
+              .collection('users')
+              .doc(firebaseUser.uid)
+              .set({
+            'nickname': firebaseUser.displayName,
+            'photoUrl': firebaseUser.photoURL,
+            'id': firebaseUser.uid
+          });
+        }
+        return firebaseUser;
       }
-      return firebaseUser;
+    } catch (e) {
+      print(e);
+      return null;
     }
   }
 
@@ -197,6 +219,7 @@ class AuthController extends GetxController {
       final List<DocumentSnapshot> documents = result.docs;
       if (documents.length == 0) {
         // Update data to server if new user
+
         FirebaseFirestore.instance
             .collection('users')
             .doc(firebaseUser.uid)
