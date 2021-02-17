@@ -6,6 +6,7 @@ import 'package:chautari/services/room_service.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/splash/splash_screen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -21,6 +22,7 @@ void initServices() async {
 
   /// Here is where you put get_storage, hive, shared_pref initialization.
   /// or moor connection, or whatever that's async.
+  await Firebase.initializeApp();
   await Get.putAsync(() => AppInfoService().init());
   await Get.putAsync(() => RoomService().init());
 

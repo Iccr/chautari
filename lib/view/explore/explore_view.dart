@@ -11,7 +11,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class Exploreview extends StatelessWidget {
   ScrollController scrollController = ScrollController();
@@ -57,12 +56,20 @@ class Exploreview extends StatelessWidget {
                   height: c.containerHeight,
                   padding: EdgeInsets.all(ChautariPadding.small5),
                   child: TextField(
+                    maxLines: 1,
+                    maxLength: 25,
+                    buildCounter: (BuildContext context,
+                            {int currentLength,
+                            int maxLength,
+                            bool isFocused}) =>
+                        null,
                     onSubmitted: (value) {
                       c.search(address: value);
                     },
                     style: ChautariTextStyles().listSubtitle,
                     cursorColor: Colors.white,
                     decoration: InputDecoration(
+                      suffixIcon: Icon(Icons.airplanemode_active),
                       hintText: "Quick Search",
                       hintStyle: ChautariTextStyles().listSubtitle,
                       enabledBorder: InputBorder.none,
