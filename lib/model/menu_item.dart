@@ -1,7 +1,18 @@
 class MenuItem {
+  int index;
   final String title;
-  final int index;
   final String subtitle;
+  final String extra;
+  final String toId;
+  final String fromId;
+
   bool selected;
-  MenuItem({this.title, this.index, this.subtitle, this.selected});
+  MenuItem(
+      {this.index,
+      this.title,
+      this.subtitle,
+      this.selected,
+      this.extra,
+      this.toId,
+      this.fromId});
 }

@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -40,7 +41,7 @@ class Chat extends StatelessWidget {
         appBar: AppBar(
           title: Text(
             'CHAT',
-            style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
+            // style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
         ),
@@ -259,15 +260,20 @@ class ChatScreenState extends State<ChatScreen> {
                 isLastMessageLeft(index)
                     ? Material(
                         child: CachedNetworkImage(
-                          placeholder: (context, url) => Container(
-                            child: CircularProgressIndicator(
-                              strokeWidth: 1.0,
-                              valueColor:
-                                  AlwaysStoppedAnimation<Color>(themeColor),
+                          placeholder: (context, url) => ClipOval(
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: ChautariColors.primary,
+                              ),
+                              // child: CircularProgressIndicator(
+                              //   strokeWidth: 1.0,
+                              //   valueColor:
+                              //       AlwaysStoppedAnimation<Color>(themeColor),
+                              // ),
+                              width: 35.0,
+                              height: 35.0,
+                              padding: EdgeInsets.all(10.0),
                             ),
-                            width: 35.0,
-                            height: 35.0,
-                            padding: EdgeInsets.all(10.0),
                           ),
                           imageUrl: peerAvatar,
                           width: 35.0,

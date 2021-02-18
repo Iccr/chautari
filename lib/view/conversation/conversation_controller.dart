@@ -1,3 +1,6 @@
+import 'package:chautari/model/menu_item.dart';
+import 'package:chautari/utilities/router/router_name.dart';
+import 'package:chautari/view/chats/chat_view.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
@@ -5,34 +8,47 @@ import 'package:get/get.dart';
 class ConversationController extends GetxController {
   AuthController auth = Get.find();
 
-  var groupChatId = "".obs;
-
-  @override
-  void onInit() async {
-    // TODO: implement onInit
-    super.onInit();
-
-    List<String> ids = [];
-    var result = await FirebaseFirestore.instance
+  Stream<List<MenuItem>> conversationListStream() {
+    return FirebaseFirestore.instance
         .collection('conversations')
         .doc(auth.user.fuid)
         .collection("groupChatId")
+        .snapshots()
+        .map(
+          (event) => {
+            event.docs.map(
+              (e) {
+                var conversation = ConversationModel.fromJson(e.data(), e.id);
+                return MenuItem(
+                    title: conversation.idFrom,
+                    subtitle: conversation.content,
+                    extra: conversation.id,
+                    fromId: conversation.idFrom,
+                    toId: conversation.idTo);
+              },
+            ).toList()
+          }.first,
+        );
+  }
 
-        // .doc("Ygm7CR2Uyea37Tfn7XeJYQSxAwv1-q3dlGmEvcZQl6aEDeDMpghcPoND2")
-        .get();
+  @override
+  void onInit() async {
+    super.onInit();
 
-    groupChatId.value = result.docs.first.id;
+    List<String> ids = [];
+  }
 
-    // .doc(groupChatId)
-    // .collection('messages')
-    // .orderBy('timestamp', descending: true)
-    // .limit(_limit)
-    // .snapshots(),
+  onTapConversation(MenuItem item) {
+    var viewModel = ChatViewModel(
+      peerId: item.toId == auth.user.fuid ? item.fromId : item.toId,
+      photoUrl: "",
+    );
+    Get.toNamed(RouteName.chat, arguments: viewModel);
   }
 }
 
 class ConversationModel {
-  String goupChatId;
+  String id;
   String content;
   String idFrom;
   String idTo;
@@ -40,7 +56,7 @@ class ConversationModel {
   bool seen;
 
   ConversationModel({
-    this.goupChatId,
+    this.id,
     this.content,
     this.idFrom,
     this.idTo,
@@ -49,7 +65,7 @@ class ConversationModel {
   });
 
   ConversationModel.fromJson(Map<String, dynamic> jsn, String key) {
-    goupChatId = key;
+    id = key;
     content = jsn['content'];
     idFrom = jsn['idFrom'];
     idTo = jsn['idTo'];
