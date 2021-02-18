@@ -22,47 +22,37 @@ class Conversation extends StatelessWidget {
         appBar: AppBar(
           title: Text("conversations"),
         ),
-        body: controller.groupChatId.value.isEmpty
-            ? Container()
-            : StreamBuilder(
-                stream: FirebaseFirestore.instance
-                    .collection('conversations')
-                    .doc(controller.auth.user.fuid)
-                    .collection("groupChatId")
-                    .doc(controller.groupChatId.value)
-                    .snapshots(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.active) {
-                    if (!snapshot.hasData) {
-                      return Container();
-                    } else {
-                      var conversation = ConversationModel.fromJson(
-                        snapshot.data.data(),
-                        snapshot.data.id,
+        body: StreamBuilder<List<MenuItem>>(
+          stream: controller.conversationListStream(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.active) {
+              if (!snapshot.hasData) {
+                return Container();
+              } else if (snapshot.connectionState == ConnectionState.done) {
+                print("done");
+              } else {
+                return ListView.separated(
+                    itemCount: snapshot.data.length,
+                    separatorBuilder: (context, index) {
+                      return ChautariList().getSeperator();
+                    },
+                    itemBuilder: (context, index) {
+                      return ChautariList().getListTile(
+                        () {
+                          controller.onTapConversation(
+                              snapshot.data.elementAt(index));
+                        },
+                        snapshot.data.elementAt(index),
                       );
-                      print(conversation);
-                      listMessage.add(MenuItem(
-                          title: conversation.idFrom,
-                          subtitle: conversation.content));
-
-                      return ListView.separated(
-                          itemCount: listMessage.length,
-                          separatorBuilder: (context, index) {
-                            return ChautariList().getSeperator();
-                          },
-                          itemBuilder: (context, index) {
-                            return ChautariList().getListTile(
-                                () {}, listMessage.elementAt(index));
-                          });
-                    }
-                  } else {
-                    return Center(
-                        child: CircularProgressIndicator(
-                            valueColor:
-                                AlwaysStoppedAnimation<Color>(themeColor)));
-                  }
-                },
-              ),
+                    });
+              }
+            } else {
+              return Center(
+                  child: CircularProgressIndicator(
+                      valueColor: AlwaysStoppedAnimation<Color>(themeColor)));
+            }
+          },
+        ),
       ),
     );
   }
