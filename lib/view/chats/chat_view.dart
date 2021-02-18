@@ -125,14 +125,9 @@ class ChatScreenState extends State<ChatScreen> {
       groupChatId = '$peerId-$id';
     }
 
-    FirebaseFirestore.instance
-        .collection('users')
-        .doc(id)
-        .update({'chattingWith': peerId});
-
-    print() {
-      "groupChatId updated: $groupChatId";
-    }
+    // FirebaseFirestore.instance.collection('users').doc(id).update(
+    //   {'chattingWith': peerId},
+    // );
   }
 
   void onSendMessage(
@@ -141,18 +136,60 @@ class ChatScreenState extends State<ChatScreen> {
       @required String peerId}) {
     if (content.trim() != '') {
       textEditingController.clear();
-      var documentReference1 = FirebaseFirestore.instance
+
+      var rootRef = FirebaseFirestore.instance;
+
+      var convesationRef1 = rootRef
+          .collection("conversations")
+          .doc(myId)
+          .collection("groupChatId")
+          .doc(groupChatId)
+          .set(
+        {
+          'groupChatId': groupChatId,
+          'idFrom': id,
+          'idTo': peerId,
+          'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
+          'content': content,
+          'seen': false
+        },
+      );
+
+      var convesationRef2 = rootRef
+          .collection("conversations")
+          .doc(peerId)
+          .collection("groupChatId")
+          .doc(groupChatId)
+          .set(
+        {
+          'groupChatId': groupChatId,
+          'idFrom': id,
+          'idTo': peerId,
+          'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
+          'content': content,
+          'seen': false
+        },
+      );
+
+      //   .set(
+      // {"groupChatId": groupChatId},
+
+      var documentReference1 = rootRef
           .collection('chats')
           .doc(myId)
-          .collection(groupChatId)
+          .collection("conversations")
+          .doc(groupChatId)
+          .collection("messages")
           .doc(
             DateTime.now().millisecondsSinceEpoch.toString(),
           );
 
-      var documentReference2 = FirebaseFirestore.instance
-          .collection('messages')
+      var documentReference2 = rootRef
+          .collection('chats')
           .doc(peerId)
-          .collection(groupChatId)
+          .collection("conversations")
+          .doc(groupChatId)
+          .collection("messages")
           .doc(
             DateTime.now().millisecondsSinceEpoch.toString(),
           );
@@ -390,9 +427,11 @@ class ChatScreenState extends State<ChatScreen> {
       child: groupChatId == ''
           ? Center(
               child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(themeColor)))
+                valueColor: AlwaysStoppedAnimation<Color>(themeColor),
+              ),
+            )
 
-          //           var documentReference1 = FirebaseFirestore.instance
+          //  var documentReference1 = FirebaseFirestore.instance
           // .collection('chats')
           // .doc(myId)
           // .collection(groupChatId)
@@ -400,11 +439,19 @@ class ChatScreenState extends State<ChatScreen> {
           //   DateTime.now().millisecondsSinceEpoch.toString(),
           // );
 
+          //          .collection('chats')
+          // .doc(loginController.user.fuid)
+          // .collection("conversations")
+          // .orderBy('timestamp', descending: true)
+          // .snapshots();
+
           : StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection('chats')
                   .doc(auth.user.fuid)
-                  .collection(groupChatId)
+                  .collection('conversations')
+                  .doc(groupChatId)
+                  .collection('messages')
                   .orderBy('timestamp', descending: true)
                   .limit(_limit)
                   .snapshots(),
