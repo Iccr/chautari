@@ -17,18 +17,6 @@ class Conversation extends StatelessWidget {
   Widget build(BuildContext context) {
     List<MenuItem> listMessage = new List.from([]);
 
-    // AuthController auth = Get.find();
-
-    // Widget buildListMessage() {
-    //   var snap = FirebaseFirestore.instance
-    //       .collection('chats')
-    //       .doc(auth.user.fuid)
-    //       .collection("conversations")
-    //       .orderBy('timestamp', descending: true)
-    //       .snapshots();
-    //   print(snap);
-    // }
-
     return GetX<ConversationController>(
       builder: (controller) => Scaffold(
         appBar: AppBar(

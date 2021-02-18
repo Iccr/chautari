@@ -430,21 +430,6 @@ class ChatScreenState extends State<ChatScreen> {
                 valueColor: AlwaysStoppedAnimation<Color>(themeColor),
               ),
             )
-
-          //  var documentReference1 = FirebaseFirestore.instance
-          // .collection('chats')
-          // .doc(myId)
-          // .collection(groupChatId)
-          // .doc(
-          //   DateTime.now().millisecondsSinceEpoch.toString(),
-          // );
-
-          //          .collection('chats')
-          // .doc(loginController.user.fuid)
-          // .collection("conversations")
-          // .orderBy('timestamp', descending: true)
-          // .snapshots();
-
           : StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection('chats')

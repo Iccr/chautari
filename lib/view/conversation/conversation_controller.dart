@@ -17,6 +17,7 @@ class ConversationController extends GetxController {
         .collection('conversations')
         .doc(auth.user.fuid)
         .collection("groupChatId")
+
         // .doc("Ygm7CR2Uyea37Tfn7XeJYQSxAwv1-q3dlGmEvcZQl6aEDeDMpghcPoND2")
         .get();
 
