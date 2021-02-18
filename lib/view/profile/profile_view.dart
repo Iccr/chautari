@@ -39,34 +39,6 @@ class ProfileView extends StatelessWidget {
     }
 
     double _getHeight() {
-      var docRef = FirebaseFirestore.instance
-          .collection('chats')
-          .doc(loginController.user.fuid)
-          .collection("conversations")
-          // .orderBy('timestamp', descending: true)
-          .snapshots();
-
-      // StreamBuilder(
-      //     stream: FirebaseFirestore.instance
-      //         .collection('chats')
-      //         .doc(loginController.user.fuid)
-      //         .collection('conversations')
-      //         .orderBy('timestamp', descending: true)
-      //         .snapshots(),
-      //     builder: (context, snapshot) {
-      //       if (!snapshot.hasData) {}
-      //     });
-
-      // .collection('chats')
-      //         .doc(auth.user.fuid)
-      //         .collection('conversations')
-      //         .doc(groupChatId)
-      //         .collection('messages')
-      //         .orderBy('timestamp', descending: true)
-      //         .limit(_limit)
-      //         .snapshots(),
-
-      print(docRef);
       return loginController.isLoggedIn ? 60 : 60;
     }
 
