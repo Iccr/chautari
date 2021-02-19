@@ -12,23 +12,29 @@ import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatViewModel {
-  String peerId;
-  String photoUrl;
-  ChatViewModel({@required this.peerId, @required this.photoUrl});
+  final String peerId;
+  final String peerPhoto;
+  final String peerName;
+  ChatViewModel({
+    @required this.peerId,
+    @required this.peerPhoto,
+    @required this.peerName,
+  });
 }
 
 class ChatController extends GetxController {
   AuthController auth = Get.find();
   var peerId = "".obs;
-  var photoUrl = "".obs;
+
   var peerName = "".obs;
+  var peerPhoto = "".obs;
 
   @override
   void onInit() {
     super.onInit();
     ChatViewModel viewModel = Get.arguments;
     peerId.value = viewModel.peerId;
-    photoUrl.value = viewModel.photoUrl;
+    peerPhoto.value = viewModel.peerPhoto;
   }
 }
 
@@ -48,8 +54,9 @@ class Chat extends StatelessWidget {
         ),
         body: ChatScreen(
           peerId: controller.peerId.value,
-          peerAvatar: controller.photoUrl.value,
+          peerAvatar: controller.peerPhoto.value,
           peerName: controller.peerName.value,
+          peerPhoto: controller.peerPhoto.value,
         ),
       ),
     );
@@ -60,30 +67,40 @@ class ChatScreen extends StatefulWidget {
   final String peerId;
   final String peerAvatar;
   final String peerName;
+  final String peerPhoto;
 
   ChatScreen(
       {Key key,
       @required this.peerId,
       @required this.peerAvatar,
-      @required this.peerName})
+      @required this.peerName,
+      @required this.peerPhoto})
       : super(key: key);
 
   @override
   State createState() => ChatScreenState(
-      peerId: peerId, peerAvatar: peerAvatar, peerName: this.peerName);
+        peerId: peerId,
+        peerAvatar: peerAvatar,
+        peerName: this.peerName,
+        peerPhoto: this.peerPhoto,
+      );
 }
 
 class ChatScreenState extends State<ChatScreen> {
-  ChatScreenState(
-      {Key key,
-      @required this.peerId,
-      @required this.peerAvatar,
-      @required this.peerName});
+  ChatScreenState({
+    Key key,
+    @required this.peerId,
+    @required this.peerAvatar,
+    @required this.peerName,
+    @required this.peerPhoto,
+  });
   AuthController auth = Get.find();
 
   final String peerId;
   final String peerAvatar;
   final String peerName;
+  final String peerPhoto;
+
   String fuid;
 
   List<QueryDocumentSnapshot> listMessage = new List.from([]);
@@ -146,12 +163,15 @@ class ChatScreenState extends State<ChatScreen> {
     // );
   }
 
-  void onSendMessage(
-      {@required String content,
-      @required String myId,
-      @required String myName,
-      @required String peerId,
-      @required String peerName}) {
+  void onSendMessage({
+    @required String content,
+    @required String myId,
+    @required String myName,
+    @required String peerId,
+    @required String peerName,
+    @required String fromPhoto,
+    @required String toPhoto,
+  }) {
     if (content.trim() != '') {
       textEditingController.clear();
 
@@ -160,11 +180,13 @@ class ChatScreenState extends State<ChatScreen> {
       var params = {
         'groupChatId': groupChatId,
         'idFrom': fuid,
-        'idFromName': myName,
+        'fromName': myName,
         'idTo': peerId,
-        'idToName': peerName,
+        'toName': peerName,
         'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
         'content': content,
+        'fimg': fromPhoto,
+        'timg': toPhoto,
         'seen': false
       };
 
@@ -398,11 +420,14 @@ class ChatScreenState extends State<ChatScreen> {
               child: TextField(
                 onSubmitted: (value) {
                   onSendMessage(
-                      content: textEditingController.text,
-                      myId: auth.user.fuid,
-                      myName: auth.user.name,
-                      peerId: this.peerId,
-                      peerName: this.peerName);
+                    content: textEditingController.text,
+                    myId: auth.user.fuid,
+                    myName: auth.user.name,
+                    peerId: this.peerId,
+                    peerName: this.peerName,
+                    toPhoto: this.peerPhoto,
+                    fromPhoto: auth.user.imageurl,
+                  );
                 },
                 style: TextStyle(color: primaryColor, fontSize: 15.0),
                 controller: textEditingController,
@@ -422,9 +447,14 @@ class ChatScreenState extends State<ChatScreen> {
               child: IconButton(
                 icon: Icon(Icons.send),
                 onPressed: () => onSendMessage(
-                    content: textEditingController.text,
-                    myId: auth.user.fuid,
-                    peerId: this.peerId),
+                  content: textEditingController.text,
+                  myId: auth.user.fuid,
+                  peerId: this.peerId,
+                  myName: auth.user.name,
+                  peerName: peerName,
+                  toPhoto: this.peerPhoto,
+                  fromPhoto: auth.user.imageurl,
+                ),
                 color: primaryColor,
               ),
             ),

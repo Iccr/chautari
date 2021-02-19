@@ -29,7 +29,6 @@ class Conversation extends StatelessWidget {
               if (!snapshot.hasData) {
                 return Container();
               } else if (snapshot.connectionState == ConnectionState.done) {
-                print("done");
               } else {
                 return ListView.separated(
                     itemCount: snapshot.data.length,

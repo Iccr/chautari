@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 
 class ConversationController extends GetxController {
   AuthController auth = Get.find();
+  List<ConversationModel> conversations = [];
 
   Stream<List<MenuItem>> conversationListStream() {
     return FirebaseFirestore.instance
@@ -19,12 +20,18 @@ class ConversationController extends GetxController {
             event.docs.map(
               (e) {
                 var conversation = ConversationModel.fromJson(e.data(), e.id);
+                conversations.add(conversation);
+
                 return MenuItem(
-                    title: conversation.idFrom,
+                    title: (conversation.fromName ?? "unknown"),
                     subtitle: conversation.content,
                     extra: conversation.id,
                     fromId: conversation.idFrom,
-                    toId: conversation.idTo);
+                    toId: conversation.idTo,
+                    fromName: conversation.fromName,
+                    toName: conversation.toName,
+                    image1: conversation.fromPhoto,
+                    image2: conversation.toPhoto);
               },
             ).toList()
           }.first,
@@ -39,9 +46,13 @@ class ConversationController extends GetxController {
   }
 
   onTapConversation(MenuItem item) {
+    var c =
+        this.conversations.firstWhere((element) => element.id == item.extra);
+    var mine = c.idTo == auth.user.fuid;
     var viewModel = ChatViewModel(
-      peerId: item.toId == auth.user.fuid ? item.fromId : item.toId,
-      photoUrl: "",
+      peerId: mine ? c.idFrom : item.toId,
+      peerPhoto: '',
+      peerName: mine ? c.fromName : c.toName,
     );
     Get.toNamed(RouteName.chat, arguments: viewModel);
   }
@@ -51,7 +62,11 @@ class ConversationModel {
   String id;
   String content;
   String idFrom;
+  String fromName;
   String idTo;
+  String fromPhoto;
+  String toPhoto;
+  String toName;
   String timestamp;
   bool seen;
 
@@ -62,6 +77,10 @@ class ConversationModel {
     this.idTo,
     this.timestamp,
     this.seen,
+    this.fromName,
+    this.toName,
+    this.fromPhoto,
+    this.toPhoto,
   });
 
   ConversationModel.fromJson(Map<String, dynamic> jsn, String key) {
@@ -71,5 +90,9 @@ class ConversationModel {
     idTo = jsn['idTo'];
     timestamp = jsn['timestamp'];
     seen = jsn["seen"];
+    fromName = jsn['fromName'];
+    toName = jsn["toName"];
+    fromPhoto = jsn["fimg"];
+    toPhoto = jsn["timg"];
   }
 }

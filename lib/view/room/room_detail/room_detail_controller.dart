@@ -121,8 +121,11 @@ class RoomDetailController extends GetxController {
 
   goToChat() {
     if (auth.isLoggedIn) {
-      var viewModel =
-          ChatViewModel(peerId: room.user.fuid, photoUrl: room.user.imageurl);
+      var viewModel = ChatViewModel(
+        peerId: room.user.fuid,
+        peerPhoto: room.user.imageurl,
+        peerName: room.user.name,
+      );
       Get.toNamed(RouteName.chat, arguments: viewModel);
     } else {
       goToLogin();

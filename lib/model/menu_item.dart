@@ -5,6 +5,10 @@ class MenuItem {
   final String extra;
   final String toId;
   final String fromId;
+  final String fromName;
+  final String toName;
+  final String image1;
+  final String image2;
 
   bool selected;
   MenuItem(
@@ -14,5 +18,9 @@ class MenuItem {
       this.selected,
       this.extra,
       this.toId,
-      this.fromId});
+      this.fromId,
+      this.fromName,
+      this.toName,
+      this.image1,
+      this.image2});
 }
