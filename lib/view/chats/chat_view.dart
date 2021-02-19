@@ -21,6 +21,7 @@ class ChatController extends GetxController {
   AuthController auth = Get.find();
   var peerId = "".obs;
   var photoUrl = "".obs;
+  var peerName = "".obs;
 
   @override
   void onInit() {
@@ -48,6 +49,7 @@ class Chat extends StatelessWidget {
         body: ChatScreen(
           peerId: controller.peerId.value,
           peerAvatar: controller.photoUrl.value,
+          peerName: controller.peerName.value,
         ),
       ),
     );
@@ -57,22 +59,32 @@ class Chat extends StatelessWidget {
 class ChatScreen extends StatefulWidget {
   final String peerId;
   final String peerAvatar;
+  final String peerName;
 
-  ChatScreen({Key key, @required this.peerId, @required this.peerAvatar})
+  ChatScreen(
+      {Key key,
+      @required this.peerId,
+      @required this.peerAvatar,
+      @required this.peerName})
       : super(key: key);
 
   @override
-  State createState() =>
-      ChatScreenState(peerId: peerId, peerAvatar: peerAvatar);
+  State createState() => ChatScreenState(
+      peerId: peerId, peerAvatar: peerAvatar, peerName: this.peerName);
 }
 
 class ChatScreenState extends State<ChatScreen> {
-  ChatScreenState({Key key, @required this.peerId, @required this.peerAvatar});
+  ChatScreenState(
+      {Key key,
+      @required this.peerId,
+      @required this.peerAvatar,
+      @required this.peerName});
   AuthController auth = Get.find();
 
-  String peerId;
-  String peerAvatar;
-  String id;
+  final String peerId;
+  final String peerAvatar;
+  final String peerName;
+  String fuid;
 
   List<QueryDocumentSnapshot> listMessage = new List.from([]);
   int _limit = 20;
@@ -119,11 +131,11 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   readLocal() async {
-    id = "${auth.user.fuid}" ?? '';
-    if (id.hashCode <= peerId.hashCode) {
-      groupChatId = '$id-$peerId';
+    fuid = "${auth.user.fuid}" ?? '';
+    if (fuid.hashCode <= peerId.hashCode) {
+      groupChatId = '$fuid-$peerId';
     } else {
-      groupChatId = '$peerId-$id';
+      groupChatId = '$peerId-$fuid';
     }
 
     // FirebaseFirestore.instance.collection('users').doc(id).update(
@@ -134,43 +146,38 @@ class ChatScreenState extends State<ChatScreen> {
   void onSendMessage(
       {@required String content,
       @required String myId,
-      @required String peerId}) {
+      @required String myName,
+      @required String peerId,
+      @required String peerName}) {
     if (content.trim() != '') {
       textEditingController.clear();
 
       var rootRef = FirebaseFirestore.instance;
+
+      var params = {
+        'groupChatId': groupChatId,
+        'idFrom': fuid,
+        'idFromName': myName,
+        'idTo': peerId,
+        'idToName': peerName,
+        'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
+        'content': content,
+        'seen': false
+      };
 
       var convesationRef1 = rootRef
           .collection("conversations")
           .doc(myId)
           .collection("groupChatId")
           .doc(groupChatId)
-          .set(
-        {
-          'groupChatId': groupChatId,
-          'idFrom': id,
-          'idTo': peerId,
-          'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
-          'content': content,
-          'seen': false
-        },
-      );
+          .set(params);
 
       var convesationRef2 = rootRef
           .collection("conversations")
           .doc(peerId)
           .collection("groupChatId")
           .doc(groupChatId)
-          .set(
-        {
-          'groupChatId': groupChatId,
-          'idFrom': id,
-          'idTo': peerId,
-          'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
-          'content': content,
-          'seen': false
-        },
-      );
+          .set(params);
 
       //   .set(
       // {"groupChatId": groupChatId},
@@ -200,7 +207,7 @@ class ChatScreenState extends State<ChatScreen> {
           transaction.set(
             documentReference1,
             {
-              'idFrom': id,
+              'idFrom': fuid,
               'idTo': peerId,
               'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
               'content': content,
@@ -210,7 +217,7 @@ class ChatScreenState extends State<ChatScreen> {
           transaction.set(
             documentReference2,
             {
-              'idFrom': id,
+              'idFrom': fuid,
               'idTo': peerId,
               'timestamp': DateTime.now().millisecondsSinceEpoch.toString(),
               'content': content,
@@ -230,7 +237,7 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   Widget buildItem(int index, DocumentSnapshot document) {
-    if (document.data()['idFrom'] == id) {
+    if (document.data()['idFrom'] == fuid) {
       // Right (my message)
       return Row(
         children: <Widget>[
@@ -327,7 +334,7 @@ class ChatScreenState extends State<ChatScreen> {
   bool isLastMessageLeft(int index) {
     if ((index > 0 &&
             listMessage != null &&
-            listMessage[index - 1].data()['idFrom'] == id) ||
+            listMessage[index - 1].data()['idFrom'] == fuid) ||
         index == 0) {
       return true;
     } else {
@@ -338,7 +345,7 @@ class ChatScreenState extends State<ChatScreen> {
   bool isLastMessageRight(int index) {
     if ((index > 0 &&
             listMessage != null &&
-            listMessage[index - 1].data()['idFrom'] != id) ||
+            listMessage[index - 1].data()['idFrom'] != fuid) ||
         index == 0) {
       return true;
     } else {
@@ -390,7 +397,9 @@ class ChatScreenState extends State<ChatScreen> {
                   onSendMessage(
                       content: textEditingController.text,
                       myId: auth.user.fuid,
-                      peerId: this.peerId);
+                      myName: auth.user.name,
+                      peerId: this.peerId,
+                      peerName: this.peerName);
                 },
                 style: TextStyle(color: primaryColor, fontSize: 15.0),
                 controller: textEditingController,
