@@ -116,7 +116,9 @@ class ChautariList {
       return [
         Text(
           item.title,
-          style: ChautariTextStyles().listTitle,
+          style: item.seen
+              ? ChautariTextStyles().listTitle
+              : ChautariTextStyles().highlightedListTitle,
         ),
         if (item.subtitle != null) ...[
           SizedBox(
@@ -124,7 +126,9 @@ class ChautariList {
           ),
           Text(
             item.subtitle ?? "",
-            style: ChautariTextStyles().listSubtitle,
+            style: item.seen
+                ? ChautariTextStyles().listSubtitle
+                : ChautariTextStyles().highlightedListTitle,
           ),
         ]
       ];

@@ -64,4 +64,7 @@ class ChautariColors extends GetxController {
     var mode = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
     return mode == ThemeMode.dark ? primaryColor().shade900 : primary;
   }
+
+  static get orangeLike => Color(0xfff5a623);
+  static get blueLike => Color(0xff203152);
 }
