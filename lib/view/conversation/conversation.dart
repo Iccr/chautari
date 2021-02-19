@@ -24,7 +24,7 @@ class Conversation extends StatelessWidget {
         appBar: AppBar(
           title: Text("conversations"),
         ),
-        body: StreamBuilder<List<MenuItem>>(
+        body: StreamBuilder<List<ChatMenuItem>>(
           stream: controller.conversationListStream(),
           builder: (context, snapshot) {
             if (snapshot.connectionState == ConnectionState.active) {
@@ -39,7 +39,7 @@ class Conversation extends StatelessWidget {
                     },
                     itemBuilder: (context, index) {
                       var item = snapshot.data.elementAt(index);
-                      return ChautariList().getListTile(
+                      return ChautariList().getChatListTile(
                         () {
                           controller.onTapConversation(
                               snapshot.data.elementAt(index));
