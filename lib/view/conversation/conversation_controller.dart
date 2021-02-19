@@ -9,7 +9,7 @@ class ConversationController extends GetxController {
   AuthController auth = Get.find();
   List<ConversationModel> conversations = [];
 
-  Stream<List<MenuItem>> conversationListStream() {
+  Stream<List<ChatMenuItem>> conversationListStream() {
     return FirebaseFirestore.instance
         .collection('conversations')
         .doc(auth.user.fuid)
@@ -22,16 +22,18 @@ class ConversationController extends GetxController {
                 var conversation = ConversationModel.fromJson(e.data(), e.id);
                 conversations.add(conversation);
 
-                return MenuItem(
-                    title: (conversation.fromName ?? "unknown"),
-                    subtitle: conversation.content,
-                    extra: conversation.id,
-                    fromId: conversation.idFrom,
-                    toId: conversation.idTo,
-                    fromName: conversation.fromName,
-                    toName: conversation.toName,
-                    image1: conversation.fromPhoto,
-                    image2: conversation.toPhoto);
+                return ChatMenuItem(
+                  title: (conversation.fromName ?? "unknown"),
+                  subtitle: conversation.content,
+                  extra: conversation.id,
+                  fromId: conversation.idFrom,
+                  toId: conversation.idTo,
+                  fromName: conversation.fromName,
+                  toName: conversation.toName,
+                  image1: conversation.fromPhoto,
+                  image2: conversation.toPhoto,
+                  seen: conversation.seen,
+                );
               },
             ).toList()
           }.first,
@@ -45,7 +47,7 @@ class ConversationController extends GetxController {
     List<String> ids = [];
   }
 
-  onTapConversation(MenuItem item) {
+  onTapConversation(ChatMenuItem item) {
     var c =
         this.conversations.firstWhere((element) => element.id == item.extra);
     var mine = c.idTo == auth.user.fuid;
