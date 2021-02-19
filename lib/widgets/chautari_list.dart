@@ -128,7 +128,7 @@ class ChautariList {
             item.subtitle ?? "",
             style: item.seen
                 ? ChautariTextStyles().listSubtitle
-                : ChautariTextStyles().highlightedListTitle,
+                : ChautariTextStyles().highlightedlistSubtitle,
           ),
         ]
       ];
