@@ -25,8 +25,8 @@ class BaseUrl {
     //   _imageServerUrl = "http://143.110.252.83:4000/";
     // }
 
-    _serverUrl = "http://143.110.252.83:4000/api/";
-    _imageServerUrl = "http://143.110.252.83:4000/";
+    _serverUrl = "http://192.168.0.101:4000/api/";
+    _imageServerUrl = "http://192.168.0.101:4000/";
   }
 
   String get imageBaseUrl => _imageServerUrl;
