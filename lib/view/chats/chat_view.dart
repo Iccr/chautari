@@ -128,6 +128,9 @@ class ChatScreenState extends State<ChatScreen> {
     isLoading = false;
 
     readLocal();
+    FirebaseFirestore.instance.collection('users').doc(fuid ?? "").update(
+      {'chattingWith': peerId},
+    );
   }
 
   readLocal() async {
