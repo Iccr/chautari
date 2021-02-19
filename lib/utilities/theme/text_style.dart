@@ -29,6 +29,7 @@ class ChautariTextStyles {
 
   TextStyle highlightedlistSubtitle = TextStyle(
     fontSize: 13,
+    fontStyle: FontStyle.italic,
     fontWeight: FontWeight.w500,
     color: ChautariColors.whiteAndBlackcolor().withOpacity(0.8),
   );
