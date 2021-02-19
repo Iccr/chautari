@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chautari/model/menu_item.dart';
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/view/chats/const.dart';
 import 'package:chautari/view/conversation/conversation_controller.dart';
 import 'package:chautari/widgets/chautari_list.dart';
@@ -36,12 +38,17 @@ class Conversation extends StatelessWidget {
                       return ChautariList().getSeperator();
                     },
                     itemBuilder: (context, index) {
+                      var item = snapshot.data.elementAt(index);
                       return ChautariList().getListTile(
                         () {
                           controller.onTapConversation(
                               snapshot.data.elementAt(index));
                         },
                         snapshot.data.elementAt(index),
+                        leading: CachedNetworkImage(
+                          imageUrl: item.image1 ??
+                              "https://picsum.photos/seed/picsum/50?grayscale",
+                        ),
                       );
                     });
               }

@@ -49,7 +49,7 @@ class ChautariList {
     );
   }
 
-  Widget getListTile(Function tap, MenuItem item) {
+  Widget getListTile(Function tap, MenuItem item, {Widget leading}) {
     List<Widget> _getContent() {
       return [
         Text(
@@ -77,6 +77,17 @@ class ChautariList {
         child: Container(
           child: Row(
             children: [
+              if (leading != null) ...[
+                Container(
+                  padding: EdgeInsets.all(ChautariPadding.small5),
+                  child: ClipOval(
+                    child: leading,
+                  ),
+                ),
+                SizedBox(
+                  width: ChautariPadding.standard,
+                )
+              ],
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.center,
