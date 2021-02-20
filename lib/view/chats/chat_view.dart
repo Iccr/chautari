@@ -157,10 +157,6 @@ class ChatScreenState extends State<ChatScreen> {
     } else {
       groupChatId = '$peerId-$fuid';
     }
-
-    // FirebaseFirestore.instance.collection('users').doc(id).update(
-    //   {'chattingWith': peerId},
-    // );
   }
 
   void onSendMessage({
@@ -284,6 +280,31 @@ class ChatScreenState extends State<ChatScreen> {
       );
     } else {
       // Left (peer message)
+      // document.reference.update({"seen": true});
+      //   var convesationRef2 = rootRef
+
+      // .collection("conversations")
+      // .doc(peerId)
+      // .collection("groupChatId")
+      // .doc(groupChatId)
+      // .set(params);
+      var fromId = document.data()['idFrom'];
+      var peerId = document.data()['idTo'];
+      var groupId = document.reference.parent.parent.id;
+      var rootref = FirebaseFirestore.instance.collection("conversations");
+
+      rootref
+          .doc(peerId)
+          .collection("groupChatId")
+          .doc(groupId)
+          .update({"seen": true});
+
+      rootref
+          .doc(fromId)
+          .collection("groupChatId")
+          .doc(groupId)
+          .update({"seen": true});
+
       return Container(
         child: Column(
           children: <Widget>[

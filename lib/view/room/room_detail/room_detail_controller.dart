@@ -13,6 +13,7 @@ import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
 import 'package:chautari/widgets/alert.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
@@ -120,7 +121,7 @@ class RoomDetailController extends GetxController {
   }
 
   goToChat() {
-    if (auth.isLoggedIn) {
+    if (auth.isLoggedIn && FirebaseAuth.instance.currentUser != null) {
       var viewModel = ChatViewModel(
         peerId: room.user.fuid,
         peerPhoto: room.user.imageurl,
