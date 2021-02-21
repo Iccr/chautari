@@ -57,7 +57,7 @@ dependencies:
   fluttertoast: ^7.1.6
   firebase_messaging: ^8.0.0-dev.14
   flutter_local_notifications: ^4.0.1
-  after_layout: ^1.0.7+2
+  visibility_detector: ^0.1.5
   
   form_builder_map_field:
     git:
