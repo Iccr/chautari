@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chautari/utilities/theme/colors.dart';
+import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -430,64 +431,69 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   Widget buildInput() {
-    return Container(
-      child: Row(
-        children: <Widget>[
-          // Button send image
+    return SafeArea(
+      child: Container(
+        padding: EdgeInsets.all(ChautariPadding.standard),
+        child: Row(
+          children: <Widget>[
+            // Button send image
 
-          // Edit text
-          Flexible(
-            child: Container(
-              child: TextField(
-                onSubmitted: (value) {
-                  onSendMessage(
+            // Edit text
+            Flexible(
+              child: Container(
+                child: TextField(
+                  autocorrect: false,
+                  cursorColor: ChautariColors.primary,
+                  onSubmitted: (value) {
+                    onSendMessage(
+                      content: textEditingController.text,
+                      myId: auth.user.fuid,
+                      myName: auth.user.name,
+                      peerId: this.peerId,
+                      peerName: this.peerName,
+                      toPhoto: this.peerPhoto,
+                      fromPhoto: auth.user.imageurl,
+                    );
+                  },
+                  style: TextStyle(color: primaryColor, fontSize: 15.0),
+                  controller: textEditingController,
+                  decoration: InputDecoration.collapsed(
+                    hintText: 'Type your message...',
+                    hintStyle: TextStyle(color: greyColor),
+                  ),
+                  focusNode: focusNode,
+                ),
+              ),
+            ),
+
+            // Button send message
+            Material(
+              child: Container(
+                margin: EdgeInsets.symmetric(horizontal: 8.0),
+                child: IconButton(
+                  icon: Icon(Icons.send),
+                  onPressed: () => onSendMessage(
                     content: textEditingController.text,
                     myId: auth.user.fuid,
-                    myName: auth.user.name,
                     peerId: this.peerId,
-                    peerName: this.peerName,
+                    myName: auth.user.name,
+                    peerName: peerName,
                     toPhoto: this.peerPhoto,
                     fromPhoto: auth.user.imageurl,
-                  );
-                },
-                style: TextStyle(color: primaryColor, fontSize: 15.0),
-                controller: textEditingController,
-                decoration: InputDecoration.collapsed(
-                  hintText: 'Type your message...',
-                  hintStyle: TextStyle(color: greyColor),
+                  ),
+                  color: primaryColor,
                 ),
-                focusNode: focusNode,
               ),
+              color: Colors.white,
             ),
-          ),
-
-          // Button send message
-          Material(
-            child: Container(
-              margin: EdgeInsets.symmetric(horizontal: 8.0),
-              child: IconButton(
-                icon: Icon(Icons.send),
-                onPressed: () => onSendMessage(
-                  content: textEditingController.text,
-                  myId: auth.user.fuid,
-                  peerId: this.peerId,
-                  myName: auth.user.name,
-                  peerName: peerName,
-                  toPhoto: this.peerPhoto,
-                  fromPhoto: auth.user.imageurl,
-                ),
-                color: primaryColor,
-              ),
-            ),
-            color: Colors.white,
-          ),
-        ],
+          ],
+        ),
+        width: double.infinity,
+        height: 50.0,
+        decoration: BoxDecoration(
+            border: Border(top: BorderSide(color: greyColor2, width: 0.5)),
+            color: Colors.white),
       ),
-      width: double.infinity,
-      height: 50.0,
-      decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: greyColor2, width: 0.5)),
-          color: Colors.white),
     );
   }
 
