@@ -74,6 +74,16 @@ class RoomModel {
         "";
   }
 
+  String get typeInitials {
+    if (this.type == null) {
+      return "";
+    }
+    return (service.appInfo.types
+            .firstWhere((element) => element.value == this.type)
+            .name ??
+        "")[0];
+  }
+
   String formattedPrice() {
     return NepaliRupeeFormatter().getDecoratedString(price);
   }

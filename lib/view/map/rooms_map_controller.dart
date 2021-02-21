@@ -6,7 +6,9 @@ import 'package:chautari/model/room_model.dart';
 import 'package:chautari/services/room_service.dart';
 import 'package:chautari/utilities/marker_generator.dart';
 import 'package:chautari/utilities/router/router_name.dart';
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
+import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/widgets/map/map.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
@@ -85,13 +87,66 @@ class RoomsMapController extends GetxController with StateMixin {
     var _iconsWidgets = rooms.map((element) {
       return RepaintBoundary(
         key: GlobalKey(),
-        child: Container(
-          child: Text(getRoundedPriceString(element.price)),
-          color: Colors.yellow,
+        child: ClipOval(
+          child: Container(
+            child: Text(
+              element.typeInitials,
+              textAlign: TextAlign.center,
+              style: ChautariTextStyles().listSubtitle.copyWith(fontSize: 10),
+            ),
+            color: getColor(element.type),
+            height: 15,
+            width: 15,
+          ),
         ),
       );
     }).toList();
     this.iconsWidgets.assignAll(_iconsWidgets);
+  }
+
+  getColor(int type) {
+    // %RoomTypes{name: "Appartment", value: 0},
+    //   %RoomTypes{name: "Room", value: 1},
+    //   %RoomTypes{name: "Flat", value: 2},
+    //   %RoomTypes{name: "Hostel", value: 3},
+    //   %RoomTypes{name: "Shutter", value: 4},
+    //   %RoomTypes{name: "Office", value: 5},
+    //   %RoomTypes{name: "Commercial", value: 6}
+
+    switch (type) {
+      case 0:
+        // appartment
+        return ChautariColors.green;
+        break;
+      case 1:
+        // room
+        return ChautariColors.indigo;
+        break;
+      case 2:
+        // flat
+        return ChautariColors.yellow;
+        break;
+      case 3:
+        // hostel
+        return ChautariColors.teal;
+        break;
+      case 4:
+        // shutter
+        return ChautariColors.brown;
+        break;
+      case 5:
+        // office
+        return ChautariColors.purple;
+        break;
+      case 6:
+        // commercial
+        return ChautariColors.blueGrey;
+        break;
+
+      default:
+        // others
+        return ChautariColors.cyan;
+    }
   }
 
   String getRoundedPriceString(String price) {
