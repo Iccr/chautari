@@ -1,10 +1,13 @@
 import 'dart:async';
 import 'dart:typed_data';
 
+import 'package:chautari/model/app_info.dart';
 import 'package:chautari/model/room_model.dart';
+import 'package:chautari/services/appinfo_service.dart';
 import 'package:chautari/services/room_service.dart';
 import 'package:chautari/utilities/marker_generator.dart';
 import 'package:chautari/utilities/theme/colors.dart';
+import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/widgets/map/map.dart';
 import 'package:flutter/material.dart';
@@ -16,6 +19,7 @@ import 'dart:ui' as ui;
 
 class RoomsMapController extends GetxController with StateMixin {
   final ChautariMapController mapController = ChautariMapController();
+  AppInfoService appInfoService = Get.find();
   Map map;
   RoomService service;
   RxList<Widget> iconsWidgets = <Widget>[].obs;
@@ -78,19 +82,27 @@ class RoomsMapController extends GetxController with StateMixin {
         key: GlobalKey(),
         child: ClipOval(
           child: Container(
+            color: getColor(element.type),
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text(
-                  element.typeInitials,
-                  textAlign: TextAlign.center,
-                  style:
-                      ChautariTextStyles().listSubtitle.copyWith(fontSize: 10),
+                RichText(
+                  text: TextSpan(
+                      style: ChautariTextStyles()
+                          .listSubtitle
+                          .copyWith(fontSize: 7.5),
+                      children: [
+                        TextSpan(text: element.getShortPriceString()),
+                        TextSpan(
+                            text: "k",
+                            style: ChautariTextStyles()
+                                .listSubtitle
+                                .copyWith(fontSize: 6)),
+                      ]),
                 ),
               ],
             ),
-            color: getColor(element.type),
             height: 18,
             width: 18,
           ),
@@ -98,6 +110,36 @@ class RoomsMapController extends GetxController with StateMixin {
       );
     }).toList();
     this.iconsWidgets.assignAll(_iconsWidgets);
+  }
+
+  List<Widget> getInsightText() {
+    var wids = appInfoService.appInfo.types
+        .map(
+          (e) => Row(
+            children: [
+              ClipOval(
+                child: Container(
+                  height: 10,
+                  width: 10,
+                  color: getColor(e.value),
+                ),
+              ),
+              SizedBox(
+                width: ChautariPadding.small5,
+              ),
+              Text(
+                e.name,
+                style: ChautariTextStyles().listTitle.copyWith(
+                    color: ChautariColors.black,
+                    fontSize: 12,
+                    fontStyle: FontStyle.normal),
+              ),
+            ],
+          ),
+        )
+        .toList();
+
+    return wids;
   }
 
   getColor(int type) {

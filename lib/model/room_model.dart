@@ -74,6 +74,15 @@ class RoomModel {
         "";
   }
 
+  String getShortPriceString() {
+    var _prc = "${(double.parse(this.price) / 1000).toStringAsFixed(1)}";
+    if (_prc.split(".").last == "0") {
+      return "${(double.parse(this.price) / 1000).toStringAsFixed(0)}";
+    } else {
+      return _prc;
+    }
+  }
+
   String get typeInitials {
     if (this.type == null) {
       return "";
