@@ -1,10 +1,12 @@
 import 'package:chautari/services/appinfo_service.dart';
+import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/router/routers.dart';
 import 'package:chautari/utilities/theme/theme.dart';
 import 'package:chautari/utilities/theme/theme_controller.dart';
 import 'package:chautari/services/room_service.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
+import 'package:chautari/view/map/rooms_map_controller.dart';
 import 'package:chautari/view/splash/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -70,11 +72,15 @@ class MyApp extends StatelessWidget {
 
   final ThemeController themeController = Get.put(ThemeController());
   final AuthController loginController = Get.put(AuthController());
+  var middleware = MiddleWare();
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       title: 'Chautari Basti',
+      routingCallback: (route) {
+        middleware.observer(route);
+      },
       getPages: ChautariRouters().routers,
       themeMode: ThemeMode.light,
       theme: AppTheme.lightTheme(),
