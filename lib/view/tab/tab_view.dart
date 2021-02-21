@@ -39,7 +39,7 @@ class _TabbarState extends State<Tabbar> {
                 activeColor: ChautariColors.white,
                 iconSize: 24,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-                duration: Duration(milliseconds: 500),
+                duration: Duration(milliseconds: 0),
                 tabBackgroundColor: ChautariColors.tabBarActiveBackgroundColor,
                 tabs: [
                   GButton(
