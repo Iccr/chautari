@@ -63,7 +63,7 @@ class _TabbarState extends State<Tabbar> {
                 onTabChange: (index) {
                   setState(() {
                     _selectedIndex = index;
-                    middleware.isRoomMapViewInScreen.add(index == 1);
+                    // middleware.isRoomMapViewInScreen.add(index == 1);
                   });
                 }),
           ),
