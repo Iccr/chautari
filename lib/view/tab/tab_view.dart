@@ -1,3 +1,4 @@
+import 'package:chautari/utilities/middleWare.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/view/explore/explore_view.dart';
 import 'package:chautari/view/map/rooms_map.dart';
@@ -62,6 +63,7 @@ class _TabbarState extends State<Tabbar> {
                 onTabChange: (index) {
                   setState(() {
                     _selectedIndex = index;
+                    middleware.isRoomMapViewInScreen.add(index == 1);
                   });
                 }),
           ),

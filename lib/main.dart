@@ -1,4 +1,5 @@
 import 'package:chautari/services/appinfo_service.dart';
+import 'package:chautari/utilities/middleWare.dart';
 import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/router/routers.dart';
 import 'package:chautari/utilities/theme/theme.dart';
@@ -72,7 +73,6 @@ class MyApp extends StatelessWidget {
 
   final ThemeController themeController = Get.put(ThemeController());
   final AuthController loginController = Get.put(AuthController());
-  var middleware = MiddleWare();
 
   @override
   Widget build(BuildContext context) {
