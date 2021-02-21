@@ -1,5 +1,7 @@
 import 'package:chautari/utilities/router/router_name.dart';
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
+import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/view/map/rooms_map_controller.dart';
 import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
 import 'package:chautari/view/room/room_widgets.dart';
@@ -43,6 +45,39 @@ class RoomsMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // // appartment
+    // return ChautariColors.green;
+    // break;
+    // // room
+    // return ChautariColors.indigo;
+    // break;
+    // // flat
+    // return ChautariColors.yellow;
+    // break;
+    // // hostel
+    // return ChautariColors.teal;
+    // break;
+    // // shutter
+    // return ChautariColors.brown;
+    // break;
+    // // office
+    // return ChautariColors.purple;
+    // break;
+    // // commercial
+    // return ChautariColors.blueGrey;
+    // break;
+
+    // // others
+    // return ChautariColors.cyan;
+
+    // %RoomTypes{name: "Appartment", value: 0},
+    //   %RoomTypes{name: "Room", value: 1},
+    //   %RoomTypes{name: "Flat", value: 2},
+    //   %RoomTypes{name: "Hostel", value: 3},
+    //   %RoomTypes{name: "Shutter", value: 4},
+    //   %RoomTypes{name: "Office", value: 5},
+    //   %RoomTypes{name: "Commercial", value: 6}
+
     return Obx(() => VisibilityDetector(
           key: GlobalKey(),
           onVisibilityChanged: (VisibilityInfo info) {
@@ -53,11 +88,25 @@ class RoomsMap extends StatelessWidget {
               }
             }
           },
-          child: Stack(
-            children: [
-              ...controller.iconsWidgets,
-              getMapWidget(),
-            ],
+          child: SafeArea(
+            child: Stack(
+              children: [
+                ...controller.iconsWidgets,
+                getMapWidget(),
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  child: Container(
+                    color: Colors.blueGrey.withAlpha(40),
+                    padding: EdgeInsets.all(ChautariPadding.small5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: controller.getInsightText(),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ));
   }
