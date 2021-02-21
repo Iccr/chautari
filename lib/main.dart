@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       title: 'Chautari Basti',
       routingCallback: (route) {
-        middleware.observer(route);
+        // middleware.observer(route);
       },
       getPages: ChautariRouters().routers,
       themeMode: ThemeMode.light,

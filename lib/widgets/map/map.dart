@@ -166,7 +166,7 @@ class Map {
     ChautariMapFunctions controller,
   }) {
     this.controller = controller;
-    this.mapView = MapView(mapController: controller, title: title);
+    this.mapView = MapView(mapController: controller);
   }
 
   Map setchild(Widget child) {
@@ -196,48 +196,38 @@ class Map {
 
 class MapView extends StatelessWidget {
   final ChautariMapFunctions mapController;
-  final String title;
   Widget child;
   Function(LatLng) onTapLocation;
-  MapView(
-      {@required this.mapController,
-      @required this.title,
-      this.child,
-      this.onTapLocation});
+  MapView({@required this.mapController, this.child, this.onTapLocation});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(title ?? "Map"),
-      ),
-      body: Obx(
-        () {
-          print("value is'");
-          print(mapController);
-          return Stack(
-            children: [
-              GoogleMap(
-                markers: this.mapController.markers,
-                mapToolbarEnabled: true,
-                myLocationEnabled: true,
-                zoomControlsEnabled: true,
-                mapType: MapType.normal,
-                initialCameraPosition: this.mapController.cameraPosition,
-                onMapCreated: (GoogleMapController controller) {
-                  this.mapController.setMap(controller);
-                },
-                onTap: (latLng) {
-                  if (onTapLocation != null) {
-                    onTapLocation(latLng);
-                  }
-                },
-              ),
-              if (child != null) ...[child]
-            ],
-          );
-        },
-      ),
+    return Obx(
+      () {
+        print("value is'");
+        print(mapController);
+        return Stack(
+          children: [
+            GoogleMap(
+              markers: this.mapController.markers,
+              mapToolbarEnabled: true,
+              myLocationEnabled: true,
+              zoomControlsEnabled: true,
+              mapType: MapType.normal,
+              initialCameraPosition: this.mapController.cameraPosition,
+              onMapCreated: (GoogleMapController controller) {
+                this.mapController.setMap(controller);
+              },
+              onTap: (latLng) {
+                if (onTapLocation != null) {
+                  onTapLocation(latLng);
+                }
+              },
+            ),
+            if (child != null) ...[child]
+          ],
+        );
+      },
     );
   }
 }
