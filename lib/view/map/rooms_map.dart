@@ -97,7 +97,11 @@ class RoomsMap extends StatelessWidget {
                   left: 0,
                   top: 0,
                   child: Container(
-                    color: Colors.blueGrey.withAlpha(40),
+                    decoration: BoxDecoration(
+                        color: Colors.blueGrey.withAlpha(80),
+                        borderRadius: BorderRadius.only(
+                            bottomRight:
+                                Radius.circular(ChautariPadding.small5))),
                     padding: EdgeInsets.all(ChautariPadding.small5),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
