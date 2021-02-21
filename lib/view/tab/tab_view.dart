@@ -43,8 +43,16 @@ class _TabbarState extends State<Tabbar> {
                 tabBackgroundColor: ChautariColors.tabBarActiveBackgroundColor,
                 tabs: [
                   GButton(
-                    icon: LineIcons.search,
                     text: 'Explore',
+                    leading: Row(
+                      children: [
+                        Icon(
+                          Icons.badge,
+                          size: 5,
+                        ),
+                        Icon(Icons.search),
+                      ],
+                    ),
                   ),
                   GButton(
                     icon: LineIcons.map,
