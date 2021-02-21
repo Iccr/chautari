@@ -7,6 +7,14 @@ class ChautariColors extends GetxController {
   static Color black = Colors.black87;
   static Color green = Colors.green;
   static Color red = Colors.red;
+  static Color yellow = Colors.yellow;
+  static Color purple = Colors.purple;
+  static Color indigo = Colors.indigo;
+  static Color brown = Colors.brown;
+  static Color blueGrey = Colors.blueGrey;
+  static Color teal = Colors.teal;
+  static Color cyan = Colors.cyan;
+
   static MaterialColor grey = Colors.grey;
 
   static Color tabBarActiveBackgroundColor = Colors.grey[800];
