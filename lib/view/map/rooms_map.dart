@@ -6,6 +6,7 @@ import 'package:chautari/view/room/room_widgets.dart';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class RoomsMap extends StatelessWidget {
   final RoomsMapController controller = Get.put(RoomsMapController());
@@ -42,6 +43,22 @@ class RoomsMap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => getMapWidget());
+    return Obx(() => VisibilityDetector(
+          key: GlobalKey(),
+          onVisibilityChanged: (VisibilityInfo info) {
+            if (info.visibleFraction == 1.0) {
+              print(info.visibleFraction);
+              if (!controller.renderingDone) {
+                controller.getMarkers();
+              }
+            }
+          },
+          child: Stack(
+            children: [
+              ...controller.iconsWidgets,
+              getMapWidget(),
+            ],
+          ),
+        ));
   }
 }

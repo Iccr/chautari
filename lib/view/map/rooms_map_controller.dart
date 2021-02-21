@@ -1,13 +1,19 @@
 import 'dart:async';
+import 'dart:math';
+import 'dart:typed_data';
 
 import 'package:chautari/model/room_model.dart';
 import 'package:chautari/services/room_service.dart';
 import 'package:chautari/utilities/marker_generator.dart';
 import 'package:chautari/utilities/router/router_name.dart';
+import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/widgets/map/map.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+import 'dart:ui' as ui;
 
 class MiddleWare {
   StreamController isRoomMapViewInScreen = new StreamController.broadcast();
@@ -21,10 +27,12 @@ class RoomsMapController extends GetxController with StateMixin {
   final ChautariMapController mapController = ChautariMapController();
   Map map;
   RoomService service;
-
-  var models = List.from([]).obs;
+  RxList<Widget> iconsWidgets = <Widget>[].obs;
+  var models = <RoomModel>[].obs;
   RxSet<Marker> markers = Set<Marker>().obs;
   MarkerGenerator generator;
+
+  bool renderingDone = false;
 
   var isRendered = false.obs;
   var customMarkersData = List.from([]).obs;
@@ -48,12 +56,9 @@ class RoomsMapController extends GetxController with StateMixin {
   void onInit() {
     super.onInit();
     service = Get.find();
-    this.models.assignAll(this.service.rooms);
-    MiddleWare().isRoomMapViewInScreen.stream.listen((event) {
-      if (event) {
-        customeMarker();
-      }
-    });
+    var rooms = this.service.rooms;
+    getIcons(rooms);
+    this.models.assignAll(rooms);
   }
 
   @override
@@ -76,40 +81,110 @@ class RoomsMapController extends GetxController with StateMixin {
     _selectedRoom.value = room;
   }
 
-  customeMarker() {
-    var _widgets = models
-        .map((element) => Container(
-              child: Text("val"),
-            ))
-        .toList();
-
-    MarkerGenerator(_widgets, (listUnit8) {
-      var list = listUnit8.map((e) => BitmapDescriptor.fromBytes(e)).toList();
-
-      customMarkersData.assignAll(list);
-      getMarkers();
-    });
+  List<Widget> getIcons(List<RoomModel> rooms) {
+    var _iconsWidgets = rooms.map((element) {
+      return RepaintBoundary(
+        key: GlobalKey(),
+        child: Container(
+          child: Text(getRoundedPriceString(element.price)),
+          color: Colors.yellow,
+        ),
+      );
+    }).toList();
+    this.iconsWidgets.assignAll(_iconsWidgets);
   }
 
-  Set<Marker> getMarkers() {
-    var markers = models.map(
-      (e) {
-        var latlng = LatLng(e.lat, e.long);
+  String getRoundedPriceString(String price) {
+    var _price = "${(double.parse(price) / 1000).toStringAsFixed(1)}k";
+    if (_price.split(".").last == "0k") {
+      print("last is 0");
+      var _price = "${(double.parse(price) / 1000).toStringAsFixed(0)}k";
+      return _price;
+    } else {
+      return _price;
+    }
+    // int decimals = 2;
+    // int fac = pow(10, decimals);
+    // double d = double.parse(price);
+    // d = (d * fac).round() / fac;
+    // return "$d";
+  }
 
-        return Marker(
-            markerId: MarkerId(
-              e.id.toString(),
-            ),
-            position: latlng,
-            onTap: () {
-              onTapMarkerOf(e);
-            },
-            infoWindow: InfoWindow(
-              title: "Rs. ${e.price}",
-            ),
-            icon: BitmapDescriptor.defaultMarker);
+  getMarkers() async {
+    var result = await Future.wait(
+      iconsWidgets.map(
+        (element) {
+          return getCustomIcon(element.key);
+        },
+      ),
+    );
+
+    this.models.asMap().forEach(
+      (index, e) {
+        var latlng = LatLng(e.lat, e.long);
+        var maker = Marker(
+          markerId: MarkerId(
+            e.id.toString(),
+          ),
+          position: latlng,
+          onTap: () {
+            onTapMarkerOf(e);
+          },
+          // infoWindow: InfoWindow(
+          //   title: "Rs. ${e.price}",
+          // ),
+          icon: result.elementAt(index),
+        );
+        this.markers.add(maker);
       },
     );
-    this.markers.assignAll(markers);
+    // return this.markers.value;
+    this.renderingDone = true;
+  }
+
+  // Set<Marker> getMarkers() {
+  //   models.forEach(
+  //     (e) {
+  //       var latlng = LatLng(e.lat, e.long);
+
+  //       var marker = Marker(
+  //         markerId: MarkerId(
+  //           e.id.toString(),
+  //         ),
+  //         position: latlng,
+  //         onTap: () {
+  //           onTapMarkerOf(e);
+  //         },
+  //         infoWindow: InfoWindow(
+  //           title: "Rs. ${e.price}",
+  //         ),
+  //         icon: BitmapDescriptor.defaultMarker,
+  //       );
+  //       this.markers.add(marker);
+  //     },
+  //   );
+  //   return this.markers.value;
+  // }
+
+  Future<BitmapDescriptor> getCustomIcon(GlobalKey iconKey) async {
+    Future<Uint8List> _capturePng(GlobalKey iconKey) async {
+      try {
+        print('inside');
+        RenderRepaintBoundary boundary =
+            iconKey.currentContext.findRenderObject();
+
+        ui.Image image = await boundary.toImage(pixelRatio: 3.0);
+        ByteData byteData =
+            await image.toByteData(format: ui.ImageByteFormat.png);
+        var pngBytes = byteData.buffer.asUint8List();
+        print(pngBytes);
+        return pngBytes;
+      } catch (e) {
+        print(e);
+      }
+    }
+
+    Uint8List imageData = await _capturePng(iconKey);
+    return BitmapDescriptor.fromBytes(imageData);
   }
 }
