@@ -26,7 +26,34 @@ class Exploreview extends StatelessWidget {
         isLoading: c.isLoading,
         child: Scaffold(
           appBar: AppBar(
-            title: Text("Chautari Basti"),
+            title: Container(
+              // duration: Duration(milliseconds: c.duration.value),
+              height: c.containerHeight,
+              padding: EdgeInsets.all(ChautariPadding.small5),
+              child: TextField(
+                maxLines: 1,
+                maxLength: 25,
+                buildCounter: (BuildContext context,
+                        {int currentLength, int maxLength, bool isFocused}) =>
+                    null,
+                onSubmitted: (value) {
+                  c.search(address: value);
+                },
+                style: ChautariTextStyles().listSubtitle,
+                cursorColor: Colors.white,
+                decoration: InputDecoration(
+                  suffixIcon: Icon(Icons.search),
+                  hintText: "Quick Search",
+                  hintStyle: ChautariTextStyles().listSubtitle,
+                  enabledBorder: InputBorder.none,
+                  focusedBorder: InputBorder.none,
+                  fillColor:
+                      ChautariColors.blackAndSearchcolor().withOpacity(0.6),
+                  filled: true,
+                  isDense: false,
+                ),
+              ),
+            ),
             actions: [
               IconButton(
                   icon: Icon(LineIcons.filter),
@@ -37,49 +64,49 @@ class Exploreview extends StatelessWidget {
             ],
           ),
           body: NotificationListener<ScrollNotification>(
-            onNotification: (notification) {
-              if (notification.metrics.pixels / 10 > 5) {
-                print(notification.metrics.pixels / 10);
-                c.height.value = 0;
-              }
-              if (notification.metrics.pixels / 10 < -5) {
-                print(notification.metrics.pixels / 10);
-                c.height.value = 45;
-              }
-            },
+            // onNotification: (notification) {
+            //   if (notification.metrics.pixels / 10 > 5) {
+            //     print(notification.metrics.pixels / 10);
+            //     c.height.value = 0;
+            //   }
+            //   if (notification.metrics.pixels / 10 < -5) {
+            //     print(notification.metrics.pixels / 10);
+            //     c.height.value = 45;
+            //   }
+            // },
             child: Column(
               children: [
                 // Search textfield
-                AnimatedContainer(
-                  duration: Duration(milliseconds: c.duration.value),
-                  height: c.containerHeight,
-                  padding: EdgeInsets.all(ChautariPadding.small5),
-                  child: TextField(
-                    maxLines: 1,
-                    maxLength: 25,
-                    buildCounter: (BuildContext context,
-                            {int currentLength,
-                            int maxLength,
-                            bool isFocused}) =>
-                        null,
-                    onSubmitted: (value) {
-                      c.search(address: value);
-                    },
-                    style: ChautariTextStyles().listSubtitle,
-                    cursorColor: Colors.white,
-                    decoration: InputDecoration(
-                      suffixIcon: Icon(Icons.airplanemode_active),
-                      hintText: "Quick Search",
-                      hintStyle: ChautariTextStyles().listSubtitle,
-                      enabledBorder: InputBorder.none,
-                      focusedBorder: InputBorder.none,
-                      fillColor:
-                          ChautariColors.blackAndSearchcolor().withOpacity(0.6),
-                      filled: true,
-                      isDense: false,
-                    ),
-                  ),
-                ),
+                // AnimatedContainer(
+                //   duration: Duration(milliseconds: c.duration.value),
+                //   height: c.containerHeight,
+                //   padding: EdgeInsets.all(ChautariPadding.small5),
+                //   child: TextField(
+                //     maxLines: 1,
+                //     maxLength: 25,
+                //     buildCounter: (BuildContext context,
+                //             {int currentLength,
+                //             int maxLength,
+                //             bool isFocused}) =>
+                //         null,
+                //     onSubmitted: (value) {
+                //       c.search(address: value);
+                //     },
+                //     style: ChautariTextStyles().listSubtitle,
+                //     cursorColor: Colors.white,
+                //     decoration: InputDecoration(
+                //       suffixIcon: Icon(Icons.airplanemode_active),
+                //       hintText: "Quick Search",
+                //       hintStyle: ChautariTextStyles().listSubtitle,
+                //       enabledBorder: InputBorder.none,
+                //       focusedBorder: InputBorder.none,
+                //       fillColor:
+                //           ChautariColors.blackAndSearchcolor().withOpacity(0.6),
+                //       filled: true,
+                //       isDense: false,
+                //     ),
+                //   ),
+                // ),
                 Expanded(
                   child: ListRoom(
                     // controller: scrollController,
