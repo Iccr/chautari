@@ -1,16 +1,33 @@
+import 'dart:async';
+
 import 'package:chautari/model/room_model.dart';
 import 'package:chautari/services/room_service.dart';
+import 'package:chautari/utilities/marker_generator.dart';
+import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/widgets/map/map.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class RoomsMapController extends GetxController {
+class MiddleWare {
+  StreamController isRoomMapViewInScreen = new StreamController.broadcast();
+
+  observer(Routing routing) {
+    this.isRoomMapViewInScreen.add(routing.current == RouteName.map);
+  }
+}
+
+class RoomsMapController extends GetxController with StateMixin {
   final ChautariMapController mapController = ChautariMapController();
   Map map;
   RoomService service;
 
-  var _models = List<RoomModel>().obs;
-  List<RoomModel> get models => _models.value;
+  var models = List.from([]).obs;
+  RxSet<Marker> markers = Set<Marker>().obs;
+  MarkerGenerator generator;
+
+  var isRendered = false.obs;
+  var customMarkersData = List.from([]).obs;
 
   RoomsMapController() {
     mapController.setZoom(16.0);
@@ -31,7 +48,17 @@ class RoomsMapController extends GetxController {
   void onInit() {
     super.onInit();
     service = Get.find();
-    this._models.assignAll(this.service.rooms);
+    this.models.assignAll(this.service.rooms);
+    MiddleWare().isRoomMapViewInScreen.stream.listen((event) {
+      if (event) {
+        customeMarker();
+      }
+    });
+  }
+
+  @override
+  void onReady() {
+    super.onReady();
   }
 
   @override
@@ -47,5 +74,42 @@ class RoomsMapController extends GetxController {
   onTapMarkerOf(RoomModel room) {
     print(room);
     _selectedRoom.value = room;
+  }
+
+  customeMarker() {
+    var _widgets = models
+        .map((element) => Container(
+              child: Text("val"),
+            ))
+        .toList();
+
+    MarkerGenerator(_widgets, (listUnit8) {
+      var list = listUnit8.map((e) => BitmapDescriptor.fromBytes(e)).toList();
+
+      customMarkersData.assignAll(list);
+      getMarkers();
+    });
+  }
+
+  Set<Marker> getMarkers() {
+    var markers = models.map(
+      (e) {
+        var latlng = LatLng(e.lat, e.long);
+
+        return Marker(
+            markerId: MarkerId(
+              e.id.toString(),
+            ),
+            position: latlng,
+            onTap: () {
+              onTapMarkerOf(e);
+            },
+            infoWindow: InfoWindow(
+              title: "Rs. ${e.price}",
+            ),
+            icon: BitmapDescriptor.defaultMarker);
+      },
+    );
+    this.markers.assignAll(markers);
   }
 }
