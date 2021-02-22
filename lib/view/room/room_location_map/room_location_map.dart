@@ -14,7 +14,7 @@ class ShowRoomLocationMap extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Pick Location")),,
+      appBar: AppBar(title: Text("Pick Location")),
       body: getMapWidget(),
     );
   }
