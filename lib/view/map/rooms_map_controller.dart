@@ -90,21 +90,21 @@ class RoomsMapController extends GetxController with StateMixin {
                 RichText(
                   text: TextSpan(
                       style: ChautariTextStyles()
-                          .listSubtitle
-                          .copyWith(fontSize: 7.5, color: Colors.white),
+                          .listTitle
+                          .copyWith(fontSize: 10, color: Colors.white),
                       children: [
                         TextSpan(text: element.getShortPriceString()),
                         TextSpan(
                             text: "k",
                             style: ChautariTextStyles()
                                 .listSubtitle
-                                .copyWith(fontSize: 6, color: Colors.white)),
+                                .copyWith(fontSize: 8.5, color: Colors.white)),
                       ]),
                 ),
               ],
             ),
-            height: 18,
-            width: 18,
+            height: 25,
+            width: 25,
           ),
         ),
       );

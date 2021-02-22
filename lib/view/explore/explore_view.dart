@@ -20,6 +20,7 @@ class Exploreview extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ExploreController c = Get.put(ExploreController());
+    var searchFocusNode = FocusNode();
 
     return Obx(
       () => ProgressHud(
@@ -31,6 +32,7 @@ class Exploreview extends StatelessWidget {
               height: c.containerHeight,
               padding: EdgeInsets.all(ChautariPadding.small5),
               child: TextField(
+                focusNode: searchFocusNode,
                 maxLines: 1,
                 maxLength: 25,
                 buildCounter: (BuildContext context,
@@ -64,16 +66,21 @@ class Exploreview extends StatelessWidget {
             ],
           ),
           body: NotificationListener<ScrollNotification>(
-            // onNotification: (notification) {
-            //   if (notification.metrics.pixels / 10 > 5) {
-            //     print(notification.metrics.pixels / 10);
-            //     c.height.value = 0;
-            //   }
-            //   if (notification.metrics.pixels / 10 < -5) {
-            //     print(notification.metrics.pixels / 10);
-            //     c.height.value = 45;
-            //   }
-            // },
+            onNotification: (notification) {
+              if (notification.metrics.pixels > 10) {
+                if (searchFocusNode.hasFocus) {
+                  searchFocusNode.unfocus();
+                }
+              }
+              // if (notification.metrics.pixels / 10 > 5) {
+              //   print(notification.metrics.pixels / 10);
+              //   c.height.value = 0;
+              // }
+              // if (notification.metrics.pixels / 10 < -5) {
+              //   print(notification.metrics.pixels / 10);
+              //   c.height.value = 45;
+              // }
+            },
             child: Column(
               children: [
                 // Search textfield

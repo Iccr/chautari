@@ -5,7 +5,8 @@ class ChautariColors extends GetxController {
   static Color primary = Colors.teal;
   static Color white = Colors.white;
   static Color black = Colors.black87;
-  static Color green = Colors.green;
+  static Color green = Colors.green.shade900;
+
   static Color red = Colors.red;
   static Color yellow = Colors.yellow;
   static Color purple = Colors.purple;
