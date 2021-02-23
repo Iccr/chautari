@@ -2,7 +2,7 @@ const functions = require('firebase-functions')
 const admin = require('firebase-admin')
 admin.initializeApp()
 
-exports.sendNotification = functions.firestore
+exports.sendPushNotification = functions.firestore
   .document('chats/{chatId}/conversations/{conversationId}/messages')
   .onCreate((snap, context) => {
     console.log('----------------start function--------------------')

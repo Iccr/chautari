@@ -202,32 +202,26 @@ class MapView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () {
-        print("value is'");
-        print(mapController);
-        return Stack(
-          children: [
-            GoogleMap(
-              markers: this.mapController.markers,
-              mapToolbarEnabled: true,
-              myLocationEnabled: true,
-              zoomControlsEnabled: true,
-              mapType: MapType.normal,
-              initialCameraPosition: this.mapController.cameraPosition,
-              onMapCreated: (GoogleMapController controller) {
-                this.mapController.setMap(controller);
-              },
-              onTap: (latLng) {
-                if (onTapLocation != null) {
-                  onTapLocation(latLng);
-                }
-              },
-            ),
-            if (child != null) ...[child]
-          ],
-        );
-      },
+    return Stack(
+      children: [
+        GoogleMap(
+          markers: this.mapController.markers,
+          mapToolbarEnabled: true,
+          myLocationEnabled: true,
+          zoomControlsEnabled: true,
+          mapType: MapType.normal,
+          initialCameraPosition: this.mapController.cameraPosition,
+          onMapCreated: (GoogleMapController controller) {
+            this.mapController.setMap(controller);
+          },
+          onTap: (latLng) {
+            if (onTapLocation != null) {
+              onTapLocation(latLng);
+            }
+          },
+        ),
+        if (child != null) ...[child]
+      ],
     );
   }
 }
