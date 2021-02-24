@@ -6,7 +6,7 @@ import 'package:get/get.dart';
 
 class SearchController extends GetxController {
   final AppinfoModel appinfo = Get.find(tag: AppConstant.appinfomodelsKey);
-  var _districts = List<MenuItem>().obs;
+  var _districts = <MenuItem>[].obs;
 
   MenuItem selectedDistrict;
 

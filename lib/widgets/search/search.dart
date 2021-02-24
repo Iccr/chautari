@@ -83,11 +83,11 @@ class SearchBar extends SearchDelegate<MenuItem> {
         return ChautariList().getListTile(
           () async {
             // await Future.delayed(Duration(seconds: 1));
-            onSelected(selected);
             close(
               context,
               selected,
             );
+            onSelected(selected);
           },
           selected,
         );
