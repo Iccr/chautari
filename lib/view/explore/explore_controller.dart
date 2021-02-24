@@ -71,6 +71,7 @@ class ExploreController extends GetxController {
   search({String address}) async {
     this._isLoading = _service.isLoading;
     this._models = _service.rooms;
+    searchModel.reset();
     _service.searchAddress(address: address);
   }
 

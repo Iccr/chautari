@@ -27,6 +27,17 @@ class SearchViewModel extends GetxController {
     setTotalFilterCount();
   }
 
+  reset() {
+    this.type = null;
+    this.noOfRoom = 1;
+    this.district = null;
+    this.address = null;
+    this.water = null;
+    this.priceLower = null;
+    this.priceUpper = null;
+    setTotalFilterCount();
+  }
+
   setWater(Water water) {
     this.water = water;
   }
