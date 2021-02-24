@@ -1,3 +1,4 @@
+import 'package:chautari/model/type.dart';
 import 'package:chautari/utilities/theme/text_decoration.dart';
 import 'package:chautari/widgets/top_down_space_wrapper.dart';
 import 'package:flutter/material.dart';
@@ -10,6 +11,7 @@ class RoomTypesRadioWidget extends StatelessWidget {
   final List<FormBuilderFieldOption<dynamic>> options;
   final ValueKey typesKey;
   final Function(dynamic value) onChanged;
+  final RoomType initialValue;
 
   const RoomTypesRadioWidget({
     Key key,
@@ -17,6 +19,7 @@ class RoomTypesRadioWidget extends StatelessWidget {
     @required this.onSaved,
     @required this.options,
     @required this.typesKey,
+    this.initialValue,
     this.onChanged,
   }) : super(key: key);
 
@@ -24,6 +27,7 @@ class RoomTypesRadioWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TopDownPaddingWrapper(
       child: FormBuilderRadioGroup(
+        initialValue: initialValue,
         focusNode: focusNode,
         key: typesKey,
         wrapSpacing: Get.width,

@@ -1,3 +1,6 @@
+import 'package:chautari/model/districts.dart';
+import 'package:chautari/model/type.dart';
+import 'package:chautari/model/water.dart';
 import 'package:chautari/services/appinfo_service.dart';
 import 'package:chautari/services/room_service.dart';
 
@@ -7,32 +10,32 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class SearchViewModel extends GetxController {
-  int type;
-  int noOfRoom = 1;
-  String districtName;
+  RoomType type;
+  double noOfRoom = 1;
+  Districts district;
   String address;
-  String water;
+  Water water;
   String priceLower;
   String priceUpper;
 
   RxInt totalFilter = 1.obs;
 
-  setType(int type) {
+  setType(RoomType type) {
     this.type = type;
     setTotalFilterCount();
   }
 
-  setWater(String water) {
+  setWater(Water water) {
     this.water = water;
   }
 
-  setNoOfRoom(int number) {
+  setNoOfRoom(double number) {
     this.noOfRoom = number;
     setTotalFilterCount();
   }
 
-  setDistrictName(String name) {
-    this.districtName = name;
+  setDistrictName(Districts name) {
+    this.district = name;
     setTotalFilterCount();
   }
 
@@ -84,20 +87,20 @@ class SearchViewModel extends GetxController {
   getQuery() {
     var query = Map<String, dynamic>();
     if (type != null) {
-      query["type"] = type;
+      query["type"] = this.type.value;
     }
     query["number_of_room_lower"] = noOfRoom;
 
-    if (districtName != null && districtName.isNotEmpty) {
-      query["district_name"] = districtName;
+    if (district != null) {
+      query["district_name"] = district.name;
     }
 
     if (address != null && address.isNotEmpty) {
       query["address"] = address;
     }
 
-    if (water != null && water.isNotEmpty) {
-      query["water"] = water;
+    if (water != null) {
+      query["water"] = water.value;
     }
 
     if (priceLower != null && priceLower.isNotEmpty) {
