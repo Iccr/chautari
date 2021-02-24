@@ -65,6 +65,7 @@ class FilterRoom extends StatelessWidget {
                       TopDownPaddingWrapper(
                         child: FormBuilderTextField(
                           key: controller.formKeys.districtKey,
+                          initialValue: controller.searchModel.district.name,
                           validator: FormBuilderValidators.required(context),
                           controller: controller.districtTextController,
                           focusNode: controller.focusNodes.districtFocusNode,
@@ -86,6 +87,7 @@ class FilterRoom extends StatelessWidget {
                         // top: 10,
                         child: FormBuilderTextField(
                           key: controller.formKeys.addressKey,
+                          initialValue: controller.searchModel.address,
                           focusNode: controller.focusNodes.addressFocusNode,
                           name: "map_field",
                           onChanged: (value) {
@@ -110,6 +112,7 @@ class FilterRoom extends StatelessWidget {
 
                       // number of rooms
                       NumberOfRoomWidget(
+                        initialVaue: controller.searchModel.noOfRoom,
                         labelText: "Minimum number of rooms",
                         helperText: null,
                         numberOfroomKey: controller.formKeys.numberOfRoomsKey,
@@ -122,6 +125,7 @@ class FilterRoom extends StatelessWidget {
                       ),
 
                       RoomPriceWidget(
+                        initialValue: controller.searchModel.priceLower,
                         labelText: "Minimum price",
                         helperText: "Per month",
                         pricekey: controller.formKeys.minimumPriceKey,
@@ -138,6 +142,7 @@ class FilterRoom extends StatelessWidget {
                       ),
 
                       RoomPriceWidget(
+                        initialValue: controller.searchModel.priceUpper,
                         labelText: "Maximum price",
                         helperText: "Per month",
                         pricekey: controller.formKeys.maximumPriceKey,
@@ -156,6 +161,7 @@ class FilterRoom extends StatelessWidget {
                       // types
                       RoomTypesRadioWidget(
                         typesKey: controller.formKeys.typesKey,
+                        initialValue: controller.searchModel.type,
                         focusNode: controller.focusNodes.typeFocusNode,
                         options: controller.appInfoService.appInfo.types
                             .map(
