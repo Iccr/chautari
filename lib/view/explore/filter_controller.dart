@@ -6,7 +6,7 @@ import 'package:chautari/view/room/room_form_focusnode.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class SearchViewModel {
+class SearchViewModel extends GetxController {
   int type;
   int noOfRoom = 1;
   String districtName;
@@ -15,7 +15,7 @@ class SearchViewModel {
   String priceLower;
   String priceUpper;
 
-  int totalFilter = 0;
+  RxInt totalFilter = 0.obs;
 
   getQuery() {
     var query = Map<String, dynamic>();

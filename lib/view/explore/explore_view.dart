@@ -15,6 +15,7 @@ import 'package:line_icons/line_icons.dart';
 
 class Exploreview extends StatelessWidget {
   ScrollController scrollController = ScrollController();
+
   getViewModel() {}
 
   @override
@@ -57,12 +58,34 @@ class Exploreview extends StatelessWidget {
               ),
             ),
             actions: [
-              IconButton(
-                  icon: Icon(LineIcons.filter),
-                  onPressed: () {
-                    Get.toNamed(RouteName.filterRoom);
-                    print("filter");
-                  }),
+              Stack(
+                children: [
+                  IconButton(
+                      icon: Icon(LineIcons.filter),
+                      onPressed: () {
+                        Get.toNamed(RouteName.filterRoom);
+                        print("filter");
+                      }),
+                  Positioned(
+                    left: 10,
+                    top: 5,
+                    child: Container(
+                      width: 15,
+                      height: 15,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: ChautariColors.blueGrey,
+                      ),
+                      child: Center(
+                          child: Text(
+                        "4",
+                        style: ChautariTextStyles().listSubtitle.copyWith(
+                            fontSize: 10, color: ChautariColors.black),
+                      )),
+                    ),
+                  ),
+                ],
+              ),
             ],
           ),
           body: NotificationListener<ScrollNotification>(
