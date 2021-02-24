@@ -32,10 +32,16 @@ class RoomService extends GetxService {
     }
   }
 
-  search({String address}) async {
+  searchAddress({String address}) async {
     Map<String, dynamic> params = Map<String, dynamic>();
 
     params["address"] = address;
+
+    this.search(params);
+  }
+
+  search(Map<String, dynamic> params) async {
+    Map<String, dynamic> params = Map<String, dynamic>();
 
     isLoading.value = true;
 

@@ -10,6 +10,7 @@ import 'package:intl/intl.dart';
 class NumberOfRoomWidget extends StatelessWidget {
   final FocusNode focusNode;
   final Function(num value) onSaved;
+  final Function(num value) onChanged;
   final ValueKey numberOfroomKey;
   final double initialVaue;
   final String labelText;
@@ -20,6 +21,7 @@ class NumberOfRoomWidget extends StatelessWidget {
     @required this.focusNode,
     @required this.onSaved,
     @required this.numberOfroomKey,
+    this.onChanged,
     this.initialVaue = 1,
     this.labelText = "Number of rooms",
     this.helperText = "Available number of rooms to rent",
@@ -49,6 +51,7 @@ class NumberOfRoomWidget extends StatelessWidget {
             labelText: labelText,
             helperText: helperText,
           ),
+          onChanged: (value) => onChanged(value),
           onSaved: (newValue) => onSaved(newValue)),
     );
   }
