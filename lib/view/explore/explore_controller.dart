@@ -28,6 +28,8 @@ class ExploreController extends GetxController {
   var _models = <RoomModel>[].obs;
   List<RoomModel> get models => _models.value;
 
+  RxInt filterCount;
+
   get length => models.length;
 
   @override
@@ -61,6 +63,8 @@ class ExploreController extends GetxController {
     } catch (e) {
       searchModel = Get.put(SearchViewModel());
     }
+
+    filterCount = searchModel.totalFilter;
   }
 
   search({String address}) async {
