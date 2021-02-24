@@ -1,35 +1,48 @@
-import 'package:cached_network_image/cached_network_image.dart';
-import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/text_decoration.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/view/explore/filter_controller.dart';
 import 'package:chautari/view/room/my_rooms/my_room.dart';
-import 'package:chautari/view/room/update_room/update_room_controller.dart';
-import 'package:chautari/widgets/room/RoomPriceRangeSlider.dart';
 
 import 'package:chautari/widgets/room/number_of_room_widget.dart';
-import 'package:chautari/widgets/room/room_amenity_checkbox_widget.dart';
-import 'package:chautari/widgets/room/room_parking_checkbox_widget.dart';
 import 'package:chautari/widgets/room/room_price_widget.dart';
 import 'package:chautari/widgets/room/room_type_radio_widgets.dart';
 import 'package:chautari/widgets/room/room_water_radio_widgets.dart';
+import 'package:chautari/widgets/search/search.dart';
+import 'package:chautari/widgets/search/search_controller.dart';
 import 'package:chautari/widgets/top_down_space_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
 
 class FilterRoom extends StatelessWidget {
   FilterRoomController controller = Get.put(FilterRoomController());
+  final SearchController search = Get.put(SearchController());
   // var priceRangeKey = ValueKey("priceRange");
   // var districtKey = ValueKey("priceRange");
   // var addressKey = ValueKey("priceRange");
   var priceRangeFocusNode = FocusNode();
-  void openSearch() {}
 
   @override
   Widget build(BuildContext context) {
+    _openSearch() async {
+      controller.focusNodes.districtFocusNode.unfocus();
+      var _ = await showSearch(
+        context: context,
+        delegate: SearchBar(
+          items: search.districtViewModel,
+          onSelected: (item) {
+            var district = search.onSelectedDistrict(item);
+            print(district);
+            controller.districtTextController.text =
+                "${district.name}, province: ${district.state}";
+            controller.params["district_name"] = district.name;
+            print(controller.params);
+          },
+        ),
+      );
+    }
+
     return Scaffold(
       appBar: AppBar(
         title: Text("Chautari Basti"),
@@ -54,7 +67,7 @@ class FilterRoom extends StatelessWidget {
                         child: FormBuilderTextField(
                           key: controller.formKeys.districtKey,
                           validator: FormBuilderValidators.required(context),
-                          // controller: controller.districtTextController,
+                          controller: controller.districtTextController,
                           focusNode: controller.focusNodes.districtFocusNode,
                           name: "district_field",
                           style: ChautariTextStyles().listSubtitle,
@@ -64,7 +77,7 @@ class FilterRoom extends StatelessWidget {
                             labelText: "District",
                           ),
                           onTap: () {
-                            openSearch();
+                            _openSearch();
                           },
                         ),
                       ),
@@ -208,47 +221,6 @@ class FilterRoom extends StatelessWidget {
                   onPressed: () => {},
                 ),
               ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
-
-class ImagePreViewWidget extends StatelessWidget {
-  final List<String> images;
-  const ImagePreViewWidget({
-    Key key,
-    @required this.images,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return TopDownPaddingWrapper(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 100,
-            child: Row(
-              children: images
-                  .map(
-                    (e) => Container(
-                      margin: EdgeInsets.all(ChautariPadding.small5),
-                      decoration: BoxDecoration(
-                        border:
-                            Border.all(width: 0.5, color: ChautariColors.white),
-                      ),
-                      height: 100,
-                      width: 100,
-                      child: CachedNetworkImage(
-                        imageUrl: e,
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                  )
-                  .toList(),
             ),
           ),
         ],

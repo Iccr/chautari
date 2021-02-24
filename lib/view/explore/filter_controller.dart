@@ -1,12 +1,9 @@
-import 'package:chautari/model/room_model.dart';
 import 'package:chautari/services/appinfo_service.dart';
 import 'package:chautari/services/room_service.dart';
 
-import 'package:chautari/utilities/NepaliRupeeTextFormatter.dart';
-import 'package:chautari/utilities/api_service.dart';
-import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/view/room/form_keys.dart';
 import 'package:chautari/view/room/room_form_focusnode.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class FilterRoomController extends GetxController {
@@ -16,13 +13,16 @@ class FilterRoomController extends GetxController {
 
   RoomService roomService;
 
-  var params = {
-    "type": null,
-    "number_of_room_lower": null,
-    "district_name": null,
-    "water": null,
-    "price_lower": null,
-    "price_upper": null
+  final TextEditingController districtTextController = TextEditingController();
+  final TextEditingController addressTextController = TextEditingController();
+
+  RxMap<String, dynamic> params = {
+    "type": "",
+    "number_of_room_lower": "",
+    "district_name": "",
+    "water": "",
+    "price_lower": "",
+    "price_upper": ""
   }.obs;
 
   var updateNewImages = false.obs;
