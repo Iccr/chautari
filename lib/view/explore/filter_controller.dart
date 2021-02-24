@@ -63,7 +63,7 @@ class SearchViewModel extends GetxController {
       count++;
     }
 
-    if (districtName != null && districtName.isNotEmpty) {
+    if (district != null) {
       count++;
     }
 
@@ -71,7 +71,7 @@ class SearchViewModel extends GetxController {
       count++;
     }
 
-    if (water != null && water.isNotEmpty) {
+    if (water != null) {
       count++;
     }
     if (priceLower != null && priceLower.isNotEmpty) {
