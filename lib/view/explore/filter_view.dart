@@ -65,7 +65,6 @@ class FilterRoom extends StatelessWidget {
                       TopDownPaddingWrapper(
                         child: FormBuilderTextField(
                           key: controller.formKeys.districtKey,
-                          initialValue: controller.searchModel.district?.name,
                           validator: FormBuilderValidators.required(context),
                           controller: controller.districtTextController,
                           focusNode: controller.focusNodes.districtFocusNode,
@@ -173,12 +172,13 @@ class FilterRoom extends StatelessWidget {
                             .toList(),
                         onSaved: (value) => {},
                         onChanged: (value) {
-                          controller.searchModel.setType(value.value);
+                          controller.searchModel.setType(value);
                         },
                       ),
 
                       // water
                       RoomWaterRadioWidgets(
+                        initialiValue: controller.searchModel.water,
                         waterKey: controller.formKeys.waterKey,
                         focusNode: controller.focusNodes.waterFocusNode,
                         options: controller.appInfoService.appInfo.waters
@@ -192,7 +192,7 @@ class FilterRoom extends StatelessWidget {
                         onSaved: (value) =>
                             {/*controller..apiModel.water = value*/},
                         onChanged: (value) {
-                          controller.searchModel.setWater(value.value);
+                          controller.searchModel.setWater(value);
                         },
                       ),
 
