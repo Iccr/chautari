@@ -36,7 +36,7 @@ class FilterRoom extends StatelessWidget {
             print(district);
             controller.districtTextController.text =
                 "${district.name}, province: ${district.state}";
-            controller.searchModel.districtName = district.name;
+            controller.searchModel.setDistrictName(district.name);
           },
         ),
       );
@@ -89,7 +89,7 @@ class FilterRoom extends StatelessWidget {
                           focusNode: controller.focusNodes.addressFocusNode,
                           name: "map_field",
                           onChanged: (value) {
-                            controller.searchModel.address = value;
+                            controller.searchModel.setAddress(value);
                           },
                           // onSaved: (newValue) {
                           //   // controller.apiModel.address = newValue;
@@ -116,7 +116,7 @@ class FilterRoom extends StatelessWidget {
                         focusNode: controller.focusNodes.numberOfRoomsFocusNode,
                         onSaved: (value) => {},
                         onChanged: (value) {
-                          controller.searchModel.noOfRoom = value;
+                          controller.searchModel.setNoOfRoom(value);
                         },
                         // controller.room.numberOfRooms = value.toInt(),
                       ),
@@ -130,8 +130,9 @@ class FilterRoom extends StatelessWidget {
                             controller.focusNodes.priceFocusNode.requestFocus(),
                         onSaved: (value) => {},
                         onChanged: (value) {
-                          controller.searchModel.priceLower =
-                              value.replaceAll(",", "");
+                          var val = value.replaceAll(",", "");
+                          controller.searchModel.setPriceLower(val;)
+                              
                         },
 
                         // controller.room.price = value.replaceAll(",", ""),
