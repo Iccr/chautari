@@ -11,6 +11,7 @@ class RoomPriceWidget extends StatelessWidget {
 
   final ValueKey pricekey;
   final Function(String value) onSaved;
+  final Function(String value) onChanged;
   final Function onTap;
   final String price;
   final String initialValue;
@@ -23,6 +24,7 @@ class RoomPriceWidget extends StatelessWidget {
     @required this.focusNode,
     @required this.onSaved,
     @required this.onTap,
+    this.onChanged,
     this.initialValue,
     this.labelText = "Price",
     this.helperText = "price per month",

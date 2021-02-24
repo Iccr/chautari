@@ -50,7 +50,7 @@ class ExploreController extends GetxController {
   search({String address}) async {
     this._isLoading = _service.isLoading;
     this._models = _service.rooms;
-    _service.search(address: address);
+    _service.searchAddress(address: address);
   }
 
   void registerNotification() async {

@@ -9,6 +9,7 @@ class RoomTypesRadioWidget extends StatelessWidget {
   final Function(dynamic value) onSaved;
   final List<FormBuilderFieldOption<dynamic>> options;
   final ValueKey typesKey;
+  final Function(dynamic value) onChanged;
 
   const RoomTypesRadioWidget({
     Key key,
@@ -16,6 +17,7 @@ class RoomTypesRadioWidget extends StatelessWidget {
     @required this.onSaved,
     @required this.options,
     @required this.typesKey,
+    this.onChanged,
   }) : super(key: key);
 
   @override
@@ -35,6 +37,9 @@ class RoomTypesRadioWidget extends StatelessWidget {
         name: "Type",
         options: options,
         onSaved: (newValue) => onSaved(newValue),
+        onChanged: (value) {
+          onChanged(value);
+        },
       ),
     );
   }

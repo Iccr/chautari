@@ -89,9 +89,13 @@ class FilterRoom extends StatelessWidget {
                           key: controller.formKeys.addressKey,
                           focusNode: controller.focusNodes.addressFocusNode,
                           name: "map_field",
-                          onSaved: (newValue) {
-                            // controller.apiModel.address = newValue;
+                          onChanged: (value) {
+                            controller.params["address"] = value;
+                            print(controller.params);
                           },
+                          // onSaved: (newValue) {
+                          //   // controller.apiModel.address = newValue;
+                          // },
                           validator: (value) {
                             return value == null || value.isEmpty
                                 ? "This field cannot be empty"
@@ -108,54 +112,69 @@ class FilterRoom extends StatelessWidget {
 
                       // number of rooms
                       NumberOfRoomWidget(
-                          labelText: "Minimum number of rooms",
-                          helperText: null,
-                          numberOfroomKey: controller.formKeys.numberOfRoomsKey,
-                          focusNode:
-                              controller.focusNodes.numberOfRoomsFocusNode,
-                          onSaved: (value) => {}
-                          // controller.room.numberOfRooms = value.toInt(),
-                          ),
+                        labelText: "Minimum number of rooms",
+                        helperText: null,
+                        numberOfroomKey: controller.formKeys.numberOfRoomsKey,
+                        focusNode: controller.focusNodes.numberOfRoomsFocusNode,
+                        onSaved: (value) => {},
+                        onChanged: (value) {
+                          controller.params["number_of_room_lower"] = value;
+                          print(controller.params);
+                        },
+                        // controller.room.numberOfRooms = value.toInt(),
+                      ),
 
                       RoomPriceWidget(
-                          labelText: "Minimum price",
-                          helperText: "Per month",
-                          pricekey: controller.formKeys.minimumPriceKey,
-                          focusNode:
-                              controller.focusNodes.minimumPriceFocusNode,
-                          onTap: () => controller.focusNodes.priceFocusNode
-                              .requestFocus(),
-                          onSaved: (value) => {}
-                          // controller.room.price = value.replaceAll(",", ""),
-                          ),
+                        labelText: "Minimum price",
+                        helperText: "Per month",
+                        pricekey: controller.formKeys.minimumPriceKey,
+                        focusNode: controller.focusNodes.minimumPriceFocusNode,
+                        onTap: () =>
+                            controller.focusNodes.priceFocusNode.requestFocus(),
+                        onSaved: (value) => {},
+                        onChanged: (value) {
+                          controller.params["price_lower"] =
+                              value.replaceAll(",", "");
+                          print(controller.params);
+                        },
+
+                        // controller.room.price = value.replaceAll(",", ""),
+                      ),
 
                       RoomPriceWidget(
-                          labelText: "Maximum price",
-                          helperText: "Per month",
-                          pricekey: controller.formKeys.maximumPriceKey,
-                          focusNode:
-                              controller.focusNodes.maximumPriceFocusNode,
-                          onTap: () => controller.focusNodes.priceFocusNode
-                              .requestFocus(),
-                          onSaved: (value) => {}
-                          // controller.room.price = value.replaceAll(",", ""),
-                          ),
+                        labelText: "Maximum price",
+                        helperText: "Per month",
+                        pricekey: controller.formKeys.maximumPriceKey,
+                        focusNode: controller.focusNodes.maximumPriceFocusNode,
+                        onTap: () =>
+                            controller.focusNodes.priceFocusNode.requestFocus(),
+                        onSaved: (value) => {},
+                        onChanged: (value) {
+                          controller.params["price_upper"] =
+                              value.replaceAll(",", "");
+                          print(controller.params);
+                        },
+                        // controller.room.price = ,
+                      ),
 
                       // types
                       RoomTypesRadioWidget(
-                          typesKey: controller.formKeys.typesKey,
-                          focusNode: controller.focusNodes.typeFocusNode,
-                          options: controller.appInfoService.appInfo.types
-                              .map(
-                                (element) => FormBuilderFieldOption(
-                                  value: element,
-                                  child: Text(element.name.capitalize),
-                                ),
-                              )
-                              .toList(),
-                          onSaved: (value) => {}
-                          // controller.apiModel.type = value),
-                          ),
+                        typesKey: controller.formKeys.typesKey,
+                        focusNode: controller.focusNodes.typeFocusNode,
+                        options: controller.appInfoService.appInfo.types
+                            .map(
+                              (element) => FormBuilderFieldOption(
+                                value: element,
+                                child: Text(element.name.capitalize),
+                              ),
+                            )
+                            .toList(),
+                        onSaved: (value) => {},
+                        onChanged: (value) {
+                          controller.params["type"] = value.value;
+                        },
+                      ),
+
                       // water
                       RoomWaterRadioWidgets(
                         waterKey: controller.formKeys.waterKey,
@@ -170,6 +189,9 @@ class FilterRoom extends StatelessWidget {
                             .toList(),
                         onSaved: (value) =>
                             {/*controller..apiModel.water = value*/},
+                        onChanged: (value) {
+                          controller.params["water"] = value.value;
+                        },
                       ),
 
                       // parkings
@@ -218,7 +240,9 @@ class FilterRoom extends StatelessWidget {
               children: [
                 ChautariRaisedButton(
                   title: "Apply Filter ",
-                  onPressed: () => {},
+                  onPressed: () => {
+                    controller.search(),
+                  },
                 ),
               ],
             ),
