@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:chautari/model/districts.dart';
 import 'package:chautari/model/type.dart';
 import 'package:chautari/model/water.dart';
@@ -18,7 +20,7 @@ class SearchViewModel extends GetxController {
   String priceLower;
   String priceUpper;
 
-  RxInt totalFilter = 1.obs;
+  var totalFilterCount = 0.obs;
 
   setType(RoomType type) {
     this.type = type;
@@ -81,7 +83,7 @@ class SearchViewModel extends GetxController {
     if (priceUpper != null && priceUpper.isNotEmpty) {
       count++;
     }
-    this.totalFilter.value = count;
+    this.totalFilterCount.value = count;
   }
 
   getQuery() {
@@ -89,7 +91,8 @@ class SearchViewModel extends GetxController {
     if (type != null) {
       query["type"] = this.type.value;
     }
-    query["number_of_room_lower"] = noOfRoom;
+
+    query["number_of_room_lower"] = noOfRoom.toInt();
 
     if (district != null) {
       query["district_name"] = district.name;
@@ -123,17 +126,7 @@ class FilterRoomController extends GetxController {
 
   final TextEditingController districtTextController = TextEditingController();
   final TextEditingController addressTextController = TextEditingController();
-
-  SearchViewModel searchModel = SearchViewModel();
-
-  // RxMap<String, dynamic> params = {
-  //   "type": -1,
-  //   "number_of_room_lower": 1,
-  //   "district_name": "",
-  //   "water": "",
-  //   "price_lower": "",
-  //   "price_upper": ""
-  // }.obs;
+  SearchViewModel searchModel;
 
   var updateNewImages = false.obs;
 
@@ -141,6 +134,15 @@ class FilterRoomController extends GetxController {
   void onInit() {
     super.onInit();
     roomService = Get.find();
+    try {
+      searchModel = Get.find();
+    } catch (e) {
+      searchModel = Get.put(SearchViewModel());
+    }
+    if (searchModel.district != null) {
+      districtTextController.text =
+          "${searchModel.district.name}, ${searchModel.district.state}";
+    }
   }
 
   search() {

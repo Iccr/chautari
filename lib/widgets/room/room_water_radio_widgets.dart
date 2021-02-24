@@ -1,3 +1,4 @@
+import 'package:chautari/model/water.dart';
 import 'package:chautari/utilities/theme/text_decoration.dart';
 import 'package:chautari/widgets/top_down_space_wrapper.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ class RoomWaterRadioWidgets extends StatelessWidget {
   final FocusNode focusNode;
   final Function(dynamic value) onSaved;
   final List<FormBuilderFieldOption<dynamic>> options;
+  final Water initialiValue;
   final Function(dynamic value) onChanged;
   final ValueKey waterKey;
   const RoomWaterRadioWidgets(
@@ -16,6 +18,7 @@ class RoomWaterRadioWidgets extends StatelessWidget {
       @required this.onSaved,
       @required this.options,
       @required this.waterKey,
+      this.initialiValue,
       this.onChanged})
       : super(key: key);
 
@@ -23,6 +26,7 @@ class RoomWaterRadioWidgets extends StatelessWidget {
   Widget build(BuildContext context) {
     return TopDownPaddingWrapper(
       child: FormBuilderRadioGroup(
+        initialValue: initialiValue,
         key: waterKey,
         focusNode: focusNode,
         wrapSpacing: Get.width,
