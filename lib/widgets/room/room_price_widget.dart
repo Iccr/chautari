@@ -14,6 +14,8 @@ class RoomPriceWidget extends StatelessWidget {
   final Function onTap;
   final String price;
   final String initialValue;
+  final String labelText;
+  final String helperText;
 
   const RoomPriceWidget({
     Key key,
@@ -22,6 +24,8 @@ class RoomPriceWidget extends StatelessWidget {
     @required this.onSaved,
     @required this.onTap,
     this.initialValue,
+    this.labelText = "Price",
+    this.helperText = "price per month",
     this.price,
   }) : super(key: key);
 
@@ -49,9 +53,10 @@ class RoomPriceWidget extends StatelessWidget {
           name: "price",
           onTap: () => onTap(),
           decoration: ChautariDecoration().outlinedBorderTextField(
-              prefix: Text("Rs. "),
-              labelText: "Price",
-              helperText: "price per month"),
+            prefix: Text("Rs. "),
+            labelText: labelText,
+            helperText: this.helperText,
+          ),
           onSaved: (newValue) => onSaved(newValue)),
     );
   }

@@ -4,6 +4,8 @@ class RoomFocusNodes {
   FocusNode districtFocusNode = FocusNode();
   FocusNode addressFocusNode = FocusNode();
   FocusNode priceFocusNode = FocusNode();
+  FocusNode minimumPriceFocusNode = FocusNode();
+  FocusNode maximumPriceFocusNode = FocusNode();
 
   FocusNode typeFocusNode = FocusNode();
   FocusNode waterFocusNode = FocusNode();

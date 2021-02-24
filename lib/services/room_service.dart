@@ -5,8 +5,8 @@ import 'package:chautari/repository/rooms_repository.dart';
 import 'package:get/get.dart';
 
 class RoomService extends GetxService {
-  var rooms = List<RoomModel>().obs;
-  var myRooms = List<RoomModel>().obs;
+  var rooms = <RoomModel>[].obs;
+  var myRooms = <RoomModel>[].obs;
   var isLoading = false.obs;
   var _error = "".obs;
   String get error => _error.value.isEmpty ? null : _error.value;
