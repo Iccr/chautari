@@ -41,8 +41,6 @@ class RoomService extends GetxService {
   }
 
   search(Map<String, dynamic> params) async {
-    Map<String, dynamic> params = Map<String, dynamic>();
-
     isLoading.value = true;
 
     var models = await RoomsRepository().searchRoom(params);

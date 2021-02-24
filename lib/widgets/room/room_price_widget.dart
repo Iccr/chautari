@@ -35,31 +35,33 @@ class RoomPriceWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TopDownPaddingWrapper(
       child: FormBuilderTextField(
-          initialValue: initialValue,
-          key: pricekey,
-          validator: (value) {
-            if (value == null) {
-              return "This field cannot be empty";
-            } else if (int.parse(
-                    value.isEmpty ? "0" : value.replaceAll(",", "")) <
-                100) {
-              return "value must be greater than 100";
-            } else {
-              return null;
-            }
-          },
-          inputFormatters: [NumericTextFormatter()],
-          keyboardType: TextInputType.number,
-          textInputAction: TextInputAction.done,
-          focusNode: focusNode,
-          name: "price",
-          onTap: () => onTap(),
-          decoration: ChautariDecoration().outlinedBorderTextField(
-            prefix: Text("Rs. "),
-            labelText: labelText,
-            helperText: this.helperText,
-          ),
-          onSaved: (newValue) => onSaved(newValue)),
+        initialValue: initialValue,
+        key: pricekey,
+        validator: (value) {
+          if (value == null) {
+            return "This field cannot be empty";
+          } else if (int.parse(
+                  value.isEmpty ? "0" : value.replaceAll(",", "")) <
+              100) {
+            return "value must be greater than 100";
+          } else {
+            return null;
+          }
+        },
+        inputFormatters: [NumericTextFormatter()],
+        keyboardType: TextInputType.number,
+        textInputAction: TextInputAction.done,
+        focusNode: focusNode,
+        name: "price",
+        onTap: () => onTap(),
+        decoration: ChautariDecoration().outlinedBorderTextField(
+          prefix: Text("Rs. "),
+          labelText: labelText,
+          helperText: this.helperText,
+        ),
+        onSaved: (newValue) => onSaved(newValue),
+        onChanged: (value) => onChanged(value),
+      ),
     );
   }
 }
