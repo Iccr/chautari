@@ -55,5 +55,6 @@ class FilterRoomController extends GetxController {
     }
 
     roomService.search(query);
+    Get.back();
   }
 }
