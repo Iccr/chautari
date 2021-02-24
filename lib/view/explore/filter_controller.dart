@@ -15,39 +15,93 @@ class SearchViewModel extends GetxController {
   String priceLower;
   String priceUpper;
 
-  RxInt totalFilter = 0.obs;
+  RxInt totalFilter = 1.obs;
+
+  setType(int type) {
+    this.type = type;
+    setTotalFilterCount();
+  }
+
+  setNoOfRoom(int number) {
+    this.noOfRoom = number;
+    setTotalFilterCount();
+  }
+
+  setDistrictName(String name) {
+    this.districtName = name;
+    setTotalFilterCount();
+  }
+
+  setAddress(String address) {
+    this.address = address;
+    setTotalFilterCount();
+  }
+
+  setPriceLower(String lower) {
+    this.priceLower = lower;
+    setTotalFilterCount();
+  }
+
+  setPriceUpper(String upper) {
+    this.priceUpper = upper;
+    setTotalFilterCount();
+  }
+
+  setTotalFilterCount() {
+    int count = 0;
+    if (type != null) {
+      count++;
+    }
+    if (noOfRoom != 1) {
+      count++;
+    }
+
+    if (districtName != null && districtName.isNotEmpty) {
+      count++;
+    }
+
+    if (address != null && address.isNotEmpty) {
+      count++;
+    }
+
+    if (water != null && water.isNotEmpty) {
+      count++;
+    }
+    if (priceLower != null && priceLower.isNotEmpty) {
+      count++;
+    }
+
+    if (priceUpper != null && priceUpper.isNotEmpty) {
+      count++;
+    }
+    this.totalFilter.value = count;
+  }
 
   getQuery() {
     var query = Map<String, dynamic>();
     if (type != null) {
       query["type"] = type;
-      totalFilter++;
     }
     query["number_of_room_lower"] = noOfRoom;
 
-    if (districtName != null) {
+    if (districtName != null && districtName.isNotEmpty) {
       query["district_name"] = districtName;
-      totalFilter++;
     }
 
-    if (address != null) {
+    if (address != null && address.isNotEmpty) {
       query["address"] = address;
-      totalFilter++;
     }
 
-    if (water != null) {
+    if (water != null && water.isNotEmpty) {
       query["water"] = water;
-      totalFilter++;
     }
 
-    if (priceLower != null) {
+    if (priceLower != null && priceLower.isNotEmpty) {
       query["price_lower"] = priceLower;
-      totalFilter++;
     }
 
-    if (priceUpper != null) {
+    if (priceUpper != null && priceUpper.isNotEmpty) {
       query["price_upper"] = priceUpper;
-      totalFilter++;
     }
     return query;
   }

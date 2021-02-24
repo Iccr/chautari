@@ -66,24 +66,25 @@ class Exploreview extends StatelessWidget {
                         Get.toNamed(RouteName.filterRoom);
                         print("filter");
                       }),
-                  Positioned(
-                    left: 10,
-                    top: 5,
-                    child: Container(
-                      width: 15,
-                      height: 15,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: ChautariColors.blueGrey,
+                  if (c.filterCount.value != 0)
+                    Positioned(
+                      left: 10,
+                      top: 5,
+                      child: Container(
+                        width: 15,
+                        height: 15,
+                        decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: ChautariColors.blueGrey,
+                        ),
+                        child: Center(
+                            child: Text(
+                          "${c.filterCount.value}",
+                          style: ChautariTextStyles().listSubtitle.copyWith(
+                              fontSize: 10, color: ChautariColors.black),
+                        )),
                       ),
-                      child: Center(
-                          child: Text(
-                        "4",
-                        style: ChautariTextStyles().listSubtitle.copyWith(
-                            fontSize: 10, color: ChautariColors.black),
-                      )),
                     ),
-                  ),
                 ],
               ),
             ],
