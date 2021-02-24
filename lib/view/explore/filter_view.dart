@@ -36,7 +36,7 @@ class FilterRoom extends StatelessWidget {
             print(district);
             controller.districtTextController.text =
                 "${district.name}, province: ${district.state}";
-            controller.searchModel.setDistrictName(district.name);
+            controller.searchModel.setDistrictName(district);
           },
         ),
       );
@@ -65,7 +65,7 @@ class FilterRoom extends StatelessWidget {
                       TopDownPaddingWrapper(
                         child: FormBuilderTextField(
                           key: controller.formKeys.districtKey,
-                          initialValue: controller.searchModel.district.name,
+                          initialValue: controller.searchModel.district?.name,
                           validator: FormBuilderValidators.required(context),
                           controller: controller.districtTextController,
                           focusNode: controller.focusNodes.districtFocusNode,
