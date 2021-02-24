@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:chautari/model/room_model.dart';
 import 'package:chautari/services/room_service.dart';
+import 'package:chautari/view/explore/filter_controller.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -11,6 +12,7 @@ import 'package:get/get.dart';
 class ExploreController extends GetxController {
   AuthController auth = Get.find();
   RoomService _service;
+  SearchViewModel searchModel;
 
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -23,10 +25,11 @@ class ExploreController extends GetxController {
   var _isLoading = false.obs;
   bool get isLoading => _isLoading.value;
   String error;
-  var _models = List<RoomModel>().obs;
+  var _models = <RoomModel>[].obs;
   List<RoomModel> get models => _models.value;
 
   get length => models.length;
+
   @override
   void onInit() {
     super.onInit();
@@ -34,6 +37,11 @@ class ExploreController extends GetxController {
     this._isLoading = _service.isLoading;
     this._models = _service.rooms;
 
+    _setupFirebase();
+    _setupSearchViewModel();
+  }
+
+  _setupFirebase() {
     FirebaseMessaging.instance
         .getInitialMessage()
         .then((RemoteMessage message) {
@@ -45,6 +53,14 @@ class ExploreController extends GetxController {
     });
     registerNotification();
     configLocalNotification();
+  }
+
+  _setupSearchViewModel() {
+    try {
+      searchModel = Get.find();
+    } catch (e) {
+      searchModel = Get.put(SearchViewModel());
+    }
   }
 
   search({String address}) async {
