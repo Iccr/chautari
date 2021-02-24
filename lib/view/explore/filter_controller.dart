@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:chautari/model/districts.dart';
 import 'package:chautari/model/type.dart';
 import 'package:chautari/model/water.dart';
@@ -13,7 +11,7 @@ import 'package:get/get.dart';
 
 class SearchViewModel extends GetxController {
   RoomType type;
-  double noOfRoom = 1;
+  var noOfRoom = 1.0.obs;
   Districts district;
   String address;
   Water water;
@@ -29,13 +27,14 @@ class SearchViewModel extends GetxController {
 
   reset() {
     this.type = null;
-    this.noOfRoom = 1;
+    this.setNoOfRoom(1.0);
     this.district = null;
     this.address = null;
     this.water = null;
     this.priceLower = null;
     this.priceUpper = null;
     setTotalFilterCount();
+    this.update();
   }
 
   setWater(Water water) {
@@ -43,8 +42,9 @@ class SearchViewModel extends GetxController {
   }
 
   setNoOfRoom(double number) {
-    this.noOfRoom = number;
+    this.noOfRoom.value = number;
     setTotalFilterCount();
+    this.update();
   }
 
   setDistrictName(Districts name) {
@@ -137,29 +137,36 @@ class FilterRoomController extends GetxController {
 
   final TextEditingController districtTextController = TextEditingController();
   final TextEditingController addressTextController = TextEditingController();
-  SearchViewModel searchModel;
+  var searchModel = SearchViewModel().obs;
 
   var updateNewImages = false.obs;
+  var object = false.obs;
 
   @override
   void onInit() {
     super.onInit();
     roomService = Get.find();
     try {
-      searchModel = Get.find();
+      searchModel.value = Get.find();
     } catch (e) {
-      searchModel = Get.put(SearchViewModel());
+      searchModel.value = Get.put(SearchViewModel());
     }
-    if (searchModel.district != null) {
+    if (searchModel.value.district != null) {
       districtTextController.text =
-          "${searchModel.district.name}, ${searchModel.district.state}";
+          "${searchModel.value.district.name}, ${searchModel.value.district.state}";
     }
   }
 
   search() {
-    var query = searchModel.getQuery();
-
+    var query = searchModel.value.getQuery();
     roomService.search(query);
     Get.back();
+  }
+
+  reset() {
+    this.districtTextController.text = "";
+    this.addressTextController.text = "";
+
+    searchModel.value.reset();
   }
 }
