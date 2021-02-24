@@ -80,11 +80,9 @@ class ExploreController extends GetxController {
 
   void showNotification(message) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-      Platform.isAndroid
-          ? 'com.dfa.flutterchatdemo'
-          : 'com.duytq.flutterchatdemo',
-      'Flutter chat demo',
-      'your channel description',
+      Platform.isAndroid ? 'com.vedait.roomfinder' : 'com.vedait.roomfinder',
+      'Roomfinder Nepal',
+      'RoomFinder Nepal',
       playSound: true,
       enableVibration: true,
       importance: Importance.max,

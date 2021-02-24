@@ -12,6 +12,8 @@ class NumberOfRoomWidget extends StatelessWidget {
   final Function(num value) onSaved;
   final ValueKey numberOfroomKey;
   final double initialVaue;
+  final String labelText;
+  final String helperText;
 
   const NumberOfRoomWidget({
     Key key,
@@ -19,6 +21,8 @@ class NumberOfRoomWidget extends StatelessWidget {
     @required this.onSaved,
     @required this.numberOfroomKey,
     this.initialVaue = 1,
+    this.labelText = "Number of rooms",
+    this.helperText = "Available number of rooms to rent",
   }) : super(key: key);
 
   @override
@@ -42,8 +46,9 @@ class NumberOfRoomWidget extends StatelessWidget {
           initialValue: initialVaue,
           displayFormat: NumberFormat("##"),
           decoration: ChautariDecoration().outlinedBorderTextField(
-              labelText: "Number of rooms",
-              helperText: "Available number of rooms to rent"),
+            labelText: labelText,
+            helperText: helperText,
+          ),
           onSaved: (newValue) => onSaved(newValue)),
     );
   }

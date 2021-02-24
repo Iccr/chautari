@@ -1,14 +1,257 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:chautari/utilities/theme/colors.dart';
+import 'package:chautari/utilities/theme/padding.dart';
+import 'package:chautari/utilities/theme/text_decoration.dart';
+import 'package:chautari/utilities/theme/text_style.dart';
+import 'package:chautari/view/explore/filter_controller.dart';
+import 'package:chautari/view/room/my_rooms/my_room.dart';
+import 'package:chautari/view/room/update_room/update_room_controller.dart';
+import 'package:chautari/widgets/room/RoomPriceRangeSlider.dart';
+
+import 'package:chautari/widgets/room/number_of_room_widget.dart';
+import 'package:chautari/widgets/room/room_amenity_checkbox_widget.dart';
+import 'package:chautari/widgets/room/room_parking_checkbox_widget.dart';
+import 'package:chautari/widgets/room/room_price_widget.dart';
+import 'package:chautari/widgets/room/room_type_radio_widgets.dart';
+import 'package:chautari/widgets/room/room_water_radio_widgets.dart';
+import 'package:chautari/widgets/top_down_space_wrapper.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
+import 'package:get/get.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 
 class FilterRoom extends StatelessWidget {
+  FilterRoomController controller = Get.put(FilterRoomController());
+  // var priceRangeKey = ValueKey("priceRange");
+  // var districtKey = ValueKey("priceRange");
+  // var addressKey = ValueKey("priceRange");
+  var priceRangeFocusNode = FocusNode();
+  void openSearch() {}
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Filter"),
+        title: Text("Chautari Basti"),
       ),
-      body: Center(
-        child: Text("filter"),
+      body: Stack(
+        children: [
+          Container(
+            padding: EdgeInsets.all(ChautariPadding.standard),
+            height: Get.height,
+            child: SingleChildScrollView(
+              child: Obx(
+                () => FormBuilder(
+                  key: controller.formKeys.formKey,
+                  child: Column(
+                    children: [
+                      Text(
+                        "Fine tune your expectations...",
+                        style: ChautariTextStyles().listSubtitle,
+                      ),
+                      // district
+                      TopDownPaddingWrapper(
+                        child: FormBuilderTextField(
+                          key: controller.formKeys.districtKey,
+                          validator: FormBuilderValidators.required(context),
+                          // controller: controller.districtTextController,
+                          focusNode: controller.focusNodes.districtFocusNode,
+                          name: "district_field",
+                          style: ChautariTextStyles().listSubtitle,
+                          decoration:
+                              ChautariDecoration().outlinedBorderTextField(
+                            helperText: "Select District",
+                            labelText: "District",
+                          ),
+                          onTap: () {
+                            openSearch();
+                          },
+                        ),
+                      ),
+
+                      // address
+                      TopDownPaddingWrapper(
+                        // top: 10,
+                        child: FormBuilderTextField(
+                          key: controller.formKeys.addressKey,
+                          focusNode: controller.focusNodes.addressFocusNode,
+                          name: "map_field",
+                          onSaved: (newValue) {
+                            // controller.apiModel.address = newValue;
+                          },
+                          validator: (value) {
+                            return value == null || value.isEmpty
+                                ? "This field cannot be empty"
+                                : null;
+                          },
+                          style: ChautariTextStyles().listSubtitle,
+                          decoration: ChautariDecoration()
+                              .outlinedBorderTextField(
+                                  helperText: "Local address name",
+                                  labelText: "address"),
+                          // onTap: () => openMap(),
+                        ),
+                      ),
+
+                      // number of rooms
+                      NumberOfRoomWidget(
+                          labelText: "Minimum number of rooms",
+                          helperText: null,
+                          numberOfroomKey: controller.formKeys.numberOfRoomsKey,
+                          focusNode:
+                              controller.focusNodes.numberOfRoomsFocusNode,
+                          onSaved: (value) => {}
+                          // controller.room.numberOfRooms = value.toInt(),
+                          ),
+
+                      RoomPriceWidget(
+                          labelText: "Minimum price",
+                          helperText: "Per month",
+                          pricekey: controller.formKeys.minimumPriceKey,
+                          focusNode:
+                              controller.focusNodes.minimumPriceFocusNode,
+                          onTap: () => controller.focusNodes.priceFocusNode
+                              .requestFocus(),
+                          onSaved: (value) => {}
+                          // controller.room.price = value.replaceAll(",", ""),
+                          ),
+
+                      RoomPriceWidget(
+                          labelText: "Maximum price",
+                          helperText: "Per month",
+                          pricekey: controller.formKeys.maximumPriceKey,
+                          focusNode:
+                              controller.focusNodes.maximumPriceFocusNode,
+                          onTap: () => controller.focusNodes.priceFocusNode
+                              .requestFocus(),
+                          onSaved: (value) => {}
+                          // controller.room.price = value.replaceAll(",", ""),
+                          ),
+
+                      // types
+                      RoomTypesRadioWidget(
+                          typesKey: controller.formKeys.typesKey,
+                          focusNode: controller.focusNodes.typeFocusNode,
+                          options: controller.appInfoService.appInfo.types
+                              .map(
+                                (element) => FormBuilderFieldOption(
+                                  value: element,
+                                  child: Text(element.name.capitalize),
+                                ),
+                              )
+                              .toList(),
+                          onSaved: (value) => {}
+                          // controller.apiModel.type = value),
+                          ),
+                      // water
+                      RoomWaterRadioWidgets(
+                        waterKey: controller.formKeys.waterKey,
+                        focusNode: controller.focusNodes.waterFocusNode,
+                        options: controller.appInfoService.appInfo.waters
+                            .map(
+                              (element) => FormBuilderFieldOption(
+                                value: element,
+                                child: Text(element.name.capitalize),
+                              ),
+                            )
+                            .toList(),
+                        onSaved: (value) =>
+                            {/*controller..apiModel.water = value*/},
+                      ),
+
+                      // parkings
+                      // RoomParkingCheckBoxWidget(
+                      //     parkingKey: controller.formKeys.parkingKey,
+                      //     focusNode: controller.focusNodes.parkingFocusNode,
+                      //     options: controller.appInfoService.appInfo.parkings
+                      //         .map(
+                      //           (element) => FormBuilderFieldOption(
+                      //             value: element,
+                      //             child: Text(element.name.capitalize),
+                      //           ),
+                      //         )
+                      //         .toList(),
+                      //     onSaved: (value) => {}),
+
+                      // // amenity
+                      // RoomAmenityCheckBoxWidget(
+                      //   amenityKey: controller.formKeys.amenityKey,
+                      //   focusNode: controller.focusNodes.parkingFocusNode,
+                      //   options: controller.appInfoService.appInfo.amenities
+                      //       .map(
+                      //         (element) => FormBuilderFieldOption(
+                      //           value: element,
+                      //           child: Text(element.name.capitalize),
+                      //         ),
+                      //       )
+                      //       .toList(),
+                      //   onSaved: (value) => {},
+                      // ),
+
+                      SizedBox(
+                        height: ChautariPadding.huge * 3,
+                      )
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            right: 0,
+            left: 0,
+            child: Column(
+              children: [
+                ChautariRaisedButton(
+                  title: "Apply Filter ",
+                  onPressed: () => {},
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class ImagePreViewWidget extends StatelessWidget {
+  final List<String> images;
+  const ImagePreViewWidget({
+    Key key,
+    @required this.images,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return TopDownPaddingWrapper(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Container(
+            height: 100,
+            child: Row(
+              children: images
+                  .map(
+                    (e) => Container(
+                      margin: EdgeInsets.all(ChautariPadding.small5),
+                      decoration: BoxDecoration(
+                        border:
+                            Border.all(width: 0.5, color: ChautariColors.white),
+                      ),
+                      height: 100,
+                      width: 100,
+                      child: CachedNetworkImage(
+                        imageUrl: e,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  )
+                  .toList(),
+            ),
+          ),
+        ],
       ),
     );
   }

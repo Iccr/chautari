@@ -19,7 +19,7 @@ class RoomsRepository {
   }
 
   Future<AllRoomsResponseModel> searchRoom(Map<String, dynamic> params) async {
-    final response = await api.post(_searchRoom, params);
+    final response = await api.get(_searchRoom, query: params);
     return AllRoomsResponseModel.fromJson(response.data);
   }
 

@@ -92,11 +92,12 @@ class ApiService {
     return header;
   }
 
-  Future get(String url) async {
+  Future get(String url, {Map<String, dynamic> query}) async {
     var responseJson;
     try {
       responseJson = await _http.get(
         _baseUrl + url,
+        queryParameters: query,
         options: Options(
           headers: _headers(),
         ),

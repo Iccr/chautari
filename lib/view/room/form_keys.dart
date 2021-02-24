@@ -14,6 +14,9 @@ class RoomFormKeys {
   var amenityKey = ValueKey("amenity");
   var waterKey = ValueKey("water");
   var priceKey = ValueKey("price");
+  var priceRangeKey = ValueKey("priceRange");
+  var minimumPriceKey = ValueKey("minimumPriceKey");
+  var maximumPriceKey = ValueKey("maximumPriceKey");
   var contactKey = ValueKey("contact");
   var imageKey = ValueKey("image");
   var contactVisibilityKey = ValueKey("contactVisibilityKey");

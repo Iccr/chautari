@@ -31,7 +31,9 @@ class ChautariDecoration {
           color: ChautariColors.red.withOpacity(0.5),
         ),
       ),
-      helperStyle: ChautariTextStyles().listSubtitle,
+      helperStyle: ChautariTextStyles()
+          .listSubtitle
+          .copyWith(fontSize: 10, fontWeight: FontWeight.w400),
       labelStyle: ChautariTextStyles().listSubtitle,
       hintText: hintText,
       helperText: helperText,

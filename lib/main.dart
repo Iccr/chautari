@@ -53,9 +53,9 @@ void initServices() async {
   /// Here is where you put get_storage, hive, shared_pref initialization.
   /// or moor connection, or whatever that's async.
   ///
-  String host = defaultTargetPlatform == TargetPlatform.android
-      ? '10.0.2.2:5002'
-      : 'localhost:5002';
+  // String host = defaultTargetPlatform == TargetPlatform.android
+  //     ? '10.0.2.2:5002'
+  //     : 'localhost:5002';
 
   //     FirebaseFunctions.instance
   // .useFunctionsEmulator(origin: 'http://localhost:5000')
@@ -64,10 +64,10 @@ void initServices() async {
 // Set the host as soon as possible.
   await Firebase.initializeApp();
 
-  FirebaseFirestore.instance.settings = Settings(host: host, sslEnabled: false);
-  FirebaseFunctions.instance
-      .useFunctionsEmulator(origin: 'http://localhost:5001');
-  FirebaseAuth.instance.useEmulator('http://localhost:5000');
+  // FirebaseFirestore.instance.settings = Settings(host: host, sslEnabled: false);
+  // FirebaseFunctions.instance
+  //     .useFunctionsEmulator(origin: 'http://localhost:5001');
+  // FirebaseAuth.instance.useEmulator('http://localhost:5000');
 
   await Get.putAsync(() => AppInfoService().init());
   await Get.putAsync(() => RoomService().init());

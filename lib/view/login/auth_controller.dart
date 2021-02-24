@@ -123,7 +123,7 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       print(e);
-      error.value = e.message;
+      error.value = e;
     }
   }
 
