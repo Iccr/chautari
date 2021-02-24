@@ -44,15 +44,7 @@ class _TabbarState extends State<Tabbar> {
                 tabs: [
                   GButton(
                     text: 'Explore',
-                    leading: Row(
-                      children: [
-                        Icon(
-                          Icons.badge,
-                          size: 5,
-                        ),
-                        Icon(Icons.search),
-                      ],
-                    ),
+                    leading: Icon(Icons.search),
                   ),
                   GButton(
                     icon: LineIcons.map,
