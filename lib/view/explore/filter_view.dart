@@ -36,8 +36,7 @@ class FilterRoom extends StatelessWidget {
             print(district);
             controller.districtTextController.text =
                 "${district.name}, province: ${district.state}";
-            controller.params["district_name"] = district.name;
-            print(controller.params);
+            controller.searchModel.districtName = district.name;
           },
         ),
       );
@@ -90,8 +89,7 @@ class FilterRoom extends StatelessWidget {
                           focusNode: controller.focusNodes.addressFocusNode,
                           name: "map_field",
                           onChanged: (value) {
-                            controller.params["address"] = value;
-                            print(controller.params);
+                            controller.searchModel.address = value;
                           },
                           // onSaved: (newValue) {
                           //   // controller.apiModel.address = newValue;
@@ -118,8 +116,7 @@ class FilterRoom extends StatelessWidget {
                         focusNode: controller.focusNodes.numberOfRoomsFocusNode,
                         onSaved: (value) => {},
                         onChanged: (value) {
-                          controller.params["number_of_room_lower"] = value;
-                          print(controller.params);
+                          controller.searchModel.noOfRoom = value;
                         },
                         // controller.room.numberOfRooms = value.toInt(),
                       ),
@@ -133,9 +130,8 @@ class FilterRoom extends StatelessWidget {
                             controller.focusNodes.priceFocusNode.requestFocus(),
                         onSaved: (value) => {},
                         onChanged: (value) {
-                          controller.params["price_lower"] =
+                          controller.searchModel.priceLower =
                               value.replaceAll(",", "");
-                          print(controller.params);
                         },
 
                         // controller.room.price = value.replaceAll(",", ""),
@@ -150,9 +146,8 @@ class FilterRoom extends StatelessWidget {
                             controller.focusNodes.priceFocusNode.requestFocus(),
                         onSaved: (value) => {},
                         onChanged: (value) {
-                          controller.params["price_upper"] =
+                          controller.searchModel.priceUpper =
                               value.replaceAll(",", "");
-                          print(controller.params);
                         },
                         // controller.room.price = ,
                       ),
@@ -171,7 +166,7 @@ class FilterRoom extends StatelessWidget {
                             .toList(),
                         onSaved: (value) => {},
                         onChanged: (value) {
-                          controller.params["type"] = value.value;
+                          controller.searchModel.type = value.value;
                         },
                       ),
 
@@ -190,7 +185,7 @@ class FilterRoom extends StatelessWidget {
                         onSaved: (value) =>
                             {/*controller..apiModel.water = value*/},
                         onChanged: (value) {
-                          controller.params["water"] = value.value;
+                          controller.searchModel.water = value.value;
                         },
                       ),
 
