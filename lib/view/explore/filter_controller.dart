@@ -22,6 +22,10 @@ class SearchViewModel extends GetxController {
     setTotalFilterCount();
   }
 
+  setWater(String water) {
+    this.water = water;
+  }
+
   setNoOfRoom(int number) {
     this.noOfRoom = number;
     setTotalFilterCount();

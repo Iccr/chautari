@@ -131,8 +131,7 @@ class FilterRoom extends StatelessWidget {
                         onSaved: (value) => {},
                         onChanged: (value) {
                           var val = value.replaceAll(",", "");
-                          controller.searchModel.setPriceLower(val;)
-                              
+                          controller.searchModel.setPriceLower(val);
                         },
 
                         // controller.room.price = value.replaceAll(",", ""),
@@ -147,8 +146,9 @@ class FilterRoom extends StatelessWidget {
                             controller.focusNodes.priceFocusNode.requestFocus(),
                         onSaved: (value) => {},
                         onChanged: (value) {
-                          controller.searchModel.priceUpper =
-                              value.replaceAll(",", "");
+                          controller.searchModel.setPriceUpper(
+                            value.replaceAll(",", ""),
+                          );
                         },
                         // controller.room.price = ,
                       ),
@@ -167,7 +167,7 @@ class FilterRoom extends StatelessWidget {
                             .toList(),
                         onSaved: (value) => {},
                         onChanged: (value) {
-                          controller.searchModel.type = value.value;
+                          controller.searchModel.setType(value.value);
                         },
                       ),
 
@@ -186,7 +186,7 @@ class FilterRoom extends StatelessWidget {
                         onSaved: (value) =>
                             {/*controller..apiModel.water = value*/},
                         onChanged: (value) {
-                          controller.searchModel.water = value.value;
+                          controller.searchModel.setWater(value.value);
                         },
                       ),
 
