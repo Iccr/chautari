@@ -15,7 +15,7 @@ class SplashController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _timer = Timer(Duration(seconds: 5), () {
+    _timer = Timer(Duration(seconds: 6), () {
       this.timeEllapsed.toggle();
       _timer.cancel();
     });
