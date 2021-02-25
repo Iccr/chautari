@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChautariColors extends GetxController {
-  static Color primary = Colors.teal;
+  // static Color primary = Colors.teal;
+  static Color primary = MaterialColor(0xFF1F85DE, colorCodes);
+  static Color complementary = MaterialColor(0xFFDE781F, colorCodes);
   static Color white = Colors.white;
   static Color black = Colors.black87;
   static Color green = Colors.green.shade900;
@@ -77,3 +79,19 @@ class ChautariColors extends GetxController {
   static get orangeLike => Color(0xfff5a623);
   static get blueLike => Color(0xff203152);
 }
+
+Map<int, Color> colorCodes = {
+  50: Color.fromRGBO(147, 205, 72, .1),
+  100: Color.fromRGBO(147, 205, 72, .2),
+  200: Color.fromRGBO(147, 205, 72, .3),
+  300: Color.fromRGBO(147, 205, 72, .4),
+  400: Color.fromRGBO(147, 205, 72, .5),
+  500: Color.fromRGBO(147, 205, 72, .6),
+  600: Color.fromRGBO(147, 205, 72, .7),
+  700: Color.fromRGBO(147, 205, 72, .8),
+  800: Color.fromRGBO(147, 205, 72, .9),
+  900: Color.fromRGBO(147, 205, 72, 1),
+};
+// Green color code: FF93cd48
+// MaterialColor customColor = MaterialColor(0xFF93cd48, colorCodes);
+// 005f40
