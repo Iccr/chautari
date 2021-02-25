@@ -101,7 +101,7 @@ class MyApp extends StatelessWidget {
       routingCallback: (route) {
         // middleware.observer(route);
       },
-      // getPages: ChautariRouters().routers,
+      getPages: ChautariRouters().routers,
       themeMode: ThemeMode.light,
       theme: AppTheme.lightTheme(),
       darkTheme: AppTheme.darkTheme(),
