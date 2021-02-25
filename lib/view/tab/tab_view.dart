@@ -1,4 +1,5 @@
 import 'package:chautari/utilities/theme/colors.dart';
+import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/view/explore/explore_view.dart';
 import 'package:chautari/view/map/rooms_map.dart';
 import 'package:chautari/view/profile/profile_view.dart';
@@ -37,29 +38,38 @@ class _TabbarState extends State<Tabbar> {
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
             child: GNav(
-                gap: 8,
+                gap: 3,
                 activeColor: ChautariColors.white,
-                iconSize: 24,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+                iconSize: 20,
+                padding: EdgeInsets.symmetric(horizontal: 15, vertical: 5),
                 duration: Duration(milliseconds: 0),
                 tabBackgroundColor:
                     ChautariColors.blackAndSearchcolor().withAlpha(100),
                 tabs: [
                   GButton(
-                    text: 'Explore',
-                    leading: Icon(Icons.search),
-                  ),
+                      text: 'Explore',
+                      icon: Icons.search,
+                      iconSize: 20,
+                      textStyle: ChautariTextStyles().listSubtitle
+                      // leading: Icon(Icons.search),
+                      ),
                   GButton(
-                    leading: Icon(LineIcons.map),
+                    // leading: Icon(LineIcons.map),
+                    icon: LineIcons.map,
                     text: 'Map',
+                    textStyle: ChautariTextStyles().listSubtitle,
                   ),
                   GButton(
-                    leading: Icon(LineIcons.user),
+                    // leading: Icon(LineIcons.user),
+                    icon: LineIcons.user,
                     text: 'Profile',
+                    textStyle: ChautariTextStyles().listSubtitle,
                   ),
                   GButton(
-                    leading: Icon(LineIcons.gears),
+                    // leading: Icon(LineIcons.gears),
+                    icon: LineIcons.gears,
                     text: 'Setting',
+                    textStyle: ChautariTextStyles().listSubtitle,
                   ),
                 ],
                 selectedIndex: _selectedIndex,
