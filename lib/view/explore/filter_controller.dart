@@ -11,7 +11,7 @@ import 'package:get/get.dart';
 
 class SearchViewModel extends GetxController {
   RoomType type;
-  var noOfRoom = 1.0.obs;
+  var noOfRoom = 1.0;
   Districts district;
   String address;
   Water water;
@@ -27,14 +27,13 @@ class SearchViewModel extends GetxController {
 
   reset() {
     this.type = null;
-    this.setNoOfRoom(1.0);
+    this.noOfRoom = 1.0;
     this.district = null;
     this.address = null;
     this.water = null;
     this.priceLower = null;
     this.priceUpper = null;
     setTotalFilterCount();
-    this.update();
   }
 
   setWater(Water water) {
@@ -42,7 +41,7 @@ class SearchViewModel extends GetxController {
   }
 
   setNoOfRoom(double number) {
-    this.noOfRoom.value = number;
+    this.noOfRoom = number;
     setTotalFilterCount();
     this.update();
   }
@@ -163,10 +162,17 @@ class FilterRoomController extends GetxController {
     Get.back();
   }
 
-  reset() {
-    this.districtTextController.text = "";
-    this.addressTextController.text = "";
-
+  reset() async {
     searchModel.value.reset();
+
+    // this.districtTextController.text = "";
+    // this.addressTextController.text = "";
+    // formKeys.formKey.currentState.fields.forEach((key, value) {value.})
+    formKeys.formKey.currentState.reset();
+
+    print(this.searchModel.value.noOfRoom);
+
+    // await Future.delayed(Duration(milliseconds: 2000));
+    this.object.refresh();
   }
 }
