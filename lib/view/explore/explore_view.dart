@@ -8,6 +8,7 @@ import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/view/explore/explore_controller.dart';
 import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
 import 'package:chautari/view/room/room_widgets.dart';
+import 'package:chautari/widgets/nodata.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:get/get.dart';
@@ -114,33 +115,6 @@ class Exploreview extends StatelessWidget {
                   ),
           ),
         ),
-      ),
-    );
-  }
-}
-
-class NoDataView extends StatelessWidget {
-  const NoDataView({
-    Key key,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Container(
-            width: 200,
-            height: 200,
-            child: Image.asset("images/No_data.png"),
-          ),
-          Text(
-            "There is not much to show you",
-            textAlign: TextAlign.center,
-          ),
-        ],
       ),
     );
   }
