@@ -27,7 +27,7 @@ class RoomsMapController extends GetxController with StateMixin {
   RxSet<Marker> markers = Set<Marker>().obs;
   MarkerGenerator generator;
 
-  bool renderingDone = false;
+  var renderingDone = false.obs;
 
   var isRendered = false.obs;
   var customMarkersData = List.from([]).obs;
@@ -201,6 +201,8 @@ class RoomsMapController extends GetxController with StateMixin {
   }
 
   getMarkers() async {
+    // await Future.delayed(Duration(seconds: 1));
+
     var result = await Future.wait(
       iconsWidgets.map(
         (element) {
@@ -229,7 +231,7 @@ class RoomsMapController extends GetxController with StateMixin {
       },
     );
     // return this.markers.value;
-    this.renderingDone = true;
+    this.renderingDone.value = true;
   }
 
   // Set<Marker> getMarkers() {
