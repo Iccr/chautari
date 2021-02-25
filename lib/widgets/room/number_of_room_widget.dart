@@ -31,28 +31,32 @@ class NumberOfRoomWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return TopDownPaddingWrapper(
       child: FormBuilderTouchSpin(
-          key: numberOfroomKey,
-          textStyle: ChautariTextStyles().withBigText,
-          focusNode: focusNode,
-          addIcon: Icon(
-            Icons.add,
-            color: ChautariColors.whiteAndBlackcolor().withOpacity(0.5),
-          ),
-          subtractIcon: Icon(
-            Icons.remove,
-            color: ChautariColors.whiteAndBlackcolor().withOpacity(0.5),
-          ),
-          name: "noOfROoms",
-          min: 1,
-          max: 20,
-          initialValue: initialVaue,
-          displayFormat: NumberFormat("##"),
-          decoration: ChautariDecoration().outlinedBorderTextField(
-            labelText: labelText,
-            helperText: helperText,
-          ),
-          onChanged: (value) => onChanged(value),
-          onSaved: (newValue) => onSaved(newValue)),
+        key: numberOfroomKey,
+        textStyle: ChautariTextStyles().withBigText,
+        focusNode: focusNode,
+        addIcon: Icon(
+          Icons.add,
+          color: ChautariColors.whiteAndBlackcolor().withOpacity(0.5),
+        ),
+        subtractIcon: Icon(
+          Icons.remove,
+          color: ChautariColors.whiteAndBlackcolor().withOpacity(0.5),
+        ),
+        name: "noOfROoms",
+        min: 1,
+        max: 20,
+        initialValue: initialVaue,
+        displayFormat: NumberFormat("##"),
+        decoration: ChautariDecoration().outlinedBorderTextField(
+          labelText: labelText,
+          helperText: helperText,
+        ),
+        onChanged: (value) => onChanged(value),
+        onSaved: (newValue) => onSaved(newValue),
+        onReset: () {
+          print("resset touch spein");
+        },
+      ),
     );
   }
 }
