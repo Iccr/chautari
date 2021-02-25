@@ -29,7 +29,10 @@ class _TabbarState extends State<Tabbar> {
       ),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(color: theme.primaryColor, boxShadow: [
-          BoxShadow(blurRadius: 20, color: ChautariColors.black.withOpacity(.1))
+          BoxShadow(
+            blurRadius: 20,
+            color: ChautariColors.black.withOpacity(.1),
+          )
         ]),
         child: SafeArea(
           child: Padding(
@@ -40,22 +43,23 @@ class _TabbarState extends State<Tabbar> {
                 iconSize: 24,
                 padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                 duration: Duration(milliseconds: 0),
-                tabBackgroundColor: ChautariColors.tabBarActiveBackgroundColor,
+                tabBackgroundColor:
+                    ChautariColors.blackAndSearchcolor().withAlpha(100),
                 tabs: [
                   GButton(
                     text: 'Explore',
                     leading: Icon(Icons.search),
                   ),
                   GButton(
-                    icon: LineIcons.map,
+                    leading: Icon(LineIcons.map),
                     text: 'Map',
                   ),
                   GButton(
-                    icon: LineIcons.user,
+                    leading: Icon(LineIcons.user),
                     text: 'Profile',
                   ),
                   GButton(
-                    icon: LineIcons.gears,
+                    leading: Icon(LineIcons.gears),
                     text: 'Setting',
                   ),
                 ],

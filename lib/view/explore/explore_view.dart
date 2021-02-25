@@ -51,7 +51,7 @@ class Exploreview extends StatelessWidget {
                   enabledBorder: InputBorder.none,
                   focusedBorder: InputBorder.none,
                   fillColor:
-                      ChautariColors.blackAndSearchcolor().withOpacity(0.6),
+                      ChautariColors.blackAndSearchcolor().withAlpha(153),
                   filled: true,
                   isDense: false,
                 ),

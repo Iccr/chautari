@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class ChautariColors extends GetxController {
-  // static Color primary = Colors.teal;
-  static Color primary = MaterialColor(0xFF1F85DE, colorCodes);
-  static Color complementary = MaterialColor(0xFFDE781F, colorCodes);
+  static Color primary = Colors.teal;
+  // static Color primary = MaterialColor(0xFF1F85DE, colorCodes);
+  // static Color complementary = MaterialColor(0xFF1F85DE, colorCodes);
   static Color white = Colors.white;
   static Color black = Colors.black87;
   static Color green = Colors.green.shade900;
