@@ -1,4 +1,5 @@
 import 'package:chautari/utilities/loading/progress_hud.dart';
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/view/splash/spalsh_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/src/simple/get_state.dart';
@@ -12,8 +13,17 @@ class SplashScreen extends StatelessWidget {
           child: ProgressHud(
         isLoading: !c.loaded,
         child: Scaffold(
-          body: Center(
-            child: Text("loading"),
+          body: Container(
+            color: ChautariColors.primary,
+            child: Center(
+              child: ClipOval(
+                clipBehavior: Clip.antiAlias,
+                child: Container(
+                    width: 200,
+                    height: 200,
+                    child: Image.asset("images/chautari_logo_whitei_bg.png")),
+              ),
+            ),
           ),
         ),
       )),
