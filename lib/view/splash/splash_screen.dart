@@ -14,7 +14,7 @@ class SplashScreen extends StatelessWidget {
       init: SplashController(),
       builder: (c) => Container(
           child: ProgressHud(
-        isLoading: !c.loaded,
+        isLoading: !(c.loaded && c.timeEllapsed.value),
         child: Scaffold(
           body: Container(
             color: ChautariColors.primary,
@@ -67,7 +67,7 @@ class SplashScreen extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     child: TyperAnimatedTextKit(
                       totalRepeatCount: 1,
-                      speed: Duration(milliseconds: 300),
+                      speed: Duration(milliseconds: 280),
                       repeatForever: false,
                       onTap: () {
                         print("Tap Event");
