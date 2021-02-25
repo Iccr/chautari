@@ -52,11 +52,11 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
     return list;
   }
 
-  BoxDecoration _glossyDecoration({double opacity = 1, Color color}) {
+  BoxDecoration _glossyDecoration({double opacity = 255, Color color}) {
     return BoxDecoration(
       borderRadius: BorderRadius.circular(5),
       color: color?.withOpacity(opacity) ??
-          ChautariColors.primaryColor().shade600.withOpacity(opacity),
+          ChautariColors.primaryColor().shade600.withAlpha(100),
     );
   }
 
@@ -83,7 +83,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
         child: Container(
           height: getItems().length > 1 ? 15 : 0,
           padding: EdgeInsets.all(ChautariPadding.unit),
-          decoration: _glossyDecoration(opacity: 0.8),
+          decoration: _glossyDecoration(opacity: 80),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: getPagerIndicator(),
