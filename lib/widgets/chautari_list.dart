@@ -62,7 +62,11 @@ class ChautariList {
           ),
           Text(
             item.subtitle ?? "",
+            // "basabasdfdsasdfasdfasdf asdfasdfasdf blablablabasdf",
             style: ChautariTextStyles().listSubtitle,
+            softWrap: true,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
         ]
       ];
@@ -73,8 +77,8 @@ class ChautariList {
       onTap: () => {tap()},
       child: Container(
         padding: EdgeInsets.only(left: ChautariPadding.standard),
-        height: 60,
         child: Container(
+          padding: EdgeInsets.all(ChautariPadding.medium),
           child: Row(
             children: [
               if (leading != null) ...[
@@ -88,10 +92,12 @@ class ChautariList {
                   width: ChautariPadding.standard,
                 )
               ],
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: _getContent(),
+              Flexible(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: _getContent(),
+                ),
               ),
               if (item.selected ?? false) ...[
                 Spacer(),
