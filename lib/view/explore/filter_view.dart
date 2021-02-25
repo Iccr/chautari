@@ -66,7 +66,7 @@ class FilterRoom extends StatelessWidget {
               height: Get.height,
               child: SingleChildScrollView(
                 child: FormBuilder(
-                  key: controller.formKeys.formKey,
+                  key: controller.searchModel.value.formKeys.formKey,
                   child: Column(
                     children: [
                       Text(
@@ -76,7 +76,8 @@ class FilterRoom extends StatelessWidget {
                       // district
                       TopDownPaddingWrapper(
                         child: FormBuilderTextField(
-                          key: controller.formKeys.districtKey,
+                          key:
+                              controller.searchModel.value.formKeys.districtKey,
                           validator: FormBuilderValidators.required(context),
                           controller: controller.districtTextController,
                           focusNode: controller.focusNodes.districtFocusNode,
@@ -98,7 +99,7 @@ class FilterRoom extends StatelessWidget {
                         // top: 10,
                         child: FormBuilderTextField(
                           controller: controller.addressTextController,
-                          key: controller.formKeys.addressKey,
+                          key: controller.searchModel.value.formKeys.addressKey,
                           initialValue: controller.searchModel.value.address,
                           focusNode: controller.focusNodes.addressFocusNode,
                           name: "map_field",
@@ -122,11 +123,15 @@ class FilterRoom extends StatelessWidget {
 
                       // number of rooms
                       NumberOfRoomWidget(
-                        key: controller.formKeys.numberOfRoomsKey,
-                        initialVaue: controller.searchModel.value.noOfRoom,
+                        key: controller
+                            .searchModel.value.formKeys.numberOfRoomsKey,
+                        initialVaue:
+                            controller.searchModel.value.intitialNoOfRoom,
                         labelText: "Minimum number of rooms",
+
                         helperText: null,
-                        numberOfroomKey: controller.formKeys.numberOfRoomsKey,
+                        numberOfroomKey: controller
+                            .searchModel.value.formKeys.numberOfRoomsKey,
                         focusNode: controller.focusNodes.numberOfRoomsFocusNode,
                         onSaved: (value) => {},
                         onChanged: (value) {
@@ -136,10 +141,13 @@ class FilterRoom extends StatelessWidget {
                       ),
 
                       RoomPriceWidget(
-                        initialValue: controller.searchModel.value.priceLower,
+                        initialValue:
+                            controller.searchModel.value.initialPriceLower,
+                        name: "price_lower",
                         labelText: "Minimum price",
                         helperText: "Per month",
-                        pricekey: controller.formKeys.minimumPriceKey,
+                        pricekey: controller
+                            .searchModel.value.formKeys.minimumPriceKey,
                         focusNode: controller.focusNodes.minimumPriceFocusNode,
                         onTap: () =>
                             controller.focusNodes.priceFocusNode.requestFocus(),
@@ -153,10 +161,13 @@ class FilterRoom extends StatelessWidget {
                       ),
 
                       RoomPriceWidget(
-                        initialValue: controller.searchModel.value.priceUpper,
+                        initialValue:
+                            controller.searchModel.value.intialPriceUpper,
+                        name: "price_upper",
                         labelText: "Maximum price",
                         helperText: "Per month",
-                        pricekey: controller.formKeys.maximumPriceKey,
+                        pricekey: controller
+                            .searchModel.value.formKeys.maximumPriceKey,
                         focusNode: controller.focusNodes.maximumPriceFocusNode,
                         onTap: () =>
                             controller.focusNodes.priceFocusNode.requestFocus(),
@@ -171,8 +182,9 @@ class FilterRoom extends StatelessWidget {
 
                       // types
                       RoomTypesRadioWidget(
-                        typesKey: controller.formKeys.typesKey,
-                        initialValue: controller.searchModel.value.type,
+                        typesKey:
+                            controller.searchModel.value.formKeys.typesKey,
+                        initialValue: controller.searchModel.value.initialType,
                         focusNode: controller.focusNodes.typeFocusNode,
                         options: controller.appInfoService.appInfo.types
                             .map(
@@ -190,8 +202,10 @@ class FilterRoom extends StatelessWidget {
 
                       // water
                       RoomWaterRadioWidgets(
-                        initialiValue: controller.searchModel.value.water,
-                        waterKey: controller.formKeys.waterKey,
+                        initialiValue:
+                            controller.searchModel.value.initialWater,
+                        waterKey:
+                            controller.searchModel.value.formKeys.waterKey,
                         focusNode: controller.focusNodes.waterFocusNode,
                         options: controller.appInfoService.appInfo.waters
                             .map(

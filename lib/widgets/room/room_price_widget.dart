@@ -14,6 +14,7 @@ class RoomPriceWidget extends StatelessWidget {
   final Function(String value) onChanged;
   final Function onTap;
   final String price;
+  final String name;
   final String initialValue;
   final String labelText;
   final String helperText;
@@ -24,6 +25,7 @@ class RoomPriceWidget extends StatelessWidget {
     @required this.focusNode,
     @required this.onSaved,
     @required this.onTap,
+    this.name = "price",
     this.onChanged,
     this.initialValue,
     this.labelText = "Price",
@@ -52,7 +54,7 @@ class RoomPriceWidget extends StatelessWidget {
         keyboardType: TextInputType.number,
         textInputAction: TextInputAction.done,
         focusNode: focusNode,
-        name: "price",
+        name: name,
         onTap: () => onTap(),
         decoration: ChautariDecoration().outlinedBorderTextField(
           prefix: Text("Rs. "),
