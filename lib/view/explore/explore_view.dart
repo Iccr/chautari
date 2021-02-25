@@ -75,7 +75,7 @@ class Exploreview extends StatelessWidget {
                         height: 15,
                         decoration: BoxDecoration(
                           shape: BoxShape.circle,
-                          color: ChautariColors.blueGrey,
+                          color: ChautariColors.cyan,
                         ),
                         child: Center(
                             child: Text(
