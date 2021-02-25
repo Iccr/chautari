@@ -13,7 +13,7 @@ import 'package:visibility_detector/visibility_detector.dart';
 class RoomsMap extends StatelessWidget {
   final RoomsMapController controller = Get.put(RoomsMapController());
 
-  getchildWidget() {
+  Widget getchildWidget() {
     return controller.selectedRoom == null
         ? null
         : Positioned.fill(
@@ -33,85 +33,47 @@ class RoomsMap extends StatelessWidget {
           );
   }
 
-  Widget getMapWidget() {
-    return controller.map
-        .setMarkers(controller.markers.value)
-        .setchild(
-          getchildWidget(),
-        )
-        .setOnTapLocation((latLng) => controller.clearRoomCard())
-        .build();
-  }
-
   @override
   Widget build(BuildContext context) {
-    // // appartment
-    // return ChautariColors.green;
-    // break;
-    // // room
-    // return ChautariColors.indigo;
-    // break;
-    // // flat
-    // return ChautariColors.yellow;
-    // break;
-    // // hostel
-    // return ChautariColors.teal;
-    // break;
-    // // shutter
-    // return ChautariColors.brown;
-    // break;
-    // // office
-    // return ChautariColors.purple;
-    // break;
-    // // commercial
-    // return ChautariColors.blueGrey;
-    // break;
-
-    // // others
-    // return ChautariColors.cyan;
-
-    // %RoomTypes{name: "Appartment", value: 0},
-    //   %RoomTypes{name: "Room", value: 1},
-    //   %RoomTypes{name: "Flat", value: 2},
-    //   %RoomTypes{name: "Hostel", value: 3},
-    //   %RoomTypes{name: "Shutter", value: 4},
-    //   %RoomTypes{name: "Office", value: 5},
-    //   %RoomTypes{name: "Commercial", value: 6}
-
-    return Obx(() => VisibilityDetector(
-          key: GlobalKey(),
-          onVisibilityChanged: (VisibilityInfo info) {
-            if (info.visibleFraction == 1.0) {
-              print(info.visibleFraction);
-              if (!controller.renderingDone) {
-                controller.getMarkers();
-              }
-            }
-          },
-          child: SafeArea(
-            child: Stack(
-              children: [
-                ...controller.iconsWidgets,
-                getMapWidget(),
-                Positioned(
-                  left: 0,
-                  top: 0,
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: Colors.blueGrey.withAlpha(80),
-                        borderRadius: BorderRadius.only(
-                            bottomRight:
-                                Radius.circular(ChautariPadding.small5))),
-                    padding: EdgeInsets.all(ChautariPadding.small5),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: controller.getInsightText(),
-                    ),
-                  ),
+    return VisibilityDetector(
+      key: GlobalKey(),
+      onVisibilityChanged: (VisibilityInfo info) {
+        if (info.visibleFraction == 1.0) {
+          print(info.visibleFraction);
+          if (!controller.renderingDone) {
+            controller.getMarkers();
+          }
+        }
+      },
+      child: SafeArea(
+        child: Stack(
+          children: [
+            ...controller.iconsWidgets,
+            controller.map
+                .setMarkers(controller.markers.value)
+                .setchild(
+                  Obx(() => getchildWidget() ?? Container()),
+                )
+                .setOnTapLocation((latLng) => controller.clearRoomCard())
+                .build(),
+            Positioned(
+              left: 0,
+              top: 0,
+              child: Container(
+                decoration: BoxDecoration(
+                    color: Colors.blueGrey.withAlpha(80),
+                    borderRadius: BorderRadius.only(
+                        bottomRight: Radius.circular(ChautariPadding.small5))),
+                padding: EdgeInsets.all(ChautariPadding.small5),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: controller.getInsightText(),
                 ),
-              ],
+              ),
             ),
-          ),
-        ));
+          ],
+        ),
+      ),
+    );
   }
 }
