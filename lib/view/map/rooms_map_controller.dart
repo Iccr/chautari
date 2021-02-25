@@ -64,7 +64,6 @@ class RoomsMapController extends GetxController with StateMixin {
   @override
   void onClose() {
     super.onClose();
-    print("closing map view");
   }
 
   setChild(Widget child) {
@@ -72,7 +71,6 @@ class RoomsMapController extends GetxController with StateMixin {
   }
 
   onTapMarkerOf(RoomModel room) {
-    print(room);
     _selectedRoom.value = room;
   }
 
@@ -190,7 +188,6 @@ class RoomsMapController extends GetxController with StateMixin {
   String getRoundedPriceString(String price) {
     var _price = "${(double.parse(price) / 1000).toStringAsFixed(1)}k";
     if (_price.split(".").last == "0k") {
-      print("last is 0");
       var _price = "${(double.parse(price) / 1000).toStringAsFixed(0)}k";
       return _price;
     } else {
@@ -262,7 +259,6 @@ class RoomsMapController extends GetxController with StateMixin {
   Future<BitmapDescriptor> getCustomIcon(GlobalKey iconKey) async {
     Future<Uint8List> _capturePng(GlobalKey iconKey) async {
       try {
-        print('inside');
         RenderRepaintBoundary boundary =
             iconKey.currentContext.findRenderObject();
 
@@ -270,11 +266,8 @@ class RoomsMapController extends GetxController with StateMixin {
         ByteData byteData =
             await image.toByteData(format: ui.ImageByteFormat.png);
         var pngBytes = byteData.buffer.asUint8List();
-        print(pngBytes);
         return pngBytes;
-      } catch (e) {
-        print(e);
-      }
+      } catch (e) {}
     }
 
     Uint8List imageData = await _capturePng(iconKey);
