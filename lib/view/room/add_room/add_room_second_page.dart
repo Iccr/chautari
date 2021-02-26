@@ -34,7 +34,7 @@ class AddRoomForm2 extends StatelessWidget {
       () => KeyboardActions(
         disableScroll: false,
         overscroll: 50,
-        config: controller.keyboardActionConfig(context),
+        config: controller.keyboardActionConfig,
         child: FormBuilder(
           key: formkey,
           autovalidateMode: controller.autovalidateForm2Mode.value,
