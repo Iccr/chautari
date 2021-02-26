@@ -5,6 +5,8 @@ import 'package:chautari/view/explore/filter_controller.dart';
 import 'package:chautari/view/room/my_rooms/my_room.dart';
 
 import 'package:chautari/widgets/room/number_of_room_widget.dart';
+import 'package:chautari/widgets/room/room_amenity_checkbox_widget.dart';
+import 'package:chautari/widgets/room/room_parking_checkbox_widget.dart';
 import 'package:chautari/widgets/room/room_price_widget.dart';
 import 'package:chautari/widgets/room/room_type_radio_widgets.dart';
 import 'package:chautari/widgets/room/room_water_radio_widgets.dart';
@@ -223,22 +225,30 @@ class FilterRoom extends StatelessWidget {
                       ),
 
                       // parkings
-                      // RoomParkingCheckBoxWidget(
-                      //     parkingKey: controller.formKeys.parkingKey,
-                      //     focusNode: controller.focusNodes.parkingFocusNode,
-                      //     options: controller.appInfoService.appInfo.parkings
-                      //         .map(
-                      //           (element) => FormBuilderFieldOption(
-                      //             value: element,
-                      //             child: Text(element.name.capitalize),
-                      //           ),
-                      //         )
-                      //         .toList(),
-                      //     onSaved: (value) => {}),
+                      RoomParkingCheckBoxWidget(
+                        initialValue:
+                            controller.searchModel.value.initialParkings,
+                        parkingKey:
+                            controller.searchModel.value.formKeys.parkingKey,
+                        focusNode: controller.focusNodes.parkingFocusNode,
+                        options: controller.appInfoService.appInfo.parkings
+                            .map(
+                              (element) => FormBuilderFieldOption(
+                                value: element,
+                                child: Text(element.name.capitalize),
+                              ),
+                            )
+                            .toList(),
+                        onSaved: (value) => {},
+                        onChanged: (value) {
+                          controller.searchModel.value.setParkings(value);
+                        },
+                      ),
 
-                      // // amenity
+                      // amenity
                       // RoomAmenityCheckBoxWidget(
-                      //   amenityKey: controller.formKeys.amenityKey,
+                      //   amenityKey:
+                      //       controller.searchModel.value.formKeys.amenityKey,
                       //   focusNode: controller.focusNodes.parkingFocusNode,
                       //   options: controller.appInfoService.appInfo.amenities
                       //       .map(
