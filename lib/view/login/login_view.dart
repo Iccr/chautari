@@ -1,3 +1,4 @@
+import 'package:chautari/utilities/loading/progress_hud.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
@@ -16,47 +17,50 @@ class LoginView extends StatelessWidget {
       appBar: AppBar(
         title: Text("Login"),
       ),
-      body: GetBuilder<AuthController>(
+      body: GetX<AuthController>(
           init: AuthController(),
           builder: (c) {
-            return Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Container(
-                    width: 250,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "After Login you are able to use many features of ",
-                          style: ChautariTextStyles().listSubtitle,
-                          textAlign: TextAlign.center,
-                        ),
-                        SizedBox(height: ChautariPadding.medium),
-                        Text(
-                          "Chautari Basti.",
-                          style: ChautariTextStyles().listTitle.copyWith(
-                                color: ChautariColors.primaryColor(),
-                              ),
-                        ),
-                        SizedBox(height: ChautariPadding.standard),
-                        SizedBox(height: ChautariPadding.standard),
-                      ],
+            return ProgressHud(
+              isLoading: c.loading.value,
+              child: Center(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Container(
+                      width: 250,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Text(
+                            "After Login you are able to use many features of ",
+                            style: ChautariTextStyles().listSubtitle,
+                            textAlign: TextAlign.center,
+                          ),
+                          SizedBox(height: ChautariPadding.medium),
+                          Text(
+                            "Chautari Basti.",
+                            style: ChautariTextStyles().listTitle.copyWith(
+                                  color: ChautariColors.primaryColor(),
+                                ),
+                          ),
+                          SizedBox(height: ChautariPadding.standard),
+                          SizedBox(height: ChautariPadding.standard),
+                        ],
+                      ),
                     ),
-                  ),
-                  SignInButton(
-                    theme.mode == ThemeMode.dark
-                        ? Buttons.GoogleDark
-                        : Buttons.Google,
-                    onPressed: () => c.gleSignIn(),
-                  ),
-                  SignInButton(
-                    Buttons.FacebookNew,
-                    onPressed: () => c.fbLogin(),
-                  )
-                ],
+                    SignInButton(
+                      theme.mode == ThemeMode.dark
+                          ? Buttons.GoogleDark
+                          : Buttons.Google,
+                      onPressed: () => c.gleSignIn(),
+                    ),
+                    SignInButton(
+                      Buttons.FacebookNew,
+                      onPressed: () => c.fbLogin(),
+                    )
+                  ],
+                ),
               ),
             );
           }),
