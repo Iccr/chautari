@@ -10,6 +10,8 @@ class LocationPickerController extends GetxController {
 
   var ready = false.obs;
 
+  var selectedPosition = LatLng(0, 0).obs;
+
   var cameraPosition =
       CameraPosition(target: LatLng(27.7172, 85.3240), zoom: 14).obs;
 
@@ -38,9 +40,9 @@ class LocationPickerController extends GetxController {
   }
 
   onTapLocation(LatLng latLng) {
-    // LatLng latLng = LatLng(room.lat, room.long);
     setMarker(latLng);
     moveCamera(latLng);
+    this.selectedPosition.value = latLng;
   }
 
   LatLng get roomLatLng => LatLng(room.lat, room.long);
