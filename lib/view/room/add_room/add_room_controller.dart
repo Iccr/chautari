@@ -94,9 +94,11 @@ class AddRoomController extends GetxController {
     fetchRoomService = Get.find();
 
     this.keyboardActionConfig = KeyboardAction().keyboardActionConfig(
-        Get.context,
-        List.from(
-            [focusNodes.contactTextFocusNode, focusNodes.priceFocusNode]));
+      Get.context,
+      List.from(
+        [focusNodes.contactTextFocusNode, focusNodes.priceFocusNode],
+      ),
+    );
 
     districtViewmodels.assignAll(
       appInfo.districts.map(

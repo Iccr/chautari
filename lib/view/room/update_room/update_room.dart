@@ -5,6 +5,7 @@ import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/view/room/form_keys.dart';
 import 'package:chautari/view/room/my_rooms/my_room.dart';
 import 'package:chautari/view/room/update_room/update_room_controller.dart';
+import 'package:chautari/widgets/keyboard_action.dart';
 
 import 'package:chautari/widgets/room/Room_Image_widget.dart';
 import 'package:chautari/widgets/room/number_of_room_widget.dart';
@@ -17,6 +18,7 @@ import 'package:chautari/widgets/top_down_space_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 
 class UpdateRoom extends StatelessWidget {
   UpdateRoomController controller = Get.put(UpdateRoomController());
@@ -36,119 +38,142 @@ class UpdateRoom extends StatelessWidget {
               height: Get.height,
               child: SingleChildScrollView(
                 child: Obx(
-                  () => FormBuilder(
-                    key: controller.formKeys.formKey,
-                    child: Column(
-                      children: [
-                        NumberOfRoomWidget(
-                          numberOfroomKey: controller.formKeys.numberOfRoomsKey,
-                          initialVaue: controller.room.numberOfRooms.toDouble(),
-                          focusNode:
-                              controller.focusNodes.numberOfRoomsFocusNode,
-                          onSaved: (value) =>
-                              controller.room.numberOfRooms = value.toInt(),
-                        ),
-
-                        // // price
-                        RoomPriceWidget(
-                          initialValue: controller.price,
-                          pricekey: controller.formKeys.parkingKey,
-                          focusNode: controller.focusNodes.priceFocusNode,
-                          onTap: () => controller.focusNodes.priceFocusNode
-                              .requestFocus(),
-                          onSaved: (value) =>
-                              controller.room.price = value.replaceAll(",", ""),
-                        ),
-
-                        // // mobile visibility
-                        ContactNumberVisibilityWidget(
-                          contactVisibilityKey: controller.formKeys.contactKey,
-                          initialValue: controller.contactNumberVisible.value,
-                          focusNode:
-                              controller.focusNodes.contactSwitchFocusNode,
-                          onChanged: (value) {
-                            controller.room.phoneVisibility = value;
-                            controller.contactNumberVisible.value = value;
-                          },
-                        ),
-
-                        // // contact number
-                        if (controller.contactNumberVisible.value) ...[
-                          ContactNumberWidget(
-                            initialValue: controller.room.phone,
-                            contactKey: controller.formKeys.contactKey,
+                  () => NotificationListener<ScrollNotification>(
+                    onNotification: (notification) {
+                      if (notification.metrics.pixels > 10) {
+                        controller.focusNodes.priceFocusNode.unfocus();
+                        // if (searchFocusNode.hasFocus) {
+                        //   searchFocusNode.unfocus();
+                        // }
+                      }
+                    },
+                    child: FormBuilder(
+                      key: controller.formKeys.formKey,
+                      child: Column(
+                        children: [
+                          NumberOfRoomWidget(
+                            numberOfroomKey:
+                                controller.formKeys.numberOfRoomsKey,
+                            initialVaue:
+                                controller.room.numberOfRooms.toDouble(),
                             focusNode:
-                                controller.focusNodes.contactTextFocusNode,
-                            onTap: () => controller
-                                .focusNodes.contactTextFocusNode
-                                .requestFocus(),
-                            onSaved: (value) => controller.room.phone = value,
+                                controller.focusNodes.numberOfRoomsFocusNode,
+                            onSaved: (value) =>
+                                controller.room.numberOfRooms = value.toInt(),
+                          ),
+
+                          // // price
+                          KeyboardActions(
+                            disableScroll: true,
+                            overscroll: 0,
+                            tapOutsideToDismiss: true,
+                            config: controller.keyboardActionConfig,
+                            child: RoomPriceWidget(
+                              initialValue: controller.price,
+                              pricekey: controller.formKeys.parkingKey,
+                              focusNode: controller.focusNodes.priceFocusNode,
+                              onTap: () {
+                                controller.focusNodes.priceFocusNode
+                                    .requestFocus();
+                              },
+                              onSaved: (value) => controller.room.price =
+                                  value.replaceAll(",", ""),
+                            ),
+                          ),
+
+                          // // mobile visibility
+                          ContactNumberVisibilityWidget(
+                            contactVisibilityKey:
+                                controller.formKeys.contactKey,
+                            initialValue: controller.contactNumberVisible.value,
+                            focusNode:
+                                controller.focusNodes.contactSwitchFocusNode,
+                            onChanged: (value) {
+                              controller.room.phoneVisibility = value;
+                              controller.contactNumberVisible.value = value;
+                            },
+                          ),
+
+                          // // contact number
+                          if (controller.contactNumberVisible.value) ...[
+                            ContactNumberWidget(
+                              initialValue: controller.room.phone,
+                              contactKey: controller.formKeys.contactKey,
+                              focusNode:
+                                  controller.focusNodes.contactTextFocusNode,
+                              onTap: () => controller
+                                  .focusNodes.contactTextFocusNode
+                                  .requestFocus(),
+                              onSaved: (value) => controller.room.phone = value,
+                            )
+                          ],
+
+                          // ImagePreview
+                          if (!controller.updateNewImages.value)
+                            ImagePreViewWidget(
+                              images: controller.roomImages,
+                            ),
+                          if (!controller.updateNewImages.value)
+                            ChautariRaisedButton(
+                              title: "Update new images",
+                              onPressed: () =>
+                                  controller.showImageReplaceWarning(),
+                            ),
+                          // // image
+                          if (controller.updateNewImages.value)
+                            RoomImageWidget(
+                                roomImageKey: controller.formKeys.imageKey,
+                                focusNode: controller.focusNodes.imageFocusNode,
+                                onChange: (value) => controller.scrollController
+                                    .animateTo(
+                                        controller.scrollController.position
+                                                .maxScrollExtent +
+                                            130,
+                                        duration: Duration(milliseconds: 100),
+                                        curve: Curves.easeInOut),
+                                onSaved: (value) => controller.room.rawImages =
+                                    List<File>.from(value),
+                                scrollController: controller.scrollController),
+
+                          // parkings
+                          RoomParkingCheckBoxWidget(
+                            initialValue: controller.room.parkings,
+                            parkingKey: controller.formKeys.parkingKey,
+                            focusNode: controller.focusNodes.parkingFocusNode,
+                            options: controller.appInfoService.appInfo.parkings
+                                .map(
+                                  (element) => FormBuilderFieldOption(
+                                    value: element,
+                                    child: Text(element.name.capitalize),
+                                  ),
+                                )
+                                .toList(),
+                            onSaved: (value) =>
+                                controller.room.parkings = value,
+                          ),
+
+                          // amenity
+                          RoomAmenityCheckBoxWidget(
+                            initialValue: controller.room.amenities,
+                            amenityKey: controller.formKeys.amenityKey,
+                            focusNode: controller.focusNodes.parkingFocusNode,
+                            options: controller.appInfoService.appInfo.amenities
+                                .map(
+                                  (element) => FormBuilderFieldOption(
+                                    value: element,
+                                    child: Text(element.name.capitalize),
+                                  ),
+                                )
+                                .toList(),
+                            onSaved: (value) =>
+                                controller.room.amenities = value,
+                          ),
+
+                          SizedBox(
+                            height: ChautariPadding.huge * 3,
                           )
                         ],
-
-                        // ImagePreview
-                        if (!controller.updateNewImages.value)
-                          ImagePreViewWidget(
-                            images: controller.roomImages,
-                          ),
-                        if (!controller.updateNewImages.value)
-                          ChautariRaisedButton(
-                            title: "Update new images",
-                            onPressed: () =>
-                                controller.showImageReplaceWarning(),
-                          ),
-                        // // image
-                        if (controller.updateNewImages.value)
-                          RoomImageWidget(
-                              roomImageKey: controller.formKeys.imageKey,
-                              focusNode: controller.focusNodes.imageFocusNode,
-                              onChange: (value) => controller.scrollController
-                                  .animateTo(
-                                      controller.scrollController.position
-                                              .maxScrollExtent +
-                                          130,
-                                      duration: Duration(milliseconds: 100),
-                                      curve: Curves.easeInOut),
-                              onSaved: (value) => controller.room.rawImages =
-                                  List<File>.from(value),
-                              scrollController: controller.scrollController),
-
-                        // parkings
-                        RoomParkingCheckBoxWidget(
-                          initialValue: controller.room.parkings,
-                          parkingKey: controller.formKeys.parkingKey,
-                          focusNode: controller.focusNodes.parkingFocusNode,
-                          options: controller.appInfoService.appInfo.parkings
-                              .map(
-                                (element) => FormBuilderFieldOption(
-                                  value: element,
-                                  child: Text(element.name.capitalize),
-                                ),
-                              )
-                              .toList(),
-                          onSaved: (value) => controller.room.parkings = value,
-                        ),
-
-                        // amenity
-                        RoomAmenityCheckBoxWidget(
-                          initialValue: controller.room.amenities,
-                          amenityKey: controller.formKeys.amenityKey,
-                          focusNode: controller.focusNodes.parkingFocusNode,
-                          options: controller.appInfoService.appInfo.amenities
-                              .map(
-                                (element) => FormBuilderFieldOption(
-                                  value: element,
-                                  child: Text(element.name.capitalize),
-                                ),
-                              )
-                              .toList(),
-                          onSaved: (value) => controller.room.amenities = value,
-                        ),
-
-                        SizedBox(
-                          height: ChautariPadding.huge * 3,
-                        )
-                      ],
+                      ),
                     ),
                   ),
                 ),
