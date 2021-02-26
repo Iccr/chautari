@@ -39,7 +39,7 @@ class AddRoom extends StatelessWidget {
     }
 
     _openMap() {
-      addController.openMap();
+      addController.onAddressTap();
     }
 
     List<Widget> _getPagerContents() {
