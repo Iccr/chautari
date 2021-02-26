@@ -1,9 +1,13 @@
 import 'package:chautari/model/room_model.dart';
+import 'package:chautari/utilities/map_styles.dart';
+import 'package:chautari/utilities/theme/theme_controller.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocationPickerController extends GetxController {
   GoogleMapController mapController;
+  ThemeController theme = Get.find();
+  ChautariMapStyles mapStyles;
   RoomModel room;
 
   var _zoom = 14.4746.obs;
@@ -48,8 +52,21 @@ class LocationPickerController extends GetxController {
   LatLng get roomLatLng => LatLng(room.lat, room.long);
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     room = Get.arguments;
+    mapStyles = await ChautariMapStyles().loadMapStyles();
+  }
+
+  setMap(GoogleMapController map) {
+    this.mapController = map;
+    mapController.setMapStyle(
+      Get.isDarkMode ? mapStyles.darkMapStyle : mapStyles.lightMapStyle,
+    );
+    theme.themeChanged.listen((_) {
+      mapController.setMapStyle(
+        Get.isDarkMode ? mapStyles.darkMapStyle : mapStyles.lightMapStyle,
+      );
+    });
   }
 }

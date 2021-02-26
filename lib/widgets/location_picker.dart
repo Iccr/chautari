@@ -44,7 +44,7 @@ class LocationPicker extends StatelessWidget {
               mapType: MapType.normal,
               initialCameraPosition: mapController.cameraPosition.value,
               onMapCreated: (GoogleMapController controller) {
-                mapController.mapController = controller;
+                mapController.setMap(controller);
               },
               onTap: (latLng) {
                 mapController.onTapLocation(latLng);
