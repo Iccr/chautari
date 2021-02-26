@@ -191,6 +191,7 @@ class FilterRoomController extends GetxController {
     this.addressTextController.text = "";
 
     print(this.searchModel.value.noOfRoom);
+    roomService.search({"": ""});
 
     // await Future.delayed(Duration(milliseconds: 2000));
     this.object.refresh();
