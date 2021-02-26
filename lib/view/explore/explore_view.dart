@@ -68,15 +68,15 @@ class Exploreview extends StatelessWidget {
                         print("filter");
                       }),
                   if (c.filterCount.value != 0)
-                    GestureDetector(
-                      onTap: () => {
-                        Get.toNamed(
-                          RouteName.filterRoom,
-                        )
-                      },
-                      child: Positioned(
-                        left: 10,
-                        top: 5,
+                    Positioned(
+                      left: 10,
+                      top: 5,
+                      child: GestureDetector(
+                        onTap: () => {
+                          Get.toNamed(
+                            RouteName.filterRoom,
+                          )
+                        },
                         child: Container(
                           width: 15,
                           height: 15,
