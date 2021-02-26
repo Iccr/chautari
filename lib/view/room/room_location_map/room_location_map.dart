@@ -10,23 +10,6 @@ class ShowRoomLocationMap extends StatelessWidget {
   final ShowRoomLocationMapController controller =
       Get.put(ShowRoomLocationMapController());
 
-  GoogleMapController mapController;
-
-  var _zoom = 14.4746.obs;
-  var _cameraPosition =
-      CameraPosition(target: LatLng(27.7172, 85.3240), zoom: 14).obs;
-
-  moveCamera(LatLng latLng) {
-    CameraPosition cameraPosition =
-        CameraPosition(target: latLng, zoom: this._zoom.value);
-    this.mapController.moveCamera(
-          CameraUpdate.newCameraPosition(cameraPosition),
-        );
-    // (
-    //       CameraUpdate.newCameraPosition(cameraPosition),
-    //     );
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,12 +21,12 @@ class ShowRoomLocationMap extends StatelessWidget {
           myLocationEnabled: true,
           zoomControlsEnabled: true,
           mapType: MapType.normal,
-          initialCameraPosition: this._cameraPosition.value,
+          initialCameraPosition: controller.cameraPosition.value,
           onMapCreated: (GoogleMapController mapController) {
-            this.mapController = mapController;
-            this.controller.setMarkers();
+            controller.mapController = mapController;
+            controller.setMarkers();
             var latLng = LatLng(controller.room.lat, controller.room.long);
-            this.moveCamera(latLng);
+            controller.moveCamera(latLng);
           },
           onTap: (latLng) {
             // if (onTapLocation != null) {
