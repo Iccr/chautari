@@ -6,6 +6,7 @@ import 'package:chautari/view/room/form_keys.dart';
 import 'package:chautari/view/room/my_rooms/my_room.dart';
 import 'package:chautari/view/room/update_room/update_room_controller.dart';
 import 'package:chautari/widgets/keyboard_action.dart';
+import 'package:chautari/widgets/keyboard_visibility_builder.dart';
 
 import 'package:chautari/widgets/room/Room_Image_widget.dart';
 import 'package:chautari/widgets/room/number_of_room_widget.dart';
@@ -31,23 +32,15 @@ class UpdateRoom extends StatelessWidget {
         appBar: AppBar(
           title: Text("Update room"),
         ),
-        body: Stack(
-          children: [
-            Container(
-              padding: EdgeInsets.all(ChautariPadding.standard),
-              height: Get.height,
-              child: SingleChildScrollView(
-                child: Obx(
-                  () => NotificationListener<ScrollNotification>(
-                    onNotification: (notification) {
-                      if (notification.metrics.pixels > 10) {
-                        controller.focusNodes.priceFocusNode.unfocus();
-                        // if (searchFocusNode.hasFocus) {
-                        //   searchFocusNode.unfocus();
-                        // }
-                      }
-                    },
-                    child: FormBuilder(
+        body: KeyboardVisibilityBuilder(
+          builder: (context, child, isKeyboardVisible) => Stack(
+            children: [
+              Container(
+                padding: EdgeInsets.all(ChautariPadding.standard),
+                height: Get.height,
+                child: SingleChildScrollView(
+                  child: Obx(
+                    () => FormBuilder(
                       key: controller.formKeys.formKey,
                       child: Column(
                         children: [
@@ -72,10 +65,8 @@ class UpdateRoom extends StatelessWidget {
                               initialValue: controller.price,
                               pricekey: controller.formKeys.parkingKey,
                               focusNode: controller.focusNodes.priceFocusNode,
-                              onTap: () {
-                                controller.focusNodes.priceFocusNode
-                                    .requestFocus();
-                              },
+                              onTap: () => controller.focusNodes.priceFocusNode
+                                  .requestFocus(),
                               onSaved: (value) => controller.room.price =
                                   value.replaceAll(",", ""),
                             ),
@@ -178,21 +169,23 @@ class UpdateRoom extends StatelessWidget {
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              bottom: 0,
-              right: 0,
-              left: 0,
-              child: Column(
-                children: [
-                  ChautariRaisedButton(
-                    title: "Update ",
-                    onPressed: () => controller.updateRoom(),
+              if (!isKeyboardVisible) ...[
+                Positioned(
+                  bottom: 0,
+                  right: 0,
+                  left: 0,
+                  child: Column(
+                    children: [
+                      ChautariRaisedButton(
+                        title: "Update ",
+                        onPressed: () => controller.updateRoom(),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-            ),
-          ],
+                ),
+              ]
+            ],
+          ),
         ),
       ),
     );
