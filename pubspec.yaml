@@ -40,7 +40,7 @@ dependencies:
   modal_bottom_sheet: ^1.0.0+1
   flutter_signin_button: ^1.1.0
   flutter_form_builder: ^4.2.0
-  google_maps_flutter: ^1.1.1
+  google_maps_flutter: ^1.2.0
   geolocator: ^6.1.14
   geocoding: ^1.0.5
   app_settings: ^4.0.4
