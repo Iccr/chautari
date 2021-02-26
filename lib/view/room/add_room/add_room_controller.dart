@@ -200,11 +200,13 @@ class AddRoomController extends GetxController {
       fetchRoomService.fetchRooms();
 
       await Alert.show(
-        message: "Your property has been added for rent in chautari basti",
+        message: "Your property has been added for rent in chautari Basti",
         onConfirm: () {
           Get.back();
           Get.offAndToNamed(RouteName.myRooms);
         },
+        onCancel: null,
+        textCancel: null,
       );
     } else {
       isLoading.value = false;

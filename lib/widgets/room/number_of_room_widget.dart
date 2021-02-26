@@ -51,7 +51,11 @@ class NumberOfRoomWidget extends StatelessWidget {
           labelText: labelText,
           helperText: helperText,
         ),
-        onChanged: (value) => onChanged(value),
+        onChanged: (value) {
+          if (onChanged != null) {
+            onChanged(value);
+          }
+        },
         onSaved: (newValue) => onSaved(newValue),
         onReset: () {
           print("resset touch spein");

@@ -62,7 +62,11 @@ class RoomPriceWidget extends StatelessWidget {
           helperText: this.helperText,
         ),
         onSaved: (newValue) => onSaved(newValue),
-        onChanged: (value) => onChanged(value),
+        onChanged: (value) {
+          if (onChanged != null) {
+            onChanged(value);
+          }
+        },
       ),
     );
   }
