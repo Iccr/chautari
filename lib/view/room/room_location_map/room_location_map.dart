@@ -23,7 +23,8 @@ class ShowRoomLocationMap extends StatelessWidget {
           mapType: MapType.normal,
           initialCameraPosition: controller.cameraPosition.value,
           onMapCreated: (GoogleMapController mapController) {
-            controller.mapController = mapController;
+            controller.setMap(mapController);
+            // controller.mapController = mapController;
             controller.setMarkers();
             var latLng = LatLng(controller.room.lat, controller.room.long);
             controller.moveCamera(latLng);

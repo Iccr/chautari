@@ -1,5 +1,7 @@
 import 'dart:collection';
 
+import 'package:chautari/utilities/map_styles.dart';
+import 'package:chautari/utilities/theme/theme_controller.dart';
 import 'package:chautari/view/room/add_room/add_room_controller.dart';
 import 'package:chautari/widgets/alert.dart';
 import 'package:get/get.dart';
@@ -10,6 +12,9 @@ import 'package:app_settings/app_settings.dart';
 
 class MapController extends GetxController {
   AddRoomController addController = Get.find();
+  ThemeController theme = Get.find();
+
+  ChautariMapStyles mapStyles;
 
   GoogleMapController mapController;
   final double zoom = 14.4746;
@@ -30,6 +35,16 @@ class MapController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+
+    mapStyles = await ChautariMapStyles().loadMapStyles();
+    mapController.setMapStyle(
+      Get.isDarkMode ? mapStyles.darkMapStyle : mapStyles.lightMapStyle,
+    );
+    theme.themeChanged.listen((_) {
+      mapController.setMapStyle(
+        Get.isDarkMode ? mapStyles.darkMapStyle : mapStyles.lightMapStyle,
+      );
+    });
 
     _cameraPosition =
         CameraPosition(target: LatLng(27.7172, 85.3240), zoom: zoom).obs;
