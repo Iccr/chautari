@@ -68,7 +68,7 @@ class AddRoomForm1 extends StatelessWidget {
                       ),
                       // Text("aasdf"),
                       SizedBox(
-                        width: 200,
+                        width: 20,
                       ),
                       GestureDetector(
                         onTap: () {
