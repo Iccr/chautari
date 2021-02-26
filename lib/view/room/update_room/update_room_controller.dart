@@ -8,14 +8,18 @@ import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/view/room/form_keys.dart';
 import 'package:chautari/view/room/room_form_focusnode.dart';
 import 'package:chautari/widgets/alert.dart';
+import 'package:chautari/widgets/keyboard_action.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:keyboard_actions/keyboard_actions_config.dart';
 
 class UpdateRoomController extends GetxController {
   RoomFormKeys formKeys = RoomFormKeys();
   RoomFocusNodes focusNodes = RoomFocusNodes();
   RoomModel room;
   ScrollController scrollController = ScrollController();
+
+  KeyboardActionsConfig keyboardActionConfig;
 
   var isLoading = false.obs;
   var _error = "".obs;
@@ -45,6 +49,12 @@ class UpdateRoomController extends GetxController {
     super.onInit();
     room = Get.arguments;
     roomService = Get.find();
+    this.keyboardActionConfig = KeyboardAction().keyboardActionConfig(
+      Get.context,
+      List.from(
+        [focusNodes.contactTextFocusNode, focusNodes.priceFocusNode],
+      ),
+    );
 
     contactNumberVisible.value = room.phoneVisibility;
   }
