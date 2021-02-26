@@ -1,4 +1,5 @@
 import 'package:chautari/model/districts.dart';
+import 'package:chautari/model/parkings.dart';
 import 'package:chautari/model/type.dart';
 import 'package:chautari/model/water.dart';
 import 'package:chautari/services/appinfo_service.dart';
@@ -17,6 +18,7 @@ class SearchViewModel extends GetxController {
   Water water;
   String priceLower;
   String priceUpper;
+  List<Parking> parkings = [];
 
   // initial value
   RoomType initialType;
@@ -26,6 +28,7 @@ class SearchViewModel extends GetxController {
   Water initialWater;
   String initialPriceLower;
   String intialPriceUpper;
+  List<Parking> initialParkings = [];
 
   RoomFormKeys formKeys = RoomFormKeys();
 
@@ -78,6 +81,11 @@ class SearchViewModel extends GetxController {
 
   setPriceUpper(String upper) {
     this.priceUpper = upper;
+    this.shouldUpdate = true;
+  }
+
+  setParkings(List<Parking> parkings) {
+    this.parkings = parkings;
     this.shouldUpdate = true;
   }
 
@@ -137,6 +145,10 @@ class SearchViewModel extends GetxController {
 
     if (priceUpper != null && priceUpper.isNotEmpty) {
       query["price_upper"] = priceUpper;
+    }
+
+    if (parkings.isNotEmpty) {
+      query["parkings"] = this.parkings.map((e) => e.id).toList();
     }
     return query;
   }

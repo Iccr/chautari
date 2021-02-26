@@ -1,1 +1,1 @@
-var development = false;
+var development = true;
