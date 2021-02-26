@@ -12,13 +12,18 @@ import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthController extends GetxController {
-  bool loading;
-  bool loaded;
-  var error = "".obs;
+  FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
+
   final ChautariStorage box = ChautariStorage();
   var _user = UserModel().obs;
 
-  FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
+  var loading = false.obs;
+  var error = "".obs;
+
+  UserModel get user => _user.value;
+  bool get isLoggedIn => this._user.value.isLoggedIn ?? false;
+  String get token => this._user.value.token;
+  final FacebookLogin facebookSignIn = new FacebookLogin();
 
   onInit() {
     super.onInit();
@@ -28,16 +33,9 @@ class AuthController extends GetxController {
       this._user.value = UserModel();
     } else {
       UserModel user = UserModel.fromJson(_userMap);
-      print(user.email);
-      print(user.isLoggedIn);
       this._user.value = user;
     }
   }
-
-  UserModel get user => _user.value;
-  bool get isLoggedIn => this._user.value.isLoggedIn ?? false;
-
-  String get token => this._user.value.token;
 
   logout() async {
     await _removeUser();
@@ -47,8 +45,6 @@ class AuthController extends GetxController {
     this._user.value = emptyUser;
   }
 
-  final FacebookLogin facebookSignIn = new FacebookLogin();
-
   GoogleSignIn _googleSignIn = GoogleSignIn(
     scopes: <String>[
       'email',
@@ -56,6 +52,7 @@ class AuthController extends GetxController {
   );
 
   Future fbLogin() async {
+    loading.value = true;
     final FacebookLoginResult result = await facebookSignIn.logIn(['email']);
     // var _result = false;
     switch (result.status) {
@@ -86,9 +83,11 @@ class AuthController extends GetxController {
 
         break;
       case FacebookLoginStatus.cancelledByUser:
+        loading.value = false;
         error.value = "Login cancelled by the user.";
         break;
       case FacebookLoginStatus.error:
+        loading.value = false;
         error.value = result.errorMessage;
         break;
     }
@@ -149,6 +148,7 @@ class AuthController extends GetxController {
 
     var model = await LoginRepository().social(params);
     if ((model.errors ?? []).isEmpty) {
+      loading.value = false;
       UserModel user = model.data;
       user.isLoggedIn = true;
       await _saveuser(user);
@@ -156,6 +156,7 @@ class AuthController extends GetxController {
 
       Get.back();
     } else {
+      loading.value = false;
       List<ApiError> errors = model.errors ?? [];
       error.value = errors.first?.value ?? "";
     }
@@ -167,6 +168,7 @@ class AuthController extends GetxController {
 
   Future<User> _loginWithGoogleFirebase(
       GoogleSignInAuthentication googleAuth) async {
+    loading.value = true;
     final AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth.accessToken,
       idToken: googleAuth.idToken,
@@ -199,6 +201,7 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       print(e);
+      loading.value = false;
       return null;
     }
   }
