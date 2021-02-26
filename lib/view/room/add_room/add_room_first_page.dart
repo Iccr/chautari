@@ -57,15 +57,19 @@ class AddRoomForm1 extends StatelessWidget {
               if (controller.lat != null && controller.long != null) ...[
                 TopDownPaddingWrapper(
                   bottom: 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                  child: Wrap(
+                    direction: Axis.horizontal,
+                    // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    // crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
                         "Latitude: ${controller.lat}, Longitude: ${controller.long}",
                         textAlign: TextAlign.left,
                       ),
                       // Text("aasdf"),
+                      SizedBox(
+                        width: 200,
+                      ),
                       GestureDetector(
                         onTap: () {
                           controller.openMap();
