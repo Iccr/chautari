@@ -79,8 +79,9 @@ class RoomDetailBottomBlock extends StatelessWidget {
                   SizedBox(
                     width: ChautariPadding.standard,
                   ),
-                  if (!(controller.room.user.id ==
-                      controller.auth.user.id)) ...[
+                  if (controller.room.user != null &&
+                      !(controller.room.user.id ==
+                          controller.auth.user.id)) ...[
                     Column(
                       children: [
                         Container(

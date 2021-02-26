@@ -12,21 +12,14 @@ class BaseUrl {
   String _imageServerUrl;
 
   BaseUrl() {
-    // if (development) {
-    //   if (Platform.isAndroid) {
-    //     _serverUrl = "http://10.0.2.2:4000/api/";
-    //     _imageServerUrl = "http://10.0.2.2:4000/";
-    //   } else if (Platform.isIOS) {
-    //     _serverUrl = "http://localhost:4000/api/";
-    //     _imageServerUrl = "http://localhost:4000/";
-    //   }
-    // } else {
-    //   _serverUrl = "http://143.110.252.83:4000/api/";
-    //   _imageServerUrl = "http://143.110.252.83:4000/";
-    // }
+    // _serverUrl = "http://167.71.234.79:4002/api/";
+    // _imageServerUrl = "http://167.71.234.79:4002/";
 
-    _serverUrl = "http://167.71.234.79:4002/api/";
-    _imageServerUrl = "http://167.71.234.79:4002/";
+    _serverUrl = "http://192.168.0.104:4000/api/";
+    _imageServerUrl = "http://192.168.0.104:4000/";
+
+    // _serverUrl = "http://167.71.234.79:4002/api/";
+    // _imageServerUrl = "http://167.71.234.79:4002/";
   }
 
   String get imageBaseUrl => _imageServerUrl;
