@@ -42,7 +42,9 @@ class RoomTypesRadioWidget extends StatelessWidget {
         options: options,
         onSaved: (newValue) => onSaved(newValue),
         onChanged: (value) {
-          onChanged(value);
+          if (onChanged != null) {
+            onChanged(value);
+          }
         },
       ),
     );

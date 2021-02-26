@@ -18,8 +18,8 @@ class Alert extends StatelessWidget {
       textConfirm: textConfirm,
       textCancel: textCancel,
       confirmTextColor: confirmTextColor ?? ChautariColors.blackAndWhitecolor(),
-      onConfirm: () => onConfirm == null ? Get.back : onConfirm(),
-      onCancel: () => onCancel == null ? null : onCancel(),
+      onConfirm: onConfirm == null ? Get.back : onConfirm,
+      onCancel: onCancel,
     );
   }
 
