@@ -15,7 +15,7 @@ class LocationPicker extends StatelessWidget {
         alignment: Alignment.bottomCenter,
         child: RaisedButton(
           onPressed: () {
-            // Get.back(result: mapController.selectedPosition);
+            Get.back(result: mapController.selectedPosition.value);
           },
           child: Text(
             "Done",
@@ -33,21 +33,26 @@ class LocationPicker extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text("Pick Location")),
-      body: Obx(
-        () => GoogleMap(
-          markers: this.mapController.markers.value,
-          mapToolbarEnabled: true,
-          myLocationEnabled: true,
-          zoomControlsEnabled: true,
-          mapType: MapType.normal,
-          initialCameraPosition: mapController.cameraPosition.value,
-          onMapCreated: (GoogleMapController controller) {
-            mapController.mapController = controller;
-          },
-          onTap: (latLng) {
-            mapController.onTapLocation(latLng);
-          },
-        ),
+      body: Stack(
+        children: [
+          Obx(
+            () => GoogleMap(
+              markers: this.mapController.markers.value,
+              mapToolbarEnabled: true,
+              myLocationEnabled: true,
+              zoomControlsEnabled: true,
+              mapType: MapType.normal,
+              initialCameraPosition: mapController.cameraPosition.value,
+              onMapCreated: (GoogleMapController controller) {
+                mapController.mapController = controller;
+              },
+              onTap: (latLng) {
+                mapController.onTapLocation(latLng);
+              },
+            ),
+          ),
+          _doneButton(),
+        ],
       ),
     );
   }
