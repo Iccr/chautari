@@ -236,16 +236,18 @@ class AddRoomController extends GetxController {
   }
 
   openMap() async {
+    focusNodes.addressFocusNode.unfocus();
+    var result = await Get.toNamed(RouteName.pickLocation);
+    this._lat.value = result.latitude;
+    this._long.value = result.longitude;
+    apiModel.lat = result.latitude;
+    apiModel.long = result.longitude;
+    requestAddressFocus();
+  }
+
+  onAddressTap() async {
     if (lat == null && long == null) {
-      focusNodes.addressFocusNode.unfocus();
-      var result = await Get.toNamed(RouteName.pickLocation);
-      if (result?.latitude != null) {
-        this._lat.value = result.latitude;
-        this._long.value = result.longitude;
-        apiModel.lat = result.latitude;
-        apiModel.long = result.longitude;
-        requestAddressFocus();
-      }
+      openMap();
     }
   }
 

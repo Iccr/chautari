@@ -3,6 +3,7 @@ import 'package:chautari/utilities/theme/text_decoration.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
 
 import 'package:chautari/view/room/add_room/add_room_controller.dart';
+import 'package:chautari/view/room/my_rooms/my_room.dart';
 import 'package:chautari/widgets/top_down_space_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
@@ -55,13 +56,35 @@ class AddRoomForm1 extends StatelessWidget {
               // map
               if (controller.lat != null && controller.long != null) ...[
                 TopDownPaddingWrapper(
-                    bottom: 0,
-                    child: Obx(
-                      () => Text(
+                  bottom: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Text(
                         "Latitude: ${controller.lat}, Longitude: ${controller.long}",
                         textAlign: TextAlign.left,
                       ),
-                    )),
+                      // Text("aasdf"),
+                      GestureDetector(
+                        onTap: () {
+                          controller.openMap();
+                        },
+                        child: Container(
+                          width: 70,
+                          height: 20,
+                          child: Text(
+                            "pick again",
+                            textAlign: TextAlign.center,
+                            style: ChautariTextStyles()
+                                .listSubtitle
+                                .copyWith(color: ChautariColors.primary),
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ),
               ],
               TopDownPaddingWrapper(
                 bottom: 0,
