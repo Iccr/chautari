@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:typed_data';
 
-import 'package:chautari/model/app_info.dart';
 import 'package:chautari/model/room_model.dart';
 import 'package:chautari/services/appinfo_service.dart';
 import 'package:chautari/services/room_service.dart';

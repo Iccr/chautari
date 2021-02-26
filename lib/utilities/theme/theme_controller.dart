@@ -7,6 +7,8 @@ import 'package:get_storage/get_storage.dart';
 
 class ThemeController extends GetxController {
   final GetStorage box = GetStorage();
+
+  var themeChanged = true.obs;
   @override
   void onInit() {
     super.onInit();
@@ -45,5 +47,6 @@ class ThemeController extends GetxController {
 
   _changeTheme(ThemeData theme) {
     Get.changeTheme(theme);
+    themeChanged.refresh();
   }
 }
