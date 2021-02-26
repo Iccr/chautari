@@ -5,15 +5,34 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ShowRoomLocationMapController extends GetxController {
   ChautariMapController mapController;
-  Map map;
 
   RoomModel room;
   // RxBool isMapReady;
 
+  var ready = false.obs;
+
+  var markers = Set<Marker>().obs;
+
   ShowRoomLocationMapController() {
-    mapController = ChautariMapController();
-    mapController.setZoom(16.0);
-    Map map;
+    // mapController = ChautariMapController();
+    // mapController.setZoom(16.0);
+  }
+
+  setMarker() {
+    LatLng latLng = LatLng(room.lat, room.long);
+    var marker = createMarker(latLng);
+    Set<Marker> newSet = Set<Marker>();
+    newSet.add(marker);
+    this.markers.value = newSet;
+    // moveCamera(latLng);
+    // setLatLong(latLng);
+  }
+
+  Marker createMarker(LatLng latLng) {
+    return Marker(
+      markerId: MarkerId("0"),
+      position: latLng,
+    );
   }
 
   LatLng get roomLatLng => LatLng(room.lat, room.long);
@@ -23,17 +42,14 @@ class ShowRoomLocationMapController extends GetxController {
     super.onInit();
     room = Get.arguments;
 
-    try {
-      mapController = Get.find();
-    } catch (e) {
-      mapController = Get.put(ChautariMapController());
-    }
+    // try {
+    //   mapController = Get.find();
+    // } catch (e) {
+    //   mapController = Get.put(ChautariMapController());
+    // }}
+  }
 
-    map = Map(title: "Map", controller: mapController);
-    mapController.isMapReady().listen((ready) {
-      if (ready) {
-        map.setMarkerWithLatLng(roomLatLng);
-      }
-    });
+  setMarkers() {
+    setMarker();
   }
 }
