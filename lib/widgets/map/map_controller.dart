@@ -30,6 +30,7 @@ class MapController extends GetxController {
   @override
   void onInit() async {
     super.onInit();
+
     _cameraPosition =
         CameraPosition(target: LatLng(27.7172, 85.3240), zoom: zoom).obs;
     var position = await _determinePosition();

@@ -1,6 +1,8 @@
 import 'package:app_settings/app_settings.dart';
+import 'package:chautari/utilities/theme/theme_controller.dart';
 import 'package:chautari/widgets/alert.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -32,7 +34,12 @@ abstract class ChautariMapFunctions extends GetxController {
 }
 
 class ChautariMapController extends ChautariMapFunctions {
+  ThemeController theme = Get.find();
+  String _darkMapStyle;
+  String _lightMapStyle;
+
   ChautariMapController() {
+    _loadMapStyles();
     _zoom = 14.4746.obs;
     _cameraPosition =
         CameraPosition(target: LatLng(27.7172, 85.3240), zoom: zoom).obs;
@@ -99,6 +106,20 @@ class ChautariMapController extends ChautariMapFunctions {
   setMap(GoogleMapController controller) {
     _mapController = controller;
     _isReadyMap.value = true;
+
+    _mapController.setMapStyle(Get.isDarkMode ? _darkMapStyle : _lightMapStyle);
+
+    theme.themeChanged.listen((_) {
+      _mapController
+          .setMapStyle(Get.isDarkMode ? _darkMapStyle : _lightMapStyle);
+    });
+  }
+
+  Future _loadMapStyles() async {
+    _darkMapStyle =
+        await rootBundle.loadString('assets/map_styles/map_night_mode.json');
+    _lightMapStyle =
+        await rootBundle.loadString('assets/map_styles/map_light_mode.json');
   }
 
   RxBool isMapReady() {
