@@ -10,6 +10,7 @@ import 'package:chautari/view/explore/explore_controller.dart';
 import 'package:chautari/view/room/form_keys.dart';
 import 'package:chautari/view/room/room_form_focusnode.dart';
 import 'package:chautari/widgets/alert.dart';
+import 'package:chautari/widgets/keyboard_action.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
@@ -72,17 +73,18 @@ class AddRoomController extends GetxController {
     MenuItem(title: "images")
   ];
 
-  KeyboardActionsConfig keyboardActionConfig(BuildContext context) {
-    return KeyboardActionsConfig(
-        keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
-        keyboardBarColor: ChautariColors.black.withOpacity(0.3),
-        nextFocus: false,
-        actions: [
-          KeyboardActionsItem(focusNode: focusNodes.priceFocusNode),
-          KeyboardActionsItem(focusNode: focusNodes.contactTextFocusNode)
-          // KeyboardActionsItem(focusNode: addController.n)
-        ]);
-  }
+  // KeyboardActionsConfig keyboardActionConfig(BuildContext context) {
+  //   return KeyboardActionsConfig(
+  //       keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
+  //       keyboardBarColor: ChautariColors.black.withOpacity(0.3),
+  //       nextFocus: false,
+  //       actions: [
+  //         KeyboardActionsItem(focusNode: focusNodes.priceFocusNode),
+  //         KeyboardActionsItem(focusNode: focusNodes.contactTextFocusNode)
+  //         // KeyboardActionsItem(focusNode: addController.n)
+  //       ]);
+  // }
+  KeyboardActionsConfig keyboardActionConfig;
 
   // life cycles
 
@@ -90,6 +92,11 @@ class AddRoomController extends GetxController {
   void onInit() {
     super.onInit();
     fetchRoomService = Get.find();
+
+    this.keyboardActionConfig = KeyboardAction().keyboardActionConfig(
+        Get.context,
+        List.from(
+            [focusNodes.contactTextFocusNode, focusNodes.priceFocusNode]));
 
     districtViewmodels.assignAll(
       appInfo.districts.map(
