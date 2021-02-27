@@ -1,11 +1,10 @@
-import 'package:chautari/model/app_info.dart';
 import 'package:chautari/model/districts.dart';
 import 'package:chautari/model/menu_item.dart';
-import 'package:chautari/utilities/constants.dart';
+import 'package:chautari/services/appinfo_service.dart';
 import 'package:get/get.dart';
 
 class SearchController extends GetxController {
-  final AppinfoModel appinfo = Get.find(tag: AppConstant.appinfomodelsKey);
+  final AppInfoService appInfoService = Get.find();
   var _districts = <MenuItem>[].obs;
 
   MenuItem selectedDistrict;
@@ -15,7 +14,7 @@ class SearchController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    var districts = appinfo.districts.map(
+    var districts = (appInfoService.appInfo.districts ?? []).map(
       (e) => MenuItem(title: e.name, subtitle: "province: ${e.state}"),
     );
 
@@ -23,7 +22,7 @@ class SearchController extends GetxController {
   }
 
   Districts onSelectedDistrict(MenuItem item) {
-    var district = appinfo.districts.firstWhere(
+    var district = appInfoService.appInfo.districts.firstWhere(
       (element) => element.name.toLowerCase() == item.title.toLowerCase(),
     );
 
