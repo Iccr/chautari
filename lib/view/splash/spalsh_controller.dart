@@ -31,9 +31,7 @@ class SplashController extends GetxController {
     _fetchAppInfo();
 
     timeEllapsed.listen((value) {
-      if (loaded && timeEllapsed.value) {
-        Get.offNamed("/tabs");
-      }
+      Get.offNamed("/tabs");
     });
 
     listenAppInfoService();
@@ -65,12 +63,5 @@ class SplashController extends GetxController {
   _fetchAppInfo() async {
     this.loaded = appInfoService.isLoading.value;
     appInfoService.fetchAppInfo();
-    // var models = ;
-    // if ((models.errors ?? []).isEmpty) {
-    //   this.loaded = true;
-    //   Get.put(models.data, tag: AppConstant.appinfomodelsKey);
-    // } else {
-    //   error = models.errors.first?.value ?? "";
-    // }
   }
 }
