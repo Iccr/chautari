@@ -130,7 +130,7 @@ class AddRoomForm1 extends StatelessWidget {
                   },
                   style: ChautariTextStyles().listSubtitle,
                   decoration: ChautariDecoration().outlinedBorderTextField(
-                      helperText: "local address name", labelText: "address"),
+                      helperText: "local address name", labelText: "Address"),
                   onTap: () => openMap(),
                 ),
               ),
