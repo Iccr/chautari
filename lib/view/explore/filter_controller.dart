@@ -209,29 +209,28 @@ class FilterRoomController extends GetxController {
   }
 
   @override
-  void onReady() {
+  Future<void> onReady() async {
     super.onReady();
 
     if (searchModel.value.shouldUpdate) {
-      var state = searchModel.value.formKeys.formKey.currentState;
-      state.patchValue({"noOfROoms": searchModel.value.noOfRoom});
-
       var districtName = "";
       if (searchModel.value.district != null) {
         districtName =
             "${searchModel.value.district.name}, province: ${searchModel.value.district.state}";
       }
 
-      if (searchModel.value.address != null) {
-        state.patchValue({"map_field": searchModel.value.address});
-      }
-
-      state.patchValue({"price_upper": searchModel.value.priceUpper});
-      state.patchValue({"price_lower": searchModel.value.priceLower});
-      state.patchValue({"Type": searchModel.value.type});
-      state.patchValue({"water": searchModel.value.water});
-      state.patchValue({"parking": searchModel.value.parkings});
-      state.patchValue({"amenity": searchModel.value.amenities});
+      var state = searchModel.value.formKeys.formKey.currentState;
+      focusNodes.parkingFocusNode.requestFocus();
+      state.patchValue({
+        "map_field": searchModel.value.address ?? "",
+        "noOfROoms": searchModel.value.noOfRoom,
+        "price_upper": searchModel.value.priceUpper,
+        "price_lower": searchModel.value.priceLower,
+        "Type": searchModel.value.type,
+        "water": searchModel.value.water,
+        "parking": searchModel.value.parkings,
+        "amenity": searchModel.value.amenities,
+      });
     }
   }
 
@@ -249,6 +248,7 @@ class FilterRoomController extends GetxController {
     searchModel.value.setTotalFilterCount();
     this.districtTextController.text = "";
     this.addressTextController.text = "";
+
     roomService.search({"": ""});
     this.object.refresh();
   }
