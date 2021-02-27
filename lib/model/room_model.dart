@@ -38,7 +38,7 @@ class RoomModel {
   List<Amenities> amenities;
   Districts district;
   UserModel user;
-  List<File> rawImages = List<File>();
+  List<File> rawImages = <File>[];
 
   RoomModel(
       {this.address,
