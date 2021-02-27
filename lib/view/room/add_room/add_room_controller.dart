@@ -2,10 +2,10 @@ import 'package:chautari/model/add_room_multipart_model.dart';
 import 'package:chautari/model/app_info.dart';
 import 'package:chautari/model/menu_item.dart';
 import 'package:chautari/repository/rooms_repository.dart';
+import 'package:chautari/services/appinfo_service.dart';
 import 'package:chautari/services/room_service.dart';
 import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/router/router_name.dart';
-import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/view/explore/explore_controller.dart';
 import 'package:chautari/view/room/form_keys.dart';
 import 'package:chautari/view/room/room_form_focusnode.dart';
@@ -16,7 +16,7 @@ import 'package:get/get.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
 class AddRoomController extends GetxController {
-  final AppinfoModel appInfo = Get.find(tag: AppConstant.appinfomodelsKey);
+  final AppInfoService appInfoService = Get.find();
   final ExploreController exploreController = Get.find();
   final CreateRoomApiRequestModel apiModel = CreateRoomApiRequestModel();
 
@@ -101,7 +101,7 @@ class AddRoomController extends GetxController {
     );
 
     districtViewmodels.assignAll(
-      appInfo.districts.map(
+      appInfoService.appInfo.districts.map(
         (e) => MenuItem(title: e.name, subtitle: "${e.state}"),
       ),
     );
