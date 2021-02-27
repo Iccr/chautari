@@ -155,35 +155,6 @@ class ApiService {
     return responseJson;
   }
 
-  // Future postFormData(String url, dynamic params,
-  //     {bool shouldAppednBaseurl = true}) async {
-  //   var responseJson;
-  //   String _url = shouldAppednBaseurl ? _baseUrl + url : url;
-
-  //   try {
-  //     var formdata = FormData.fromMap(params);
-  //     Response response = await _http.post(
-  //       _url,
-  //       data: formdata,
-  //       options: Options(
-  //         headers: _headers(),
-  //       ),
-  //     );
-
-  //     responseJson = response;
-  //   } catch (e) {
-  //     String err = e.error.toString();
-  //     Map<String, dynamic> val = {
-  //       'error': [
-  //         {'code': '1', 'detail': '$err'}
-  //       ]
-  //     };
-  //     Response res = Response(data: val);
-  //     responseJson = res;
-  //   }
-  //   return responseJson;
-  // }
-
   Future post(String url, dynamic params,
       {bool shouldAppednBaseurl = true}) async {
     var responseJson;
