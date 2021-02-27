@@ -15,9 +15,9 @@ class AppinfoResponseModel {
     data =
         json['data'] != null ? new AppinfoModel.fromJson(json['data']) : null;
 
-    if (json['error'] != null) {
+    if (json['errors'] != null) {
       errors = new List<ApiError>();
-      json['error'].forEach((v) {
+      json['errors'].forEach((v) {
         errors.add(new ApiError.fromJson(v));
       });
     }

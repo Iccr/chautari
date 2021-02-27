@@ -62,6 +62,7 @@ dependencies:
   flutter_launcher_icons: ^0.8.1
   animated_text_kit: ^3.1.2
   firebase_analytics: ^7.0.1
+  data_connection_checker: ^0.3.4
 
   flutter_native_splash: ^0.3.0
   form_builder_map_field:
