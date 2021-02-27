@@ -228,48 +228,48 @@ class FilterRoom extends StatelessWidget {
                         },
                       ),
 
-                      // parkings
-                      RoomParkingCheckBoxWidget(
-                        initialValue:
-                            controller.searchModel.value.initialParkings,
-                        parkingKey:
-                            controller.searchModel.value.formKeys.parkingKey,
-                        focusNode: controller.focusNodes.parkingFocusNode,
-                        options: controller.appInfoService.appInfo.parkings
-                            .map(
-                              (element) => FormBuilderFieldOption(
-                                value: element,
-                                child: Text(element.name.capitalize),
-                              ),
-                            )
-                            .toList(),
-                        onSaved: (value) => {},
-                        onChanged: (value) {
-                          controller.searchModel.value.setParkings(value);
-                          print("parking change");
-                        },
-                      ),
+                      // // parkings
+                      // RoomParkingCheckBoxWidget(
+                      //   initialValue:
+                      //       controller.searchModel.value.initialParkings,
+                      //   parkingKey:
+                      //       controller.searchModel.value.formKeys.parkingKey,
+                      //   focusNode: controller.focusNodes.parkingFocusNode,
+                      //   options: controller.appInfoService.appInfo.parkings
+                      //       .map(
+                      //         (element) => FormBuilderFieldOption(
+                      //           value: element,
+                      //           child: Text(element.name.capitalize),
+                      //         ),
+                      //       )
+                      //       .toList(),
+                      //   onSaved: (value) => {},
+                      //   onChanged: (value) {
+                      //     controller.searchModel.value.setParkings(value);
+                      //     print("parking change");
+                      //   },
+                      // ),
 
-                      // amenity
-                      RoomAmenityCheckBoxWidget(
-                        initialValue: [],
-                        amenityKey:
-                            controller.searchModel.value.formKeys.amenityKey,
-                        focusNode: controller.focusNodes.parkingFocusNode,
-                        options: controller.appInfoService.appInfo.amenities
-                            .map(
-                              (element) => FormBuilderFieldOption(
-                                value: element,
-                                child: Text(element.name.capitalize),
-                              ),
-                            )
-                            .toList(),
-                        onSaved: (value) => {},
-                        onChanged: (value) {
-                          controller.searchModel.value.setAmenities(value);
-                          print("aminities change");
-                        },
-                      ),
+                      // // amenity
+                      // RoomAmenityCheckBoxWidget(
+                      //   initialValue: [],
+                      //   amenityKey:
+                      //       controller.searchModel.value.formKeys.amenityKey,
+                      //   focusNode: controller.focusNodes.parkingFocusNode,
+                      //   options: controller.appInfoService.appInfo.amenities
+                      //       .map(
+                      //         (element) => FormBuilderFieldOption(
+                      //           value: element,
+                      //           child: Text(element.name.capitalize),
+                      //         ),
+                      //       )
+                      //       .toList(),
+                      //   onSaved: (value) => {},
+                      //   onChanged: (value) {
+                      //     controller.searchModel.value.setAmenities(value);
+                      //     print("aminities change");
+                      //   },
+                      // ),
 
                       SizedBox(
                         height: ChautariPadding.huge * 3,
