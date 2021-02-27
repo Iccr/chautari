@@ -50,8 +50,8 @@ void initServices() async {
   print('starting services ...');
 
   await Firebase.initializeApp();
-
   await Get.putAsync(() => AnalyticsService().init());
+
   await Get.putAsync(() => AppInfoService().init());
   await Get.putAsync(() => RoomService().init());
 
