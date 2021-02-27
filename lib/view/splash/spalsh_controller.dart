@@ -1,15 +1,14 @@
 import 'dart:async';
 
-import 'package:chautari/repository/appinfo_repository.dart';
 import 'package:chautari/services/appinfo_service.dart';
-import 'package:chautari/utilities/constants.dart';
-import 'package:chautari/view/chats/loading.dart';
+import 'package:chautari/services/room_service.dart';
 import 'package:chautari/widgets/snack_bar.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class SplashController extends GetxController {
   AppInfoService appInfoService = Get.find();
+  RoomService _roomService = Get.find();
   String error;
   var loaded = false;
   var timeEllapsed = false.obs;
@@ -37,6 +36,15 @@ class SplashController extends GetxController {
       }
     });
 
+    listenAppInfoService();
+    listenRoomService();
+  }
+
+  listenRoomService() {
+    _roomService.rooms;
+  }
+
+  listenAppInfoService() {
     appInfoService.success.listen((value) {
       if (!value) {
         error = appInfoService.error.value;
