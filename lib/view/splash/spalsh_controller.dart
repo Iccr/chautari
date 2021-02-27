@@ -41,17 +41,25 @@ class SplashController extends GetxController {
   }
 
   listenRoomService() {
-    _roomService.rooms;
+    _roomService.success.listen((value) {
+      if (!value) {
+        showNoInternetError(_roomService.error);
+      }
+    });
+    _roomService.fetchRooms();
   }
 
   listenAppInfoService() {
     appInfoService.success.listen((value) {
       if (!value) {
-        error = appInfoService.error.value;
-        ChautariSnackBar.context = Get.context;
-        ChautariSnackBar.showNoInternetMesage(error);
+        showNoInternetError(appInfoService.error.value);
       }
     });
+  }
+
+  showNoInternetError(String message) {
+    ChautariSnackBar.context = Get.context;
+    ChautariSnackBar.showNoInternetMesage(message);
   }
 
   _fetchAppInfo() async {
