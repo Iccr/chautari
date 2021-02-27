@@ -116,6 +116,10 @@ class SearchViewModel extends GetxController {
     if (priceUpper != null && priceUpper.isNotEmpty) {
       count++;
     }
+
+    if (parkings.isNotEmpty) {
+      count++;
+    }
     this.totalFilterCount.value = count;
   }
 
@@ -239,6 +243,7 @@ class FilterRoomController extends GetxController {
         state.patchValue({"price_lower": searchModel.value.priceLower});
         state.patchValue({"Type": searchModel.value.type});
         state.patchValue({"water": searchModel.value.water});
+        state.patchValue({"parking": searchModel.value.parkings});
       });
     }
     super.onReady();

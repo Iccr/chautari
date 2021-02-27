@@ -155,7 +155,7 @@ class FilterRoom extends StatelessWidget {
                             controller.focusNodes.priceFocusNode.requestFocus(),
                         onSaved: (value) => {},
                         onChanged: (value) {
-                          var val = value.replaceAll(",", "");
+                          var val = value?.replaceAll(",", "");
                           controller.searchModel.value.setPriceLower(val);
                         },
 
@@ -176,7 +176,7 @@ class FilterRoom extends StatelessWidget {
                         onSaved: (value) => {},
                         onChanged: (value) {
                           controller.searchModel.value.setPriceUpper(
-                            value.replaceAll(",", ""),
+                            value?.replaceAll(",", ""),
                           );
                         },
                         // controller.room.price = ,
