@@ -1,4 +1,5 @@
 import 'package:chautari/utilities/router/router_name.dart';
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/view/map/rooms_map_controller.dart';
 import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
@@ -46,33 +47,36 @@ class RoomsMap extends StatelessWidget {
           }
         },
         child: SafeArea(
-          child: Stack(
-            children: [
-              ...controller.iconsWidgets,
-              controller.map
-                  .setMarkers(controller.markers.value)
-                  .setchild(
-                    Obx(() => getchildWidget() ?? Container()),
-                  )
-                  .setOnTapLocation((latLng) => controller.clearRoomCard())
-                  .build(),
-              Positioned(
-                left: 0,
-                top: 0,
-                child: Container(
-                  decoration: BoxDecoration(
-                      color: Colors.blueGrey.withAlpha(80),
-                      borderRadius: BorderRadius.only(
-                          bottomRight:
-                              Radius.circular(ChautariPadding.small5))),
-                  padding: EdgeInsets.all(ChautariPadding.small5),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: controller.getInsightText(),
+          child: Container(
+            color: ChautariColors.blackAndWhitecolor(),
+            child: Stack(
+              children: [
+                ...controller.iconsWidgets,
+                controller.map
+                    .setMarkers(controller.markers.value)
+                    .setchild(
+                      Obx(() => getchildWidget() ?? Container()),
+                    )
+                    .setOnTapLocation((latLng) => controller.clearRoomCard())
+                    .build(),
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: Colors.blueGrey.withAlpha(80),
+                        borderRadius: BorderRadius.only(
+                            bottomRight:
+                                Radius.circular(ChautariPadding.small5))),
+                    padding: EdgeInsets.all(ChautariPadding.small5),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: controller.getInsightText(),
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
