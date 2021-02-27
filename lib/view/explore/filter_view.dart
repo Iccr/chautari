@@ -198,14 +198,15 @@ class FilterRoom extends StatelessWidget {
                           initialValue:
                               controller.searchModel.value.initialType,
                           focusNode: controller.focusNodes.typeFocusNode,
-                          options: controller.appInfoService.appInfo.types
-                              .map(
-                                (element) => FormBuilderFieldOption(
-                                  value: element,
-                                  child: Text(element.name.capitalize),
-                                ),
-                              )
-                              .toList(),
+                          options:
+                              (controller.appInfoService.appInfo.types ?? [])
+                                  .map(
+                                    (element) => FormBuilderFieldOption(
+                                      value: element,
+                                      child: Text(element.name.capitalize),
+                                    ),
+                                  )
+                                  .toList(),
                           onSaved: (value) => {},
                           onChanged: (value) {
                             controller.searchModel.value.setType(value);
@@ -220,14 +221,15 @@ class FilterRoom extends StatelessWidget {
                           waterKey:
                               controller.searchModel.value.formKeys.waterKey,
                           focusNode: controller.focusNodes.waterFocusNode,
-                          options: controller.appInfoService.appInfo.waters
-                              .map(
-                                (element) => FormBuilderFieldOption(
-                                  value: element,
-                                  child: Text(element.name.capitalize),
-                                ),
-                              )
-                              .toList(),
+                          options:
+                              (controller.appInfoService.appInfo.waters ?? [])
+                                  .map(
+                                    (element) => FormBuilderFieldOption(
+                                      value: element,
+                                      child: Text(element.name.capitalize),
+                                    ),
+                                  )
+                                  .toList(),
                           onSaved: (value) =>
                               {/*controller..apiModel.water = value*/},
                           onChanged: (value) {
