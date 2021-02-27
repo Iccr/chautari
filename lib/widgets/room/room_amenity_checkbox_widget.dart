@@ -1,6 +1,5 @@
 import 'package:chautari/model/amenity.dart';
 import 'package:chautari/utilities/theme/text_decoration.dart';
-import 'package:chautari/view/room/add_room/add_room_controller.dart';
 import 'package:chautari/widgets/top_down_space_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
