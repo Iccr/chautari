@@ -16,7 +16,6 @@ class AppinfoResponseModel {
         json['data'] != null ? new AppinfoModel.fromJson(json['data']) : null;
 
     if (json['errors'] != null) {
-      errors = new List<ApiError>();
       json['errors'].forEach((v) {
         errors.add(new ApiError.fromJson(v));
       });
@@ -43,37 +42,37 @@ class AppinfoModel {
   List<Water> waters;
   List<RoomType> types;
 
-  AppinfoModel(
-      {this.amenities, this.districts, this.parkings, this.waters, this.types});
+  AppinfoModel({
+    this.amenities = const <Amenities>[],
+    this.districts = const <Districts>[],
+    this.parkings = const <Parking>[],
+    this.waters = const <Water>[],
+    this.types = const <RoomType>[],
+  });
 
   AppinfoModel.fromJson(Map<String, dynamic> json) {
     if (json['amenities'] != null) {
-      amenities = new List<Amenities>();
       json['amenities'].forEach((v) {
-        amenities.add(new Amenities.fromJson(v));
+        this.amenities.add(new Amenities.fromJson(v));
       });
     }
     if (json['districts'] != null) {
-      districts = new List<Districts>();
       json['districts'].forEach((v) {
-        districts.add(new Districts.fromJson(v));
+        this.districts.add(new Districts.fromJson(v));
       });
     }
     if (json['parkings'] != null) {
-      parkings = new List<Parking>();
       json['parkings'].forEach((v) {
-        parkings.add(new Parking.fromJson(v));
+        this.parkings.add(new Parking.fromJson(v));
       });
     }
     if (json['waters'] != null) {
-      waters = new List<Water>();
       json['waters'].forEach((v) {
-        waters.add(new Water.fromJson(v));
+        this.waters.add(new Water.fromJson(v));
       });
     }
 
     if (json['types'] != null) {
-      types = new List<RoomType>();
       json['types'].forEach((v) {
         types.add(new RoomType.fromJson(v));
       });
@@ -82,16 +81,16 @@ class AppinfoModel {
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.amenities != null) {
+    if (this.amenities.isNotEmpty) {
       data['amenities'] = this.amenities.map((v) => v.toJson()).toList();
     }
-    if (this.districts != null) {
+    if (this.districts.isNotEmpty) {
       data['districts'] = this.districts.map((v) => v.toJson()).toList();
     }
-    if (this.parkings != null) {
+    if (this.parkings.isNotEmpty) {
       data['parkings'] = this.parkings.map((v) => v.toJson()).toList();
     }
-    if (this.waters != null) {
+    if (this.waters.isNotEmpty) {
       data['waters'] = this.waters.map((v) => v.toJson()).toList();
     }
     return data;
