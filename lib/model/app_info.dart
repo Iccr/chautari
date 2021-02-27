@@ -36,11 +36,11 @@ class AppinfoResponseModel {
 }
 
 class AppinfoModel {
-  List<Amenities> amenities;
-  List<Districts> districts;
-  List<Parking> parkings;
-  List<Water> waters;
-  List<RoomType> types;
+  List<Amenities> amenities = [];
+  List<Districts> districts = [];
+  List<Parking> parkings = [];
+  List<Water> waters = [];
+  List<RoomType> types = [];
 
   AppinfoModel({
     this.amenities = const <Amenities>[],
