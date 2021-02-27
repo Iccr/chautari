@@ -11,16 +11,18 @@ class RoomAmenityCheckBoxWidget extends StatelessWidget {
   final Function(List<Amenities> values) onSaved;
   final List<FormBuilderFieldOption<Amenities>> options;
   final List<Amenities> initialValue;
+  final Function(List<Amenities> value) onChanged;
   final ValueKey amenityKey;
 
-  const RoomAmenityCheckBoxWidget(
-      {Key key,
-      @required this.focusNode,
-      @required this.amenityKey,
-      @required this.onSaved,
-      @required this.options,
-      this.initialValue})
-      : super(key: key);
+  const RoomAmenityCheckBoxWidget({
+    Key key,
+    @required this.focusNode,
+    @required this.amenityKey,
+    @required this.onSaved,
+    @required this.options,
+    this.initialValue,
+    this.onChanged,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -41,6 +43,11 @@ class RoomAmenityCheckBoxWidget extends StatelessWidget {
         name: "amenity",
         options: options,
         onSaved: (newValue) => onSaved(newValue),
+        onChanged: (value) {
+          if (onChanged != null) {
+            onChanged(value);
+          }
+        },
       ),
     );
   }
