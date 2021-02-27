@@ -7,7 +7,7 @@ import 'package:chautari/model/water.dart';
 
 class AppinfoResponseModel {
   AppinfoModel data;
-  List<ApiError> errors;
+  List<ApiError> errors = [];
 
   AppinfoResponseModel({this.data});
 
