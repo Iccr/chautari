@@ -1,11 +1,15 @@
 import 'dart:async';
 
 import 'package:chautari/repository/appinfo_repository.dart';
+import 'package:chautari/services/appinfo_service.dart';
 import 'package:chautari/utilities/constants.dart';
+import 'package:chautari/view/chats/loading.dart';
+import 'package:chautari/widgets/snack_bar.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 class SplashController extends GetxController {
+  AppInfoService appInfoService = Get.find();
   String error;
   var loaded = false;
   var timeEllapsed = false.obs;
@@ -15,10 +19,11 @@ class SplashController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    _timer = Timer(Duration(seconds: 6), () {
+    _timer = Timer(Duration(seconds: 4), () {
       this.timeEllapsed.toggle();
       _timer.cancel();
     });
+    ChautariSnackBar.context = Get.context;
   }
 
   @override
@@ -31,15 +36,25 @@ class SplashController extends GetxController {
         Get.offNamed("/tabs");
       }
     });
+
+    appInfoService.success.listen((value) {
+      if (!value) {
+        error = appInfoService.error.value;
+        ChautariSnackBar.context = Get.context;
+        ChautariSnackBar.showNoInternetMesage(error);
+      }
+    });
   }
 
   _fetchAppInfo() async {
-    var models = await AppinfoRepository().fetchAppInfo();
-    if ((models.errors ?? []).isEmpty) {
-      this.loaded = true;
-      Get.put(models.data, tag: AppConstant.appinfomodelsKey);
-    } else {
-      error = models.errors.first?.value ?? "";
-    }
+    this.loaded = appInfoService.isLoading.value;
+    appInfoService.fetchAppInfo();
+    // var models = ;
+    // if ((models.errors ?? []).isEmpty) {
+    //   this.loaded = true;
+    //   Get.put(models.data, tag: AppConstant.appinfomodelsKey);
+    // } else {
+    //   error = models.errors.first?.value ?? "";
+    // }
   }
 }

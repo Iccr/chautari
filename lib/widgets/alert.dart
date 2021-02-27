@@ -2,7 +2,7 @@ import 'package:chautari/utilities/theme/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class Alert extends StatelessWidget {
+class Alert {
   static show({
     @required String message,
     String title = "Info",
@@ -21,10 +21,5 @@ class Alert extends StatelessWidget {
       onConfirm: onConfirm == null ? Get.back : onConfirm,
       onCancel: onCancel,
     );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }
