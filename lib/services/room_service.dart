@@ -15,7 +15,6 @@ class RoomService extends GetxService {
   var _selectedRoom = RoomModel().obs;
 
   Future<RoomService> init() async {
-    fetchRooms();
     return this;
   }
 
