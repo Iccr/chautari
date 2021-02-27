@@ -93,7 +93,7 @@ class ApiService {
 
     bool result = await DataConnectionChecker().hasConnection;
     if (!result) {
-      var message = 'It appears to be some issue with internet connection.';
+      var message = AppConstant.noInternetMessage;
       var val = createErrorJson(message);
       Response res = Response(data: val);
       responseJson = res;

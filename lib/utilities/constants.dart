@@ -7,4 +7,6 @@ class AppConstant {
   static String themeKey = "Theme";
   static String appinfomodelsKey = "appinfomodels";
   static String isMyRoomDetail = "isMyRoomDetail";
+  static String noInternetMessage =
+      'It appears to be some issue with internet connection.';
 }
