@@ -10,6 +10,7 @@ class RoomWidget extends StatelessWidget {
   final RoomModel room;
   final Function onTap;
   RoomWidget({@required this.room, this.onTap});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -66,6 +67,8 @@ class RoomsInsight extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String capitalize(String s) => s[0].toUpperCase() + s.substring(1);
+
     return Container(
         decoration: BoxDecoration(
           color: ChautariColors.blackWithOpacityAndWhitecolor(),
@@ -79,7 +82,7 @@ class RoomsInsight extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  "${room.address}",
+                  "${capitalize(room.address)}",
                   style: ChautariTextStyles().listTitle,
                   textAlign: TextAlign.left,
                 ),
@@ -107,7 +110,7 @@ class RoomsInsight extends StatelessWidget {
             SizedBox(height: vgap),
             Row(
               children: [
-                Text("date: "),
+                // Text("date: "),
                 Text(room.postedOn ?? "n/a",
                     style: TextStyle(color: ChautariColors.grey)),
               ],
