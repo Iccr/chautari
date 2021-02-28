@@ -55,7 +55,7 @@ class ConversationController extends GetxController {
     var mine = c.idTo == auth.user.fuid;
     var viewModel = ChatViewModel(
       peerId: mine ? c.idFrom : item.toId,
-      peerPhoto: '',
+      peerPhoto: mine ? c.fromPhoto : c.toPhoto,
       peerName: mine ? c.fromName : c.toName,
     );
     Get.toNamed(RouteName.chat, arguments: viewModel);

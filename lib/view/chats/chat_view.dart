@@ -310,21 +310,17 @@ class ChatScreenState extends State<ChatScreen> {
                 isLastMessageLeft(index)
                     ? Material(
                         child: CachedNetworkImage(
-                          placeholder: (context, url) => ClipOval(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: ChautariColors.primary,
-                              ),
-                              // child: CircularProgressIndicator(
-                              //   strokeWidth: 1.0,
-                              //   valueColor:
-                              //       AlwaysStoppedAnimation<Color>(themeColor),
-                              // ),
-                              width: 35.0,
-                              height: 35.0,
-                              padding: EdgeInsets.all(10.0),
-                            ),
-                          ),
+                          // placeholder: (context, url) =>
+                          // ClipOval(
+                          //   child: Container(
+                          //     decoration: BoxDecoration(
+                          //       color: ChautariColors.primary,
+                          //     ),
+                          //     width: 35.0,
+                          //     height: 35.0,
+                          //     padding: EdgeInsets.all(10.0),
+                          //   ),
+                          // ),
                           imageUrl: peerAvatar,
                           width: 35.0,
                           height: 35.0,
