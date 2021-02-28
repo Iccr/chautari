@@ -45,7 +45,7 @@ class LocationPickerController extends GetxController {
 
   onTapLocation(LatLng latLng) {
     setMarker(latLng);
-    moveCamera(latLng);
+    // moveCamera(latLng);
     this.selectedPosition.value = latLng;
   }
 

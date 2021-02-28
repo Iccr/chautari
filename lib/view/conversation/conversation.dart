@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chautari/model/menu_item.dart';
-import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/view/chats/const.dart';
 import 'package:chautari/view/conversation/conversation_controller.dart';
 import 'package:chautari/widgets/chautari_list.dart';

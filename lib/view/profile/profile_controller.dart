@@ -1,7 +1,6 @@
 import 'package:chautari/model/menu_item.dart';
 import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/view/login/auth_controller.dart';
-import 'package:chautari/widgets/alert.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
@@ -20,7 +19,7 @@ class ProfileController extends GetxController {
     //     title: "My Subscriptions",
     //     index: 2,
     //     subtitle: "We will notify you when your preference is matched"),
-    MenuItem(title: "chats", index: 3, subtitle: "Your chats history")
+    MenuItem(title: "Chats", index: 3, subtitle: "Your chats history")
   ];
 
   List<MenuItem> _normalMenu = [

@@ -1,5 +1,6 @@
 import 'package:chautari/services/analytics_service.dart';
 import 'package:chautari/services/appinfo_service.dart';
+import 'package:chautari/utilities/mapStyles.dart';
 
 import 'package:chautari/utilities/router/routers.dart';
 import 'package:chautari/utilities/theme/theme.dart';
@@ -50,8 +51,9 @@ void initServices() async {
   print('starting services ...');
 
   await Firebase.initializeApp();
-
   await Get.putAsync(() => AnalyticsService().init());
+
+  await Get.putAsync(() => MapStyles().init());
   await Get.putAsync(() => AppInfoService().init());
   await Get.putAsync(() => RoomService().init());
 

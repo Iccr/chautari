@@ -24,7 +24,7 @@ class AddRoomForm4 extends StatelessWidget {
             RoomParkingCheckBoxWidget(
               parkingKey: controller.formKeys.parkingKey,
               focusNode: controller.focusNodes.parkingFocusNode,
-              options: controller.appInfo.parkings
+              options: controller.appInfoService.appInfo.parkings
                   .map(
                     (element) => FormBuilderFieldOption(
                       value: element,
@@ -39,7 +39,7 @@ class AddRoomForm4 extends StatelessWidget {
             RoomAmenityCheckBoxWidget(
               amenityKey: controller.formKeys.amenityKey,
               focusNode: controller.focusNodes.parkingFocusNode,
-              options: controller.appInfo.amenities
+              options: controller.appInfoService.appInfo.amenities
                   .map(
                     (element) => FormBuilderFieldOption(
                       value: element,

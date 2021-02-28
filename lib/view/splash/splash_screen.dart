@@ -14,7 +14,7 @@ class SplashScreen extends StatelessWidget {
       init: SplashController(),
       builder: (c) => Container(
           child: ProgressHud(
-        isLoading: !(c.loaded && c.timeEllapsed.value),
+        isLoading: false,
         child: Scaffold(
           body: Container(
             color: ChautariColors.primary,
@@ -67,12 +67,12 @@ class SplashScreen extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     child: TyperAnimatedTextKit(
                       totalRepeatCount: 1,
-                      speed: Duration(milliseconds: 280),
+                      speed: Duration(milliseconds: 250),
                       repeatForever: false,
                       onTap: () {
                         print("Tap Event");
                       },
-                      text: ["हजुर को दिन शुभ रहोस "],
+                      text: ["तपाईंको दिन शुभ रहोस "],
                       textStyle: ChautariTextStyles().listTitle,
                       textAlign: TextAlign.start,
                     ),

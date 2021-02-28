@@ -25,7 +25,7 @@ class MyRoom extends StatelessWidget {
         isLoading: c.isLoading.value,
         child: Scaffold(
           appBar: AppBar(
-            title: Text("My Rooms"),
+            title: Text("My Rents"),
           ),
           body: ListRoom(
             rooms: c.models ?? [],

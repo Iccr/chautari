@@ -30,7 +30,9 @@ class ConversationController extends GetxController {
                   toId: conversation.idTo,
                   fromName: conversation.fromName,
                   toName: conversation.toName,
-                  image1: conversation.fromPhoto,
+                  image1: auth.user.fuid == conversation.idFrom
+                      ? conversation.toPhoto
+                      : conversation.fromPhoto,
                   image2: conversation.toPhoto,
                   seen: conversation.seen,
                 );
