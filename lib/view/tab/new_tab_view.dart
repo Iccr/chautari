@@ -1,6 +1,10 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
+import 'package:chautari/view/explore/explore_view.dart';
+import 'package:chautari/view/map/rooms_map.dart';
+import 'package:chautari/view/profile/profile_view.dart';
+import 'package:chautari/view/setting/setting_view.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -23,6 +27,9 @@ class _NewTabViewState extends State<NewTabView>
   AnimationController _animationController;
   Animation<double> animation;
   CurvedAnimation curve;
+
+  List<Widget> _widgetOptions() =>
+      <Widget>[Exploreview(), RoomsMap(), ProfileView(), SettingView()];
 
   final iconList = <IconData>[
     Icons.search,
@@ -74,7 +81,7 @@ class _NewTabViewState extends State<NewTabView>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: Container(),
+      body: _widgetOptions().elementAt(_bottomNavIndex), // main tab controllers
       floatingActionButton: ScaleTransition(
         scale: animation,
         child: FloatingActionButton(
@@ -84,7 +91,10 @@ class _NewTabViewState extends State<NewTabView>
             Icons.home_work,
             color: HexColor('#373A36'),
           ),
-          onPressed: () {},
+          onPressed: () {
+            _animationController.reset();
+            _animationController.forward();
+          },
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
