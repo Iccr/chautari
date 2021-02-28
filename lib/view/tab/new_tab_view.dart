@@ -1,6 +1,7 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'package:chautari/utilities/router/router_name.dart';
+import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/view/explore/explore_view.dart';
 import 'package:chautari/view/map/rooms_map.dart';
@@ -53,11 +54,6 @@ class _NewTabViewState extends State<NewTabView>
   @override
   void initState() {
     super.initState();
-    final systemTheme = SystemUiOverlayStyle.light.copyWith(
-      systemNavigationBarColor: HexColor('#373A36'),
-      systemNavigationBarIconBrightness: Brightness.light,
-    );
-    SystemChrome.setSystemUIOverlayStyle(systemTheme);
 
     _animationController = AnimationController(
       duration: Duration(seconds: 1),
@@ -116,10 +112,10 @@ class _NewTabViewState extends State<NewTabView>
           scale: animation,
           child: FloatingActionButton(
             elevation: 8,
-            backgroundColor: HexColor('#FFA400'),
+            backgroundColor: ChautariColors.tabYellow, // yello color
             child: Icon(
               Icons.home_work,
-              color: HexColor('#373A36'),
+              color: ChautariColors.tabBlack, // dark model black color
             ),
             onPressed: () async {
               var _ = await Get.toNamed(RouteName.addRoom);
@@ -133,7 +129,8 @@ class _NewTabViewState extends State<NewTabView>
         bottomNavigationBar: AnimatedBottomNavigationBar.builder(
           itemCount: iconList.length,
           tabBuilder: (int index, bool isActive) {
-            final color = isActive ? HexColor('#FFA400') : Colors.white;
+            final color =
+                isActive ? ChautariColors.tabYellow : ChautariColors.white;
             return Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -157,12 +154,12 @@ class _NewTabViewState extends State<NewTabView>
               ],
             );
           },
-          backgroundColor: HexColor('#373A36'),
+          backgroundColor: ChautariColors.tabBlack,
           activeIndex: _bottomNavIndex,
-          splashColor: HexColor('#FFA400'),
+          splashColor: ChautariColors.tabYellow,
           notchMargin: 0,
           notchAndCornersAnimation: animation,
-          splashSpeedInMilliseconds: 300,
+          splashSpeedInMilliseconds: 0,
           notchSmoothness: NotchSmoothness.defaultEdge,
           gapLocation: GapLocation.center,
           leftCornerRadius: 0,
@@ -233,7 +230,7 @@ class _NavigationScreenState extends State<NavigationScreen>
     return Container(
       width: double.infinity,
       height: double.infinity,
-      color: Colors.white,
+      color: ChautariColors.white,
       child: Center(
         child: CircularRevealAnimation(
           animation: animation,
@@ -241,7 +238,7 @@ class _NavigationScreenState extends State<NavigationScreen>
           maxRadius: MediaQuery.of(context).size.longestSide * 1.1,
           child: Icon(
             widget.iconData,
-            color: HexColor('#FFA400'),
+            color: ChautariColors.tabYellow,
             size: 160,
           ),
         ),
