@@ -52,6 +52,9 @@ class AddRoomForm2 extends StatelessWidget {
                 NumberOfRoomWidget(
                   numberOfroomKey: controller.formKeys.numberOfRoomsKey,
                   focusNode: controller.focusNodes.numberOfRoomsFocusNode,
+                  onChanged: (value) {
+                    controller.apiModel.numberOfRooms = value.toInt();
+                  },
                   onSaved: (value) =>
                       controller.apiModel.numberOfRooms = value.toInt(),
                 ),
@@ -62,6 +65,9 @@ class AddRoomForm2 extends StatelessWidget {
                   focusNode: controller.focusNodes.priceFocusNode,
                   onTap: () =>
                       controller.focusNodes.priceFocusNode.requestFocus(),
+                  onChanged: (value) {
+                    controller.apiModel.price = value?.replaceAll(",", "");
+                  },
                   onSaved: (value) => {
                     controller.apiModel.price = value.replaceAll(",", ""),
                     print(controller.apiModel)
@@ -89,6 +95,8 @@ class AddRoomForm2 extends StatelessWidget {
                         .requestFocus(),
                     onSaved: (value) =>
                         controller.apiModel.contactNumber = value,
+                    onChanged: (value) =>
+                        controller.apiModel.contactNumber = value,
                   )
                 ],
 
@@ -96,10 +104,13 @@ class AddRoomForm2 extends StatelessWidget {
                 RoomImageWidget(
                     roomImageKey: controller.formKeys.imageKey,
                     focusNode: controller.focusNodes.imageFocusNode,
-                    onChange: (value) => scrollController.animateTo(
-                        scrollController.position.maxScrollExtent + 130,
-                        duration: Duration(milliseconds: 100),
-                        curve: Curves.easeInOut),
+                    onChange: (value) {
+                      scrollController.animateTo(
+                          scrollController.position.maxScrollExtent + 130,
+                          duration: Duration(milliseconds: 100),
+                          curve: Curves.easeInOut);
+                      controller.apiModel.images = List<File>.from(value);
+                    },
                     onSaved: (value) =>
                         controller.apiModel.images = List<File>.from(value),
                     scrollController: scrollController),

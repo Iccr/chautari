@@ -131,6 +131,9 @@ class AddRoomForm1 extends StatelessWidget {
                     onSaved: (newValue) {
                       controller.apiModel.address = newValue;
                     },
+                    onChanged: (value) {
+                      controller.apiModel.address = value;
+                    },
                     validator: (value) {
                       return value == null || value.isEmpty
                           ? "This field cannot be empty"
