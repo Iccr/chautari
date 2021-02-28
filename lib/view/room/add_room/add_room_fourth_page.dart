@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:chautari/view/room/add_room/add_room_controller.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class AddRoomForm4 extends StatelessWidget {
   final AddRoomController controller = Get.find();

@@ -8,6 +8,7 @@ class ContactNumberWidget extends StatelessWidget {
   final FocusNode focusNode;
   final Function onTap;
   final Function(String value) onSaved;
+  final Function(String value) onChanged;
   final ValueKey contactKey;
   final String initialValue;
 
@@ -17,6 +18,7 @@ class ContactNumberWidget extends StatelessWidget {
       @required this.focusNode,
       @required this.onTap,
       @required this.onSaved,
+      this.onChanged,
       this.initialValue})
       : super(key: key);
 
@@ -43,6 +45,7 @@ class ContactNumberWidget extends StatelessWidget {
           // helperText: "If vissible people can call to this number",
         ),
         onSaved: (newValue) => onSaved(newValue),
+        onChanged: (newValue) => onSaved(newValue),
       ),
     );
   }
