@@ -41,6 +41,7 @@ class AddRoomForm4 extends StatelessWidget {
                     )
                     .toList(),
                 onSaved: (values) => controller.apiModel.parkings = values,
+                onChanged: (values) => controller.apiModel.parkings = values,
               ),
 
               // amenity
@@ -56,6 +57,7 @@ class AddRoomForm4 extends StatelessWidget {
                     )
                     .toList(),
                 onSaved: (values) => controller.apiModel.amenities = values,
+                onChanged: (values) => controller.apiModel.amenities = values,
               )
             ],
           ),
