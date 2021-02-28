@@ -23,7 +23,7 @@ class ConversationController extends GetxController {
                 conversations.add(conversation);
 
                 return ChatMenuItem(
-                  title: (conversation.fromName ?? "unknown"),
+                  title: (conversation.toName ?? "unknown"),
                   subtitle: conversation.content,
                   extra: conversation.id,
                   fromId: conversation.idFrom,
