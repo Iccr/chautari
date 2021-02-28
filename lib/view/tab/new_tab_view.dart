@@ -127,6 +127,7 @@ class _NewTabViewState extends State<NewTabView>
         backgroundColor: HexColor('#373A36'),
         activeIndex: _bottomNavIndex,
         splashColor: HexColor('#FFA400'),
+        notchMargin: 0,
         notchAndCornersAnimation: animation,
         splashSpeedInMilliseconds: 300,
         notchSmoothness: NotchSmoothness.defaultEdge,
