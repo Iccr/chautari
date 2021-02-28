@@ -73,7 +73,7 @@ class _NewTabViewState extends State<NewTabView>
     ).animate(curve);
 
     Future.delayed(
-      Duration(seconds: 1),
+      Duration(milliseconds: 100),
       () => _animationController.forward(),
     );
   }
@@ -89,7 +89,8 @@ class _NewTabViewState extends State<NewTabView>
         if (scrollInfo.metrics.pixels - position >= sensitivityFactor) {
           print('Axis Scroll Direction : Up');
           position = scrollInfo.metrics.pixels;
-          _animationController.reset();
+          // _animationController.reset();
+          _animationController.reverse();
         }
         if (position - scrollInfo.metrics.pixels >= sensitivityFactor) {
           print('Axis Scroll Direction : Down');
