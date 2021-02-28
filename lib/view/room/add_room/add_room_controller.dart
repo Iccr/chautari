@@ -1,22 +1,23 @@
 import 'package:chautari/model/add_room_multipart_model.dart';
-import 'package:chautari/model/app_info.dart';
 import 'package:chautari/model/menu_item.dart';
 import 'package:chautari/repository/rooms_repository.dart';
+import 'package:chautari/services/appinfo_service.dart';
 import 'package:chautari/services/room_service.dart';
 import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/router/router_name.dart';
-import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/view/explore/explore_controller.dart';
 import 'package:chautari/view/room/form_keys.dart';
 import 'package:chautari/view/room/room_form_focusnode.dart';
 import 'package:chautari/widgets/alert.dart';
 import 'package:chautari/widgets/keyboard_action.dart';
+import 'package:chautari/widgets/snack_bar.dart';
+import 'package:data_connection_checker/data_connection_checker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:keyboard_actions/keyboard_actions.dart';
 
 class AddRoomController extends GetxController {
-  final AppinfoModel appInfo = Get.find(tag: AppConstant.appinfomodelsKey);
+  final AppInfoService appInfoService = Get.find();
   final ExploreController exploreController = Get.find();
   final CreateRoomApiRequestModel apiModel = CreateRoomApiRequestModel();
 
@@ -33,7 +34,6 @@ class AddRoomController extends GetxController {
   var _long = 1000.0.obs;
   var contactNumberVisible = true.obs;
 
-  var pageoffset = 0.0.obs;
   // observable keys
 
   RoomFormKeys formKeys = RoomFormKeys();
@@ -89,19 +89,25 @@ class AddRoomController extends GetxController {
   // life cycles
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
+    var result = await DataConnectionChecker().hasConnection;
+    if (!result) {
+      ChautariSnackBar.showNoInternetMesage(AppConstant.noInternetMessage);
+    }
     fetchRoomService = Get.find();
-
     this.keyboardActionConfig = KeyboardAction().keyboardActionConfig(
       Get.context,
       List.from(
         [focusNodes.contactTextFocusNode, focusNodes.priceFocusNode],
       ),
     );
+    _setupDistrictViewModel();
+  }
 
+  _setupDistrictViewModel() {
     districtViewmodels.assignAll(
-      appInfo.districts.map(
+      appInfoService.appInfo.districts.map(
         (e) => MenuItem(title: e.name, subtitle: "${e.state}"),
       ),
     );
@@ -174,6 +180,11 @@ class AddRoomController extends GetxController {
 
   _goToNextPage() {
     pageController.nextPage(
+        duration: Duration(milliseconds: 333), curve: Curves.easeInOut);
+  }
+
+  goToPreviousPage() {
+    pageController.previousPage(
         duration: Duration(milliseconds: 333), curve: Curves.easeInOut);
   }
 
@@ -266,9 +277,5 @@ class AddRoomController extends GetxController {
 
   setContactNumbervisibility(bool val) {
     contactNumberVisible.value = val;
-  }
-
-  setPageOffset(int val) {
-    pageoffset.value = val.toDouble();
   }
 }

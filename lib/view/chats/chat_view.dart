@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
+import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
@@ -250,11 +251,6 @@ class ChatScreenState extends State<ChatScreen> {
 
       listScrollController.animateTo(0.0,
           duration: Duration(milliseconds: 300), curve: Curves.easeOut);
-    } else {
-      Fluttertoast.showToast(
-          msg: 'Nothing to send',
-          backgroundColor: Colors.black,
-          textColor: Colors.red);
     }
   }
 
@@ -433,14 +429,21 @@ class ChatScreenState extends State<ChatScreen> {
   Widget buildInput() {
     return SafeArea(
       child: Container(
-        padding: EdgeInsets.all(ChautariPadding.standard),
+        width: double.infinity,
+        height: 60.0,
+        decoration: BoxDecoration(
+            border: Border(top: BorderSide(color: greyColor2, width: 0.5)),
+            color: Colors.white),
+        // padding: EdgeInsets.all(ChautariPadding.standard),
         child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             // Button send image
 
             // Edit text
             Flexible(
               child: Container(
+                padding: EdgeInsets.only(left: ChautariPadding.standard),
                 child: TextField(
                   autocorrect: false,
                   cursorColor: ChautariColors.primary,
@@ -455,11 +458,16 @@ class ChatScreenState extends State<ChatScreen> {
                       fromPhoto: auth.user.imageurl,
                     );
                   },
-                  style: TextStyle(color: primaryColor, fontSize: 15.0),
+                  style: ChautariTextStyles()
+                      .listSubtitle
+                      .copyWith(color: ChautariColors.black),
                   controller: textEditingController,
                   decoration: InputDecoration.collapsed(
                     hintText: 'Type your message...',
-                    hintStyle: TextStyle(color: greyColor),
+                    // hintStyle: TextStyle(color: greyColor),
+                    hintStyle: ChautariTextStyles()
+                        .listSubtitle
+                        .copyWith(fontSize: 13, color: ChautariColors.grey),
                   ),
                   focusNode: focusNode,
                 ),
@@ -467,32 +475,24 @@ class ChatScreenState extends State<ChatScreen> {
             ),
 
             // Button send message
-            Material(
-              child: Container(
-                margin: EdgeInsets.symmetric(horizontal: 8.0),
-                child: IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () => onSendMessage(
-                    content: textEditingController.text,
-                    myId: auth.user.fuid,
-                    peerId: this.peerId,
-                    myName: auth.user.name,
-                    peerName: peerName,
-                    toPhoto: this.peerPhoto,
-                    fromPhoto: auth.user.imageurl,
-                  ),
-                  color: primaryColor,
+            Container(
+              margin: EdgeInsets.only(right: ChautariPadding.standard),
+              child: IconButton(
+                color: ChautariColors.brown,
+                icon: Icon(Icons.send),
+                onPressed: () => onSendMessage(
+                  content: textEditingController.text,
+                  myId: auth.user.fuid,
+                  peerId: this.peerId,
+                  myName: auth.user.name,
+                  peerName: peerName,
+                  toPhoto: this.peerPhoto,
+                  fromPhoto: auth.user.imageurl,
                 ),
               ),
-              color: Colors.white,
             ),
           ],
         ),
-        width: double.infinity,
-        height: 50.0,
-        decoration: BoxDecoration(
-            border: Border(top: BorderSide(color: greyColor2, width: 0.5)),
-            color: Colors.white),
       ),
     );
   }

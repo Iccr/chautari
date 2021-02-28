@@ -1,4 +1,6 @@
+import 'package:chautari/model/amenity.dart';
 import 'package:chautari/model/districts.dart';
+import 'package:chautari/model/parkings.dart';
 import 'package:chautari/model/type.dart';
 import 'package:chautari/model/water.dart';
 import 'package:chautari/services/appinfo_service.dart';
@@ -17,6 +19,8 @@ class SearchViewModel extends GetxController {
   Water water;
   String priceLower;
   String priceUpper;
+  List<Parking> parkings = [];
+  List<Amenities> amenities = [];
 
   // initial value
   RoomType initialType;
@@ -26,6 +30,8 @@ class SearchViewModel extends GetxController {
   Water initialWater;
   String initialPriceLower;
   String intialPriceUpper;
+  List<Parking> initialParkings = [];
+  List<Amenities> initialAmenities = [];
 
   RoomFormKeys formKeys = RoomFormKeys();
 
@@ -46,6 +52,8 @@ class SearchViewModel extends GetxController {
     this.water = null;
     this.priceLower = null;
     this.priceUpper = null;
+    this.parkings = [];
+    this.amenities = [];
     this.shouldUpdate = false;
     // setTotalFilterCount();
   }
@@ -81,6 +89,16 @@ class SearchViewModel extends GetxController {
     this.shouldUpdate = true;
   }
 
+  setParkings(List<Parking> parkings) {
+    this.parkings = parkings;
+    this.shouldUpdate = true;
+  }
+
+  setAmenities(List<Amenities> amenities) {
+    this.amenities = amenities;
+    this.shouldUpdate = true;
+  }
+
   setTotalFilterCount() {
     int count = 0;
     if (type != null) {
@@ -106,6 +124,14 @@ class SearchViewModel extends GetxController {
     }
 
     if (priceUpper != null && priceUpper.isNotEmpty) {
+      count++;
+    }
+
+    if (parkings.isNotEmpty) {
+      count++;
+    }
+
+    if (amenities.isNotEmpty) {
       count++;
     }
     this.totalFilterCount.value = count;
@@ -138,6 +164,14 @@ class SearchViewModel extends GetxController {
     if (priceUpper != null && priceUpper.isNotEmpty) {
       query["price_upper"] = priceUpper;
     }
+
+    if (parkings.isNotEmpty) {
+      query["parkings"] = this.parkings.map((e) => e.id).toList();
+    }
+
+    if (amenities.isNotEmpty) {
+      query["amenities"] = this.parkings.map((e) => e.id).toList();
+    }
     return query;
   }
 }
@@ -168,6 +202,36 @@ class FilterRoomController extends GetxController {
       districtTextController.text =
           "${searchModel.value.district.name}, province: ${searchModel.value.district.state}";
     }
+
+    if (searchModel.value.address != null) {
+      addressTextController.text = searchModel.value.address;
+    }
+  }
+
+  @override
+  Future<void> onReady() async {
+    super.onReady();
+
+    if (searchModel.value.shouldUpdate) {
+      var districtName = "";
+      if (searchModel.value.district != null) {
+        districtName =
+            "${searchModel.value.district.name}, province: ${searchModel.value.district.state}";
+      }
+
+      var state = searchModel.value.formKeys.formKey.currentState;
+      focusNodes.parkingFocusNode.requestFocus();
+      state.patchValue({
+        "map_field": searchModel.value.address ?? "",
+        "noOfROoms": searchModel.value.noOfRoom,
+        "price_upper": searchModel.value.priceUpper,
+        "price_lower": searchModel.value.priceLower,
+        "Type": searchModel.value.type,
+        "water": searchModel.value.water,
+        "parking": searchModel.value.parkings,
+        "amenity": searchModel.value.amenities,
+      });
+    }
   }
 
   search() {
@@ -180,55 +244,12 @@ class FilterRoomController extends GetxController {
   reset() async {
     searchModel.value.reset();
     searchModel.value.getQuery();
-
-    // this.addressTextController.text = "";
-    // formKeys.formKey.currentState.fields.forEach((key, value) {value.})
-    // searchModel.value.formKeys.formKey.currentState
-    // .patchValue({"noOfROoms": 1.0});
     searchModel.value.formKeys.formKey.currentState.reset();
     searchModel.value.setTotalFilterCount();
     this.districtTextController.text = "";
     this.addressTextController.text = "";
 
-    print(this.searchModel.value.noOfRoom);
     roomService.search({"": ""});
-
-    // await Future.delayed(Duration(milliseconds: 2000));
     this.object.refresh();
-  }
-
-  @override
-  void onReady() {
-    if (searchModel.value.shouldUpdate) {
-      print("update");
-      // RoomType type;
-      // double noOfRoom = 1.0;
-      // Districts district;
-      // String address;
-      // Water water;
-      // String priceLower;
-      // String priceUpper;
-      var state = searchModel.value.formKeys.formKey.currentState;
-      state?.fields?.forEach((key, value) {
-        print(key);
-        state.patchValue({"noOfROoms": searchModel.value.noOfRoom});
-
-        var districtName = "";
-        if (searchModel.value.district != null) {
-          districtName =
-              "${searchModel.value.district.name}, province: ${searchModel.value.district.state}";
-        }
-
-        state.patchValue(
-          {"district_field": districtName},
-        );
-
-        state.patchValue({"price_upper": searchModel.value.priceUpper});
-        state.patchValue({"price_lower": searchModel.value.priceLower});
-        state.patchValue({"Type": searchModel.value.type});
-        state.patchValue({"water": searchModel.value.water});
-      });
-    }
-    super.onReady();
   }
 }

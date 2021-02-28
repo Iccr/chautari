@@ -12,10 +12,10 @@ class SettingController extends GetxController {
         title: "Theme",
         index: 0,
         subtitle: "Customize app appeareance of Chautari Basti"),
-    MenuItem(
-        title: "Lanugate",
-        index: 1,
-        subtitle: "Use Chautari Basit in your prefered language"),
+    // MenuItem(
+    //     title: "Lanugate",
+    //     index: 1,
+    //     subtitle: "Use Chautari Basit in your prefered language"),
   ];
 
   var _themeMenu = [

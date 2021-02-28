@@ -10,12 +10,14 @@ class RoomParkingCheckBoxWidget extends StatelessWidget {
   final ValueKey parkingKey;
   final List<FormBuilderFieldOption<Parking>> options;
   final List<Parking> initialValue;
+  final Function(List<Parking> value) onChanged;
   const RoomParkingCheckBoxWidget(
       {Key key,
       @required this.focusNode,
       @required this.onSaved,
       @required this.parkingKey,
       @required this.options,
+      this.onChanged,
       this.initialValue})
       : super(key: key);
 
@@ -36,6 +38,11 @@ class RoomParkingCheckBoxWidget extends StatelessWidget {
         name: "parking",
         options: options,
         onSaved: (newValue) => onSaved(newValue),
+        onChanged: (value) {
+          if (onChanged != null) {
+            onChanged(value);
+          }
+        },
       ),
     );
   }

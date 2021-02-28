@@ -13,6 +13,7 @@ import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
 import 'package:chautari/widgets/alert.dart';
+import 'package:chautari/widgets/snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -60,26 +61,39 @@ class RoomDetailController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _setup();
+    _setupRoomService();
+    _fetchRoomDetail();
+    _fillRoomDetailHash();
+    roomParkings = [];
+  }
+
+  @override
+  onClose() async {
+    // await ChautariSnackBar.remove(Get.context);
+    super.onClose();
+  }
+
+  _setup() {
     _room = RoomModel().obs;
     RoomDetailViewModel viewmodel = Get.arguments;
-
     this.isMyRoomDetail = viewmodel.isMyRoom;
     _room.value = viewmodel.room;
+  }
 
-    roomService = RoomService();
-
+  _setupRoomService() {
     try {
       roomService = Get.find();
     } catch (e) {
       roomService = Get.put(RoomService());
     }
+  }
 
-    _fetchRoomDetail();
+  _fillRoomDetailHash() {
     roomDetailHashContent["Type"] = "Appartment";
     roomDetailHashContent["Number Of Rooms"] = "${room.numberOfRooms}";
     roomDetailHashContent["Number Of Bathrooms"] = "${room.numberOfRooms}";
     roomDetailHashContent["Kitchen available"] = "${room.numberOfRooms}";
-    roomParkings = [];
   }
 
   _fetchRoomDetail() async {
@@ -89,6 +103,10 @@ class RoomDetailController extends GetxController {
       _room.value = model.room;
     } else {
       _error.value = model.errors.first.value;
+      // Get.showSnackbar(_error.value);
+      // Get.snackbar("Warning", _error.value);
+
+      // ChautariSnackBar.showNoInternetMesage(_error.value);
     }
 
     _isLoading.value = false;

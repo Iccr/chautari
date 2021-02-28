@@ -4,6 +4,7 @@ import 'package:chautari/view/explore/explore_view.dart';
 import 'package:chautari/view/map/rooms_map.dart';
 import 'package:chautari/view/profile/profile_view.dart';
 import 'package:chautari/view/setting/setting_view.dart';
+import 'package:chautari/widgets/snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:line_icons/line_icons.dart';
@@ -22,6 +23,7 @@ class _TabbarState extends State<Tabbar> {
   @override
   Widget build(BuildContext context) {
     var theme = Theme.of(context);
+    ChautariSnackBar.context = context;
     return Scaffold(
       body: Center(
         child:

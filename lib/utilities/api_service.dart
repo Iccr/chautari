@@ -1,7 +1,8 @@
 import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/storage.dart';
+import 'package:chautari/widgets/snack_bar.dart';
 import 'package:dio/dio.dart';
-import 'dart:io' show Platform;
+import 'package:data_connection_checker/data_connection_checker.dart';
 
 import '../environment.dart';
 
@@ -89,6 +90,17 @@ class ApiService {
 
   Future get(String url, {Map<String, dynamic> query}) async {
     var responseJson;
+
+    bool result = await DataConnectionChecker().hasConnection;
+    if (!result) {
+      var message = AppConstant.noInternetMessage;
+      var val = createErrorJson(message);
+      Response res = Response(data: val);
+      responseJson = res;
+      ChautariSnackBar.showNoInternetMesage(message);
+
+      return responseJson;
+    }
     try {
       responseJson = await _http.get(
         _baseUrl + url,
@@ -99,19 +111,34 @@ class ApiService {
       );
     } catch (e) {
       String err = e.error.toString();
-      Map<String, dynamic> val = {
-        'error': [
-          {'code': '1', 'detail': '$err'}
-        ]
-      };
+      Map<String, dynamic> val = createErrorJson(err);
       Response res = Response(data: val);
       responseJson = res;
     }
     return responseJson;
   }
 
+  Map<String, dynamic> createErrorJson(String errorMessage) {
+    return {
+      'errors': [
+        {'name': "httpError", 'value': '$errorMessage'}
+      ]
+    };
+  }
+
+  //   name = json['name'];
+  // value = json['value'];
+
   Future delete(String url) async {
     var responseJson;
+    bool result = await DataConnectionChecker().hasConnection;
+    if (!result) {
+      var message = 'It appears to be some issue with internet connection.';
+      var val = createErrorJson(message);
+      Response res = Response(data: val);
+      responseJson = res;
+      return responseJson;
+    }
     try {
       responseJson = await _http.delete(
         _baseUrl + url,
@@ -121,49 +148,24 @@ class ApiService {
       );
     } catch (e) {
       String err = e.error.toString();
-      Map<String, dynamic> val = {
-        'error': [
-          {'code': '1', 'detail': '$err'}
-        ]
-      };
+      var val = createErrorJson(err);
       Response res = Response(data: val);
       responseJson = res;
     }
     return responseJson;
   }
 
-  // Future postFormData(String url, dynamic params,
-  //     {bool shouldAppednBaseurl = true}) async {
-  //   var responseJson;
-  //   String _url = shouldAppednBaseurl ? _baseUrl + url : url;
-
-  //   try {
-  //     var formdata = FormData.fromMap(params);
-  //     Response response = await _http.post(
-  //       _url,
-  //       data: formdata,
-  //       options: Options(
-  //         headers: _headers(),
-  //       ),
-  //     );
-
-  //     responseJson = response;
-  //   } catch (e) {
-  //     String err = e.error.toString();
-  //     Map<String, dynamic> val = {
-  //       'error': [
-  //         {'code': '1', 'detail': '$err'}
-  //       ]
-  //     };
-  //     Response res = Response(data: val);
-  //     responseJson = res;
-  //   }
-  //   return responseJson;
-  // }
-
   Future post(String url, dynamic params,
       {bool shouldAppednBaseurl = true}) async {
     var responseJson;
+    bool result = await DataConnectionChecker().hasConnection;
+    if (!result) {
+      var message = 'It appears to be some issue with internet connection.';
+      var val = createErrorJson(message);
+      Response res = Response(data: val);
+      responseJson = res;
+      return responseJson;
+    }
     String _url = shouldAppednBaseurl ? _baseUrl + url : url;
 
     try {
@@ -177,11 +179,8 @@ class ApiService {
       responseJson = response;
     } catch (e) {
       String err = e.error.toString();
-      Map<String, dynamic> val = {
-        'error': [
-          {'code': '1', 'detail': '$err'}
-        ]
-      };
+      var val = createErrorJson(err);
+
       Response res = Response(data: val);
       responseJson = res;
     }
@@ -190,6 +189,14 @@ class ApiService {
 
   Future update(String url, dynamic params) async {
     var responseJson;
+    bool result = await DataConnectionChecker().hasConnection;
+    if (!result) {
+      var message = 'It appears to be some issue with internet connection.';
+      var val = createErrorJson(message);
+      Response res = Response(data: val);
+      responseJson = res;
+      return responseJson;
+    }
     try {
       Response response = await _http.patch(
         _baseUrl + url,
@@ -201,11 +208,8 @@ class ApiService {
       responseJson = response;
     } catch (e) {
       String err = e.error.toString();
-      Map<String, dynamic> val = {
-        'error': [
-          {'code': '1', 'detail': '$err'}
-        ]
-      };
+      var val = createErrorJson(err);
+
       Response res = Response(data: val);
       responseJson = res;
     }

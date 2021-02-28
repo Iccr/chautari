@@ -4,26 +4,26 @@ import 'package:get/get.dart';
 
 class AppInfoService extends GetxService {
   var _appInfo = AppinfoModel().obs;
-  var _isLoading = false.obs;
-  var _error = "".obs;
-  bool get isLoading => _isLoading.value;
-  String get error => _error.value.isEmpty ? null : _error.value;
+  var isLoading = false.obs;
+  var error = "".obs;
+  var success = false.obs;
   AppinfoModel get appInfo => _appInfo.value;
 
   Future<AppInfoService> init() async {
-    _fetchAppInfo();
     return this;
   }
 
-  _fetchAppInfo() async {
-    _isLoading.value = true;
+  fetchAppInfo() async {
+    isLoading.value = true;
     var model = await AppinfoRepository().fetchAppInfo();
 
-    _isLoading.value = false;
+    isLoading.value = false;
     if (model.errors?.isEmpty ?? false) {
-      this._error.value = model.errors?.first?.value;
-    } else {
       this._appInfo.value = model.data;
+      this.success.value = true;
+    } else {
+      this.error.value = model.errors?.first?.value;
+      this.success.value = false;
     }
   }
 }
