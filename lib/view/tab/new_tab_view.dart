@@ -74,9 +74,7 @@ class _NewTabViewState extends State<NewTabView>
   Widget build(BuildContext context) {
     return Scaffold(
       extendBody: true,
-      body: NavigationScreen(
-        iconList[_bottomNavIndex],
-      ),
+      body: Container(),
       floatingActionButton: ScaleTransition(
         scale: animation,
         child: FloatingActionButton(
@@ -123,8 +121,8 @@ class _NewTabViewState extends State<NewTabView>
         splashSpeedInMilliseconds: 300,
         notchSmoothness: NotchSmoothness.defaultEdge,
         gapLocation: GapLocation.center,
-        leftCornerRadius: 32,
-        rightCornerRadius: 32,
+        leftCornerRadius: 0,
+        rightCornerRadius: 0,
         onTap: (index) => setState(() => _bottomNavIndex = index),
       ),
     );
