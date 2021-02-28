@@ -33,17 +33,19 @@ class AddRoomForm3 extends StatelessWidget {
             children: [
               // types
               RoomTypesRadioWidget(
-                  typesKey: controller.formKeys.typesKey,
-                  focusNode: controller.focusNodes.typeFocusNode,
-                  options: controller.appInfoService.appInfo.types
-                      .map(
-                        (element) => FormBuilderFieldOption(
-                          value: element,
-                          child: Text(element.name.capitalize),
-                        ),
-                      )
-                      .toList(),
-                  onSaved: (value) => controller.apiModel.type = value),
+                typesKey: controller.formKeys.typesKey,
+                focusNode: controller.focusNodes.typeFocusNode,
+                options: controller.appInfoService.appInfo.types
+                    .map(
+                      (element) => FormBuilderFieldOption(
+                        value: element,
+                        child: Text(element.name.capitalize),
+                      ),
+                    )
+                    .toList(),
+                onSaved: (value) => controller.apiModel.type = value,
+                onChanged: (value) => controller.apiModel.type = value,
+              ),
 
               // water
               RoomWaterRadioWidgets(
@@ -58,6 +60,7 @@ class AddRoomForm3 extends StatelessWidget {
                     )
                     .toList(),
                 onSaved: (value) => controller.apiModel.water = value,
+                onChanged: (value) => controller.apiModel.water = value,
               ),
             ],
           ),
