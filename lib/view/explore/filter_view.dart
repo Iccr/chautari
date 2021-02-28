@@ -3,6 +3,7 @@ import 'package:chautari/utilities/theme/text_decoration.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/view/explore/filter_controller.dart';
 import 'package:chautari/view/room/my_rooms/my_room.dart';
+import 'package:chautari/widgets/keyboard_visibility_builder.dart';
 
 import 'package:chautari/widgets/room/number_of_room_widget.dart';
 import 'package:chautari/widgets/room/room_amenity_checkbox_widget.dart';
@@ -64,247 +65,254 @@ class FilterRoom extends StatelessWidget {
               ),
             ],
           ),
-          body: Stack(
-            children: [
-              Container(
-                padding: EdgeInsets.all(ChautariPadding.standard),
-                height: Get.height,
-                child: SingleChildScrollView(
-                  child: FormBuilder(
-                    key: controller.searchModel.value.formKeys.formKey,
-                    child: Column(
-                      children: [
-                        Text(
-                          "Fine tune your expectations...",
-                          style: ChautariTextStyles().listSubtitle,
-                        ),
-                        // district
-                        TopDownPaddingWrapper(
-                          child: FormBuilderTextField(
-                            key: controller
-                                .searchModel.value.formKeys.districtKey,
-                            validator: FormBuilderValidators.required(context),
-                            controller: controller.districtTextController,
-                            focusNode: controller.focusNodes.districtFocusNode,
-                            name: "district_field",
+          body: KeyboardVisibilityBuilder(
+            builder: (context, child, isKeyboardVisible) => Stack(
+              children: [
+                Container(
+                  padding: EdgeInsets.all(ChautariPadding.standard),
+                  height: Get.height,
+                  child: SingleChildScrollView(
+                    child: FormBuilder(
+                      key: controller.searchModel.value.formKeys.formKey,
+                      child: Column(
+                        children: [
+                          Text(
+                            "Fine tune your expectations...",
                             style: ChautariTextStyles().listSubtitle,
-                            decoration:
-                                ChautariDecoration().outlinedBorderTextField(
-                              helperText: "Select District",
-                              labelText: "District",
+                          ),
+                          // district
+                          TopDownPaddingWrapper(
+                            child: FormBuilderTextField(
+                              key: controller
+                                  .searchModel.value.formKeys.districtKey,
+                              validator:
+                                  FormBuilderValidators.required(context),
+                              controller: controller.districtTextController,
+                              focusNode:
+                                  controller.focusNodes.districtFocusNode,
+                              name: "district_field",
+                              style: ChautariTextStyles().listSubtitle,
+                              decoration:
+                                  ChautariDecoration().outlinedBorderTextField(
+                                helperText: "Select District",
+                                labelText: "District",
+                              ),
+                              onTap: () {
+                                _openSearch();
+                              },
                             ),
-                            onTap: () {
-                              _openSearch();
-                            },
                           ),
-                        ),
 
-                        // address
-                        TopDownPaddingWrapper(
-                          // top: 10,
-                          child: FormBuilderTextField(
-                            // controller: controller.addressTextController,
+                          // address
+                          TopDownPaddingWrapper(
+                            // top: 10,
+                            child: FormBuilderTextField(
+                              // controller: controller.addressTextController,
+                              key: controller
+                                  .searchModel.value.formKeys.addressKey,
+                              initialValue:
+                                  controller.searchModel.value.address,
+                              focusNode: controller.focusNodes.addressFocusNode,
+                              name: "map_field",
+                              onChanged: (value) {
+                                controller.searchModel.value.setAddress(value);
+                              },
+                              validator: (value) {
+                                return value == null || value.isEmpty
+                                    ? "This field cannot be empty"
+                                    : null;
+                              },
+                              style: ChautariTextStyles().listSubtitle,
+                              decoration: ChautariDecoration()
+                                  .outlinedBorderTextField(
+                                      helperText: "Local address name",
+                                      labelText: "address"),
+                              // onTap: () => openMap(),
+                            ),
+                          ),
+
+                          // number of rooms
+                          NumberOfRoomWidget(
                             key: controller
-                                .searchModel.value.formKeys.addressKey,
-                            initialValue: controller.searchModel.value.address,
-                            focusNode: controller.focusNodes.addressFocusNode,
-                            name: "map_field",
+                                .searchModel.value.formKeys.numberOfRoomsKey,
+                            initialVaue:
+                                controller.searchModel.value.intitialNoOfRoom,
+                            labelText: "Minimum number of rooms",
+
+                            helperText: null,
+                            numberOfroomKey: controller
+                                .searchModel.value.formKeys.numberOfRoomsKey,
+                            focusNode:
+                                controller.focusNodes.numberOfRoomsFocusNode,
+                            onSaved: (value) => {},
                             onChanged: (value) {
-                              controller.searchModel.value.setAddress(value);
+                              controller.searchModel.value.setNoOfRoom(value);
+                              print("number of rooms change");
                             },
-                            validator: (value) {
-                              return value == null || value.isEmpty
-                                  ? "This field cannot be empty"
-                                  : null;
-                            },
-                            style: ChautariTextStyles().listSubtitle,
-                            decoration: ChautariDecoration()
-                                .outlinedBorderTextField(
-                                    helperText: "Local address name",
-                                    labelText: "address"),
-                            // onTap: () => openMap(),
+                            // controller.room.numberOfRooms = value.toInt(),
                           ),
-                        ),
 
-                        // number of rooms
-                        NumberOfRoomWidget(
-                          key: controller
-                              .searchModel.value.formKeys.numberOfRoomsKey,
-                          initialVaue:
-                              controller.searchModel.value.intitialNoOfRoom,
-                          labelText: "Minimum number of rooms",
+                          RoomPriceWidget(
+                            initialValue:
+                                controller.searchModel.value.initialPriceLower,
+                            name: "price_lower",
+                            labelText: "Minimum price",
+                            helperText: "Per month",
+                            pricekey: controller
+                                .searchModel.value.formKeys.minimumPriceKey,
+                            focusNode:
+                                controller.focusNodes.minimumPriceFocusNode,
+                            onTap: () => controller.focusNodes.priceFocusNode
+                                .requestFocus(),
+                            onSaved: (value) => {},
+                            onChanged: (value) {
+                              var val = value?.replaceAll(",", "");
+                              controller.searchModel.value.setPriceLower(val);
+                              print("price lower change");
+                            },
 
-                          helperText: null,
-                          numberOfroomKey: controller
-                              .searchModel.value.formKeys.numberOfRoomsKey,
-                          focusNode:
-                              controller.focusNodes.numberOfRoomsFocusNode,
-                          onSaved: (value) => {},
-                          onChanged: (value) {
-                            controller.searchModel.value.setNoOfRoom(value);
-                            print("number of rooms change");
-                          },
-                          // controller.room.numberOfRooms = value.toInt(),
-                        ),
+                            // controller.room.price = value.replaceAll(",", ""),
+                          ),
 
-                        RoomPriceWidget(
-                          initialValue:
-                              controller.searchModel.value.initialPriceLower,
-                          name: "price_lower",
-                          labelText: "Minimum price",
-                          helperText: "Per month",
-                          pricekey: controller
-                              .searchModel.value.formKeys.minimumPriceKey,
-                          focusNode:
-                              controller.focusNodes.minimumPriceFocusNode,
-                          onTap: () => controller.focusNodes.priceFocusNode
-                              .requestFocus(),
-                          onSaved: (value) => {},
-                          onChanged: (value) {
-                            var val = value?.replaceAll(",", "");
-                            controller.searchModel.value.setPriceLower(val);
-                            print("price lower change");
-                          },
+                          RoomPriceWidget(
+                            initialValue:
+                                controller.searchModel.value.intialPriceUpper,
+                            name: "price_upper",
+                            labelText: "Maximum price",
+                            helperText: "Per month",
+                            pricekey: controller
+                                .searchModel.value.formKeys.maximumPriceKey,
+                            focusNode:
+                                controller.focusNodes.maximumPriceFocusNode,
+                            onTap: () => controller.focusNodes.priceFocusNode
+                                .requestFocus(),
+                            onSaved: (value) => {},
+                            onChanged: (value) {
+                              controller.searchModel.value.setPriceUpper(
+                                value?.replaceAll(",", ""),
+                              );
+                              print("price upper change");
+                            },
+                            // controller.room.price = ,
+                          ),
 
-                          // controller.room.price = value.replaceAll(",", ""),
-                        ),
+                          // types
+                          RoomTypesRadioWidget(
+                            typesKey:
+                                controller.searchModel.value.formKeys.typesKey,
+                            initialValue:
+                                controller.searchModel.value.initialType,
+                            focusNode: controller.focusNodes.typeFocusNode,
+                            options:
+                                (controller.appInfoService.appInfo.types ?? [])
+                                    .map(
+                                      (element) => FormBuilderFieldOption(
+                                        value: element,
+                                        child: Text(element.name.capitalize),
+                                      ),
+                                    )
+                                    .toList(),
+                            onSaved: (value) => {},
+                            onChanged: (value) {
+                              controller.searchModel.value.setType(value);
+                              print("types change");
+                            },
+                          ),
 
-                        RoomPriceWidget(
-                          initialValue:
-                              controller.searchModel.value.intialPriceUpper,
-                          name: "price_upper",
-                          labelText: "Maximum price",
-                          helperText: "Per month",
-                          pricekey: controller
-                              .searchModel.value.formKeys.maximumPriceKey,
-                          focusNode:
-                              controller.focusNodes.maximumPriceFocusNode,
-                          onTap: () => controller.focusNodes.priceFocusNode
-                              .requestFocus(),
-                          onSaved: (value) => {},
-                          onChanged: (value) {
-                            controller.searchModel.value.setPriceUpper(
-                              value?.replaceAll(",", ""),
-                            );
-                            print("price upper change");
-                          },
-                          // controller.room.price = ,
-                        ),
+                          // water
+                          RoomWaterRadioWidgets(
+                            initialiValue:
+                                controller.searchModel.value.initialWater,
+                            waterKey:
+                                controller.searchModel.value.formKeys.waterKey,
+                            focusNode: controller.focusNodes.waterFocusNode,
+                            options:
+                                (controller.appInfoService.appInfo.waters ?? [])
+                                    .map(
+                                      (element) => FormBuilderFieldOption(
+                                        value: element,
+                                        child: Text(element.name.capitalize),
+                                      ),
+                                    )
+                                    .toList(),
+                            onSaved: (value) =>
+                                {/*controller..apiModel.water = value*/},
+                            onChanged: (value) {
+                              controller.searchModel.value.setWater(value);
+                              print("water change");
+                            },
+                          ),
 
-                        // types
-                        RoomTypesRadioWidget(
-                          typesKey:
-                              controller.searchModel.value.formKeys.typesKey,
-                          initialValue:
-                              controller.searchModel.value.initialType,
-                          focusNode: controller.focusNodes.typeFocusNode,
-                          options:
-                              (controller.appInfoService.appInfo.types ?? [])
-                                  .map(
-                                    (element) => FormBuilderFieldOption(
-                                      value: element,
-                                      child: Text(element.name.capitalize),
-                                    ),
-                                  )
-                                  .toList(),
-                          onSaved: (value) => {},
-                          onChanged: (value) {
-                            controller.searchModel.value.setType(value);
-                            print("types change");
-                          },
-                        ),
+                          // // parkings
+                          // RoomParkingCheckBoxWidget(
+                          //   initialValue:
+                          //       controller.searchModel.value.initialParkings,
+                          //   parkingKey:
+                          //       controller.searchModel.value.formKeys.parkingKey,
+                          //   focusNode: controller.focusNodes.parkingFocusNode,
+                          //   options: controller.appInfoService.appInfo.parkings
+                          //       .map(
+                          //         (element) => FormBuilderFieldOption(
+                          //           value: element,
+                          //           child: Text(element.name.capitalize),
+                          //         ),
+                          //       )
+                          //       .toList(),
+                          //   onSaved: (value) => {},
+                          //   onChanged: (value) {
+                          //     controller.searchModel.value.setParkings(value);
+                          //     print("parking change");
+                          //   },
+                          // ),
 
-                        // water
-                        RoomWaterRadioWidgets(
-                          initialiValue:
-                              controller.searchModel.value.initialWater,
-                          waterKey:
-                              controller.searchModel.value.formKeys.waterKey,
-                          focusNode: controller.focusNodes.waterFocusNode,
-                          options:
-                              (controller.appInfoService.appInfo.waters ?? [])
-                                  .map(
-                                    (element) => FormBuilderFieldOption(
-                                      value: element,
-                                      child: Text(element.name.capitalize),
-                                    ),
-                                  )
-                                  .toList(),
-                          onSaved: (value) =>
-                              {/*controller..apiModel.water = value*/},
-                          onChanged: (value) {
-                            controller.searchModel.value.setWater(value);
-                            print("water change");
-                          },
-                        ),
+                          // // amenity
+                          // RoomAmenityCheckBoxWidget(
+                          //   initialValue: [],
+                          //   amenityKey:
+                          //       controller.searchModel.value.formKeys.amenityKey,
+                          //   focusNode: controller.focusNodes.parkingFocusNode,
+                          //   options: controller.appInfoService.appInfo.amenities
+                          //       .map(
+                          //         (element) => FormBuilderFieldOption(
+                          //           value: element,
+                          //           child: Text(element.name.capitalize),
+                          //         ),
+                          //       )
+                          //       .toList(),
+                          //   onSaved: (value) => {},
+                          //   onChanged: (value) {
+                          //     controller.searchModel.value.setAmenities(value);
+                          //     print("aminities change");
+                          //   },
+                          // ),
 
-                        // // parkings
-                        // RoomParkingCheckBoxWidget(
-                        //   initialValue:
-                        //       controller.searchModel.value.initialParkings,
-                        //   parkingKey:
-                        //       controller.searchModel.value.formKeys.parkingKey,
-                        //   focusNode: controller.focusNodes.parkingFocusNode,
-                        //   options: controller.appInfoService.appInfo.parkings
-                        //       .map(
-                        //         (element) => FormBuilderFieldOption(
-                        //           value: element,
-                        //           child: Text(element.name.capitalize),
-                        //         ),
-                        //       )
-                        //       .toList(),
-                        //   onSaved: (value) => {},
-                        //   onChanged: (value) {
-                        //     controller.searchModel.value.setParkings(value);
-                        //     print("parking change");
-                        //   },
-                        // ),
-
-                        // // amenity
-                        // RoomAmenityCheckBoxWidget(
-                        //   initialValue: [],
-                        //   amenityKey:
-                        //       controller.searchModel.value.formKeys.amenityKey,
-                        //   focusNode: controller.focusNodes.parkingFocusNode,
-                        //   options: controller.appInfoService.appInfo.amenities
-                        //       .map(
-                        //         (element) => FormBuilderFieldOption(
-                        //           value: element,
-                        //           child: Text(element.name.capitalize),
-                        //         ),
-                        //       )
-                        //       .toList(),
-                        //   onSaved: (value) => {},
-                        //   onChanged: (value) {
-                        //     controller.searchModel.value.setAmenities(value);
-                        //     print("aminities change");
-                        //   },
-                        // ),
-
-                        SizedBox(
-                          height: ChautariPadding.huge * 3,
-                        )
-                      ],
+                          SizedBox(
+                            height: ChautariPadding.huge * 3,
+                          )
+                        ],
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Positioned(
-                bottom: 0,
-                right: 0,
-                left: 0,
-                child: Column(
-                  children: [
-                    ChautariRaisedButton(
-                      title: "Apply Filter ",
-                      onPressed: () => {
-                        controller.search(),
-                      },
+                if (!isKeyboardVisible) ...[
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    left: 0,
+                    child: Column(
+                      children: [
+                        ChautariRaisedButton(
+                          title: "Apply Filter ",
+                          onPressed: () => {
+                            controller.search(),
+                          },
+                        ),
+                      ],
                     ),
-                  ],
-                ),
-              ),
-            ],
+                  ),
+                ]
+              ],
+            ),
           ),
         ),
       );
