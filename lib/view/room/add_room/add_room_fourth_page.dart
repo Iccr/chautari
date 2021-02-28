@@ -15,41 +15,49 @@ class AddRoomForm4 extends StatelessWidget {
   AddRoomForm4({@required this.parkingKey, @required this.amenityKey});
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: FormBuilder(
-        key: controller.formKeys.form4Key,
-        autovalidateMode: controller.autovalidateForm4Mode.value,
-        child: Column(
-          children: [
-            RoomParkingCheckBoxWidget(
-              parkingKey: controller.formKeys.parkingKey,
-              focusNode: controller.focusNodes.parkingFocusNode,
-              options: controller.appInfoService.appInfo.parkings
-                  .map(
-                    (element) => FormBuilderFieldOption(
-                      value: element,
-                      child: Text(element.name.capitalize),
-                    ),
-                  )
-                  .toList(),
-              onSaved: (values) => controller.apiModel.parkings = values,
-            ),
+    return VisibilityDetector(
+      key: GlobalKey(),
+      onVisibilityChanged: (VisibilityInfo info) {
+        if (info.visibleFraction == 1.0) {
+          controller.setupPager(2);
+        }
+      },
+      child: SingleChildScrollView(
+        child: FormBuilder(
+          key: controller.formKeys.form4Key,
+          autovalidateMode: controller.autovalidateForm4Mode.value,
+          child: Column(
+            children: [
+              RoomParkingCheckBoxWidget(
+                parkingKey: controller.formKeys.parkingKey,
+                focusNode: controller.focusNodes.parkingFocusNode,
+                options: controller.appInfoService.appInfo.parkings
+                    .map(
+                      (element) => FormBuilderFieldOption(
+                        value: element,
+                        child: Text(element.name.capitalize),
+                      ),
+                    )
+                    .toList(),
+                onSaved: (values) => controller.apiModel.parkings = values,
+              ),
 
-            // amenity
-            RoomAmenityCheckBoxWidget(
-              amenityKey: controller.formKeys.amenityKey,
-              focusNode: controller.focusNodes.parkingFocusNode,
-              options: controller.appInfoService.appInfo.amenities
-                  .map(
-                    (element) => FormBuilderFieldOption(
-                      value: element,
-                      child: Text(element.name.capitalize),
-                    ),
-                  )
-                  .toList(),
-              onSaved: (values) => controller.apiModel.amenities = values,
-            )
-          ],
+              // amenity
+              RoomAmenityCheckBoxWidget(
+                amenityKey: controller.formKeys.amenityKey,
+                focusNode: controller.focusNodes.parkingFocusNode,
+                options: controller.appInfoService.appInfo.amenities
+                    .map(
+                      (element) => FormBuilderFieldOption(
+                        value: element,
+                        child: Text(element.name.capitalize),
+                      ),
+                    )
+                    .toList(),
+                onSaved: (values) => controller.apiModel.amenities = values,
+              )
+            ],
+          ),
         ),
       ),
     );
