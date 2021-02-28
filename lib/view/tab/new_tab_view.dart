@@ -1,5 +1,6 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:auto_size_text/auto_size_text.dart';
+import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
 import 'package:chautari/view/explore/explore_view.dart';
 import 'package:chautari/view/map/rooms_map.dart';
@@ -8,6 +9,7 @@ import 'package:chautari/view/setting/setting_view.dart';
 import 'package:circular_reveal_animation/circular_reveal_animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:line_icons/line_icons.dart';
 
 class NewTabView extends StatefulWidget {
@@ -120,8 +122,9 @@ class _NewTabViewState extends State<NewTabView>
               color: HexColor('#373A36'),
             ),
             onPressed: () {
-              _animationController.reset();
-              _animationController.forward();
+              Get.toNamed(RouteName.addRoom);
+              // _animationController.reset();
+              // _animationController.forward();
             },
           ),
         ),
