@@ -34,7 +34,6 @@ class AddRoomController extends GetxController {
   var _long = 1000.0.obs;
   var contactNumberVisible = true.obs;
 
-  var pageoffset = 0.0.obs;
   // observable keys
 
   RoomFormKeys formKeys = RoomFormKeys();
@@ -184,6 +183,11 @@ class AddRoomController extends GetxController {
         duration: Duration(milliseconds: 333), curve: Curves.easeInOut);
   }
 
+  goToPreviousPage() {
+    pageController.previousPage(
+        duration: Duration(milliseconds: 333), curve: Curves.easeInOut);
+  }
+
 // functions
   submit() {
     print(pageController.page);
@@ -273,9 +277,5 @@ class AddRoomController extends GetxController {
 
   setContactNumbervisibility(bool val) {
     contactNumberVisible.value = val;
-  }
-
-  setPageOffset(int val) {
-    pageoffset.value = val.toDouble();
   }
 }
