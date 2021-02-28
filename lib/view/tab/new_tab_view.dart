@@ -121,10 +121,11 @@ class _NewTabViewState extends State<NewTabView>
               Icons.home_work,
               color: HexColor('#373A36'),
             ),
-            onPressed: () {
-              Get.toNamed(RouteName.addRoom);
-              // _animationController.reset();
-              // _animationController.forward();
+            onPressed: () async {
+              var _ = await Get.toNamed(RouteName.addRoom);
+
+              _animationController.reset();
+              _animationController.forward();
             },
           ),
         ),
