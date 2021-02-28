@@ -79,62 +79,73 @@ class _NewTabViewState extends State<NewTabView>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      extendBody: true,
-      body: _widgetOptions().elementAt(_bottomNavIndex), // main tab controllers
-      floatingActionButton: ScaleTransition(
-        scale: animation,
-        child: FloatingActionButton(
-          elevation: 8,
-          backgroundColor: HexColor('#FFA400'),
-          child: Icon(
-            Icons.home_work,
-            color: HexColor('#373A36'),
+    return NotificationListener<ScrollNotification>(
+      onNotification: (notification) {
+        if (notification.metrics.pixels > 10) {
+          _animationController.forward();
+        } else if (notification.metrics.pixels < -20) {
+          _animationController.reset();
+        }
+      },
+      child: Scaffold(
+        extendBody: true,
+        body:
+            _widgetOptions().elementAt(_bottomNavIndex), // main tab controllers
+        floatingActionButton: ScaleTransition(
+          scale: animation,
+          child: FloatingActionButton(
+            elevation: 8,
+            backgroundColor: HexColor('#FFA400'),
+            child: Icon(
+              Icons.home_work,
+              color: HexColor('#373A36'),
+            ),
+            onPressed: () {
+              _animationController.reset();
+              _animationController.forward();
+            },
           ),
-          onPressed: () {
-            _animationController.reset();
-            _animationController.forward();
-          },
         ),
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: AnimatedBottomNavigationBar.builder(
-        itemCount: iconList.length,
-        tabBuilder: (int index, bool isActive) {
-          final color = isActive ? HexColor('#FFA400') : Colors.white;
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                iconList[index],
-                size: 24,
-                color: color,
-              ),
-              const SizedBox(height: 4),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8),
-                child: Text(
-                  titleList.elementAt(index),
-                  maxLines: 1,
-                  style:
-                      ChautariTextStyles().listSubtitle.copyWith(color: color),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: AnimatedBottomNavigationBar.builder(
+          itemCount: iconList.length,
+          tabBuilder: (int index, bool isActive) {
+            final color = isActive ? HexColor('#FFA400') : Colors.white;
+            return Column(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  iconList[index],
+                  size: 24,
+                  color: color,
                 ),
-              )
-            ],
-          );
-        },
-        backgroundColor: HexColor('#373A36'),
-        activeIndex: _bottomNavIndex,
-        splashColor: HexColor('#FFA400'),
-        notchMargin: 0,
-        notchAndCornersAnimation: animation,
-        splashSpeedInMilliseconds: 300,
-        notchSmoothness: NotchSmoothness.defaultEdge,
-        gapLocation: GapLocation.center,
-        leftCornerRadius: 0,
-        rightCornerRadius: 0,
-        onTap: (index) => setState(() => _bottomNavIndex = index),
+                const SizedBox(height: 4),
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    titleList.elementAt(index),
+                    maxLines: 1,
+                    style: ChautariTextStyles()
+                        .listSubtitle
+                        .copyWith(color: color),
+                  ),
+                )
+              ],
+            );
+          },
+          backgroundColor: HexColor('#373A36'),
+          activeIndex: _bottomNavIndex,
+          splashColor: HexColor('#FFA400'),
+          notchMargin: 0,
+          notchAndCornersAnimation: animation,
+          splashSpeedInMilliseconds: 300,
+          notchSmoothness: NotchSmoothness.defaultEdge,
+          gapLocation: GapLocation.center,
+          leftCornerRadius: 0,
+          rightCornerRadius: 0,
+          onTap: (index) => setState(() => _bottomNavIndex = index),
+        ),
       ),
     );
   }
