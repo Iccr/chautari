@@ -36,6 +36,7 @@ class ChatController extends GetxController {
     super.onInit();
     ChatViewModel viewModel = Get.arguments;
     peerId.value = viewModel.peerId;
+    peerName.value = viewModel.peerName;
     peerPhoto.value = viewModel.peerPhoto;
   }
 }
@@ -89,6 +90,10 @@ class ChatScreen extends StatefulWidget {
 }
 
 class ChatScreenState extends State<ChatScreen> {
+  final String peerId;
+  final String peerAvatar;
+  final String peerName;
+  final String peerPhoto;
   ChatScreenState({
     Key key,
     @required this.peerId,
@@ -97,11 +102,6 @@ class ChatScreenState extends State<ChatScreen> {
     @required this.peerPhoto,
   });
   AuthController auth = Get.find();
-
-  final String peerId;
-  final String peerAvatar;
-  final String peerName;
-  final String peerPhoto;
 
   String fuid;
 
@@ -116,26 +116,6 @@ class ChatScreenState extends State<ChatScreen> {
   final TextEditingController textEditingController = TextEditingController();
   final ScrollController listScrollController = ScrollController();
   final FocusNode focusNode = FocusNode();
-
-  _scrollListener() {
-    if (listScrollController.offset >=
-            listScrollController.position.maxScrollExtent &&
-        !listScrollController.position.outOfRange) {
-      print("reach the bottom");
-      setState(() {
-        print("reach the bottom");
-        _limit += _limitIncrement;
-      });
-    }
-    if (listScrollController.offset <=
-            listScrollController.position.minScrollExtent &&
-        !listScrollController.position.outOfRange) {
-      print("reach the top");
-      setState(() {
-        print("reach the top");
-      });
-    }
-  }
 
   @override
   void initState() {
@@ -158,6 +138,26 @@ class ChatScreenState extends State<ChatScreen> {
       groupChatId = '$fuid-$peerId';
     } else {
       groupChatId = '$peerId-$fuid';
+    }
+  }
+
+  _scrollListener() {
+    if (listScrollController.offset >=
+            listScrollController.position.maxScrollExtent &&
+        !listScrollController.position.outOfRange) {
+      print("reach the bottom");
+      setState(() {
+        print("reach the bottom");
+        _limit += _limitIncrement;
+      });
+    }
+    if (listScrollController.offset <=
+            listScrollController.position.minScrollExtent &&
+        !listScrollController.position.outOfRange) {
+      print("reach the top");
+      setState(() {
+        print("reach the top");
+      });
     }
   }
 
