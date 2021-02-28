@@ -47,7 +47,7 @@ class ProfileView extends StatelessWidget {
           ? null
           : FloatingActionButton(
               onPressed: () => {_goTOLogin()},
-              backgroundColor: ChautariColors.blackAndPrimarycolor(),
+              backgroundColor: ChautariColors.primaryColor(),
               child: Text(
                 "Login",
                 style: Theme.of(context).textTheme.bodyText2,
