@@ -22,7 +22,7 @@ class AddRoomForm3 extends StatelessWidget {
       key: GlobalKey(),
       onVisibilityChanged: (VisibilityInfo info) {
         if (info.visibleFraction == 1.0) {
-          controller.setupPager(2);
+          controller.setupPager(3);
         }
       },
       child: SingleChildScrollView(
