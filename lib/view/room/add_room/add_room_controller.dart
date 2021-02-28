@@ -101,8 +101,24 @@ class AddRoomController extends GetxController {
         state.patchValue({"map_field": apiModel.address});
         break;
       case 2:
+        var state = formKeys.form2Key.currentState;
+        state.patchValue({
+          "noOfROoms": apiModel.numberOfRooms ?? 1,
+          "price": apiModel.price,
+          "contact_visibility": apiModel.contactNumbervisibile ?? true,
+          "contact": apiModel.contactNumber,
+          "images": apiModel.images,
+        });
         break;
       case 3:
+        var state = formKeys.form3Key.currentState;
+        // state.patchValue({
+        //   "noOfROoms": apiModel.numberOfRooms ?? 1,
+        //   "price": apiModel.price,
+        //   "contact_visibility": apiModel.contactNumbervisibile ?? true,
+        //   "contact": apiModel.contactNumber,
+        //   "images": apiModel.images,
+        // });
         break;
       case 4:
         break;

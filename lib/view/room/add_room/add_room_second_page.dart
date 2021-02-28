@@ -11,6 +11,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
 
 import 'package:keyboard_actions/keyboard_actions.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class AddRoomForm2 extends StatelessWidget {
   final AddRoomController controller = Get.find();
@@ -31,69 +32,92 @@ class AddRoomForm2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Obx(
-      () => KeyboardActions(
-        disableScroll: false,
-        overscroll: 50,
-        config: controller.keyboardActionConfig,
-        child: FormBuilder(
-          key: formkey,
-          autovalidateMode: controller.autovalidateForm2Mode.value,
-          child: Column(
-            children: [
-              // number of rooms
-              NumberOfRoomWidget(
-                numberOfroomKey: controller.formKeys.numberOfRoomsKey,
-                focusNode: controller.focusNodes.numberOfRoomsFocusNode,
-                onSaved: (value) =>
-                    controller.apiModel.numberOfRooms = value.toInt(),
-              ),
-
-              // price
-              RoomPriceWidget(
-                pricekey: pricekey,
-                focusNode: controller.focusNodes.priceFocusNode,
-                onTap: () =>
-                    controller.focusNodes.priceFocusNode.requestFocus(),
-                onSaved: (value) => {
-                  controller.apiModel.price = value.replaceAll(",", ""),
-                  print(controller.apiModel)
-                },
-              ),
-
-              // mobile visibility
-              ContactNumberVisibilityWidget(
-                contactVisibilityKey: controller.formKeys.contactVisibilityKey,
-                initialValue: controller.contactNumberVisible.value,
-                focusNode: controller.focusNodes.contactSwitchFocusNode,
-                onChanged: (value) => {
-                  controller.apiModel.contactNumbervisibile = value,
-                  controller.setContactNumbervisibility(value),
-                },
-              ),
-
-              // contact number
-              if (controller.contactNumberVisible.value) ...[
-                ContactNumberWidget(
-                  contactKey: contactKey,
-                  focusNode: controller.focusNodes.contactTextFocusNode,
-                  onTap: () =>
-                      controller.focusNodes.contactTextFocusNode.requestFocus(),
-                  onSaved: (value) => controller.apiModel.contactNumber = value,
-                )
-              ],
-
-              // image
-              RoomImageWidget(
-                  roomImageKey: controller.formKeys.imageKey,
-                  focusNode: controller.focusNodes.imageFocusNode,
-                  onChange: (value) => scrollController.animateTo(
-                      scrollController.position.maxScrollExtent + 130,
-                      duration: Duration(milliseconds: 100),
-                      curve: Curves.easeInOut),
+      () => VisibilityDetector(
+        key: GlobalKey(),
+        onVisibilityChanged: (VisibilityInfo info) {
+          if (info.visibleFraction == 1.0) {
+            controller.setupPager(2);
+          }
+        },
+        child: KeyboardActions(
+          disableScroll: false,
+          overscroll: 50,
+          config: controller.keyboardActionConfig,
+          child: FormBuilder(
+            key: formkey,
+            autovalidateMode: controller.autovalidateForm2Mode.value,
+            child: Column(
+              children: [
+                // number of rooms
+                NumberOfRoomWidget(
+                  numberOfroomKey: controller.formKeys.numberOfRoomsKey,
+                  focusNode: controller.focusNodes.numberOfRoomsFocusNode,
+                  onChanged: (value) {
+                    controller.apiModel.numberOfRooms = value.toInt();
+                  },
                   onSaved: (value) =>
-                      controller.apiModel.images = List<File>.from(value),
-                  scrollController: scrollController),
-            ],
+                      controller.apiModel.numberOfRooms = value.toInt(),
+                ),
+
+                // price
+                RoomPriceWidget(
+                  pricekey: pricekey,
+                  focusNode: controller.focusNodes.priceFocusNode,
+                  onTap: () =>
+                      controller.focusNodes.priceFocusNode.requestFocus(),
+                  onChanged: (value) {
+                    controller.apiModel.price = value.replaceAll(",", "");
+                    print(controller.apiModel);
+                  },
+                  onSaved: (value) => {
+                    controller.apiModel.price = value.replaceAll(",", ""),
+                    print(controller.apiModel)
+                  },
+                ),
+
+                // mobile visibility
+                ContactNumberVisibilityWidget(
+                  contactVisibilityKey:
+                      controller.formKeys.contactVisibilityKey,
+                  initialValue: controller.contactNumberVisible.value,
+                  focusNode: controller.focusNodes.contactSwitchFocusNode,
+                  onChanged: (value) => {
+                    controller.apiModel.contactNumbervisibile = value,
+                    controller.setContactNumbervisibility(value),
+                  },
+                ),
+
+                // contact number
+                if (controller.contactNumberVisible.value) ...[
+                  ContactNumberWidget(
+                    contactKey: contactKey,
+                    focusNode: controller.focusNodes.contactTextFocusNode,
+                    onTap: () => controller.focusNodes.contactTextFocusNode
+                        .requestFocus(),
+                    onSaved: (value) =>
+                        controller.apiModel.contactNumber = value,
+                    onChanged: (value) {
+                      controller.apiModel.contactNumber = value;
+                    },
+                  )
+                ],
+
+                // image
+                RoomImageWidget(
+                    roomImageKey: controller.formKeys.imageKey,
+                    focusNode: controller.focusNodes.imageFocusNode,
+                    onChange: (value) {
+                      scrollController.animateTo(
+                          scrollController.position.maxScrollExtent + 130,
+                          duration: Duration(milliseconds: 100),
+                          curve: Curves.easeInOut);
+                      controller.apiModel.images = List<File>.from(value);
+                    },
+                    onSaved: (value) =>
+                        controller.apiModel.images = List<File>.from(value),
+                    scrollController: scrollController),
+              ],
+            ),
           ),
         ),
       ),

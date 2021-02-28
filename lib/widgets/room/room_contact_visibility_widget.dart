@@ -25,7 +25,7 @@ class ContactNumberVisibilityWidget extends StatelessWidget {
         key: contactVisibilityKey,
         initialValue: initialValue,
         focusNode: focusNode,
-        name: "contact number",
+        name: "contact_visibility",
         title: Text(
           "Let people contact you via phone",
           style: ChautariTextStyles().listSubtitle,
