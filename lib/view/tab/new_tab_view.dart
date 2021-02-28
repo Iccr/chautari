@@ -81,7 +81,7 @@ class _NewTabViewState extends State<NewTabView>
           elevation: 8,
           backgroundColor: HexColor('#FFA400'),
           child: Icon(
-            Icons.home_filled,
+            Icons.home_work,
             color: HexColor('#373A36'),
           ),
           onPressed: () {},
