@@ -8,8 +8,10 @@ import 'package:chautari/services/room_service.dart';
 
 import 'package:chautari/view/room/form_keys.dart';
 import 'package:chautari/view/room/room_form_focusnode.dart';
+import 'package:chautari/widgets/keyboard_action.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:keyboard_actions/keyboard_actions_config.dart';
 
 class SearchViewModel extends GetxController {
   RoomType type;
@@ -180,6 +182,8 @@ class FilterRoomController extends GetxController {
   RoomFocusNodes focusNodes = RoomFocusNodes();
   AppInfoService appInfoService = Get.find();
 
+  KeyboardActionsConfig keyboardActionConfig;
+
   RoomService roomService;
 
   final TextEditingController districtTextController = TextEditingController();
@@ -206,6 +210,16 @@ class FilterRoomController extends GetxController {
     if (searchModel.value.address != null) {
       addressTextController.text = searchModel.value.address;
     }
+
+    this.keyboardActionConfig = KeyboardAction().keyboardActionConfig(
+      Get.context,
+      List.from(
+        [
+          focusNodes.minimumPriceFocusNode,
+          focusNodes.maximumPriceFocusNode,
+        ],
+      ),
+    );
   }
 
   @override

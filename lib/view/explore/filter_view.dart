@@ -17,6 +17,7 @@ import 'package:chautari/widgets/top_down_space_wrapper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
+import 'package:keyboard_actions/keyboard_actions.dart';
 
 class FilterRoom extends StatelessWidget {
   FilterRoomController controller = Get.put(FilterRoomController());
@@ -71,7 +72,10 @@ class FilterRoom extends StatelessWidget {
                 Container(
                   padding: EdgeInsets.all(ChautariPadding.standard),
                   height: Get.height,
-                  child: SingleChildScrollView(
+                  child: KeyboardActions(
+                    overscroll: 40,
+                    disableScroll: false,
+                    config: controller.keyboardActionConfig,
                     child: FormBuilder(
                       key: controller.searchModel.value.formKeys.formKey,
                       child: Column(
@@ -132,6 +136,7 @@ class FilterRoom extends StatelessWidget {
                           ),
 
                           // number of rooms
+
                           NumberOfRoomWidget(
                             key: controller
                                 .searchModel.value.formKeys.numberOfRoomsKey,
