@@ -73,21 +73,9 @@ class AddRoomController extends GetxController {
     MenuItem(title: "images")
   ];
 
-  // KeyboardActionsConfig keyboardActionConfig(BuildContext context) {
-  //   return KeyboardActionsConfig(
-  //       keyboardActionsPlatform: KeyboardActionsPlatform.ALL,
-  //       keyboardBarColor: ChautariColors.black.withOpacity(0.3),
-  //       nextFocus: false,
-  //       actions: [
-  //         KeyboardActionsItem(focusNode: focusNodes.priceFocusNode),
-  //         KeyboardActionsItem(focusNode: focusNodes.contactTextFocusNode)
-  //         // KeyboardActionsItem(focusNode: addController.n)
-  //       ]);
-  // }
   KeyboardActionsConfig keyboardActionConfig;
 
   // life cycles
-
   @override
   void onInit() async {
     super.onInit();
@@ -103,6 +91,23 @@ class AddRoomController extends GetxController {
       ),
     );
     _setupDistrictViewModel();
+  }
+
+  setupPager(int page) {
+    print("add page: $page");
+    switch (page) {
+      case 1:
+        var state = formKeys.form1Key.currentState;
+        state.patchValue({"map_field": apiModel.address});
+        break;
+      case 2:
+        break;
+      case 3:
+        break;
+      case 4:
+        break;
+      default:
+    }
   }
 
   _setupDistrictViewModel() {
@@ -124,7 +129,6 @@ class AddRoomController extends GetxController {
     autovalidateForm1Mode.value = AutovalidateMode.always;
     if (formKeys.form1Key.currentState.validate()) {
       formKeys.form1Key.currentState.save();
-
       _goToNextPage();
     } else {
       var firstWidget =
