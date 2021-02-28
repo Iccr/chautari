@@ -246,6 +246,42 @@ class AddRoomController extends GetxController {
     }
   }
 
+  setupPager(int page) {
+    print("add page: $page");
+    switch (page) {
+      case 1:
+        var state = formKeys.form1Key.currentState;
+        state.patchValue({"map_field": apiModel.address});
+        break;
+      case 2:
+        var state = formKeys.form2Key.currentState;
+        state.patchValue({
+          "noOfROoms": apiModel.numberOfRooms ?? 1,
+          "price": apiModel.price,
+          "contact_visibility": apiModel.contactNumbervisibile ?? true,
+          "contact": apiModel.contactNumber,
+          "images": apiModel.images,
+        });
+        break;
+      case 3:
+        var state = formKeys.form3Key.currentState;
+        state.patchValue({
+          "Type": apiModel.type,
+          "water": apiModel.water,
+        });
+        break;
+      case 4:
+        var state = formKeys.form4Key.currentState;
+        state.patchValue({
+          "parking": apiModel.parkings,
+          "amenity": apiModel.amenities,
+        });
+        // state.fields["parking"].didChange([apiModel.parkings[0]]);
+        break;
+      default:
+    }
+  }
+
   openMap() async {
     focusNodes.addressFocusNode.unfocus();
     var result = await Get.toNamed(RouteName.pickLocation);
