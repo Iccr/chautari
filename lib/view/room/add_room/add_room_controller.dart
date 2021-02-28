@@ -112,13 +112,10 @@ class AddRoomController extends GetxController {
         break;
       case 3:
         var state = formKeys.form3Key.currentState;
-        // state.patchValue({
-        //   "noOfROoms": apiModel.numberOfRooms ?? 1,
-        //   "price": apiModel.price,
-        //   "contact_visibility": apiModel.contactNumbervisibile ?? true,
-        //   "contact": apiModel.contactNumber,
-        //   "images": apiModel.images,
-        // });
+        state.patchValue({
+          "Type": apiModel.type,
+          "water": apiModel.water,
+        });
         break;
       case 4:
         break;

@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:chautari/view/room/add_room/add_room_controller.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:get/get.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class AddRoomForm3 extends StatelessWidget {
   final AddRoomController controller = Get.find();
@@ -17,17 +18,38 @@ class AddRoomForm3 extends StatelessWidget {
       @required this.waterKey});
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: FormBuilder(
-        key: formkey,
-        autovalidateMode: controller.autovalidateForm3Mode.value,
-        child: Column(
-          children: [
-            // types
-            RoomTypesRadioWidget(
-                typesKey: controller.formKeys.typesKey,
-                focusNode: controller.focusNodes.typeFocusNode,
-                options: controller.appInfoService.appInfo.types
+    return VisibilityDetector(
+      key: GlobalKey(),
+      onVisibilityChanged: (VisibilityInfo info) {
+        if (info.visibleFraction == 1.0) {
+          controller.setupPager(3);
+        }
+      },
+      child: SingleChildScrollView(
+        child: FormBuilder(
+          key: formkey,
+          autovalidateMode: controller.autovalidateForm3Mode.value,
+          child: Column(
+            children: [
+              // types
+              RoomTypesRadioWidget(
+                  typesKey: controller.formKeys.typesKey,
+                  focusNode: controller.focusNodes.typeFocusNode,
+                  options: controller.appInfoService.appInfo.types
+                      .map(
+                        (element) => FormBuilderFieldOption(
+                          value: element,
+                          child: Text(element.name.capitalize),
+                        ),
+                      )
+                      .toList(),
+                  onSaved: (value) => controller.apiModel.type = value),
+
+              // water
+              RoomWaterRadioWidgets(
+                waterKey: waterKey,
+                focusNode: controller.focusNodes.waterFocusNode,
+                options: controller.appInfoService.appInfo.waters
                     .map(
                       (element) => FormBuilderFieldOption(
                         value: element,
@@ -35,23 +57,10 @@ class AddRoomForm3 extends StatelessWidget {
                       ),
                     )
                     .toList(),
-                onSaved: (value) => controller.apiModel.type = value),
-
-            // water
-            RoomWaterRadioWidgets(
-              waterKey: waterKey,
-              focusNode: controller.focusNodes.waterFocusNode,
-              options: controller.appInfoService.appInfo.waters
-                  .map(
-                    (element) => FormBuilderFieldOption(
-                      value: element,
-                      child: Text(element.name.capitalize),
-                    ),
-                  )
-                  .toList(),
-              onSaved: (value) => controller.apiModel.water = value,
-            ),
-          ],
+                onSaved: (value) => controller.apiModel.water = value,
+              ),
+            ],
+          ),
         ),
       ),
     );
