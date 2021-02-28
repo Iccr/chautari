@@ -28,6 +28,9 @@ class _NewTabViewState extends State<NewTabView>
   Animation<double> animation;
   CurvedAnimation curve;
 
+  double position = 0.0;
+  double sensitivityFactor = 40.0;
+
   List<Widget> _widgetOptions() =>
       <Widget>[Exploreview(), RoomsMap(), ProfileView(), SettingView()];
 
@@ -80,12 +83,28 @@ class _NewTabViewState extends State<NewTabView>
   @override
   Widget build(BuildContext context) {
     return NotificationListener<ScrollNotification>(
-      onNotification: (notification) {
-        if (notification.metrics.pixels > 10) {
+      onNotification: (ScrollNotification scrollInfo) {
+        if (scrollInfo.metrics.pixels < 0) {
           _animationController.forward();
-        } else if (notification.metrics.pixels < -20) {
+          return;
+        }
+        if (scrollInfo.metrics.pixels - position >= sensitivityFactor) {
+          print('Axis Scroll Direction : Up');
+          position = scrollInfo.metrics.pixels;
           _animationController.reset();
         }
+        if (position - scrollInfo.metrics.pixels >= sensitivityFactor) {
+          print('Axis Scroll Direction : Down');
+          position = scrollInfo.metrics.pixels;
+          _animationController.forward();
+        }
+        // if (notification.metrics.pixels > 10) {
+        //   print(notification.metrics.pixels);
+        //   _animationController.forward();
+        // } else if (notification.metrics.pixels < -10) {
+        //   print(notification.metrics.pixels);
+        //   _animationController.reset();
+        // }
       },
       child: Scaffold(
         extendBody: true,
@@ -177,7 +196,7 @@ class _NavigationScreenState extends State<NavigationScreen>
   void initState() {
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 1000),
+      duration: Duration(milliseconds: 333),
     );
     animation = CurvedAnimation(
       parent: _controller,
@@ -190,7 +209,7 @@ class _NavigationScreenState extends State<NavigationScreen>
   _startAnimation() {
     _controller = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 1000),
+      duration: Duration(milliseconds: 333),
     );
     animation = CurvedAnimation(
       parent: _controller,
