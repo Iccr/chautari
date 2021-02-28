@@ -91,45 +91,56 @@ class AddRoom extends StatelessWidget {
           builder: (addController) {
             return ProgressHud(
               isLoading: addController.isLoading.value,
-              child: Container(
-                padding: EdgeInsets.all(ChautariPadding.standard),
-                child: Column(
-                  children: [
-                    Expanded(
-                        child: PageView.builder(
-                            controller: addController.pageController,
-                            physics: NeverScrollableScrollPhysics(),
-                            itemCount: _getPagerContents().length,
-                            itemBuilder: (context, index) {
-                              return _getPagerContents().elementAt(index);
-                            })),
+              child: WillPopScope(
+                onWillPop: () async {
+                  var page = addController.pageController.page;
+                  if (page == 0) {
+                    return true;
+                  } else {
+                    addController.goToPreviousPage();
+                    return false;
+                  }
+                },
+                child: Container(
+                  padding: EdgeInsets.all(ChautariPadding.standard),
+                  child: Column(
+                    children: [
+                      Expanded(
+                          child: PageView.builder(
+                              controller: addController.pageController,
+                              physics: NeverScrollableScrollPhysics(),
+                              itemCount: _getPagerContents().length,
+                              itemBuilder: (context, index) {
+                                return _getPagerContents().elementAt(index);
+                              })),
 
-                    // submit
+                      // submit
 
-                    KeyboardVisibilityBuilder(
-                      builder: (context, child, isKeyboardVisible) => Column(
-                        children: [
-                          if (!isKeyboardVisible) ...[
-                            RaisedButton(
-                              color: ChautariColors.primaryColor(),
-                              onPressed: () {
-                                addController.submit();
-                              },
-                              child: Text(
-                                "Submit",
-                                style: ChautariTextStyles()
-                                    .normal
-                                    .copyWith(color: ChautariColors.white),
+                      KeyboardVisibilityBuilder(
+                        builder: (context, child, isKeyboardVisible) => Column(
+                          children: [
+                            if (!isKeyboardVisible) ...[
+                              RaisedButton(
+                                color: ChautariColors.primaryColor(),
+                                onPressed: () {
+                                  addController.submit();
+                                },
+                                child: Text(
+                                  "Submit",
+                                  style: ChautariTextStyles()
+                                      .normal
+                                      .copyWith(color: ChautariColors.white),
+                                ),
                               ),
-                            ),
+                            ],
+                            SizedBox(height: ChautariPadding.standard),
                           ],
-                          SizedBox(height: ChautariPadding.standard),
-                        ],
-                      ),
-                    )
-                  ],
+                        ),
+                      )
+                    ],
+                  ),
+                  // ),
                 ),
-                // ),
               ),
             );
           }),
