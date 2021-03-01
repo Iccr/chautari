@@ -106,11 +106,11 @@ class ChautariMapController extends ChautariMapFunctions {
     _mapController = controller;
     _isReadyMap.value = true;
 
-    _mapController.setMapStyle(mapStyles.style);
+    // _mapController.setMapStyle(mapStyles.style);
 
-    theme.themeChanged.listen((_) {
-      _mapController.setMapStyle(mapStyles.style);
-    });
+    // theme.themeChanged.listen((_) {
+    //   _mapController.setMapStyle(mapStyles.style);
+    // });
   }
 
   RxBool isMapReady() {
