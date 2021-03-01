@@ -88,20 +88,20 @@ class RoomsMapController extends GetxController with StateMixin {
                   text: TextSpan(
                       style: ChautariTextStyles()
                           .listTitle
-                          .copyWith(fontSize: 10, color: Colors.white),
+                          .copyWith(fontSize: 12, color: Colors.white),
                       children: [
                         TextSpan(text: element.getShortPriceString()),
                         TextSpan(
                             text: "k",
                             style: ChautariTextStyles()
                                 .listSubtitle
-                                .copyWith(fontSize: 8.5, color: Colors.white)),
+                                .copyWith(fontSize: 10.5, color: Colors.white)),
                       ]),
                 ),
               ],
             ),
-            height: 35,
-            width: 35,
+            height: 45,
+            width: 45,
           ),
         ),
       );
@@ -159,7 +159,7 @@ class RoomsMapController extends GetxController with StateMixin {
         break;
       case 2:
         // flat
-        return ChautariColors.yellow;
+        return ChautariColors.tabYellow;
         break;
       case 3:
         // hostel
