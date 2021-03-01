@@ -17,7 +17,7 @@ class AddInfo extends StatelessWidget {
         MenuItem(title: "It's Free", subtitle: "Add once, and Enjoy forever");
     var menu2 = MenuItem(
         title: "Reach More People",
-        subtitle: "Your property will reach to more needy people than before");
+        subtitle: "Your property will reach to more people than before");
     var menu3 = MenuItem(
         title: "Save Broker's Fee",
         subtitle:
@@ -27,112 +27,115 @@ class AddInfo extends StatelessWidget {
     return SafeArea(
       top: false,
       child: Scaffold(
-        appBar: AppBar(
-          title: Text("Earn Easy"),
-        ),
-        body: Container(
+          appBar: AppBar(
+            title: Text("Earn Easy"),
+          ),
+          body: Container(
             child: Stack(
-          // fit: StackFit.expand,
-          children: [
-            Column(
+              fit: StackFit.expand,
               children: [
-                Container(
-                  height: 200,
-                  child: AspectRatio(
-
-                      // padding: EdgeInsets.all(ChautariPadding.standard),
-                      aspectRatio: 1050 / 679,
-                      child: Image.asset("images/earn_money.png")),
-                ),
-                Container(
-                  width: Get.width,
-                  height: 50,
-                  color: ChautariColors.black.withAlpha(20),
-                  padding: EdgeInsets.all(ChautariPadding.standard),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: ChautariPadding.standard),
-                    child: Text(
-                      "Earn more with Chautari Basti",
-                      textAlign: TextAlign.start,
-                      style: ChautariTextStyles().listTitle.copyWith(
-                          color: Get.isDarkMode
-                              ? ChautariColors.tabYellow
-                              : ChautariColors.primary),
-                    ),
-                  ),
-                ),
-                Container(
-                  height: 260,
-                  width: Get.width,
-                  // padding: EdgeInsets.all(ChautariPadding.standard),
+                SingleChildScrollView(
                   child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      ChautariList().getListTile(
-                        null,
-                        menu1,
-                        leading: Icon(
-                          LineIcons.rupee,
-                          color: ChautariColors.standartIconColor(),
-                        ),
+                      Container(
+                        height: 200,
+                        child: AspectRatio(
+
+                            // padding: EdgeInsets.all(ChautariPadding.standard),
+                            aspectRatio: 1050 / 679,
+                            child: Image.asset("images/earn_money.png")),
                       ),
-                      ChautariList().getListTile(
-                        null,
-                        menu2,
-                        leading: Icon(
-                          Icons.people,
-                          color: ChautariColors.standartIconColor(),
-                        ),
-                      ),
-                      ChautariList().getListTile(
-                        null,
-                        menu3,
-                        leading: Icon(
-                          LineIcons.bank,
-                          color: ChautariColors.standartIconColor(),
+                      Container(
+                        width: Get.width,
+                        height: 50,
+                        color: ChautariColors.black.withAlpha(20),
+                        padding: EdgeInsets.all(ChautariPadding.standard),
+                        child: Padding(
+                          padding:
+                              EdgeInsets.only(left: ChautariPadding.standard),
+                          child: Text(
+                            "Earn more with Chautari Basti",
+                            textAlign: TextAlign.start,
+                            style: ChautariTextStyles().listTitle.copyWith(
+                                color: Get.isDarkMode
+                                    ? ChautariColors.tabYellow
+                                    : ChautariColors.primary),
+                          ),
                         ),
                       ),
                       Container(
-                        height: 100,
+                        // height: 260,
+                        width: Get.width,
+                        // padding: EdgeInsets.all(ChautariPadding.standard),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            ChautariList().getListTile(
+                              null,
+                              menu1,
+                              leading: Icon(
+                                LineIcons.rupee,
+                                color: ChautariColors.standartIconColor(),
+                              ),
+                            ),
+                            ChautariList().getListTile(
+                              null,
+                              menu2,
+                              leading: Icon(
+                                Icons.people,
+                                color: ChautariColors.standartIconColor(),
+                              ),
+                            ),
+                            ChautariList().getListTile(
+                              null,
+                              menu3,
+                              leading: Icon(
+                                LineIcons.bank,
+                                color: ChautariColors.standartIconColor(),
+                              ),
+                            ),
+                            Container(
+                              height: 120,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
                 ),
-              ],
-            ),
-            Positioned.fill(
-              bottom: 20,
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: 40,
-                  child: ElevatedButton(
-                    style: ButtonStyle(
-                      backgroundColor: MaterialStateProperty.resolveWith<Color>(
-                        (Set<MaterialState> states) {
-                          if (states.contains(MaterialState.disabled))
-                            return ChautariColors.tabYellow;
-                          return ChautariColors
-                              .primary; // Use the component's default.
+                Positioned.fill(
+                  bottom: 20,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Container(
+                      height: 40,
+                      child: ElevatedButton(
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.resolveWith<Color>(
+                            (Set<MaterialState> states) {
+                              if (states.contains(MaterialState.disabled))
+                                return ChautariColors.tabYellow;
+                              return ChautariColors
+                                  .primary; // Use the component's default.
+                            },
+                          ),
+                        ),
+                        onPressed: () {
+                          Get.toNamed(RouteName.addRoom);
                         },
+                        child: Text(
+                          "Get Started",
+                          style: ChautariTextStyles().listTitle.copyWith(
+                              fontSize: 14, color: ChautariColors.white),
+                        ),
                       ),
-                    ),
-                    onPressed: () {
-                      Get.toNamed(RouteName.addRoom);
-                    },
-                    child: Text(
-                      "Get Started",
-                      style: ChautariTextStyles()
-                          .listTitle
-                          .copyWith(fontSize: 14, color: ChautariColors.white),
                     ),
                   ),
                 ),
-              ),
+              ],
             ),
-          ],
-        )),
-      ),
+          )),
     );
   }
 }
