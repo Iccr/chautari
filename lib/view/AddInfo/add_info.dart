@@ -129,7 +129,7 @@ class AddInfo extends StatelessWidget {
             ),
 
             Positioned.fill(
-              top: 610,
+              top: 620,
               child: Align(
                 alignment: Alignment.topCenter,
                 child: Container(
@@ -146,7 +146,11 @@ class AddInfo extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {},
-                    child: Text("Get Started"),
+                    child: Text(
+                      "Get Started",
+                      style:
+                          ChautariTextStyles().listTitle.copyWith(fontSize: 14),
+                    ),
                   ),
                 ),
               ),
