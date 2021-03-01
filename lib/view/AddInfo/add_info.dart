@@ -92,6 +92,9 @@ class AddInfo extends StatelessWidget {
                           color: ChautariColors.standartIconColor(),
                         ),
                       ),
+                      Container(
+                        height: 100,
+                      ),
                     ],
                   ),
                 ),
