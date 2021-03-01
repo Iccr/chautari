@@ -32,7 +32,7 @@ class _NewTabViewState extends State<NewTabView>
   CurvedAnimation curve;
 
   double position = 0.0;
-  double sensitivityFactor = 40.0;
+  double sensitivityFactor = 60.0;
 
   List<Widget> _widgetOptions() =>
       <Widget>[Exploreview(), RoomsMap(), ProfileView(), SettingView()];
@@ -145,17 +145,16 @@ class _NewTabViewState extends State<NewTabView>
                   color: color,
                 ),
                 const SizedBox(height: 0),
-                if (isActive)
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      titleList.elementAt(index),
-                      maxLines: 1,
-                      style: ChautariTextStyles()
-                          .listSubtitle
-                          .copyWith(color: color, fontSize: 12),
-                    ),
-                  )
+                Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Text(
+                    titleList.elementAt(index),
+                    maxLines: 1,
+                    style: ChautariTextStyles()
+                        .listSubtitle
+                        .copyWith(color: color, fontSize: 12),
+                  ),
+                )
               ],
             );
           },
