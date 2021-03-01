@@ -76,13 +76,16 @@ class AddInfo extends StatelessWidget {
                   height: 50,
                   color: ChautariColors.black.withAlpha(20),
                   padding: EdgeInsets.all(ChautariPadding.standard),
-                  child: Text(
-                    "Earn more with Chautari Basti",
-                    textAlign: TextAlign.start,
-                    style: ChautariTextStyles().listTitle.copyWith(
-                        color: Get.isDarkMode
-                            ? ChautariColors.tabYellow
-                            : ChautariColors.primary),
+                  child: Padding(
+                    padding: EdgeInsets.only(left: ChautariPadding.standard),
+                    child: Text(
+                      "Earn more with Chautari Basti",
+                      textAlign: TextAlign.start,
+                      style: ChautariTextStyles().listTitle.copyWith(
+                          color: Get.isDarkMode
+                              ? ChautariColors.tabYellow
+                              : ChautariColors.primary),
+                    ),
                   ),
                 ),
               ),
@@ -95,7 +98,7 @@ class AddInfo extends StatelessWidget {
                 child: Container(
                   height: 260,
                   width: Get.width,
-                  padding: EdgeInsets.all(ChautariPadding.standard),
+                  // padding: EdgeInsets.all(ChautariPadding.standard),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
