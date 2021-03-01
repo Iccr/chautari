@@ -113,11 +113,13 @@ class _NewTabViewState extends State<NewTabView>
           scale: animation,
           child: FloatingActionButton(
             elevation: 8,
-            backgroundColor: ChautariColors.tabYellow, // yello color
+            backgroundColor: ChautariColors.taBFabColor(),
+            // yello color
             child: Icon(
               Icons.home_work,
               color: ChautariColors.tabBlack, // dark model black color
             ),
+
             onPressed: () async {
               var _ = await Get.toNamed(RouteName.addRoom);
 
@@ -128,10 +130,11 @@ class _NewTabViewState extends State<NewTabView>
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: AnimatedBottomNavigationBar.builder(
+          height: 50,
           itemCount: iconList.length,
           tabBuilder: (int index, bool isActive) {
             final color =
-                isActive ? ChautariColors.tabYellow : ChautariColors.white;
+                isActive ? ChautariColors.white : ChautariColors.black;
             return Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -141,23 +144,23 @@ class _NewTabViewState extends State<NewTabView>
                   size: 24,
                   color: color,
                 ),
-                const SizedBox(height: 4),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: Text(
-                    titleList.elementAt(index),
-                    maxLines: 1,
-                    style: ChautariTextStyles()
-                        .listSubtitle
-                        .copyWith(color: color),
-                  ),
-                )
+                const SizedBox(height: 0),
+                if (isActive)
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 8),
+                    child: Text(
+                      titleList.elementAt(index),
+                      maxLines: 1,
+                      style: ChautariTextStyles()
+                          .listSubtitle
+                          .copyWith(color: color, fontSize: 12),
+                    ),
+                  )
               ],
             );
           },
-          backgroundColor: ChautariColors.tabBlack,
+          backgroundColor: ChautariColors.taBackgroundColor(),
           activeIndex: _bottomNavIndex,
-          splashColor: ChautariColors.tabYellow,
           notchMargin: 0,
           notchAndCornersAnimation: animation,
           splashSpeedInMilliseconds: 0,
