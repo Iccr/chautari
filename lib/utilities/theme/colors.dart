@@ -29,6 +29,13 @@ class ChautariColors extends GetxController {
     return mode == ThemeMode.dark ? ChautariColors.tabBlack : primary;
   }
 
+  static Color standartIconColor() {
+    var mode = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    return mode == ThemeMode.dark
+        ? ChautariColors.white
+        : ChautariColors.primary;
+  }
+
   static Color taBFabColor() {
     var mode = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
     return mode == ThemeMode.dark

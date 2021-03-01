@@ -23,6 +23,7 @@ class AddInfo extends StatelessWidget {
         subtitle:
             "No more paying to broker for your property. People will directly get connected with you");
 
+    print("width of device is: ${Get.width}");
     return SafeArea(
       top: false,
       child: Scaffold(
@@ -31,32 +32,11 @@ class AddInfo extends StatelessWidget {
         ),
         body: Container(
             child: Stack(
-          fit: StackFit.expand,
+          // fit: StackFit.expand,
           children: [
-            // head lines
-            // Positioned.fill(
-            //   top: 20,
-            //   child: Align(
-            //     alignment: Alignment.topLeft,
-            //     child: Container(
-            //       width: Get.width,
-            //       padding: EdgeInsets.only(left: ChautariPadding.standard),
-            //       child: Text(
-            //         "Easily earn money with Chautari Basti",
-            //         textAlign: TextAlign.start,
-            //         style: ChautariTextStyles()
-            //             .listTitle
-            //             .copyWith(color: ChautariColors.tabYellow),
-            //       ),
-            //     ),
-            //   ),
-            // ),
-
-            Positioned.fill(
-              top: 70,
-              child: Align(
-                alignment: Alignment.topCenter,
-                child: Container(
+            Column(
+              children: [
+                Container(
                   height: 200,
                   child: AspectRatio(
 
@@ -64,14 +44,7 @@ class AddInfo extends StatelessWidget {
                       aspectRatio: 1050 / 679,
                       child: Image.asset("images/earn_money.png")),
                 ),
-              ),
-            ),
-
-            Positioned.fill(
-              top: 300,
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: Container(
+                Container(
                   width: Get.width,
                   height: 50,
                   color: ChautariColors.black.withAlpha(20),
@@ -88,14 +61,7 @@ class AddInfo extends StatelessWidget {
                     ),
                   ),
                 ),
-              ),
-            ),
-
-            Positioned.fill(
-              top: 350,
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: Container(
+                Container(
                   height: 260,
                   width: Get.width,
                   // padding: EdgeInsets.all(ChautariPadding.standard),
@@ -107,7 +73,7 @@ class AddInfo extends StatelessWidget {
                         menu1,
                         leading: Icon(
                           LineIcons.rupee,
-                          color: ChautariColors.white,
+                          color: ChautariColors.standartIconColor(),
                         ),
                       ),
                       ChautariList().getListTile(
@@ -115,7 +81,7 @@ class AddInfo extends StatelessWidget {
                         menu2,
                         leading: Icon(
                           Icons.people,
-                          color: ChautariColors.white,
+                          color: ChautariColors.standartIconColor(),
                         ),
                       ),
                       ChautariList().getListTile(
@@ -123,19 +89,18 @@ class AddInfo extends StatelessWidget {
                         menu3,
                         leading: Icon(
                           LineIcons.bank,
-                          color: ChautariColors.white,
+                          color: ChautariColors.standartIconColor(),
                         ),
                       ),
                     ],
                   ),
                 ),
-              ),
+              ],
             ),
-
             Positioned.fill(
-              top: 620,
+              bottom: 20,
               child: Align(
-                alignment: Alignment.topCenter,
+                alignment: Alignment.bottomCenter,
                 child: Container(
                   height: 40,
                   child: ElevatedButton(
@@ -144,8 +109,8 @@ class AddInfo extends StatelessWidget {
                         (Set<MaterialState> states) {
                           if (states.contains(MaterialState.disabled))
                             return ChautariColors.tabYellow;
-                          return ChautariColors.primary
-                              .withAlpha(200); // Use the component's default.
+                          return ChautariColors
+                              .primary; // Use the component's default.
                         },
                       ),
                     ),
@@ -154,8 +119,9 @@ class AddInfo extends StatelessWidget {
                     },
                     child: Text(
                       "Get Started",
-                      style:
-                          ChautariTextStyles().listTitle.copyWith(fontSize: 14),
+                      style: ChautariTextStyles()
+                          .listTitle
+                          .copyWith(fontSize: 14, color: ChautariColors.white),
                     ),
                   ),
                 ),
