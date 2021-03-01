@@ -1,4 +1,5 @@
 import 'package:chautari/model/menu_item.dart';
+import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/padding.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
@@ -145,7 +146,9 @@ class AddInfo extends StatelessWidget {
                         },
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.toNamed(RouteName.addRoom);
+                    },
                     child: Text(
                       "Get Started",
                       style:
