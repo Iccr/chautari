@@ -100,8 +100,8 @@ class RoomsMapController extends GetxController with StateMixin {
                 ),
               ],
             ),
-            height: 25,
-            width: 25,
+            height: 35,
+            width: 35,
           ),
         ),
       );
