@@ -133,8 +133,13 @@ class _NewTabViewState extends State<NewTabView>
           height: 50,
           itemCount: iconList.length,
           tabBuilder: (int index, bool isActive) {
-            final color =
-                isActive ? ChautariColors.white : ChautariColors.black;
+            final color = Get.isDarkMode
+                ? (isActive)
+                    ? ChautariColors.tabYellow
+                    : ChautariColors.white
+                : (isActive)
+                    ? ChautariColors.white
+                    : ChautariColors.black;
             return Column(
               mainAxisSize: MainAxisSize.min,
               mainAxisAlignment: MainAxisAlignment.center,
