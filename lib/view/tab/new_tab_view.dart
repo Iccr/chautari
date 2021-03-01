@@ -112,6 +112,7 @@ class _NewTabViewState extends State<NewTabView>
         floatingActionButton: ScaleTransition(
           scale: animation,
           child: FloatingActionButton(
+            mini: true,
             elevation: 8,
             backgroundColor: ChautariColors.taBFabColor(),
             // yello color
