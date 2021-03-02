@@ -10,6 +10,7 @@ import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 
 class AuthController extends GetxController {
   FirebaseAuth get firebaseAuth => FirebaseAuth.instance;
@@ -71,6 +72,8 @@ class AuthController extends GetxController {
             "token": accessToken.token,
             "user_id": accessToken.userId,
             "provider": "facebook",
+            "name": "",
+            "email": "",
             "imageurl": firebaseUser.photoURL ?? "",
             "fuid": firebaseUser.uid
             // "fcm"
@@ -109,6 +112,8 @@ class AuthController extends GetxController {
             "user_id": auth.idToken,
             "provider": "google",
             "imageurl": result.photoUrl,
+            "name": "",
+            "email": "",
             "fuid": firebaseUser.uid,
           }
         };
@@ -130,16 +135,16 @@ class AuthController extends GetxController {
   }
 
   Future _loginWithApi(Map<String, dynamic> params) async {
-    String fuid = params['user']['fuid'];
+    // String fuid = params['user']['fuid'];
     String fcm;
-    if (fuid != null) {
-      fcm = await getFcmToken(fuid);
-      params["user"]["fcm"] = fcm;
+    // if (fuid != null) {
+    fcm = await getFcmToken();
+    params["user"]["fcm"] = fcm;
 
-      FirebaseFirestore.instance.collection('users').doc(fuid ?? "").update(
-        {'fcm': fcm},
-      );
-    }
+    // FirebaseFirestore.instance.collection('users').doc(fuid ?? "").update(
+    //   {'fcm': fcm},
+    // );
+    // }
 
     var model = await LoginRepository().social(params);
     if ((model.errors ?? []).isEmpty) {
@@ -157,7 +162,7 @@ class AuthController extends GetxController {
     }
   }
 
-  Future<String> getFcmToken(String fuid) async {
+  Future<String> getFcmToken() async {
     return FirebaseMessaging.instance.getToken();
   }
 
@@ -229,5 +234,36 @@ class AuthController extends GetxController {
       }
       return firebaseUser;
     }
+  }
+
+  Future appleSignIn() async {
+    final credential = await SignInWithApple.getAppleIDCredential(
+      scopes: [
+        AppleIDAuthorizationScopes.email,
+        AppleIDAuthorizationScopes.fullName,
+      ],
+    );
+
+    var name = credential.givenName;
+    if (credential.familyName != null && credential.familyName.isNotEmpty) {
+      name = name + " " + credential.familyName;
+    }
+
+    Map<String, dynamic> params = {
+      "user": {
+        "token": credential.userIdentifier,
+        "user_id": credential.userIdentifier,
+        "provider": "apple",
+        "name": name,
+        "email": credential.email ?? "",
+        "imageurl": "",
+        // "fuid": firebaseUser.uid
+        // "fcm"
+      }
+    };
+
+    await _loginWithApi(params);
+    // Now send the credential (especially `credential.authorizationCode`) to your server to create a session
+    // after they have been validated with Apple (see `Integration` section for more information on how to do this)
   }
 }
