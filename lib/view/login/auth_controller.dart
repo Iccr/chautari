@@ -59,7 +59,7 @@ class AuthController extends GetxController {
       case FacebookLoginStatus.loggedIn:
         final FacebookAccessToken accessToken = result.accessToken;
 
-        var model = await LoginRepository().getFacebookUser(accessToken.token);
+        // var model = await LoginRepository().getFacebookUser(accessToken.token);
 
         var firebaseUser = await _loginWithFacebookFirebase(accessToken.token);
         if (firebaseUser == null) {
@@ -71,8 +71,6 @@ class AuthController extends GetxController {
             "token": accessToken.token,
             "user_id": accessToken.userId,
             "provider": "facebook",
-            "name": firebaseUser.displayName,
-            "email": model.email,
             "imageurl": firebaseUser.photoURL ?? "",
             "fuid": firebaseUser.uid
             // "fcm"
@@ -110,11 +108,8 @@ class AuthController extends GetxController {
             "token": auth.accessToken,
             "user_id": auth.idToken,
             "provider": "google",
-            "name": result.displayName,
-            "email": result.email,
             "imageurl": result.photoUrl,
             "fuid": firebaseUser.uid,
-            // "fcm":
           }
         };
 
