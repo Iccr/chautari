@@ -60,13 +60,13 @@ class LocationPickerController extends GetxController {
 
   setMap(GoogleMapController map) {
     this.mapController = map;
-    mapController.setMapStyle(
-      Get.isDarkMode ? mapStyles.darkMapStyle : mapStyles.lightMapStyle,
-    );
-    theme.themeChanged.listen((_) {
-      mapController.setMapStyle(
-        Get.isDarkMode ? mapStyles.darkMapStyle : mapStyles.lightMapStyle,
-      );
-    });
+    // mapController.setMapStyle(
+    //   Get.isDarkMode ? mapStyles.darkMapStyle : mapStyles.lightMapStyle,
+    // );
+    // theme.themeChanged.listen((_) {
+    //   mapController.setMapStyle(
+    //     Get.isDarkMode ? mapStyles.darkMapStyle : mapStyles.lightMapStyle,
+    //   );
+    // });
   }
 }

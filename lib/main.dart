@@ -7,14 +7,12 @@ import 'package:chautari/utilities/theme/theme.dart';
 import 'package:chautari/utilities/theme/theme_controller.dart';
 import 'package:chautari/services/room_service.dart';
 import 'package:chautari/view/login/auth_controller.dart';
-import 'package:chautari/view/login/login_view.dart';
 
 import 'package:chautari/view/splash/splash_screen.dart';
 import 'package:firebase_analytics/observer.dart';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:get/get.dart';
@@ -95,23 +93,6 @@ class MyApp extends StatelessWidget {
       theme: AppTheme.lightTheme(),
       darkTheme: AppTheme.darkTheme(),
       home: SplashScreen(),
-      // home: MyHomePage(title: 'Chautari'),
     );
-  }
-}
-
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  @override
-  Widget build(BuildContext context) {
-    return LoginView();
   }
 }

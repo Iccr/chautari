@@ -1,3 +1,4 @@
+import 'package:chautari/extensions/color_extensions.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -18,9 +19,29 @@ class ChautariColors extends GetxController {
   static Color teal = Colors.teal;
   static Color cyan = Colors.cyan;
 
+  static Color tabYellow = HexColor('#FFA400'); // yello color
+  static Color tabBlack = HexColor('#373A36'); // dark model black color
+
   static MaterialColor grey = Colors.grey;
 
-  static Color tabBarActiveBackgroundColor = Colors.grey[800];
+  static Color taBackgroundColor() {
+    var mode = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    return mode == ThemeMode.dark ? ChautariColors.tabBlack : primary;
+  }
+
+  static Color standartIconColor() {
+    var mode = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    return mode == ThemeMode.dark
+        ? ChautariColors.white
+        : ChautariColors.primary;
+  }
+
+  static Color taBFabColor() {
+    var mode = Get.isDarkMode ? ThemeMode.dark : ThemeMode.light;
+    return mode == ThemeMode.dark
+        ? ChautariColors.tabYellow
+        : ChautariColors.primaryColor().shade300;
+  }
 
   // black and white => dark black, light mode white
 

@@ -9,7 +9,6 @@ import 'package:chautari/view/profile/profile_controller.dart';
 import 'package:chautari/widgets/alert.dart';
 import 'package:chautari/widgets/chautari_list.dart';
 import 'package:chautari/widgets/chautari_widgets.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -50,7 +49,9 @@ class ProfileView extends StatelessWidget {
               backgroundColor: ChautariColors.primaryColor(),
               child: Text(
                 "Login",
-                style: Theme.of(context).textTheme.bodyText2,
+                style: ChautariTextStyles()
+                    .listTitle
+                    .copyWith(color: ChautariColors.white, fontSize: 14),
               ),
             );
     }
