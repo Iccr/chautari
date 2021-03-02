@@ -18,7 +18,7 @@ class SettingView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final title = 'setting screen';
+    final title = 'Setting';
 
     return Scaffold(
       appBar: AppBar(
