@@ -58,6 +58,12 @@ class LoginView extends StatelessWidget {
                     SignInButton(
                       Buttons.FacebookNew,
                       onPressed: () => c.fbLogin(),
+                    ),
+                    SignInButton(
+                      Buttons.AppleDark,
+                      onPressed: () {
+                        c.appleSignIn();
+                      },
                     )
                   ],
                 ),
