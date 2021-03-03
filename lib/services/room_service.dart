@@ -57,7 +57,7 @@ class RoomService extends GetxService {
     var models = await RoomsRepository().deleteRoom(room.id);
     isLoading.value = false;
 
-    if (models.errors?.isEmpty ?? false) {
+    if (models.errors.isNotEmpty) {
       this.success.value = false;
       this._error.value = models.errors?.first?.value;
     } else {

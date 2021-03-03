@@ -84,7 +84,7 @@ class AddRoom extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Add"),
+        title: Text("Add rent"),
       ),
       body: GetX<AddRoomController>(
           init: AddRoomController(),

@@ -109,15 +109,23 @@ class MyRoomDetailBottomBlock extends StatelessWidget {
 class ChautariRaisedButton extends StatelessWidget {
   final String title;
   final Function onPressed;
+  final double top;
+  final double bottom;
+  final double right;
+  final double left;
   const ChautariRaisedButton({
     this.title,
     this.onPressed,
+    this.top = 15,
+    this.bottom = 15,
+    this.left = 15,
+    this.right = 15,
     Key key,
   }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return TopDownPaddingWrapper(
+      bottom: bottom,
       child: RaisedButton(
         color: ChautariColors.primaryColor(),
         onPressed: () => onPressed(),

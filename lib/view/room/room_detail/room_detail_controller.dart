@@ -13,7 +13,6 @@ import 'package:chautari/view/login/auth_controller.dart';
 import 'package:chautari/view/login/login_view.dart';
 import 'package:chautari/view/room/my_rooms/my_room_viewmodel.dart';
 import 'package:chautari/widgets/alert.dart';
-import 'package:chautari/widgets/snack_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -99,7 +98,7 @@ class RoomDetailController extends GetxController {
   _fetchRoomDetail() async {
     _isLoading.value = true;
     var model = await RoomsRepository().fetchRoomDetail(room.id);
-    if (model.errors == null) {
+    if (model.errors.isEmpty) {
       _room.value = model.room;
     } else {
       _error.value = model.errors.first.value;

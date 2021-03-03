@@ -75,7 +75,7 @@ class UpdateRoomController extends GetxController {
   }
 
   _update() async {
-    isLoading.value = true;
+    isLoading.value = roomService.isLoading.value;
     await roomService.updateRoom(room);
     if (roomService.success.value) {
       isLoading.value = roomService.isLoading.value;
