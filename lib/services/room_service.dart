@@ -20,9 +20,7 @@ class RoomService extends GetxService {
 
   fetchRooms() async {
     isLoading.value = true;
-
     var models = await RoomsRepository().fetchRooms();
-
     isLoading.value = false;
     if (models.errors.isEmpty ?? false) {
       this.rooms.assignAll(models.rooms);
@@ -33,17 +31,13 @@ class RoomService extends GetxService {
 
   searchAddress({String address}) async {
     Map<String, dynamic> params = Map<String, dynamic>();
-
     params["address"] = address;
-
     this.search(params);
   }
 
   search(Map<String, dynamic> params) async {
     isLoading.value = true;
-
     var models = await RoomsRepository().searchRoom(params);
-
     isLoading.value = false;
     if (models.errors.isEmpty ?? false) {
       this.rooms.assignAll(models.rooms);
@@ -56,7 +50,6 @@ class RoomService extends GetxService {
     isLoading.value = true;
     var models = await RoomsRepository().deleteRoom(room.id);
     isLoading.value = false;
-
     if (models.errors.isNotEmpty) {
       this.success.value = false;
       this._error.value = models.errors?.first?.value;
