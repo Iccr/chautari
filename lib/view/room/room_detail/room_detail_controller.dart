@@ -91,8 +91,8 @@ class RoomDetailController extends GetxController {
   _fillRoomDetailHash() {
     roomDetailHashContent["Type"] = "Appartment";
     roomDetailHashContent["Number Of Rooms"] = "${room.numberOfRooms}";
-    roomDetailHashContent["Number Of Bathrooms"] = "${room.numberOfRooms}";
-    roomDetailHashContent["Kitchen available"] = "${room.numberOfRooms}";
+    roomDetailHashContent["Parkings"] = "${room.parkingCount}";
+    roomDetailHashContent["Amenities"] = "${room.amenityCount}";
   }
 
   _fetchRoomDetail() async {
@@ -140,7 +140,7 @@ class RoomDetailController extends GetxController {
   goToChat() {
     if (auth.isLoggedIn && FirebaseAuth.instance.currentUser != null) {
       var viewModel = ChatViewModel(
-        peerId: room.user.fuid,
+        peerId: room.user.id.toString(),
         peerPhoto: room.user.imageurl,
         peerName: room.user.name,
       );

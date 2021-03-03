@@ -12,7 +12,7 @@ class ConversationController extends GetxController {
   Stream<List<ChatMenuItem>> conversationListStream() {
     return FirebaseFirestore.instance
         .collection('conversations')
-        .doc(auth.user.fuid)
+        .doc("${auth.user.id}")
         .collection("groupChatId")
         .snapshots()
         .map(
@@ -30,7 +30,7 @@ class ConversationController extends GetxController {
                   toId: conversation.idTo,
                   fromName: conversation.fromName,
                   toName: conversation.toName,
-                  image1: auth.user.fuid == conversation.idFrom
+                  image1: auth.user.id.toString() == conversation.idFrom
                       ? conversation.toPhoto
                       : conversation.fromPhoto,
                   image2: conversation.toPhoto,
@@ -52,7 +52,7 @@ class ConversationController extends GetxController {
   onTapConversation(ChatMenuItem item) {
     var c =
         this.conversations.firstWhere((element) => element.id == item.extra);
-    var mine = c.idTo == auth.user.fuid;
+    var mine = c.idTo == auth.user.id.toString();
     var viewModel = ChatViewModel(
       peerId: mine ? c.idFrom : item.toId,
       peerPhoto: mine ? c.fromPhoto : c.toPhoto,

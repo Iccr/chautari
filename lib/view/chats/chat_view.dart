@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'const.dart';
 
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:intl/intl.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -121,6 +120,7 @@ class ChatScreenState extends State<ChatScreen> {
   void initState() {
     super.initState();
     listScrollController.addListener(_scrollListener);
+    this.fuid = "${auth.user.id}";
 
     groupChatId = '';
 
@@ -133,7 +133,7 @@ class ChatScreenState extends State<ChatScreen> {
   }
 
   readLocal() async {
-    fuid = "${auth.user.fuid}" ?? '';
+    fuid = "${auth.user.id}" ?? '';
     if (fuid.hashCode <= peerId.hashCode) {
       groupChatId = '$fuid-$peerId';
     } else {
@@ -446,7 +446,7 @@ class ChatScreenState extends State<ChatScreen> {
                   onSubmitted: (value) {
                     onSendMessage(
                       content: textEditingController.text,
-                      myId: auth.user.fuid,
+                      myId: auth.user.id.toString(),
                       myName: auth.user.name,
                       peerId: this.peerId,
                       peerName: this.peerName,
@@ -478,7 +478,7 @@ class ChatScreenState extends State<ChatScreen> {
                 icon: Icon(Icons.send),
                 onPressed: () => onSendMessage(
                   content: textEditingController.text,
-                  myId: auth.user.fuid,
+                  myId: auth.user.id.toString(),
                   peerId: this.peerId,
                   myName: auth.user.name,
                   peerName: peerName,
@@ -504,7 +504,7 @@ class ChatScreenState extends State<ChatScreen> {
           : StreamBuilder(
               stream: FirebaseFirestore.instance
                   .collection('chats')
-                  .doc(auth.user.fuid)
+                  .doc(auth.user.id.toString())
                   .collection('conversations')
                   .doc(groupChatId)
                   .collection('messages')

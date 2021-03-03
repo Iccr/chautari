@@ -5,6 +5,7 @@ import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:get/get.dart';
@@ -153,13 +154,25 @@ class AuthController extends GetxController {
       user.isLoggedIn = true;
       await _saveuser(user);
       this._user.value = user;
-
+      await createFirebaseUser(user);
       Get.back();
     } else {
       loading.value = false;
       List<ApiError> errors = model.errors ?? [];
       error.value = errors.first?.value ?? "";
     }
+  }
+
+  Future createFirebaseUser(UserModel user) {
+    var params = {
+      "imageurl": user.imageurl ?? "",
+      "name": user.name ?? "",
+      "email": user.email ?? ""
+    };
+    FirebaseFirestore.instance
+        .collection("users")
+        .doc("${user.id}")
+        .set(params);
   }
 
   Future<String> getFcmToken() async {
