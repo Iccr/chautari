@@ -213,7 +213,7 @@ class AddRoomController extends GetxController {
     var model = await RoomsRepository().addRoom(
       await apiModel.toJson(),
     );
-    if (model.errors == null) {
+    if (model.errors.isEmpty) {
       print(model.room);
       isLoading.value = false;
 
