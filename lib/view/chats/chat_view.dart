@@ -164,6 +164,12 @@ class ChatScreenState extends State<ChatScreen> {
     }
   }
 
+  Future<bool> onBackPress() async {
+    FirebaseFirestore.instance.collection('users').doc(fuid ?? "").update(
+      {'chattingWith': null},
+    );
+  }
+
   void onSendMessage({
     @required String content,
     @required String myId,
@@ -401,28 +407,34 @@ class ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<QuerySnapshot>(
-        future: checkReferenceExist(),
-        builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
-          if (snapshot.hasData) {
-            return Stack(
-              children: <Widget>[
-                Column(
-                  children: <Widget>[
-                    // List of messages
+    return WillPopScope(
+      onWillPop: () async {
+        await onBackPress();
+        return true;
+      },
+      child: FutureBuilder<QuerySnapshot>(
+          future: checkReferenceExist(),
+          builder: (context, AsyncSnapshot<QuerySnapshot> snapshot) {
+            if (snapshot.hasData) {
+              return Stack(
+                children: <Widget>[
+                  Column(
+                    children: <Widget>[
+                      // List of messages
 
-                    buildListMessage(),
-                    buildInput()
-                  ],
-                ),
-                // Loading
-                // buildLoading()
-              ],
-            );
-          } else {
-            return Container();
-          }
-        });
+                      buildListMessage(),
+                      buildInput()
+                    ],
+                  ),
+                  // Loading
+                  // buildLoading()
+                ],
+              );
+            } else {
+              return Container();
+            }
+          }),
+    );
   }
 
   Widget buildInput() {
