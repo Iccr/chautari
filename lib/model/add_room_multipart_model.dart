@@ -4,6 +4,7 @@ import 'package:chautari/model/parkings.dart';
 import 'package:chautari/model/type.dart';
 import 'package:chautari/model/water.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get.dart' as getX;
 import 'package:http_parser/http_parser.dart';
 import 'package:flutter_native_image/flutter_native_image.dart';
 
@@ -58,7 +59,8 @@ class CreateRoomApiRequestModel {
   }
 
   Future<File> _compressFile(File file) async {
-    int quality = 5;
+    int quality = getX.GetPlatform.isAndroid ? 55 : 5;
+
     int percentage = 60;
     return FlutterNativeImage.compressImage(file.path,
         quality: quality, percentage: percentage);
