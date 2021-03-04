@@ -138,9 +138,9 @@ class ChatScreenState extends State<ChatScreen> {
   readLocal() async {
     fuid = "${auth.user.id}" ?? '';
     if (fuid.hashCode <= peerId.hashCode) {
-      groupChatId = '$fuid-$peerId';
+      groupChatId = "${fuid.toString()}-${peerId.toString()}";
     } else {
-      groupChatId = '$peerId-$fuid';
+      groupChatId = "${peerId.toString()}-${fuid.toString()}";
     }
   }
 
