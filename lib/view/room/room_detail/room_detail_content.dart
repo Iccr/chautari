@@ -14,6 +14,7 @@ import 'package:get/get.dart';
 
 class RoomDetailContent extends StatelessWidget {
   RoomDetailController controller = Get.put(RoomDetailController());
+
   Widget detailBlock(List<Widget> content) {
     return DecoratedContainerWrapper(
       child: Column(
