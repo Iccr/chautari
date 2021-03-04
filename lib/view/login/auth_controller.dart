@@ -5,7 +5,6 @@ import 'package:chautari/utilities/constants.dart';
 import 'package:chautari/utilities/storage.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_facebook_login/flutter_facebook_login.dart';
 import 'package:get/get.dart';
@@ -96,10 +95,6 @@ class AuthController extends GetxController {
       } else {
         var auth = await result.authentication;
 
-        var firebaseUser = await _loginWithGoogleFirebase(auth);
-        if (firebaseUser == null) {
-          print("firebase login failed");
-        }
         Map<String, dynamic> params = {
           "user": {
             "token": auth.accessToken,
@@ -108,7 +103,7 @@ class AuthController extends GetxController {
             "imageurl": result.photoUrl,
             "name": "",
             "email": "",
-            "fuid": firebaseUser.uid,
+            "fuid": "",
           }
         };
 
