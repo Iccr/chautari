@@ -60,23 +60,16 @@ class AuthController extends GetxController {
     switch (result.status) {
       case FacebookLoginStatus.loggedIn:
         final FacebookAccessToken accessToken = result.accessToken;
-
-        // var model = await LoginRepository().getFacebookUser(accessToken.token);
-
-        var firebaseUser = await _loginWithFacebookFirebase(accessToken.token);
-        if (firebaseUser == null) {
-          print("firebase login failed");
-        }
-
+        var model = await LoginRepository().getFacebookUser(accessToken.token);
         Map<String, dynamic> params = {
           "user": {
             "token": accessToken.token,
-            "user_id": accessToken.userId,
+            "user_id": "",
             "provider": "facebook",
             "name": "",
             "email": "",
-            "imageurl": firebaseUser.photoURL ?? "",
-            "fuid": firebaseUser.uid
+            "imageurl": model.picture ?? "",
+            "fuid": ""
             // "fcm"
           }
         };
@@ -110,7 +103,7 @@ class AuthController extends GetxController {
         Map<String, dynamic> params = {
           "user": {
             "token": auth.accessToken,
-            "user_id": auth.idToken,
+            "user_id": "",
             "provider": "google",
             "imageurl": result.photoUrl,
             "name": "",

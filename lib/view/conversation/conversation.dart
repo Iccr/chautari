@@ -21,7 +21,7 @@ class Conversation extends StatelessWidget {
     return GetX<ConversationController>(
       builder: (controller) => Scaffold(
         appBar: AppBar(
-          title: Text("conversations"),
+          title: Text("Conversations"),
         ),
         body: StreamBuilder<List<ChatMenuItem>>(
           stream: controller.conversationListStream(),
