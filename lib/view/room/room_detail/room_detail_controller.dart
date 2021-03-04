@@ -17,6 +17,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class RoomDetailController extends GetxController {
   AuthController auth;
@@ -138,13 +139,27 @@ class RoomDetailController extends GetxController {
   }
 
   goToChat() {
-    if (auth.isLoggedIn && FirebaseAuth.instance.currentUser != null) {
+    if (auth.isLoggedIn) {
       var viewModel = ChatViewModel(
         peerId: room.user.id.toString(),
         peerPhoto: room.user.imageurl,
         peerName: room.user.name,
       );
       Get.toNamed(RouteName.chat, arguments: viewModel);
+    } else {
+      goToLogin();
+    }
+  }
+
+  call() async {
+    if (auth.isLoggedIn) {
+      var number = room.phone;
+      var url = 'tel://$number';
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
     } else {
       goToLogin();
     }

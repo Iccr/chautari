@@ -24,16 +24,6 @@ class RoomDetailBottomBlock extends StatelessWidget {
     );
   }
 
-  _call() async {
-    var number = controller.room.phone;
-    var url = 'tel://$number';
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      throw 'Could not launch $url';
-    }
-  }
-
   Widget build(BuildContext context) {
     return Column(
       children: [
@@ -70,7 +60,7 @@ class RoomDetailBottomBlock extends StatelessWidget {
                                     .primaryDarkAndWhite900color(),
                               ),
                               onPressed: () {
-                                _call();
+                                controller.call();
                               }),
                         ),
                         Text("Call")

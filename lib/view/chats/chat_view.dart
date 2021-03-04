@@ -31,12 +31,15 @@ class ChatController extends GetxController {
   var peerPhoto = "".obs;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     ChatViewModel viewModel = Get.arguments;
     peerId.value = viewModel.peerId;
     peerName.value = viewModel.peerName;
     peerPhoto.value = viewModel.peerPhoto;
+
+    var chats = await FirebaseFirestore.instance.collection('chats');
+    print(chats);
   }
 }
 
