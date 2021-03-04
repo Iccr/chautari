@@ -84,8 +84,12 @@ class ExploreController extends GetxController {
       showNotification(remoteMessage.notification);
     });
 
+    FirebaseMessaging.onBackgroundMessage((message) {
+      print("remote message in on background message");
+    });
+
     FirebaseMessaging.onMessageOpenedApp.listen((remoteMessage) {
-      print("$remoteMessage");
+      print("remote message in on onMessageOpenedApp ");
     });
   }
 
@@ -102,9 +106,9 @@ class ExploreController extends GetxController {
 
   void showNotification(message) async {
     var androidPlatformChannelSpecifics = new AndroidNotificationDetails(
-      Platform.isAndroid ? 'com.vedait.roomfinder' : 'com.vedait.roomfinder',
-      'Roomfinder Nepal',
-      'RoomFinder Nepal',
+      'com.chautari.basti',
+      'Chautari Basti',
+      'Chautari Basti',
       playSound: true,
       enableVibration: true,
       importance: Importance.max,
@@ -119,10 +123,14 @@ class ExploreController extends GetxController {
     print(message);
 //    print(message['body'].toString());
 //    print(json.encode(message));
+    var payload = {
+      "title": message.title,
+      "body": message.body,
+    };
 
-    await flutterLocalNotificationsPlugin.show(0, message['title'].toString(),
-        message['body'].toString(), platformChannelSpecifics,
-        payload: json.encode(message));
+    await flutterLocalNotificationsPlugin.show(
+        0, message.title, message.body, platformChannelSpecifics,
+        payload: json.encode(payload));
 
 //    await flutterLocalNotificationsPlugin.show(
 //        0, 'plain title', 'plain body', platformChannelSpecifics,
