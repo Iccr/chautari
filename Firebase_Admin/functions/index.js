@@ -46,6 +46,7 @@ exports.sendPushNotification =  functions.firestore
                     .sendToDevice(userTo.data().fcm, payload)
                     .then(response => {
                       console.log('Successfully sent message:', response)
+                      console.log(response.results[0].error);
                     })
                     .catch(error => {
                       console.log('Error sending message:', error)
@@ -57,6 +58,8 @@ exports.sendPushNotification =  functions.firestore
                 console.log(`userFrom not found with id ${idFrom}!`);
               }
             })
+          }else {
+            console.log("athere is no fcm for this user")
           }
       } else {
           // doc.data() will be undefined in this case
