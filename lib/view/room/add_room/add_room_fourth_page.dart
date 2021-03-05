@@ -36,7 +36,7 @@ class AddRoomForm4 extends StatelessWidget {
                     .map(
                       (element) => FormBuilderFieldOption(
                         value: element,
-                        child: Text(element.name.capitalize),
+                        child: Text(element.name.capitalizeFirst),
                       ),
                     )
                     .toList(),
@@ -52,7 +52,7 @@ class AddRoomForm4 extends StatelessWidget {
                     .map(
                       (element) => FormBuilderFieldOption(
                         value: element,
-                        child: Text(element.name.capitalize),
+                        child: Text(element.name.capitalizeFirst),
                       ),
                     )
                     .toList(),

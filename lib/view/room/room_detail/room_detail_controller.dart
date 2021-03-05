@@ -91,7 +91,7 @@ class RoomDetailController extends GetxController {
 
   _fillRoomDetailHash() {
     roomDetailHashContent["Type"] = "Appartment";
-    roomDetailHashContent["Number Of Rooms"] = "${room.numberOfRooms}";
+    roomDetailHashContent["Number of rooms"] = "${room.numberOfRooms}";
     roomDetailHashContent["Parkings"] = "${room.parkingCount}";
     roomDetailHashContent["Amenities"] = "${room.amenityCount}";
   }

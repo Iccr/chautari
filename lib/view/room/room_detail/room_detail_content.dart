@@ -92,7 +92,7 @@ class RoomDetailContent extends StatelessWidget {
             return Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(e.name),
+                Text(e.name.capitalizeFirst),
                 SizedBox(
                   height: ChautariPadding.standard,
                 )

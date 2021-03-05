@@ -136,15 +136,15 @@ class UpdateRoom extends StatelessWidget {
                               initialValue: controller.room.parkings,
                               parkingKey: controller.formKeys.parkingKey,
                               focusNode: controller.focusNodes.parkingFocusNode,
-                              options:
-                                  controller.appInfoService.appInfo.parkings
-                                      .map(
-                                        (element) => FormBuilderFieldOption(
-                                          value: element,
-                                          child: Text(element.name.capitalize),
-                                        ),
-                                      )
-                                      .toList(),
+                              options: controller
+                                  .appInfoService.appInfo.parkings
+                                  .map(
+                                    (element) => FormBuilderFieldOption(
+                                      value: element,
+                                      child: Text(element.name.capitalizeFirst),
+                                    ),
+                                  )
+                                  .toList(),
                               onSaved: (value) =>
                                   controller.room.parkings = value,
                             ),
@@ -154,15 +154,15 @@ class UpdateRoom extends StatelessWidget {
                               initialValue: controller.room.amenities,
                               amenityKey: controller.formKeys.amenityKey,
                               focusNode: controller.focusNodes.parkingFocusNode,
-                              options:
-                                  controller.appInfoService.appInfo.amenities
-                                      .map(
-                                        (element) => FormBuilderFieldOption(
-                                          value: element,
-                                          child: Text(element.name.capitalize),
-                                        ),
-                                      )
-                                      .toList(),
+                              options: controller
+                                  .appInfoService.appInfo.amenities
+                                  .map(
+                                    (element) => FormBuilderFieldOption(
+                                      value: element,
+                                      child: Text(element.name.capitalizeFirst),
+                                    ),
+                                  )
+                                  .toList(),
                               onSaved: (value) =>
                                   controller.room.amenities = value,
                             ),

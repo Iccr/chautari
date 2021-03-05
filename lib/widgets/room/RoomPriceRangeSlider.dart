@@ -41,7 +41,7 @@ class RoomPriceRangeSliderWidget extends StatelessWidget {
           decoration: ChautariDecoration().outlinedBorderTextField(
               prefix: Text("Rs. "),
               labelText: "Price",
-              helperText: "price per month"),
+              helperText: "Price per month"),
           onSaved: (newValue) => onSaved(newValue)),
     );
   }
