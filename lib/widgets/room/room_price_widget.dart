@@ -29,7 +29,7 @@ class RoomPriceWidget extends StatelessWidget {
     this.onChanged,
     this.initialValue,
     this.labelText = "Price",
-    this.helperText = "price per month",
+    this.helperText = "Price per month",
     this.price,
   }) : super(key: key);
 

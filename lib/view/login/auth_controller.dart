@@ -155,7 +155,9 @@ class AuthController extends GetxController {
     var params = {
       "imageurl": user.imageurl ?? "",
       "name": user.name ?? "",
-      "email": user.email ?? ""
+      "email": user.email ?? "",
+      "id": user.id,
+      "fcm": user.fcm
     };
     FirebaseFirestore.instance
         .collection("users")

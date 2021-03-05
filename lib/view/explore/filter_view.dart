@@ -6,8 +6,6 @@ import 'package:chautari/view/room/my_rooms/my_room.dart';
 import 'package:chautari/widgets/keyboard_visibility_builder.dart';
 
 import 'package:chautari/widgets/room/number_of_room_widget.dart';
-import 'package:chautari/widgets/room/room_amenity_checkbox_widget.dart';
-import 'package:chautari/widgets/room/room_parking_checkbox_widget.dart';
 import 'package:chautari/widgets/room/room_price_widget.dart';
 import 'package:chautari/widgets/room/room_type_radio_widgets.dart';
 import 'package:chautari/widgets/room/room_water_radio_widgets.dart';
@@ -208,15 +206,15 @@ class FilterRoom extends StatelessWidget {
                             initialValue:
                                 controller.searchModel.value.initialType,
                             focusNode: controller.focusNodes.typeFocusNode,
-                            options:
-                                (controller.appInfoService.appInfo.types ?? [])
-                                    .map(
-                                      (element) => FormBuilderFieldOption(
-                                        value: element,
-                                        child: Text(element.name.capitalize),
-                                      ),
-                                    )
-                                    .toList(),
+                            options: (controller.appInfoService.appInfo.types ??
+                                    [])
+                                .map(
+                                  (element) => FormBuilderFieldOption(
+                                    value: element,
+                                    child: Text(element.name.capitalizeFirst),
+                                  ),
+                                )
+                                .toList(),
                             onSaved: (value) => {},
                             onChanged: (value) {
                               controller.searchModel.value.setType(value);
@@ -236,7 +234,8 @@ class FilterRoom extends StatelessWidget {
                                     .map(
                                       (element) => FormBuilderFieldOption(
                                         value: element,
-                                        child: Text(element.name.capitalize),
+                                        child:
+                                            Text(element.name.capitalizeFirst),
                                       ),
                                     )
                                     .toList(),

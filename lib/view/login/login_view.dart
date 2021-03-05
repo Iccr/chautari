@@ -33,7 +33,7 @@ class LoginView extends StatelessWidget {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            "After Login you are able to use many features of ",
+                            "After login you are able to use many features of ",
                             style: ChautariTextStyles().listSubtitle,
                             textAlign: TextAlign.center,
                           ),
