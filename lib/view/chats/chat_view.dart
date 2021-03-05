@@ -52,7 +52,7 @@ class Chat extends StatelessWidget {
       builder: (controller) => Scaffold(
         appBar: AppBar(
           title: Text(
-            'CHAT',
+            'Chat',
             // style: TextStyle(color: primaryColor, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
