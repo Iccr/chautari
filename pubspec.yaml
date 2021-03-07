@@ -91,7 +91,7 @@ dev_dependencies:
     sdk: flutter
 
 flutter_icons:
-  image_path: "images/chautari_logo_whitei_bg.png" 
+  image_path: "images/tree_logo.png" 
   android: true
   ios: true
 flutter_native_splash:
