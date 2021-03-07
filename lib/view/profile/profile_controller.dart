@@ -8,13 +8,13 @@ class ProfileController extends GetxController {
   AuthController auth = Get.find();
   List<MenuItem> _loggedInMenu = [
     MenuItem(
-        title: "Add Rent",
+        title: "List your property",
         index: 0,
         subtitle: "Earn money, rent your property in Chautari Basti"),
     MenuItem(
-        title: "My Rents",
+        title: "My properties ",
         index: 1,
-        subtitle: "See Your properties in Chautari Basti"),
+        subtitle: "Manage Your properties in Chautari Basti"),
     // MenuItem(
     //     title: "My Subscriptions",
     //     index: 2,
@@ -24,13 +24,13 @@ class ProfileController extends GetxController {
 
   List<MenuItem> _normalMenu = [
     MenuItem(
-        title: "Add Rent",
+        title: "List your property",
         index: 0,
         subtitle: "Earn money, rent your property in Chautari Basti"),
     MenuItem(
-        title: "My Rents",
+        title: "My properties",
         index: 1,
-        subtitle: "See Your properties in Chautari Basti"),
+        subtitle: "Manage Your properties in Chautari Basti"),
   ];
 
   List<MenuItem> get menu => auth.isLoggedIn ? _loggedInMenu : _normalMenu;
