@@ -56,8 +56,7 @@ class SplashScreen extends StatelessWidget {
                           color: Colors.white24,
                           width: 200,
                           height: 200,
-                          child: Image.asset(
-                              "images/symmetric_transparent_chautari.png")),
+                          child: Image.asset("images/tree_logo.png")),
                     ),
                   ],
                 ),
