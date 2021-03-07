@@ -18,7 +18,7 @@ class RoomService extends GetxService {
     return this;
   }
 
-  fetchRooms() async {
+  Future fetchRooms() async {
     isLoading.value = true;
     var models = await RoomsRepository().fetchRooms();
     isLoading.value = false;

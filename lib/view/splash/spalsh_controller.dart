@@ -5,6 +5,7 @@ import 'package:chautari/services/room_service.dart';
 import 'package:chautari/widgets/snack_bar.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
+import 'package:package_info/package_info.dart';
 
 class SplashController extends GetxController {
   AppInfoService appInfoService = Get.find();
@@ -15,63 +16,63 @@ class SplashController extends GetxController {
   var roomLoaded = false.obs;
   var timeEllapsed = false.obs;
 
-  int waitDuration = 3;
+  var appName = "".obs;
+  var version = "".obs;
+  var buildNumber = "".obs;
+
+  int waitDuration = 0;
 
   Timer _timer;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     _timer = Timer(Duration(seconds: waitDuration), () {
       this.timeEllapsed.toggle();
       _timer.cancel();
     });
     ChautariSnackBar.context = Get.context;
+
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    appName.value = packageInfo.appName;
+    version.value = packageInfo.version;
+    buildNumber.value = packageInfo.buildNumber;
   }
 
   @override
-  void onReady() {
+  void onReady() async {
     super.onReady();
-    _fetchAppInfo();
+
+    this.isLoading = true;
 
     timeEllapsed.listen((value) {
-      if (this.appInfoLoaded.value && this.roomLoaded.value) {
-        Get.offNamed("/tabs");
-      }
+      proceed();
     });
-
-    listenAppInfoService();
-    listenRoomService();
+    await Future.wait([
+      _roomService.fetchRooms(),
+      appInfoService.fetchAppInfo(),
+    ]);
+    this.isLoading = false;
+    proceed();
   }
 
-  listenRoomService() {
-    this.roomLoaded.value = _roomService.isLoading.value;
-
-    _roomService.success.listen((value) {
-      this.roomLoaded.value = true;
-      if (!value) {
-        showNoInternetError(_roomService.error);
-      }
-    });
-    _roomService.fetchRooms();
+  proceed() {
+    if (!this.isLoading) {
+      Get.offNamed("/tabs");
+    }
   }
 
-  listenAppInfoService() {
-    appInfoService.success.listen((value) {
-      this.appInfoLoaded.value = true;
-      if (!value) {
-        showNoInternetError(appInfoService.error.value);
-      }
-    });
+  String versionText() {
+    print(appName + " V" + version.value + ":" + buildNumber.value);
+    if (appName.isNotEmpty) {
+      return appName + " V" + version.value + ":" + buildNumber.value;
+    }
+    return "";
   }
 
   showNoInternetError(String message) {
     ChautariSnackBar.context = Get.context;
     ChautariSnackBar.showNoInternetMesage(message);
-  }
-
-  _fetchAppInfo() async {
-    this.appInfoLoaded.value = appInfoService.isLoading.value;
-    appInfoService.fetchAppInfo();
   }
 }

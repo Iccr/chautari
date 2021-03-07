@@ -26,17 +26,24 @@ class SettingView extends StatelessWidget {
       ),
       body: GetBuilder<SettingController>(
         init: SettingController(),
-        builder: (c) => ListView.separated(
-          separatorBuilder: (context, index) => ChautariList().getSeperator(),
-          itemCount: c.menu.length,
-          itemBuilder: (context, index) {
-            return ChautariList().getListTile(
-              () {
-                _showThemeSelectionView(context);
-              },
-              c.menu.elementAt(index),
-            );
-          },
+        builder: (c) => Stack(
+          children: [
+            Container(
+              child: ListView.separated(
+                separatorBuilder: (context, index) =>
+                    ChautariList().getSeperator(),
+                itemCount: c.menu.length,
+                itemBuilder: (context, index) {
+                  return ChautariList().getListTile(
+                    () {
+                      _showThemeSelectionView(context);
+                    },
+                    c.menu.elementAt(index),
+                  );
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );
