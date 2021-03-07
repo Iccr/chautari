@@ -75,12 +75,15 @@ class SplashScreen extends StatelessWidget {
                       textStyle: ChautariTextStyles().listTitle,
                       textAlign: TextAlign.start,
                     ),
-
-                    // Text(
-                    //   "Roots of Nepal",
-                    //   textAlign: TextAlign.center,
-                    //   style: ChautariTextStyles().listTitle,
-                    // ),
+                  ),
+                ),
+                Positioned.fill(
+                  bottom: 60,
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: Text(
+                      c.versionText(),
+                    ),
                   ),
                 ),
               ],

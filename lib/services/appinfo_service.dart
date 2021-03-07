@@ -13,7 +13,7 @@ class AppInfoService extends GetxService {
     return this;
   }
 
-  fetchAppInfo() async {
+  Future fetchAppInfo() async {
     isLoading.value = true;
     var model = await AppinfoRepository().fetchAppInfo();
 

@@ -4,6 +4,8 @@ import 'package:chautari/utilities/theme/theme_controller.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
+import 'package:package_info/package_info.dart';
+
 class SettingController extends GetxController {
   ThemeController themeController;
 
@@ -27,7 +29,7 @@ class SettingController extends GetxController {
   List<MenuItem> get themes => this._themeMenu.value;
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     themeController = Get.find();
   }
