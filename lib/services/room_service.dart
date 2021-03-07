@@ -27,6 +27,7 @@ class RoomService extends GetxService {
     } else {
       this._error.value = models.errors.first?.value;
     }
+    this.success.value = true;
   }
 
   searchAddress({String address}) async {

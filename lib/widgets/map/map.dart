@@ -25,7 +25,6 @@ abstract class ChautariMapFunctions extends GetxController {
   setMap(GoogleMapController controller);
   setMultipleMarker(Set<Marker> markers);
   onTapLocation(LatLng latLng);
-  _showPermissionAlert({String title, String message, String textConfirm});
   Future<Position> _determinePosition();
   moveCamera(LatLng latLng);
   setMarker(LatLng latLng);

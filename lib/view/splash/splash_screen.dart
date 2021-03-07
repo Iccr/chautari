@@ -67,7 +67,7 @@ class SplashScreen extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     child: TyperAnimatedTextKit(
                       totalRepeatCount: 1,
-                      speed: Duration(milliseconds: 250),
+                      speed: Duration(milliseconds: 140),
                       repeatForever: false,
                       onTap: () {
                         print("Tap Event");
