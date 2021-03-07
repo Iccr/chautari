@@ -3,6 +3,8 @@ import 'dart:convert';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
+import 'package:flutter_app_badger/flutter_app_badger.dart';
+
 class Firemessenger {
   final FirebaseMessaging firebaseMessaging = FirebaseMessaging.instance;
   final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -41,7 +43,16 @@ class Firemessenger {
 
     FirebaseMessaging.onMessageOpenedApp.listen((remoteMessage) {
       print("remote message in on onMessageOpenedApp ");
+      _removeBadge();
     });
+  }
+
+  // void _addBadge() {
+  //   FlutterAppBadger.updateBadgeCount(1);
+  // }
+
+  void _removeBadge() {
+    FlutterAppBadger.removeBadge();
   }
 
   void configLocalNotification() {
