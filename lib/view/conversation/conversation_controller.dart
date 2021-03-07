@@ -3,12 +3,15 @@ import 'package:chautari/utilities/router/router_name.dart';
 import 'package:chautari/view/chats/chat_view.dart';
 import 'package:chautari/view/login/auth_controller.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_core/firebase_core.dart';
+
 import 'package:get/get.dart';
 
 class ConversationController extends GetxController {
   AuthController auth = Get.find();
   List<ConversationModel> conversations = [];
+  var loading = false.obs;
+
+  RxList<ChatMenuItem> conversationViewModels = <ChatMenuItem>[].obs;
 
   Future<List<ChatMenuItem>> getConversation() async {
     var grups = await FirebaseFirestore.instance
@@ -72,13 +75,21 @@ class ConversationController extends GetxController {
   // }
 
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
 
     List<String> ids = [];
+    this.getData();
   }
 
-  onTapConversation(ChatMenuItem item) {
+  getData() async {
+    this.loading.value = true;
+    var conversations = await getConversation();
+    this.conversationViewModels.assignAll(conversations);
+    this.loading.value = false;
+  }
+
+  onTapConversation(ChatMenuItem item) async {
     var c =
         this.conversations.firstWhere((element) => element.id == item.extra);
     var mine = c.idTo == auth.user.id.toString();
@@ -87,7 +98,8 @@ class ConversationController extends GetxController {
       peerPhoto: mine ? c.fromPhoto : c.toPhoto,
       peerName: mine ? c.fromName : c.toName,
     );
-    Get.toNamed(RouteName.chat, arguments: viewModel);
+    var _ = await Get.toNamed(RouteName.chat, arguments: viewModel);
+    this.getData();
   }
 }
 

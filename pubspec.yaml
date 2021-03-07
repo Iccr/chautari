@@ -67,6 +67,7 @@ dependencies:
   circular_reveal_animation: ^1.1.5
   auto_size_text: ^2.1.0
   sign_in_with_apple: ^2.5.4
+  flutter_app_badger: ^1.1.2
 
 
   flutter_native_splash: ^0.3.0

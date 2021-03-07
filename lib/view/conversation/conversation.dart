@@ -5,6 +5,7 @@ import 'package:chautari/widgets/chautari_list.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:visibility_detector/visibility_detector.dart';
 
 class Conversation extends StatelessWidget {
   ConversationController controller = Get.put(ConversationController());
@@ -77,17 +78,13 @@ class Conversation extends StatelessWidget {
     // }
 
     return GetX<ConversationController>(
+      init: Get.put(ConversationController()),
       builder: (controller) => Scaffold(
-          appBar: AppBar(
-            title: Text("Conversations"),
-          ),
-          body: FutureBuilder<List<ChatMenuItem>>(
-            initialData: [],
-            future: controller.getConversation(),
-            builder: (context, snapshot) => snapshot.data.isNotEmpty
-                ? buildList(snapshot.data)
-                : const SizedBox(),
-          )),
+        appBar: AppBar(
+          title: Text("Conversations"),
+        ),
+        body: buildList(controller.conversationViewModels.value),
+      ),
     );
   }
 
