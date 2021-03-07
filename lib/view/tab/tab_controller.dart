@@ -47,7 +47,6 @@ class ChautariTabController extends GetxController
 
   onClose() {
     controller.dispose();
-
     super.onClose();
   }
 }
