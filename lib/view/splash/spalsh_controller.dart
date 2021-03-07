@@ -10,15 +10,19 @@ class SplashController extends GetxController {
   AppInfoService appInfoService = Get.find();
   RoomService _roomService = Get.find();
   String error;
-  var loaded = false;
+  var isLoading = false;
+  var appInfoLoaded = false.obs;
+  var roomLoaded = false.obs;
   var timeEllapsed = false.obs;
+
+  int waitDuration = 3;
 
   Timer _timer;
 
   @override
   void onInit() {
     super.onInit();
-    _timer = Timer(Duration(seconds: 4), () {
+    _timer = Timer(Duration(seconds: waitDuration), () {
       this.timeEllapsed.toggle();
       _timer.cancel();
     });
@@ -31,7 +35,9 @@ class SplashController extends GetxController {
     _fetchAppInfo();
 
     timeEllapsed.listen((value) {
-      Get.offNamed("/tabs");
+      if (this.appInfoLoaded.value && this.roomLoaded.value) {
+        Get.offNamed("/tabs");
+      }
     });
 
     listenAppInfoService();
@@ -39,7 +45,10 @@ class SplashController extends GetxController {
   }
 
   listenRoomService() {
+    this.roomLoaded.value = _roomService.isLoading.value;
+
     _roomService.success.listen((value) {
+      this.roomLoaded.value = true;
       if (!value) {
         showNoInternetError(_roomService.error);
       }
@@ -49,6 +58,7 @@ class SplashController extends GetxController {
 
   listenAppInfoService() {
     appInfoService.success.listen((value) {
+      this.appInfoLoaded.value = true;
       if (!value) {
         showNoInternetError(appInfoService.error.value);
       }
@@ -61,7 +71,7 @@ class SplashController extends GetxController {
   }
 
   _fetchAppInfo() async {
-    this.loaded = appInfoService.isLoading.value;
+    this.appInfoLoaded.value = appInfoService.isLoading.value;
     appInfoService.fetchAppInfo();
   }
 }
