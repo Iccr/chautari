@@ -20,7 +20,7 @@ class SplashController extends GetxController {
   var version = "".obs;
   var buildNumber = "".obs;
 
-  int waitDuration = 0;
+  int waitDuration = 3;
 
   Timer _timer;
 
