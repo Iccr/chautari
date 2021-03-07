@@ -9,6 +9,7 @@
 .history
 .svn/
 ./android/key.properties
+./android/app/src/main/res/values/strings.xml
 
 # IntelliJ related
 *.iml
