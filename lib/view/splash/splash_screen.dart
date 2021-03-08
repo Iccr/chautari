@@ -1,3 +1,4 @@
+import 'package:chautari/services/app_update.dart';
 import 'package:chautari/utilities/loading/progress_hud.dart';
 import 'package:chautari/utilities/theme/colors.dart';
 import 'package:chautari/utilities/theme/text_style.dart';
@@ -8,6 +9,7 @@ import 'package:animated_text_kit/animated_text_kit.dart';
 
 class SplashScreen extends StatelessWidget {
   SplashController controller = Get.put(SplashController());
+  AppUpdateService appUpdateService = Get.find();
   @override
   Widget build(BuildContext context) {
     return ProgressHud(

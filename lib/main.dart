@@ -1,4 +1,5 @@
 import 'package:chautari/services/analytics_service.dart';
+import 'package:chautari/services/app_update.dart';
 import 'package:chautari/services/appinfo_service.dart';
 import 'package:chautari/utilities/mapStyles.dart';
 
@@ -54,6 +55,7 @@ void initServices() async {
   await Get.putAsync(() => MapStyles().init());
   await Get.putAsync(() => AppInfoService().init());
   await Get.putAsync(() => RoomService().init());
+  await Get.putAsync(() => AppUpdateService().init());
 
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   await flutterLocalNotificationsPlugin

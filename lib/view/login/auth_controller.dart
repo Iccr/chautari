@@ -265,7 +265,7 @@ class AuthController extends GetxController {
       }
     };
 
-    await _loginWithApi(params);
+    // await _loginWithApi(params);
     // Now send the credential (especially `credential.authorizationCode`) to your server to create a session
     // after they have been validated with Apple (see `Integration` section for more information on how to do this)
   }
