@@ -25,13 +25,12 @@ class AppUpdateService extends GetxService {
       String buildNumber,
       String serverVersion,
       String serverBuildNumber,
-      bool forceUPdate}) {
+      bool forceUpdate}) {
     this.version = version;
     this.buildNumber = buildNumber;
     this.serverVersion = serverVersion;
     this.serverBuildNumber = serverBuildNumber;
     this.forceUpdate = forceUpdate;
-
     if (this.version != this.serverVersion) {
       this.shouldUPdate = true;
     }

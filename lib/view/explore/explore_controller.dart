@@ -48,6 +48,7 @@ class ExploreController extends GetxController {
 
   checkAppUpdate() {
     if (appUpdateService.shouldUPdate) {
+      var isForceUpdate = appUpdateService.forceUpdate;
       Alert.show(
           title: "Hurray..",
           message:
@@ -56,8 +57,8 @@ class ExploreController extends GetxController {
           onConfirm: () {
             appUpdateService.update();
           },
-          textCancel: null,
-          onCancel: null);
+          textCancel: isForceUpdate ? null : "Later",
+          onCancel: isForceUpdate ? null : () {});
     }
   }
 
