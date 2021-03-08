@@ -20,7 +20,9 @@ class SplashController extends GetxController {
   var version = "".obs;
   var buildNumber = "".obs;
 
-  int waitDuration = 3;
+  var versionlabel = "".obs;
+
+  int waitDuration = 10;
 
   Timer _timer;
 
@@ -38,6 +40,16 @@ class SplashController extends GetxController {
     appName.value = packageInfo.appName;
     version.value = packageInfo.version;
     buildNumber.value = packageInfo.buildNumber;
+
+    if (version.isNotEmpty) {
+      var name = appName.isEmpty ? "Chautari Basti" : appName.value;
+
+      this.versionlabel.value =
+          appName + " V" + version.value + ":" + buildNumber.value;
+
+      // this.update();
+      // return
+    }
   }
 
   @override
@@ -54,21 +66,13 @@ class SplashController extends GetxController {
       appInfoService.fetchAppInfo(),
     ]);
     this.isLoading = false;
-    proceed();
+    // proceed();
   }
 
   proceed() {
     if (!this.isLoading) {
       Get.offNamed("/tabs");
     }
-  }
-
-  String versionText() {
-    print(appName + " V" + version.value + ":" + buildNumber.value);
-    if (appName.isNotEmpty) {
-      return appName + " V" + version.value + ":" + buildNumber.value;
-    }
-    return "";
   }
 
   showNoInternetError(String message) {
