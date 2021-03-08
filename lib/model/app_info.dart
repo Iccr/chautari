@@ -1,4 +1,5 @@
 import 'package:chautari/model/amenity.dart';
+import 'package:chautari/model/config.dart';
 import 'package:chautari/model/districts.dart';
 import 'package:chautari/model/error.dart';
 import 'package:chautari/model/parkings.dart';
@@ -41,6 +42,7 @@ class AppinfoModel {
   List<Parking> parkings = [];
   List<Water> waters = [];
   List<RoomType> types = [];
+  AppConfig config;
 
   AppinfoModel({
     this.amenities = const <Amenities>[],
@@ -76,6 +78,10 @@ class AppinfoModel {
       json['types'].forEach((v) {
         types.add(new RoomType.fromJson(v));
       });
+    }
+
+    if (json['config'] != null) {
+      this.config = AppConfig.fromJson(json["config"]);
     }
   }
 
