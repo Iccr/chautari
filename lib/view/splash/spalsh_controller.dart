@@ -80,7 +80,7 @@ class SplashController extends GetxController {
 
   setVersionText() {
     if (version.isNotEmpty) {
-      var name = appName.isEmpty ? "Chautari Basti" : appName.value;
+      var name = appName.isEmpty ? "Chautari" : appName.value;
       this.versionlabel.value =
           appName + " V" + version.value + ":" + buildNumber.value;
     }
