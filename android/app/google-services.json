@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "739135606863",
+    "firebase_url": "https://boiling-fire-3549.firebaseio.com",
+    "project_id": "boiling-fire-3549",
+    "storage_bucket": "boiling-fire-3549.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:739135606863:android:70b6e880b44d7a86a15a3a",
+        "android_client_info": {
+          "package_name": "com.chautari.basti"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "739135606863-2ocsmfs16p408nnrqn6eien34nt7pkam.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chautari.basti",
+            "certificate_hash": "7d5a89920f53e8a6378ac25bf48b5cdd67d7c10c"
+          }
+        },
+        {
+          "client_id": "739135606863-e420c6hkhkrh5e4gdcqqf710kk5t2a52.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAkvuZVft1iDIxI41GTojrV-sGBf8jFno0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "739135606863-e420c6hkhkrh5e4gdcqqf710kk5t2a52.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "739135606863-4s1456p5mleefs6l8u9hcbcuc6k016vf.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.chautari.basti"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
