@@ -55,6 +55,7 @@ class SplashController extends GetxController {
     timeEllapsed.listen((value) {
       proceed();
     });
+
     await Future.wait([
       _roomService.fetchRooms(),
       appInfoService.fetchAppInfo(),
@@ -66,7 +67,9 @@ class SplashController extends GetxController {
         version: this.version.value,
         serverVersion: serverVersion,
         forceUPdate: config.forceUpdate);
+
     this.isLoading = false;
+    proceed();
   }
 
   proceed() {
