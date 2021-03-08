@@ -92,7 +92,7 @@ dev_dependencies:
     sdk: flutter
 
 flutter_icons:
-  image_path: "images/tree_logo.png" 
+  image_path: "images/tree_logo_bg.png" 
   android: true
   ios: true
 flutter_native_splash:
