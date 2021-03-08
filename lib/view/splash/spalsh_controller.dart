@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:chautari/services/app_update.dart';
 import 'package:chautari/services/appinfo_service.dart';
 import 'package:chautari/services/room_service.dart';
 import 'package:chautari/widgets/snack_bar.dart';
@@ -10,6 +11,7 @@ import 'package:package_info/package_info.dart';
 class SplashController extends GetxController {
   AppInfoService appInfoService = Get.find();
   RoomService _roomService = Get.find();
+  AppUpdateService appUpdateService = Get.find();
   String error;
   var isLoading = false;
   var appInfoLoaded = false.obs;
@@ -57,7 +59,13 @@ class SplashController extends GetxController {
       _roomService.fetchRooms(),
       appInfoService.fetchAppInfo(),
     ]);
-
+    var config = appInfoService.appInfo.config;
+    var serverVersion =
+        GetPlatform.isAndroid ? config.androidVersion : config.iosVersion;
+    appUpdateService.setInfo(
+        version: this.version.value,
+        serverVersion: serverVersion,
+        forceUPdate: config.forceUpdate);
     this.isLoading = false;
   }
 
