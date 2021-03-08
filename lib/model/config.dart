@@ -7,8 +7,8 @@ class AppConfig {
 
   AppConfig.fromJson(Map<String, dynamic> json) {
     androidVersion = json['android_version'];
-    iosVersion = json['force_update'];
-    forceUpdate = json['ios_version'];
+    iosVersion = json['ios_version'];
+    forceUpdate = json['force_update'];
   }
 
   Map<String, dynamic> toJson() {

@@ -17,8 +17,8 @@ class BaseUrl {
     // _imageServerUrl = "http://167.71.234.79:4002/";
 
     if (development) {
-      _serverUrl = "http://192.168.0.105:4000/api/";
-      _imageServerUrl = "http://192.168.0.105:4000/";
+      _serverUrl = "http://192.168.0.100:4000/api/";
+      _imageServerUrl = "http://192.168.0.100:4000/";
     } else {
       _serverUrl = "http://167.71.234.79:4002/api/";
       _imageServerUrl = "http://167.71.234.79:4002/";
