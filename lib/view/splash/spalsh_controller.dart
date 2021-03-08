@@ -66,7 +66,7 @@ class SplashController extends GetxController {
     appUpdateService.setInfo(
         version: this.version.value,
         serverVersion: serverVersion,
-        forceUPdate: config.forceUpdate);
+        forceUpdate: config.forceUpdate);
 
     this.isLoading = false;
     proceed();
