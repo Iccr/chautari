@@ -24,7 +24,7 @@ class SplashController extends GetxController {
 
   var versionlabel = "".obs;
 
-  int waitDuration = 10;
+  int waitDuration = 3;
 
   Timer _timer;
 
@@ -61,6 +61,7 @@ class SplashController extends GetxController {
       appInfoService.fetchAppInfo(),
     ]);
     var config = appInfoService.appInfo.config;
+
     var serverVersion =
         GetPlatform.isAndroid ? config.androidVersion : config.iosVersion;
     appUpdateService.setInfo(
