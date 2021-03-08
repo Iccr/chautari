@@ -41,15 +41,7 @@ class SplashController extends GetxController {
     version.value = packageInfo.version;
     buildNumber.value = packageInfo.buildNumber;
 
-    if (version.isNotEmpty) {
-      var name = appName.isEmpty ? "Chautari Basti" : appName.value;
-
-      this.versionlabel.value =
-          appName + " V" + version.value + ":" + buildNumber.value;
-
-      // this.update();
-      // return
-    }
+    setVersionText();
   }
 
   @override
@@ -66,12 +58,19 @@ class SplashController extends GetxController {
       appInfoService.fetchAppInfo(),
     ]);
     this.isLoading = false;
-    // proceed();
   }
 
   proceed() {
     if (!this.isLoading) {
       Get.offNamed("/tabs");
+    }
+  }
+
+  setVersionText() {
+    if (version.isNotEmpty) {
+      var name = appName.isEmpty ? "Chautari Basti" : appName.value;
+      this.versionlabel.value =
+          appName + " V" + version.value + ":" + buildNumber.value;
     }
   }
 
