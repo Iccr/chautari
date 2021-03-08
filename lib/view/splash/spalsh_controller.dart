@@ -57,6 +57,7 @@ class SplashController extends GetxController {
       _roomService.fetchRooms(),
       appInfoService.fetchAppInfo(),
     ]);
+
     this.isLoading = false;
   }
 
