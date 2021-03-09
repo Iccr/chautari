@@ -16,8 +16,8 @@
 *.ipr
 *.iws
 .idea/
-# ios/Runner/GoogleService-Info.plist
-# android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+android/app/google-services.json
 android/app/src/main/res/values/strings.xml
 
 # The .vscode folder contains launch configuration and tasks you configure in
