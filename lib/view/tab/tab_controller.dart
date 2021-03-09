@@ -1,4 +1,5 @@
 import 'package:chautari/view/AddInfo/add_info.dart';
+import 'package:chautari/view/conversation/conversation.dart';
 import 'package:chautari/view/explore/explore_view.dart';
 import 'package:chautari/view/map/rooms_map.dart';
 import 'package:chautari/view/profile/profile_view.dart';
@@ -16,7 +17,7 @@ class ChautariTabController extends GetxController
         RoomsMap(),
         AddInfo(),
         ProfileView(),
-        SettingView()
+        Conversation(),
       ];
 
   final iconList = <IconData>[
@@ -24,7 +25,7 @@ class ChautariTabController extends GetxController
     LineIcons.map,
     LineIcons.money,
     LineIcons.user,
-    LineIcons.gears,
+    Icons.chat
   ];
 
   final titleList = <String>[
@@ -32,7 +33,7 @@ class ChautariTabController extends GetxController
     "Map",
     "Earn",
     "Profile",
-    "Setting",
+    "Chats",
   ];
 
   Widget get currentScreen => widgetOptions().elementAt(bottomNavIndex.value);

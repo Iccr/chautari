@@ -16,6 +16,7 @@ class RouteName {
   static String login = "/login";
   static String map = "/map";
   static String chat = "/chat";
+  static String setting = "/setting";
   static String conversation = "/conversation";
   static String pickLocation = "/pickLocation";
   static String showRoomLocationOnMap = "/ShowRoomLocationMapController";

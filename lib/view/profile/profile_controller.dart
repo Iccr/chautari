@@ -19,7 +19,10 @@ class ProfileController extends GetxController {
     //     title: "My Subscriptions",
     //     index: 2,
     //     subtitle: "We will notify you when your preference is matched"),
-    MenuItem(title: "Chats", index: 3, subtitle: "Your chats history")
+    MenuItem(
+        title: "Setting",
+        index: 3,
+        subtitle: "Customize looks and feel of Chautari Basti")
   ];
 
   List<MenuItem> _normalMenu = [
@@ -31,6 +34,10 @@ class ProfileController extends GetxController {
         title: "My properties",
         index: 1,
         subtitle: "Manage Your properties in Chautari Basti"),
+    MenuItem(
+        title: "Setting",
+        index: 3,
+        subtitle: "Customize looks and feel of Chautari Basti")
   ];
 
   List<MenuItem> get menu => auth.isLoggedIn ? _loggedInMenu : _normalMenu;
@@ -54,8 +61,8 @@ class ProfileController extends GetxController {
       case 2:
         break;
       case 3:
-        print("go to ${RouteName.conversation}");
-        Get.toNamed(RouteName.conversation);
+        print("go to ${RouteName.setting}");
+        Get.toNamed(RouteName.setting);
         break;
       default:
     }
